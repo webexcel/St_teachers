@@ -42,7 +42,7 @@
     "@ionic/angular": "^7.0.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
-    "ionic-selectable": "^4.9.0",
+    "ionic-selectable": "^5.0.2",
     "ionicons": "^7.0.0",
     "ngx-bootstrap": "^11.0.2",
     "ngx-ui-loader": "^13.0.0",

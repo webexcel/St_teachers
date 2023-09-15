@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IonicSelectableModule } from 'ionic-selectable';
+import { IonicSelectableComponent } from 'ionic-selectable';
 import { FlashRoutingModule } from './flash-routing.module';
 import { FlashComponent } from './flash.component';
 
@@ -13,7 +13,7 @@ import { FlashComponent } from './flash.component';
     IonicModule,
     FormsModule,
     FlashRoutingModule,
-    IonicSelectableModule,
+    IonicSelectableComponent,
   ],
 })
 export class FlashModule {}

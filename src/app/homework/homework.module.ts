@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IonicSelectableModule } from 'ionic-selectable';
+import { IonicSelectableComponent } from 'ionic-selectable';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TranModule } from '../tran.module';
@@ -16,7 +16,7 @@ import { HomeworkComponent } from './homework.component';
     HomeworkRoutingModule,
     IonicModule,
     TranModule,
-    IonicSelectableModule,
+    IonicSelectableComponent,
     FormsModule,
     TabsModule.forRoot(),
     AccordionModule.forRoot(),

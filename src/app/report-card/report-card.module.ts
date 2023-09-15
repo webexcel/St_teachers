@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IonicSelectableModule } from 'ionic-selectable';
+import { IonicSelectableComponent } from 'ionic-selectable';
 import { TranModule } from '../tran.module';
 import { ReportCardRoutingModule } from './report-card-routing.module';
 import { ReportCardComponent } from './report-card.component';
@@ -14,7 +14,7 @@ import { ReportCardComponent } from './report-card.component';
     ReportCardRoutingModule,
     IonicModule,
     TranModule,
-    IonicSelectableModule,
+    IonicSelectableComponent,
     FormsModule,
   ],
 })

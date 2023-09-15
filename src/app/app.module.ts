@@ -25,7 +25,7 @@ import { Media } from '@ionic-native/media/ngx';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { IonicSelectableModule } from 'ionic-selectable';
+import { IonicSelectableComponent } from 'ionic-selectable';
 // import { IonicSelectableComponent } from 'ionic-selectable';
 import { JwtInterceptor } from './service/jwt.interceptor';
 import { LoadingService } from './service/loading.service';
@@ -42,7 +42,7 @@ import { LoadingService } from './service/loading.service';
     TranModule,
     NgxUiLoaderModule,
     ModalModule.forRoot(),
-    IonicSelectableModule,
+    IonicSelectableComponent,
     CommonModule,
   ],
   exports: [],

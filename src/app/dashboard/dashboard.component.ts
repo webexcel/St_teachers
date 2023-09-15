@@ -32,6 +32,8 @@ export class DashboardComponent implements OnInit {
   modalRef?: BsModalRef;
   storeSMSDetails: any = [];
   ing: any = 0;
+  // @TODO - get correct value
+  ADNO: any = 0;
 
   public appPages = environment.pages;
 

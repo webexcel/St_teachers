@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IonicSelectableModule } from 'ionic-selectable';
+import { IonicSelectableComponent } from 'ionic-selectable';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TranModule } from '../tran.module';
 import { PersonalizedRoutingModule } from './personalized-routing.module';
@@ -15,7 +15,7 @@ import { PersonalizedComponent } from './personalized.component';
     PersonalizedRoutingModule,
     IonicModule,
     TranModule,
-    IonicSelectableModule,
+    IonicSelectableComponent,
     FormsModule,
     TabsModule.forRoot(),
   ],
