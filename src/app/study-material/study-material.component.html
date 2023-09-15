@@ -1,0 +1,130 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Study Material</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+    <ion-toolbar class="p-0">
+      <ion-buttons slot="start" >
+        <ion-menu-button><ion-icon class="text-white" [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+      </ion-buttons>
+      <ion-title >Study Material</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="card m-3 shadow-lg" >
+    <div class="card-body card_body">
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+        <ion-list>
+          <ion-item>
+            <ion-label>Class</ion-label>
+            <ionic-selectable #portComponent name="class" item-content [(ngModel)]="details.class" itemValueField="id"
+              itemTextField="name" [items]="classs" [canSearch]="true" [hasVirtualScroll]="true" [isMultiple]="true"
+              #class="ngModel" required>
+              <ng-template ionicSelectableCloseButtonTemplate>
+                <ion-icon [md]="'close-circle'" [ios]="'close-circle'" style="font-size: 24px;"></ion-icon>
+              </ng-template>
+              <ng-template ionicSelectableFooterTemplate>
+                <ion-toolbar>
+                  <ion-row>
+                    <ion-col [size]="4">
+                      <ion-button expand="full"
+                        (click)="toggleItems(true)">
+                        Select All
+                      </ion-button>
+                    </ion-col>
+                    <ion-col [size]="4">
+                      <ion-button expand="full"
+                        (click)="toggleItems(false)">
+                        Deselect All
+                      </ion-button>
+                    </ion-col>
+                    <ion-col [size]="4">
+                      <ion-button expand="full" (click)="confirm()">
+                        OK
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-toolbar>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+          <span *ngIf="f.submitted && class.invalid" class="text-danger">Select Class</span>
+          <ion-item>
+            <ion-label position="floating">Title</ion-label>
+            <ion-input type="text" name="title" [(ngModel)]="details.title" #title="ngModel" required></ion-input>
+            
+          </ion-item>
+          <span *ngIf="f.submitted && title.invalid" class="text-danger">Enter Title</span>
+          <ion-item>
+            <ion-label position="floating">Description</ion-label>
+            <ion-textarea type="text" name="description" [(ngModel)]="details.description" #description="ngModel" required>
+            </ion-textarea>
+          </ion-item>
+          <span *ngIf="f.submitted && description.invalid" class="text-danger">Enter Description</span>
+          <ion-item>
+            <ion-label position="floating">Message Date</ion-label>
+            <ion-datetime name="date" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="details.date" #date="ngModel" required></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <div class="row w-100 align-items-center text-center">
+              <div class="col-8">
+                <img class="w-100" src="../../assets/imgs/speakers/image.png" *ngIf="details.image.length==0">
+                <img class="w-100" [src]="details.image" *ngIf="details.image.length!=0">
+              </div>
+              <div class="col-4">
+                <ion-icon [ios]="'folder-open-sharp'" [md]="'folder-open-sharp'" class="icon-width text-success" (click)="open()"></ion-icon>
+              </div>
+              <div class="col-12 text-danger" *ngIf="error" >
+                only allow jpg, jpeg, png.
+              </div>
+            </div>
+          </ion-item>
+          </ion-list>
+        <div padding>
+          <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="cardlist" *ngIf="flashlist.length>0">
+    <div class="card-header py-1">
+      <div class="row align-items-center">
+        <div class="col">
+         Flash Message List
+        </div>
+      </div>
+    </div>
+    <div class="card-body card_body border border-primary p-0 bodytable">
+      <table *ngIf="flashlist.length" class="table table-bordered w-100">
+        <!-- <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>Image</th>
+            <th>Action</th>
+          </tr>
+        </thead> -->
+        <tbody>
+          <tr *ngFor="let s of flashlist;">
+            <td>Title: {{s.Title}}<br>
+            Description: {{s.Discription}}<br>
+            Date: {{s.NewsADate}}<br>
+            <img src={{s.event_image}} class="w-100" alt=""><br>
+            <br>
+            <button class="btn btn-danger"><ion-icon [ios]="'trash-sharp'" [md]="'trash-sharp'" class="text-white" (click)="delete(s.nid)"></ion-icon> Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ion-content>

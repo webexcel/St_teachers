@@ -1,0 +1,24 @@
+.rTable {    
+    display: block;
+    width: 100%;
+    font-size: 10px; 
+   } 
+   
+   .rTableHeading, .rTableBody, .rTableFoot, .rTableRow{ 
+    clear: both; 
+   } 
+   
+   .rTableHead, .rTableFoot{    
+     background-color: #DDD;    
+     font-weight: bold;
+   }
+   
+   .rTableCell, .rTableHead {     
+     border: 1px solid #999999;
+     float: left; 
+     height: 40px; 
+     overflow: hidden;
+     padding: 3px 1.8%; 
+     width: calc(100% / 3); 
+     box-sizing: border-box;
+   }

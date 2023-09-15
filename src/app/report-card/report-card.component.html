@@ -1,0 +1,123 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ 'report-card' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+    <ion-toolbar class="p-0">
+      <ion-buttons slot="start" >
+        <ion-menu-button><ion-icon class="text-white" [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+      </ion-buttons>
+      <ion-title >{{ 'report-card' | translate }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="reportcard">
+    <div class="">
+      <!-- <div class="card-header">
+        {{'send_message_to_students' | translate }}
+      </div> -->
+      <div class="card-body card_body">
+
+
+        <form name="form" (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm" novalidate class="border border-primary">
+          <ion-item>
+            <ion-label>{{ 'class' | translate }}</ion-label>
+            <ionic-selectable name="class" item-content [(ngModel)]="select_datas.class" itemValueField="id"
+              itemTextField="name" [items]="classs" [canSearch]="true" 
+              (onChange)="classChange($event)" #class="ngModel" required>
+              <ng-template ionicSelectableCloseButtonTemplate>
+                <ion-icon [md]="'close-circle'" [ios]="'close-circle'" style="font-size: 24px;"></ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+          <span *ngIf="f.submitted && class.invalid" class="text-danger">Select Class</span> 
+          <ion-item>
+            <ion-label>{{ 'subject' | translate }}</ion-label>
+            <ionic-selectable name="subject" item-content [(ngModel)]="select_datas.subject" itemValueField="id"
+              itemTextField="name" [items]="subjects" [canSearch]="true" 
+              #subject="ngModel" required (onChange)="subjectChange($event)">
+              <ng-template ionicSelectableCloseButtonTemplate>
+                <ion-icon [md]="'close-circle'" [ios]="'close-circle'" style="font-size: 24px;"></ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+          <span *ngIf="f.submitted && subject.invalid" class="text-danger">Select Subject</span> 
+          <ion-item>
+            <ion-label>Select Exam</ion-label>
+            <ionic-selectable name="exam" item-content [(ngModel)]="select_datas.exams" itemValueField="exam_type_id"
+              itemTextField="exam_type_name" [items]="exams" [canSearch]="true" 
+              #exam="ngModel" required (onChange)="subjectExam($event)">
+              <ng-template ionicSelectableCloseButtonTemplate>
+                <ion-icon [md]="'close-circle'" [ios]="'close-circle'" style="font-size: 24px;"></ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+          <span *ngIf="f.submitted && exams.invalid" class="text-danger">Select Exam</span> 
+          
+          <div *ngIf="students.length>0 || g_btn">
+            <hr class="bg-info">
+          </div>
+
+          <div *ngIf="g_btn" class="text-center">
+            <button type="button" class="btn btn-primary" (click)="generate()">Generate</button>
+          </div>
+          <!-- <table class="w-100" *ngIf="students.length>0">
+            <thead>
+              <tr>
+              <th>
+                Name
+              </th>
+              <th>
+                Mark
+              </th>
+              <th>
+                Max Mark
+              </th>
+              <th>
+                Grade
+              </th></tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let d of students;">
+                <td>{{d.name}}</td>
+                <td><input [(ngModel)]="d.mark" placeholder="Mark"> </td>
+                <td><input [(ngModel)]="d.maxmark" placeholder="Max Mark"> </td>
+                <td><input [(ngModel)]="d.grade" placeholder="Grade"></td>
+              </tr>
+            </tbody>
+          </table> -->
+
+          <div class="rTable" *ngIf="students.length>0"> 
+            <div class="rTableRow"> 
+              <div class="rTableHead">Name</div> 
+              <div class="rTableHead">Mark</div> 
+              <!-- <div class="rTableHead">Max Mark</div>   -->
+              <div class="rTableHead">Grade</div> 
+            </div> 
+        
+            <div class="rTableRow" style="page-break-before:always;" *ngFor="let d of students;">
+              <div class="rTableCell">{{d.NAME}}</div>  
+              <div class="rTableCell"><input name="{{d.Admission_Id}}mark" [(ngModel)]="d.marks" placeholder="Mark" class="w-100"></div>  
+              <!-- <div class="rTableCell"><input name="{{d.stu_name.split('-')[0]}}maxmark" [(ngModel)]="d.maxmark" placeholder="Max Mark" class="w-100"></div>   -->
+              <div class="rTableCell"><input name="{{d.Admission_Id}}grade" [(ngModel)]="d.Grade" placeholder="Grade" class="w-100"></div>  
+            </div> 
+      
+          </div>
+         
+         
+          
+          <div class="p-1 text-center" *ngIf="students.length>0">
+            <button type="submit" class="btn btn-primary">{{'save' | translate}}</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</ion-content>

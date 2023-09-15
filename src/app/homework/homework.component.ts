@@ -1,0 +1,481 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+// import { IonicSelectableComponent } from 'ionic-selectable';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
+import { Base64 } from '@ionic-native/base64/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
+import { Media, MediaObject } from '@ionic-native/media/ngx';
+import { AlertController, Platform } from '@ionic/angular';
+import { AuthService } from '../service/auth.service';
+import { FilesService } from '../service/files.service';
+import { LoadingService } from '../service/loading.service';
+import { StorageService } from '../service/storage.service';
+import { TranslateConfigService } from '../service/translate-config.service';
+
+import { NgForm } from '@angular/forms';
+@Component({
+  selector: 'app-homework',
+  templateUrl: './homework.component.html',
+  styleUrls: ['./homework.component.scss'],
+})
+export class HomeworkComponent implements OnInit {
+  ios: any = false;
+  @ViewChild('portComponent', { static: false }) portComponent: any;
+  classs: any = [];
+  subjects: any = [];
+  select_datas: any = {};
+  select_datas1: any = {};
+  getwhdates: any = [];
+  gethw: any = [];
+  last3daysdates: any = [];
+  last3days: any = [];
+  recentdata: any = [];
+  recentdata1: any = [];
+  recentdates: any = [];
+
+  senditems1dates: any = [];
+  senditems1: any = [];
+
+  delete_homework: any;
+  cancel: any;
+  delete: any;
+  recording: boolean = false;
+  fileName!: string;
+  audio!: MediaObject;
+  Path!: string;
+  error: any = false;
+  constructor(
+    private serfile: FilesService,
+    private media: Media,
+    private fileChooser: FileChooser,
+    private filePath: FilePath,
+    public base64: Base64,
+    private sanitizer: DomSanitizer,
+    public alertCtrl: AlertController,
+    public storage: StorageService,
+    private platform: Platform,
+    private router: Router,
+    private translate: TranslateConfigService,
+    public loading: LoadingService,
+    public authservice: AuthService
+  ) {
+    this.platform.backButton.subscribe(() => {
+      this.router.navigate(['/dashboard']);
+    });
+  }
+
+  ngOnInit() {
+    this.ios = this.authservice.isiso();
+    this.translate.set();
+    this.translate
+      .getparam('delete_circulars')
+      .then((v) => (this.delete_homework = v));
+    this.translate.getparam('cancel').then((v) => (this.cancel = v));
+    this.translate.getparam('delete').then((v) => (this.delete = v));
+    this.reset();
+    this.getSaveHomeworkDraft();
+    this.getallsubject();
+    this.getSaveHomework();
+  }
+
+  reset() {
+    this.select_datas.s_date = new Date().toISOString();
+    this.select_datas.staff_id =
+      this.storage.getjson('teachersDetail')[0]['staff_id'];
+    this.select_datas.Is_Admin =
+      this.storage.getjson('teachersDetail')[0]['Is_Admin'];
+    this.classs = this.storage.getjson('classlist');
+    this.select_datas1.s_date = new Date().toISOString();
+    this.select_datas.image = '';
+    this.select_datas.type = '';
+    this.select_datas.filename = '';
+  }
+
+  toggleItems(status: any) {
+    if (status) {
+      this.portComponent.toggleItems(false);
+      this.portComponent.toggleItems(status);
+      this.confirm();
+    } else {
+      this.portComponent.toggleItems(status);
+    }
+  }
+
+  confirm() {
+    this.portComponent.confirm();
+    this.portComponent.close();
+  }
+
+  classChange(event: any) {}
+
+  getSaveHomeworkDraft() {
+    this.recentdata1 = {};
+    this.recentdates = [];
+    this.loading.present();
+    this.authservice
+      .post('getSaveHomeworkDraft', {
+        Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
+        staff_id: this.storage.getjson('teachersDetail')[0]['staff_id'],
+        classid: this.authservice.classids(),
+      })
+      .subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.recentdata = res['data'];
+            let recentdata = res['data'];
+            for (let i = 0; i < recentdata.length; i++) {
+              let d = recentdata[i]['MSG_DATE'];
+              if (this.recentdates.indexOf(d) == -1) {
+                this.recentdates.push(d);
+                this.recentdata1[d] = [];
+              }
+              this.recentdata1[d].push(recentdata[i]);
+            }
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
+          console.log(err);
+        }
+      );
+  }
+
+  getSaveHomework() {
+    this.gethw = {};
+    this.getwhdates = [];
+    this.last3days = {};
+    this.last3daysdates = [];
+    this.loading.present();
+    this.authservice
+      .post('getSaveHomework', {
+        Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
+        staff_id: this.storage.getjson('teachersDetail')[0]['staff_id'],
+        classid: this.authservice.classids(),
+      })
+      .subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            let gethw = res['data'];
+            let last3days = res['last3senditem'];
+            for (let i = 0; i < gethw.length; i++) {
+              let d = gethw[i]['MSG_DATE'];
+              if (this.getwhdates.indexOf(d) == -1) {
+                this.getwhdates.push(d);
+                this.gethw[d] = [];
+              }
+              this.gethw[d].push(gethw[i]);
+            }
+            for (let i = 0; i < last3days.length; i++) {
+              let d = last3days[i]['MSG_DATE'];
+              if (this.last3daysdates.indexOf(d) == -1) {
+                this.last3daysdates.push(d);
+                this.last3days[d] = [];
+              }
+              this.last3days[d].push(last3days[i]);
+            }
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
+          console.log(err);
+        }
+      );
+  }
+
+  getallsubject() {
+    this.loading.present();
+    this.authservice.get('getallsubject').subscribe(
+      (res: any) => {
+        this.loading.dismissAll();
+        if (res['status']) {
+          this.subjects = res['data'];
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+        console.log(err);
+      }
+    );
+  }
+
+  onSubmit(form: NgForm) {
+    this.loading.present();
+    this.authservice.post('saveHomeworkMessage', this.select_datas).subscribe(
+      (res: any) => {
+        this.loading.dismissAll();
+        if (res['status']) {
+          form.resetForm();
+          this.reset();
+          this.getSaveHomeworkDraft();
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+        console.log(err);
+      }
+    );
+  }
+
+  async deletehomework(ID: any) {
+    let alert = await this.alertCtrl.create({
+      header: this.delete_homework,
+      //subTitle: this.name,
+      //message:message,
+      buttons: [
+        {
+          text: this.cancel,
+          role: 'cancel',
+          handler: (data) => {
+            console.log('Cancel clicked');
+          },
+        },
+        {
+          text: this.delete,
+          handler: (data) => {
+            this.loading.present();
+            this.authservice.post('deletehomework', { id: ID }).subscribe(
+              (res) => {
+                this.loading.dismissAll();
+                this.getSaveHomeworkDraft();
+              },
+              (err) => {
+                this.loading.dismissAll();
+              }
+            );
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+
+  formatPorts(classs: any) {
+    return classs.map((port: any) => port.name).join(', ');
+  }
+
+  open() {
+    this.fileChooser
+      .open()
+      .then((uri) => {
+        console.log(uri);
+        this.filePath.resolveNativePath(uri).then(
+          (res) => {
+            console.log(res);
+            let f: any = res.split('/');
+            this.select_datas.filename = f[f.length - 1].toLowerCase();
+            let l: any = res.split('.');
+            l = l[l.length - 1].toLowerCase();
+            if (
+              l == 'jpg' ||
+              l == 'jpeg' ||
+              l == 'png' ||
+              l == 'pdf' ||
+              l == 'mp3' ||
+              l == 'xls' ||
+              l == 'xlsx'
+            ) {
+              this.select_datas.type = l;
+              this.error = false;
+              if (l == 'mp3') {
+                l = `data:audio/mpeg;base64,`;
+              } else {
+                l = `data:image/${l};base64,`;
+              }
+              this.base64.encodeFile(res).then(
+                (res) => {
+                  this.select_datas.image =
+                    this.sanitizer.bypassSecurityTrustUrl(
+                      l + res.split('ase64,')[1]
+                    );
+                  console.log(this.select_datas.image);
+                },
+                (err) => {
+                  console.log(err);
+                }
+              );
+            } else {
+              this.error = true;
+            }
+          },
+          (err) => {
+            console.log(err);
+          }
+        );
+      })
+      .catch((e) => console.log(e));
+  }
+
+  checkimage(f: any) {
+    if (f) {
+      f = f.split('.');
+      f = f[f.length - 1].toLowerCase();
+      console.log(f);
+      if (f != 'pdf' && f != 'mp3' && f != 'xls' && f != 'xlsx') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+    //image.event_image.split('.')[image.event_image.split('.').length-1]!='pdf'
+  }
+
+  checkmp3(f: any) {
+    if (f) {
+      f = f.split('.');
+      f = f[f.length - 1].toLowerCase();
+      if (f == 'mp3') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  checkxls(f: any) {
+    if (f) {
+      f = f.split('.');
+      f = f[f.length - 1].toLowerCase();
+      if (f == 'xls' || f == 'xlsx') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  checkpdf(f: any) {
+    if (f) {
+      f = f.split('.');
+      f = f[f.length - 1].toLowerCase();
+      if (f == 'pdf') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  getfilename(f: any) {
+    f = f.split('/');
+    f = f[f.length - 1];
+    return f;
+  }
+
+  startRecord() {
+    this.fileName =
+      'record' +
+      new Date().getDate() +
+      new Date().getMonth() +
+      new Date().getFullYear() +
+      new Date().getHours() +
+      new Date().getMinutes() +
+      new Date().getSeconds() +
+      '.mp3';
+
+    this.Path = this.serfile.filepath() + this.fileName;
+    console.log(this.Path);
+    this.audio = this.media.create(this.Path);
+    this.select_datas.type = '';
+    this.select_datas.image = '';
+    this.select_datas.filename = '';
+    this.audio.startRecord();
+    this.recording = true;
+  }
+
+  stopRecord() {
+    this.audio.stopRecord();
+    this.recording = false;
+
+    this.serfile.read(this.fileName).then(
+      (res) => {
+        console.log(res);
+        let l = res.split('base64,');
+        if (l[1].length != 0) {
+          this.select_datas.filename = this.fileName;
+          this.select_datas.type = 'mp3';
+          this.error = false;
+          this.select_datas.image = this.sanitizer.bypassSecurityTrustUrl(
+            'data:audio/mpeg;base64,' + l[1]
+          );
+        }
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  deletefile() {
+    this.select_datas.type = '';
+    this.select_datas.image = '';
+    this.select_datas.filename = '';
+  }
+
+  onSubmit1() {
+    this.senditems1dates = [];
+    this.senditems1 = {};
+    this.loading.present();
+    this.authservice
+      .post('searchSaveHomework', {
+        Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
+        staff_id: this.storage.getjson('teachersDetail')[0]['staff_id'],
+        classid: this.authservice.classids(),
+        s_date: this.select_datas1.s_date,
+      })
+      .subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            let senditems1 = res['data'];
+            for (let i = 0; i < senditems1.length; i++) {
+              let d = senditems1[i]['MSG_DATE'];
+              if (this.senditems1dates.indexOf(d) == -1) {
+                this.senditems1dates.push(d);
+                this.senditems1[d] = [];
+              }
+              this.senditems1[d].push(senditems1[i]);
+            }
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
+          console.log(err);
+        }
+      );
+  }
+
+  movehomeworktofinal() {
+    let data: any = [];
+    for (let i = 0; i < this.recentdata.length; i++) {
+      data.push({
+        CLASSSEC: this.recentdata[i]['CLASS'],
+        ID: this.recentdata[i]['MSG_ID'],
+      });
+    }
+    data = { CLASSSEC: data };
+    this.authservice.post('movehomeworktofinal', data).subscribe(
+      (res: any) => {
+        this.loading.dismissAll();
+        if (res['status']) {
+          this.getSaveHomeworkDraft();
+          this.getSaveHomework();
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+        console.log(err);
+      }
+    );
+  }
+}

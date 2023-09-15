@@ -1,29 +1,98 @@
+<!-- <ngx-ui-loader
+
+  [fgsColor]="loadingconfig.fgsColor"
+  [fgsPosition]="loadingconfig.fgsPosition"
+  [fgsSize]="loadingconfig.fgsSize"
+  [fgsType]="loadingconfig.fgsType"
+  [bgsOpacity]="loadingconfig.bgsOpacity"
+  [bgsPosition]="loadingconfig.bgsPosition"
+  [bgsSize]="loadingconfig.bgsSize"
+  [bgsType]="loadingconfig.bgsType"
+  [gap]="loadingconfig.gap"
+  [logoPosition]="loadingconfig.logoPosition"
+  [logoSize]="loadingconfig.logoSize"
+  [logoUrl]="loadingconfig.logoUrl"
+  [overlayColor]="loadingconfig.overlayColor"
+  [pbColor]="loadingconfig.pbColor"
+  [pbDirection]="loadingconfig.pbDirection"
+  [pbThickness]="loadingconfig.pbThickness"
+  [hasProgressBar]="loadingconfig.hasProgressBar"
+  [text]="loadingconfig.text"
+  [textColor]="loadingconfig.textColor"
+  [textPosition]="loadingconfig.textPosition"
+></ngx-ui-loader> -->
+
 <ion-app>
-  <ion-split-pane contentId="main-content">
+  <ion-split-pane contentId="main-content" *ngIf="index">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi@ionicframework.com</ion-note>
+        <ion-list id="inbox-list" [class.mt-4]="ios">
+          <!-- <ion-list-header>Inbox</ion-list-header>
+          <ion-note>hi@ionicframework.com</ion-note> -->
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-              <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
-              <ion-label>{{ p.title }}</ion-label>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item
+              routerDirection="root"
+              routerLink="/dashboard"
+              lines="none"
+              detail="false"
+              routerLinkActive="selected"
+            >
+              <ion-icon
+                class="icon_menu"
+                slot="start"
+                [ios]="'grid-sharp'"
+                [md]="'grid-sharp'"
+              ></ion-icon>
+              <ion-label>{{ "dashboard" | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle
+            auto-hide="false"
+            *ngFor="let p of appPages; let i = index"
+            [class.d-none]="checkview(p.admin)"
+          >
+            <ion-item
+              routerDirection="root"
+              [routerLink]="[p.url]"
+              lines="none"
+              detail="false"
+              routerLinkActive="selected"
+            >
+              <img
+                class="icon-img"
+                [src]="p.icon"
+                [ngStyle]="{ filter: p.filter }"
+              />
+              <ion-label class="after-img">{{ p.title | translate }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false" (click)="logout()">
+            <ion-item routerDirection="root" lines="none" detail="false">
+              <ion-icon
+                class="icon_menu"
+                slot="start"
+                [ios]="'log-out-sharp'"
+                [md]="'log-out-sharp'"
+              ></ion-icon>
+              <ion-label>{{ "logout" | translate }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
 
-        <ion-list id="labels-list">
+        <!-- <ion-list id="labels-list">
           <ion-list-header>Labels</ion-list-header>
 
           <ion-item *ngFor="let label of labels" lines="none">
-            <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+            <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
             <ion-label>{{ label }}</ion-label>
           </ion-item>
-        </ion-list>
+        </ion-list> -->
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
   </ion-split-pane>
+  <ion-router-outlet *ngIf="!index" id="main-content"></ion-router-outlet>
 </ion-app>

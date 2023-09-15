@@ -1,0 +1,232 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ 'attendance' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+    <ion-toolbar class="p-0">
+      <ion-buttons slot="start">
+        <ion-menu-button>
+          <ion-icon class="text-white" [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+        </ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ 'attendance' | translate }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="attendance">
+    <div class="">
+      <div class="card-header">
+        {{'select_list_of_absent_students' | translate }}
+      </div>
+      <div class="card-body card_body">
+
+
+        <form name="form" (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm" novalidate class="border border-primary">
+          <ion-item>
+            <ion-label>{{ 'class' | translate }}</ion-label>
+            <ionic-selectable name="class" item-content [(ngModel)]="select_datas.class" itemValueField="id"
+              itemTextField="name" [items]="classs" [canSearch]="true" (onChange)="classChange($event)" #class="ngModel"
+              required>
+              <ng-template ionicSelectableCloseButtonTemplate>
+                <ion-icon [md]="'close-circle'" [ios]="'close-circle'" style="font-size: 24px;"></ion-icon>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+          <ion-item>
+            <ion-label>{{ 'date' | translate }}</ion-label>
+            <ion-datetime name="s_date" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"
+              [(ngModel)]="select_datas.s_date" #s_date="ngModel" required></ion-datetime>
+          </ion-item>
+          <ion-item>
+            <ion-label>{{ 'students' | translate }}</ion-label>
+            <ionic-selectable #portComponent name="student" item-content [(ngModel)]="select_datas.student"
+              [hasVirtualScroll]="true" itemValueField="id" itemTextField="name" [items]="students" [canSearch]="true"
+              [isMultiple]="true" #student="ngModel" required>
+              <ng-template ionicSelectableValueTemplate let-ports="value">
+                <div class="ionic-selectable-value-item">
+                  {{formatPorts(select_datas.student)}}
+                </div>
+              </ng-template>
+              <ng-template ionicSelectableCloseButtonTemplate>
+                <ion-icon [md]="'close-circle'" [ios]="'close-circle'" style="font-size: 24px;"></ion-icon>
+              </ng-template>
+              <ng-template ionicSelectableFooterTemplate>
+                <ion-toolbar>
+                  <ion-row>
+                    <ion-col [size]="4">
+                      <ion-button expand="full" (click)="toggleItems(true)">
+                        Select All
+                      </ion-button>
+                    </ion-col>
+                    <ion-col [size]="4">
+                      <ion-button expand="full" (click)="toggleItems(false)">
+                        Deselect All
+                      </ion-button>
+                    </ion-col>
+                    <ion-col [size]="4">
+                      <ion-button expand="full" (click)="confirm()">
+                        OK
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-toolbar>
+              </ng-template>
+            </ionic-selectable>
+          </ion-item>
+          <div class="p-1">
+            <button type="submit" class="btn btn-primary">{{'save' | translate}}</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+
+    <div class="cardlist mb-3" *ngFor="let d of grpmes;">
+      <div class="card-header py-1">
+        <div class="row align-items-center">
+          <div class="col">
+            {{d.name}} ({{d.CLASSSEC}})
+          </div>
+          <div class="col text-right">
+            <button type="button" class="btn bg-white mx-1">
+              <ion-icon class="text-success" [md]="'send-sharp'" (click)="movegrouptofinal([{ID:d.ID}])"></ion-icon>
+            </button>
+            <button type="button" class="btn bg-white ml-1" (click)="deletecirculars(d.ID)">
+              <ion-icon class="text-danger" [md]="'trash-sharp'"></ion-icon>
+            </button>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="" *ngIf="grpmes.length>0">
+      <div class="card-body card_body">
+        <button type="button" class="btn btn-primary btn-lg btn-block"
+          (click)="moveFinalgroupAll()">{{'send_aLl_messages' | translate}}</button>
+      </div>
+    </div>
+    <div class="m-3">
+      <tabset>
+        <tab heading="Today">
+          <div class="cardlist" *ngIf="senditems.length>0">
+            <div class="card-header py-1">
+              <div class="row align-items-center">
+                <div class="col">
+                  {{ 'sended_message' | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="card-body card_body border border-primary p-0 bodytable">
+              <table *ngIf="senditems.length" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th style="
+                    width: 40%;
+                ">{{ 'name' | translate }}</th>
+                <th>delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let s of senditems;">
+                    <td style="width: 80%;">{{s.Admission_No}}-{{s.name}}</td>
+                    <td><button type="button" class="btn bg-white ml-1" (click)="deletecirculars1(s.ID)">
+                      <ion-icon class="text-danger" [md]="'trash-sharp'"></ion-icon>
+                    </button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </tab>
+        <tab heading="Last 3 Days">
+          <div class="cardlist" *ngIf="last3days.length>0">
+            <div class="card-header py-1">
+              <div class="row align-items-center">
+                <div class="col">
+                  {{ 'sended_message' | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="card-body card_body border border-primary p-0 bodytable">
+              <table *ngIf="last3days.length" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th style="
+                    width: 40%;
+                ">{{ 'name' | translate }}</th>
+                <th>delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let s of last3days;">
+                    <td style="width: 80%;">{{s.Admission_No}}-{{s.name}}</td>
+                    <td><button type="button" class="btn bg-white ml-1" (click)="deletecirculars1(s.ID)">
+                      <ion-icon class="text-danger" [md]="'trash-sharp'"></ion-icon>
+                    </button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </tab>
+        <tab heading="Search By Date">
+          <form name="form" (ngSubmit)="f.form.valid && onSubmit1()" #f1="ngForm" novalidate
+            class="border border-primary">
+            <div class="row text-center align-items-center">
+              <div class="col-8">
+                <ion-item>
+                  <ion-datetime name="s_date" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"
+                    [(ngModel)]="select_datas1.s_date" #s_date="ngModel" required></ion-datetime>
+                </ion-item>
+              </div>
+              <div class="col-4">
+                <button type="button" (click)="onSubmit1()" class="btn btn-success">Get <ion-icon
+                    [ios]="'arrow-forward-sharp'" [md]="'arrow-forward-sharp'"></ion-icon></button>
+              </div>
+            </div>
+          </form>
+          <div class="cardlist" *ngIf="senditems1.length>0">
+            <div class="card-header py-1">
+              <div class="row align-items-center">
+                <div class="col">
+                  {{ 'sended_message' | translate }}
+                </div>
+              </div>
+            </div>
+            <div class="card-body card_body border border-primary p-0 bodytable">
+              <table *ngIf="senditems1.length" class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th style="
+                    width: 40%;
+                ">{{ 'name' | translate }}</th>
+                <th>delete</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let s of senditems1;">
+                    <td style="width: 80%;">{{s.Admission_No}}-{{s.name}}</td>
+                    <td><button type="button" class="btn bg-white ml-1" (click)="deletecirculars1(s.ID)">
+                      <ion-icon class="text-danger" [md]="'trash-sharp'"></ion-icon>
+                    </button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </tab>
+      </tabset>
+    </div>
+  </div>
+
+</ion-content>
