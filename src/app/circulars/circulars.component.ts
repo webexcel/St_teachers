@@ -6,13 +6,13 @@ import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
-import { AlertController, Platform } from '@ionic/angular';
+import { AlertController, IonModal, Platform } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core/components';
 import { AuthService } from '../service/auth.service';
 import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
 import { TranslateConfigService } from '../service/translate-config.service';
-
 @Component({
   selector: 'app-circulars',
   templateUrl: './circulars.component.html',
@@ -38,6 +38,9 @@ export class CircularsComponent implements OnInit {
   fileName: string | undefined;
   audio!: MediaObject;
   Path: string | undefined;
+  showDatePicker: boolean = false;
+  @ViewChild(IonModal)
+  modal!: IonModal;
   constructor(
     private serfile: FilesService,
     private media: Media,
@@ -481,5 +484,38 @@ export class CircularsComponent implements OnInit {
           console.log(err);
         }
       );
+  }
+  showHideDatePicker() {
+    this.showDatePicker = !this.showDatePicker;
+  }
+
+  formatDate(date: Date = new Date()) {
+    const today = new Date(date);
+    const yyyy = today.getFullYear();
+    let mm = `${today.getMonth() + 1}`; // Months start at 0!
+    let dd = `${today.getDate()}`;
+
+    if (+dd < 10) {
+      dd = '0' + dd;
+    }
+    if (+mm < 10) {
+      mm = '0' + mm;
+    }
+
+    return dd + '/' + mm + '/' + yyyy;
+  }
+
+  cancel_date() {
+    this.modal.dismiss(null, 'cancel');
+  }
+
+  confirm_date() {
+    this.modal.dismiss(null, 'confirm');
+  }
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'cancel') {
+      this.select_datas.s_date = null;
+    }
   }
 }

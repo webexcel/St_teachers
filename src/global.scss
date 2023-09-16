@@ -10,17 +10,176 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "@ionic/angular/css/core.css";
+@import "~@ionic/angular/css/core.css";
 
 /* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
-@import "@ionic/angular/css/structure.css";
-@import "@ionic/angular/css/typography.css";
-@import '@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
-@import "@ionic/angular/css/padding.css";
-@import "@ionic/angular/css/float-elements.css";
-@import "@ionic/angular/css/text-alignment.css";
-@import "@ionic/angular/css/text-transformation.css";
-@import "@ionic/angular/css/flex-utils.css";
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+:root {
+  --ion-color-primary: #00cccc;
+}
+
+$colors: #00cccc !important;
+$filter: invert(21%) sepia(81%) saturate(1905%) hue-rotate(239deg)
+  brightness(93%) contrast(96%);
+
+ion-toolbar {
+  --color: #ffffff;
+  --background: var(--ion-color-primary);
+}
+
+ion-menu-toggle {
+  .selected {
+    --background: #d9fbfb !important;
+  }
+}
+#inbox-list {
+  padding-top: 0% !important;
+}
+
+ion-menu {
+  ion-content {
+    --padding-top: 2% !important;
+  }
+}
+
+@import url(//fonts.googleapis.com/css?family=Montserrat:400:300:500:600);
+app-login {
+  overflow: hidden;
+  font-family: "Montserrat", sans-serif;
+  margin: 0;
+}
+
+.card-header {
+  margin-top: 1.25rem;
+  margin-left: 1.25rem;
+  margin-right: 1.25rem;
+  border-bottom: 0px !important ;
+  margin-bottom: 0px !important;
+}
+.card_body {
+  // padding: 0.25rem;
+
+  .card-header {
+    padding: 0rem;
+  }
+
+  .card-body {
+    // padding: 0.25rem!important;
+  }
+  img {
+    width: 60px;
+  }
+  .panel-heading {
+    background: $colors;
+  }
+  .btn-link {
+    color: #fff;
+  }
+}
+
+.icon_menu {
+  color: var(--ion-color-primary) !important;
+}
+.icon-img {
+  width: 30px;
+  //filter: $filter;
+}
+ion-content {
+  --background: #fff;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 180px;
+  //margin-right: 20px;
+}
+.btn-primary,
+.table .thead-dark th {
+  background-color: $colors;
+  border-color: #fff !important;
+}
+
+.header-date,
+.header-select-date,
+.weekdays-container,
+.card-header {
+  background: $colors;
+  color: #fff !important;
+}
+
+.ngx-loading-text {
+  width: 100% !important;
+  text-align: center !important;
+}
+
+#outerContainer .hiddenSmallView {
+  display: inline !important;
+  svg {
+    display: inline !important;
+    path {
+      display: inline !important;
+    }
+  }
+}
+
+.table {
+  margin-bottom: 0 !important;
+}
+.panel-heading {
+  margin: 0 !important;
+}
+.panel-body {
+  padding: 0 !important;
+}
+
+.border-primary {
+  border-color: $colors;
+}
+
+.cardlist {
+  font-size: 90% !important;
+  .card_body {
+    margin-top: 0px !important ;
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.25rem !important;
+  }
+  .bodytable {
+    padding: 0 !important;
+  }
+}
+
+.logo_img {
+  width: 30px !important;
+}
+
+.multi_lines_text {
+  white-space: pre-line;
+  // line-height: 8px;
+}
+
+audio {
+  width: 100%;
+}
+
+audio::-webkit-media-controls-panel {
+  background-color: gray;
+  color: #fff;
+}
+.text-center {
+  text-align: center;
+}
+.align-items-center {
+  align-items: center;
+}
