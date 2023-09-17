@@ -22,11 +22,15 @@
   }
   .selected-date {
     color: #000 !important;
-    float: right !important;
+    background-color: #fff;
   }
 
   ion-card-content {
     border-radius: 0px 0px 10px 10px;
+  }
+
+  .text-success {
+    margin-left: 4px;
   }
 
   .dm {
@@ -59,7 +63,9 @@
     height: 10vh;
     margin-bottom: 3%;
     border: 1px solid rgb(230, 227, 227);
-    border-radius: 5%;
+    border-radius: 4px;
+    --padding-start: 8px;
+    --padding-end: 8px;
   }
   hr {
     margin-top: 1rem;

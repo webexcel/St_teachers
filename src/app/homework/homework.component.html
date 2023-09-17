@@ -199,7 +199,8 @@
               <div
                 class="col-10"
                 *ngIf="
-                  select_datas.filename.length > 0 && select_datas.type != 'mp3'
+                  select_datas.filename.length > 0 &&
+                  select_datas.type !== 'mp3'
                 "
               >
                 {{ select_datas.filename }}
@@ -207,7 +208,8 @@
               <div
                 class="col-10"
                 *ngIf="
-                  select_datas.filename.length > 0 && select_datas.type == 'mp3'
+                  select_datas.filename.length > 0 &&
+                  select_datas.type === 'mp3'
                 "
               >
                 <audio
@@ -255,7 +257,7 @@
         <accordion-group
           heading="{{ l }}"
           *ngFor="let l of recentdates; let i = index"
-          [isOpen]="i == 0"
+          [isOpen]="i === 0"
         >
           <table class="table table-bordered">
             <tbody *ngFor="let d of recentdata1[l]">
@@ -408,7 +410,7 @@
               <accordion-group
                 heading="{{ l }}"
                 *ngFor="let l of getwhdates; let i = index"
-                [isOpen]="i == 0"
+                [isOpen]="i === 0"
               >
                 <table class="table table-bordered">
                   <tbody *ngFor="let d of gethw[l]">
@@ -494,7 +496,7 @@
               <accordion-group
                 heading="{{ l }}"
                 *ngFor="let l of last3daysdates; let i = index"
-                [isOpen]="i == 0"
+                [isOpen]="i === 0"
               >
                 <table class="table table-bordered">
                   <tbody *ngFor="let d of last3days[l]">
@@ -615,7 +617,7 @@
               <accordion-group
                 heading="{{ l }}"
                 *ngFor="let l of senditems1dates; let i = index"
-                [isOpen]="i == 0"
+                [isOpen]="i === 0"
               >
                 <table class="table table-bordered">
                   <tbody *ngFor="let d of senditems1[l]">

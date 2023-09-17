@@ -106,12 +106,14 @@
         ></ion-datetime>
       </ion-item> -->
 
-      <ion-item>
-        <ion-label id="open-modal"
-          >{{ "date" | translate }}
-          <ion-label class="selected-date" *ngIf="select_datas.s_date">
-            {{ formatDate(select_datas.s_date) }}
-          </ion-label>
+      <ion-item lines="full">
+        <ion-label>{{ "date" | translate }} </ion-label>
+        <ion-label
+          id="open-modal"
+          class="selected-date"
+          *ngIf="select_datas.s_date"
+        >
+          {{ formatDate(select_datas.s_date) }}
         </ion-label>
         <ion-modal
           trigger="open-modal"
@@ -154,10 +156,10 @@
         </ion-modal>
       </ion-item>
 
-      <ion-item class="input-group">
-        <ion-row class="w-100">
-          <ion-col [size]="12">
-            <ion-label class="w-100" style="max-width: none">{{
+      <ion-item class="input-group" lines="none">
+        <ion-row style="width: 100%">
+          <ion-col>
+            <ion-label style="min-width: 100%">{{
               "message" | translate
             }}</ion-label>
           </ion-col>
@@ -166,8 +168,8 @@
       <span *ngIf="f.submitted && message.invalid" class="text-danger"
         >Enter Message</span
       >
-      <ion-item
-        ><ion-row>
+      <ion-item lines="full">
+        <ion-row style="width: 100%">
           <ion-col [size]="12">
             <ion-textarea
               class="form-control textarea"
@@ -184,64 +186,69 @@
         </ion-row>
       </ion-item>
 
-      <ion-grid class="align-items-center text-center">
+      <!-- <ion-grid class="align-items-center text-center">
         <ion-row>
-          <ion-col size="6" *ngIf="select_datas.filename.length == 0">
-            <ion-item>
-              <img
-                alt=""
-                style="width: 30px"
-                src="../../assets/imgs/speakers/attachment.png"
-                (click)="open()"
-              />
-            </ion-item>
+          <ion-col
+            size="6"
+            *ngIf="select_datas.filename.length === 0"
+            style="padding: 0 !important; margin: 0 !important"
+          >
+            <img
+              alt=""
+              style="width: 30px"
+              src="../../assets/imgs/speakers/attachment.png"
+              (click)="open()"
+            />
           </ion-col>
-          <ion-col size="6" *ngIf="select_datas.filename.length == 0">
-            <ion-item>
-              <img
-                alt=""
-                style="
-                  width: 30px;
-                  filter: invert(58%) sepia(16%) saturate(2009%)
-                    hue-rotate(81deg) brightness(88%) contrast(86%);
-                "
-                src="../../assets/imgs/speakers/microphone.png"
-                (click)="startRecord()"
-                *ngIf="!recording"
-              />
-              <span
-                class="text-success"
-                *ngIf="!recording"
-                (click)="startRecord()"
-              >
-                Start
-              </span>
-              <img
-                alt=""
-                style="
-                  width: 30px;
-                  filter: invert(13%) sepia(100%) saturate(6859%)
-                    hue-rotate(358deg) brightness(119%) contrast(120%);
-                "
-                src="../../assets/imgs/speakers/microphone-off.png"
-                (click)="stopRecord()"
-                *ngIf="recording"
-              />
-              <span
-                style="color: #ff0000"
-                *ngIf="recording"
-                (click)="stopRecord()"
-              >
-                Stop
-              </span>
-            </ion-item>
+          <ion-col
+            size="6"
+            *ngIf="select_datas.filename.length === 0"
+            style="justify-content: center; align-items: center; display: flex"
+          >
+            <img
+              alt=""
+              style="
+                width: 30px;
+                filter: invert(58%) sepia(16%) saturate(2009%) hue-rotate(81deg)
+                  brightness(88%) contrast(86%);
+              "
+              src="../../assets/imgs/speakers/microphone.png"
+              (click)="startRecord()"
+              *ngIf="!recording"
+            />
+            <span
+              class="text-success"
+              *ngIf="!recording"
+              (click)="startRecord()"
+            >
+              Start
+            </span>
+            <img
+              alt=""
+              style="
+                width: 30px;
+                filter: invert(13%) sepia(100%) saturate(6859%)
+                  hue-rotate(358deg) brightness(119%) contrast(120%);
+              "
+              src="../../assets/imgs/speakers/microphone-off.png"
+              (click)="stopRecord()"
+              *ngIf="recording"
+            />
+            <span
+              style="color: #ff0000"
+              *ngIf="recording"
+              (click)="stopRecord()"
+            >
+              Stop
+            </span>
           </ion-col>
         </ion-row>
+
         <ion-row>
           <ion-col
             size="6"
             *ngIf="
-              select_datas.filename.length > 0 && select_datas.type != 'mp3'
+              select_datas.filename.length > 0 && select_datas.type !== 'mp3'
             "
           >
             {{ select_datas.filename }}
@@ -249,7 +256,7 @@
           <ion-col
             size="10"
             *ngIf="
-              select_datas.filename.length > 0 && select_datas.type == 'mp3'
+              select_datas.filename.length > 0 && select_datas.type === 'mp3'
             "
           >
             <audio
@@ -276,7 +283,90 @@
             <hr class="bg-info" />
           </ion-col>
         </ion-row>
-      </ion-grid>
+      </ion-grid> -->
+
+      <div class="row w-100 align-items-center text-center pt-3 m-0">
+        <div class="col-6" *ngIf="select_datas.filename.length === 0">
+          <img
+            alt=""
+            style="width: 30px"
+            src="../../assets/imgs/speakers/attachment.png"
+            (click)="open()"
+          />
+        </div>
+        <div class="col-6" *ngIf="select_datas.filename.length === 0">
+          <img
+            alt=""
+            style="
+              width: 30px;
+              filter: invert(58%) sepia(16%) saturate(2009%) hue-rotate(81deg)
+                brightness(88%) contrast(86%);
+            "
+            src="../../assets/imgs/speakers/microphone.png"
+            (click)="startRecord()"
+            *ngIf="!recording"
+          />
+          <span class="text-success" *ngIf="!recording" (click)="startRecord()">
+            Start</span
+          >
+          <img
+            alt=""
+            style="
+              width: 30px;
+              filter: invert(13%) sepia(100%) saturate(6859%) hue-rotate(358deg)
+                brightness(119%) contrast(120%);
+            "
+            src="../../assets/imgs/speakers/microphone-off.png"
+            (click)="stopRecord()"
+            *ngIf="recording"
+          />
+          <span style="color: #ff0000" *ngIf="recording" (click)="stopRecord()">
+            Stop</span
+          >
+        </div>
+        <!-- <div class="col-12" *ngIf="select_datas.filename.length>0">
+          <hr class="bg-info">f
+        </div> -->
+        <div
+          class="col-10"
+          *ngIf="
+            select_datas.filename.length > 0 && select_datas.type !== 'mp3'
+          "
+        >
+          {{ select_datas.filename }}
+        </div>
+        <div
+          class="col-10"
+          *ngIf="
+            select_datas.filename.length > 0 && select_datas.type === 'mp3'
+          "
+        >
+          <audio
+            controls
+            controlsList="noplaybackrate nodownload"
+            class="w-100"
+          >
+            <source [src]="select_datas.image" type="audio/mpeg" />
+          </audio>
+        </div>
+        <div class="col-2" *ngIf="select_datas.filename.length > 0">
+          <button type="button" class="btn btn-danger" (click)="deletefile()">
+            <ion-icon [ios]="'trash-sharp'" [md]="'trash-sharp'"></ion-icon>
+          </button>
+        </div>
+        <!-- <div class="col-12">
+          <hr class="bg-info">
+        </div>
+        <div class="col-12">
+          <button type="button" class="btn btn-danger" (click)="deletefile()"><ion-icon [ios]="'trash-sharp'" [md]="'trash-sharp'"  ></ion-icon> Delete</button>
+        </div> -->
+        <div class="col-12 text-danger" *ngIf="error">
+          only allow jpg, jpeg, png, pdf, mp3, xls, xlsx.
+        </div>
+        <div class="col-12 p-0">
+          <hr class="bg-info" />
+        </div>
+      </div>
 
       <!-- <ion-item>
             <button  type="button" class="btn btn-primary btn-block" (click)="stopRecord()" *ngIf="recording"><ion-icon [ios]="'mic-off-sharp'" [md]="'mic-off-sharp'" ></ion-icon>&nbsp;&nbsp;Stop Record</button>
@@ -287,9 +377,9 @@
             <source [src]="select_datas.image" type="audio/mpeg"></audio>
           </ion-item> -->
       <div class="p-2 text-right">
-        <ion-button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary">
           {{ "save" | translate }}
-        </ion-button>
+        </button>
       </div>
     </form>
     <!-- </div>
