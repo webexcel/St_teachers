@@ -120,6 +120,7 @@
           (willDismiss)="onWillDismiss($event, 'first')"
           [initialBreakpoint]="0.5"
           [breakpoints]="[0, 0.25, 0.5, 0.75]"
+          animated="true"
         >
           <ng-template>
             <ion-header>
@@ -716,30 +717,32 @@
 
                 <ion-item lines="full">
                   <ion-label
-                    id="open-modal"
+                    id="open-modal1"
                     class="selected-date"
                     *ngIf="select_datas1.s_date"
+                    (click)="toggleDateSelection()"
                   >
                     {{ formatDate(select_datas1.s_date) }}
                   </ion-label>
                   <ion-modal
-                    trigger="open-modal"
+                    [isOpen]="isPickerOpen"
                     (willDismiss)="onWillDismiss($event, 'second')"
                     [initialBreakpoint]="0.5"
                     [breakpoints]="[0, 0.25, 0.5, 0.75]"
+                    animated="true"
                   >
                     <ng-template>
                       <ion-header>
                         <ion-toolbar>
                           <ion-buttons slot="start">
-                            <ion-button (click)="cancel_date()">{{
+                            <ion-button (click)="toggleDateSelection()">{{
                               "cancel" | translate
                             }}</ion-button>
                           </ion-buttons>
                           <ion-title>{{ "select_date" | translate }}</ion-title>
                           <ion-buttons slot="end">
                             <ion-button
-                              (click)="confirm_date()"
+                              (click)="toggleDateSelection()"
                               [strong]="true"
                               >{{ "confirm" | translate }}</ion-button
                             >

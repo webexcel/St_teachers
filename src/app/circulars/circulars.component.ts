@@ -41,6 +41,7 @@ export class CircularsComponent implements OnInit {
   showDatePicker: boolean = false;
   @ViewChild(IonModal)
   modal!: IonModal;
+  isPickerOpen: boolean = false;
   constructor(
     private serfile: FilesService,
     private media: Media,
@@ -506,12 +507,16 @@ export class CircularsComponent implements OnInit {
   }
 
   cancel_date() {
-    this.modal.dismiss(null, 'cancel');
+    this.modal.dismiss(null, 'confirm');
   }
 
   confirm_date() {
     console.log('confirm');
     this.modal.dismiss(null, 'confirm');
+  }
+
+  toggleDateSelection() {
+    this.isPickerOpen = !this.isPickerOpen;
   }
   onWillDismiss(event: Event, type: any) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
