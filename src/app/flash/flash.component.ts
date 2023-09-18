@@ -5,7 +5,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { AlertController, Platform } from '@ionic/angular';
+import { AlertController, IonModal, Platform } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core/components';
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
@@ -22,7 +23,10 @@ export class FlashComponent implements OnInit {
   details: any = {};
   error: any = false;
   flashlist: any = [];
-
+  showDatePicker: boolean = false;
+  @ViewChild(IonModal)
+  modal!: IonModal;
+  isPickerOpen: boolean = false;
   constructor(
     public alertCtrl: AlertController,
     private sanitizer: DomSanitizer,
@@ -176,5 +180,47 @@ export class FlashComponent implements OnInit {
       ],
     });
     await alert.present();
+  }
+  showHideDatePicker() {
+    this.showDatePicker = !this.showDatePicker;
+  }
+
+  formatDate(date: Date = new Date()) {
+    const today = new Date(date);
+    const yyyy = today.getFullYear();
+    let mm = `${today.getMonth() + 1}`; // Months start at 0!
+    let dd = `${today.getDate()}`;
+
+    if (+dd < 10) {
+      dd = '0' + dd;
+    }
+    if (+mm < 10) {
+      mm = '0' + mm;
+    }
+
+    return dd + '/' + mm + '/' + yyyy;
+  }
+
+  cancel_date() {
+    this.modal.dismiss(null, 'confirm');
+  }
+
+  confirm_date() {
+    console.log('confirm');
+    this.modal.dismiss(null, 'confirm');
+  }
+
+  toggleDateSelection() {
+    this.isPickerOpen = !this.isPickerOpen;
+  }
+  onWillDismiss(event: Event, type: any) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'cancel') {
+      if (type == 'first') {
+        this.details.startdate = null;
+      } else {
+        this.details.enddate = null;
+      }
+    }
   }
 }

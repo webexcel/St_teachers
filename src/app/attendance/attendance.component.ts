@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, Platform } from '@ionic/angular';
+import { AlertController, IonModal, Platform } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core/components';
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
@@ -27,7 +28,10 @@ export class AttendanceComponent implements OnInit {
   send_attendance: any;
   send: any;
   delete: any;
-
+  showDatePicker: boolean = false;
+  @ViewChild(IonModal)
+  modal!: IonModal;
+  isPickerOpen: boolean = false;
   constructor(
     public alertCtrl: AlertController,
     private platform: Platform,
@@ -316,5 +320,47 @@ export class AttendanceComponent implements OnInit {
           console.log(err);
         }
       );
+  }
+  showHideDatePicker() {
+    this.showDatePicker = !this.showDatePicker;
+  }
+
+  formatDate(date: Date = new Date()) {
+    const today = new Date(date);
+    const yyyy = today.getFullYear();
+    let mm = `${today.getMonth() + 1}`; // Months start at 0!
+    let dd = `${today.getDate()}`;
+
+    if (+dd < 10) {
+      dd = '0' + dd;
+    }
+    if (+mm < 10) {
+      mm = '0' + mm;
+    }
+
+    return dd + '/' + mm + '/' + yyyy;
+  }
+
+  cancel_date() {
+    this.modal.dismiss(null, 'confirm');
+  }
+
+  confirm_date() {
+    console.log('confirm');
+    this.modal.dismiss(null, 'confirm');
+  }
+
+  toggleDateSelection() {
+    this.isPickerOpen = !this.isPickerOpen;
+  }
+  onWillDismiss(event: Event, type: any) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'cancel') {
+      if (type == 'first') {
+        this.select_datas.s_date = null;
+      } else {
+        this.select_datas1.s_date = null;
+      }
+    }
   }
 }

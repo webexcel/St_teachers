@@ -124,7 +124,7 @@
   <!-- <div class=" ">
     <div class="">
       <div class="row dashboard-menu align-items-center">
-        <div class="col-4 mb-1" *ngFor="let p of appPages; let i = index" [class.lasticon]="(i % 2 === 0 && i!=0 && i%3 !== 0 && i!=4 && i!=10) || i==5 || i==11" [class.fisticon]="i % 3 === 0">
+        <div class="col-4 mb-1" *ngFor="let p of appPages; let i = index" [class.lasticon]="(i % 2 == 0 && i!=0 && i%3 != 0 && i!=4 && i!=10) || i==5 || i==11" [class.fisticon]="i % 3 == 0">
           <div class=" border-0"  (click)="go(p.url)">
             <div class="text-center">
               <div class="row">
@@ -146,8 +146,8 @@
     <div class="">
       <div class="row dashboard-menu align-items-center ">
         <div class="col-4  border" *ngFor="let p of appPages; let i = index"
-          [class.lasticon]="(i % 2 === 0 && i!=0 && i%3 !== 0 && i!=4 && i!=10) || i==5 || i==11"
-          [class.fisticon]="i % 3 === 0" [class.d-none]="checkview(p.admin)">
+          [class.lasticon]="(i % 2 == 0 && i!=0 && i%3 != 0 && i!=4 && i!=10) || i==5 || i==11"
+          [class.fisticon]="i % 3 == 0" [class.d-none]="checkview(p.admin)">
           <div class=" border-0" (click)="go(p.url)">
             <div class="text-center">
               <div class="row align-items-center">
@@ -186,7 +186,7 @@
         class="card-img-top"
         src="{{ smsData.event_image }}"
         alt=""
-        *ngIf="checkimage(smsData.event_image) && smsData.base64.length === 0"
+        *ngIf="checkimage(smsData.event_image) && smsData.base64.length == 0"
       />
       <div *ngIf="checkmp3(smsData.event_image)">
         <audio controls controlsList="noplaybackrate nodownload">
@@ -198,7 +198,7 @@
           <source
             src="{{ smsData.event_image }}"
             type="audio/mpeg"
-            *ngIf="smsData.base64.length === 0"
+            *ngIf="smsData.base64.length == 0"
           />
         </audio>
       </div>
@@ -282,7 +282,7 @@
     <img
       [src]="flashData[flashindex].event_image"
       alt=""
-      [class.d-none]="flashData[flashindex].event_image.length === 0"
+      [class.d-none]="flashData[flashindex].event_image.length == 0"
     />
     <p class="text-center multi_lines_text">
       {{ flashData[flashindex].Discription }}

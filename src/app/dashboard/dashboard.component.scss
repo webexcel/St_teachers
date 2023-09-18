@@ -177,10 +177,6 @@ ion-content {
   line-height: 60px;
   width: 65px;
   height: 65px;
-  margin: auto !important;
+  margin: 0 auto;
   background: url("../../assets/imgs/dashboard/round.png") no-repeat !important;
-}
-
-.icon-img {
-  margin-top: 16px !important;
 }

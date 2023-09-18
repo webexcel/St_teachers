@@ -1,12 +1,11 @@
-
-
-.attendance{
-
-    .card_body {
-        padding-top: 0px !important;
-      }
-       
-          
-    
-
+.attendance {
+  .card_body {
+    padding-top: 0px !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
+  .card-header {
+    padding: 12px !important;
+    padding-left: 20px !important;
+  }
 }
