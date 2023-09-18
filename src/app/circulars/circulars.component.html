@@ -117,7 +117,7 @@
         </ion-label>
         <ion-modal
           trigger="open-modal"
-          (willDismiss)="onWillDismiss($event)"
+          (willDismiss)="onWillDismiss($event, 'first')"
           [initialBreakpoint]="0.5"
           [breakpoints]="[0, 0.25, 0.5, 0.75]"
         >
@@ -703,7 +703,7 @@
           >
             <div class="row text-center align-items-center">
               <div class="col-8">
-                <ion-item>
+                <!-- <ion-item>
                   <ion-datetime
                     name="s_date"
                     displayFormat="DD/MM/YYYY"
@@ -712,6 +712,57 @@
                     #s_date="ngModel"
                     required
                   ></ion-datetime>
+                </ion-item> -->
+
+                <ion-item lines="full">
+                  <ion-label
+                    id="open-modal"
+                    class="selected-date"
+                    *ngIf="select_datas1.s_date"
+                  >
+                    {{ formatDate(select_datas1.s_date) }}
+                  </ion-label>
+                  <ion-modal
+                    trigger="open-modal"
+                    (willDismiss)="onWillDismiss($event, 'second')"
+                    [initialBreakpoint]="0.5"
+                    [breakpoints]="[0, 0.25, 0.5, 0.75]"
+                  >
+                    <ng-template>
+                      <ion-header>
+                        <ion-toolbar>
+                          <ion-buttons slot="start">
+                            <ion-button (click)="cancel_date()">{{
+                              "cancel" | translate
+                            }}</ion-button>
+                          </ion-buttons>
+                          <ion-title>{{ "select_date" | translate }}</ion-title>
+                          <ion-buttons slot="end">
+                            <ion-button
+                              (click)="confirm_date()"
+                              [strong]="true"
+                              >{{ "confirm" | translate }}</ion-button
+                            >
+                          </ion-buttons>
+                        </ion-toolbar>
+                      </ion-header>
+                      <ion-content class="ion-padding">
+                        <ion-datetime
+                          name="dob"
+                          displayFormat="DD/MM/YYYY"
+                          pickerFormat="DD/MM/YYYY"
+                          [(ngModel)]="select_datas1.s_date"
+                          #dob="ngModel"
+                          presentation="date"
+                          mode="md"
+                          #datetime
+                          (ionChange)="showHideDatePicker()"
+                          required
+                        >
+                        </ion-datetime>
+                      </ion-content>
+                    </ng-template>
+                  </ion-modal>
                 </ion-item>
               </div>
               <div class="col-4">

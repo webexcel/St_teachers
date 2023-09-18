@@ -510,12 +510,17 @@ export class CircularsComponent implements OnInit {
   }
 
   confirm_date() {
+    console.log('confirm');
     this.modal.dismiss(null, 'confirm');
   }
-  onWillDismiss(event: Event) {
+  onWillDismiss(event: Event, type: any) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'cancel') {
-      this.select_datas.s_date = null;
+      if (type == 'first') {
+        this.select_datas.s_date = null;
+      } else {
+        this.select_datas1.s_date = null;
+      }
     }
   }
 }
