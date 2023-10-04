@@ -1,0 +1,8 @@
+{
+	"appId": "com.parentalert.in.schoolapp1",
+	"appName": "demo-teachers",
+	"webDir": "www",
+	"server": {
+		"androidScheme": "https"
+	}
+}

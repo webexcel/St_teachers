@@ -391,17 +391,20 @@
               </div>
             </div>
             <div
-              class="card-body card_body border border-primary p-0 bodytable"
+              class="card-body card_body border border-primary p-0 bodytable table-responsive"
             >
               <table *ngIf="senditems.length" class="table table-bordered">
                 <thead>
                   <tr>
                     <th style="width: 40%">{{ "name" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
+                    <th>delete</th>
+                    <th>Edit</th>
+                    <th>View</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let s of senditems">
+                  <tr *ngFor="let s of senditems; let i = index">
                     <td>{{ s.Group_name }}</td>
                     <td class="multi_lines_text">
                       {{ s.message }}
@@ -445,6 +448,41 @@
                         </audio>
                       </div>
                     </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn bg-white ml-1"
+                        (click)="deletecirculars1(s.ID)"
+                      >
+                        <ion-icon
+                          class="text-danger"
+                          [md]="'trash-sharp'"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        class="btn bg-white ml-1"
+                        (click)="toggleMessage(s.ID, s.message, i)"
+                      >
+                        <ion-icon
+                          class="text-black"
+                          [md]="'create-outline'"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn bg-white ml-1"
+                        (click)="deletecirculars1(s.ID)"
+                      >
+                        <ion-icon
+                          class="text-danger"
+                          [md]="'trash-sharp'"
+                        ></ion-icon>
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -461,17 +499,20 @@
               </div>
             </div>
             <div
-              class="card-body card_body border border-primary p-0 bodytable"
+              class="card-body card_body border border-primary p-0 bodytable table-responsive"
             >
               <table *ngIf="last3days.length" class="table table-bordered">
                 <thead>
                   <tr>
                     <th style="width: 40%">{{ "name" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
+                    <th>delete</th>
+                    <th>Edit</th>
+                    <th>View</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let s of last3days">
+                  <tr *ngFor="let s of last3days; let i = index">
                     <td>{{ s.Group_name }}</td>
                     <td class="multi_lines_text">
                       {{ s.message }}
@@ -514,6 +555,41 @@
                           <source src="{{ s.event_image }}" type="audio/mpeg" />
                         </audio>
                       </div>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn bg-white ml-1"
+                        (click)="deletecirculars1(s.ID)"
+                      >
+                        <ion-icon
+                          class="text-danger"
+                          [md]="'trash-sharp'"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        class="btn bg-white ml-1"
+                        (click)="toggleMessage(s.ID, s.message, i)"
+                      >
+                        <ion-icon
+                          class="text-black"
+                          [md]="'create-outline'"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn bg-white ml-1"
+                        (click)="deletecirculars1(s.ID)"
+                      >
+                        <ion-icon
+                          class="text-danger"
+                          [md]="'trash-sharp'"
+                        ></ion-icon>
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -619,17 +695,20 @@
               </div>
             </div>
             <div
-              class="card-body card_body border border-primary p-0 bodytable"
+              class="card-body card_body border border-primary p-0 bodytable table-responsive"
             >
               <table *ngIf="senditems1.length" class="table table-bordered">
                 <thead>
                   <tr>
                     <th style="width: 40%">{{ "name" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
+                    <th>delete</th>
+                    <th>Edit</th>
+                    <th>View</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let s of senditems1">
+                  <tr *ngFor="let s of senditems1; let i = index">
                     <td>{{ s.Group_name }}</td>
                     <td class="multi_lines_text">
                       {{ s.message }}
@@ -672,6 +751,41 @@
                           <source src="{{ s.event_image }}" type="audio/mpeg" />
                         </audio>
                       </div>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn bg-white ml-1"
+                        (click)="deletecirculars1(s.ID)"
+                      >
+                        <ion-icon
+                          class="text-danger"
+                          [md]="'trash-sharp'"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        class="btn bg-white ml-1"
+                        (click)="toggleMessage(s.ID, s.message, i)"
+                      >
+                        <ion-icon
+                          class="text-black"
+                          [md]="'create-outline'"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn bg-white ml-1"
+                        (click)="deletecirculars1(s.ID)"
+                      >
+                        <ion-icon
+                          class="text-danger"
+                          [md]="'trash-sharp'"
+                        ></ion-icon>
+                      </button>
                     </td>
                   </tr>
                 </tbody>

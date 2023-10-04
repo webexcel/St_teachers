@@ -1,0 +1,235 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="medium" (click)="cancel()">Cancel</ion-button>
+    </ion-buttons>
+    <ion-title>Add Report</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirm()" [strong]="true">Confirm</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <form (ngSubmit)="submitForm()" class="custom-form">
+    <div class="custom-input" lines="full">
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Date"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.date"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Day"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.day"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full"
+        ><ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Arrival Time"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.arrival"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full"
+        ><ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Period 1"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.period1"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea
+      ></ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Period 2"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.period2"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea
+      ></ion-item>
+
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Period 3"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.period3"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Period 4"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.period4"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Period 5"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.period5"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Period 6"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.period6"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Period 7"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.period7"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Period 8"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.period8"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Period 9"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.period9"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Period 10"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.period10"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Dispersal Report"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.dispersal"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="After Dispersal workdone"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.after_dispersal"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Parents Met"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.parent_met"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Students Discipline Issues"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.stu_dis_issues"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Chronic Latecomers"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.chronic_late"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-textarea
+          class="custom-textarea"
+          ion-input
+          label="Chronic Defaulters"
+          labelPlacement="floating"
+          placeholder="Enter text"
+          [(ngModel)]="formData.chronic_default"
+          [ngModelOptions]="{ standalone: true }"
+        ></ion-textarea>
+      </ion-item>
+    </div>
+
+    <ion-button
+      type="submit"
+      expand="full"
+      class="custom-button"
+      (click)="confirm()"
+      >Submit</ion-button
+    >
+  </form>
+</ion-content>

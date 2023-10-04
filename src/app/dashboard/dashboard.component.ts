@@ -136,7 +136,7 @@ export class DashboardComponent implements OnInit {
     this.authservice.post('getteacherflashmessage', {}).subscribe(
       (result: any) => {
         flashmes = result;
-
+        console.log('result', flashmes);
         if (flashmes.status) {
           this.disabledValue = false;
           this.flashData = flashmes.data;

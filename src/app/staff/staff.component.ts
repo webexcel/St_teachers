@@ -44,6 +44,10 @@ export class StaffComponent implements OnInit {
   @ViewChild(IonModal)
   modal!: IonModal;
   isPickerOpen: boolean = false;
+  isEditMessageOpen: boolean = false;
+  messageText: any;
+  messageId: any;
+  index: any;
   constructor(
     private serfile: FilesService,
     private media: Media,
@@ -241,7 +245,7 @@ export class StaffComponent implements OnInit {
           handler: (data) => {
             this.loading.present();
             this.authservice
-              .post('getdeletepersonalmessagelist', { ID: ID })
+              .post('getdeletestaffmessagelist', { ID: ID })
               .subscribe(
                 (res) => {
                   this.loading.dismissAll();
@@ -536,5 +540,71 @@ export class StaffComponent implements OnInit {
         this.select_datas1.s_date = null;
       }
     }
+  }
+  toggleMessage(id: any, message: any, i: any) {
+    console.log('toggle', id);
+    if (id != 'cancel' && id != 'confirm') {
+      this.index = i;
+      this.messageId = id;
+      this.messageText = message;
+    }
+    if (id == 'confirm') {
+      console.log('message id', this.index);
+      this.last3days[this.index].message = this.messageText;
+      this.editMessage(this.messageId, this.messageText);
+    }
+    this.isEditMessageOpen = !this.isEditMessageOpen;
+  }
+  editMessage(id: any, message: any) {
+    this.loading.present();
+    this.authservice
+      .post('editMessage', { messageId: id, messageText: message })
+      .subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.getlist();
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
+          console.log(err);
+        }
+      );
+  }
+
+  async deletecirculars1(ID: any) {
+    let alert = await this.alertCtrl.create({
+      header: this.delete_personalized,
+      //subTitle: this.name,
+      //message:message,
+      buttons: [
+        {
+          text: this.cancel,
+          role: 'cancel',
+          handler: (data) => {
+            console.log('Cancel clicked');
+          },
+        },
+        {
+          text: this.delete,
+          handler: (data) => {
+            this.loading.present();
+            this.authservice
+              .post('senddeletestaffmessagelist', { ID: ID })
+              .subscribe(
+                (res) => {
+                  this.loading.dismissAll();
+                  this.getlist();
+                },
+                (err) => {
+                  this.loading.dismissAll();
+                }
+              );
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 }

@@ -42,6 +42,10 @@ export class CircularsComponent implements OnInit {
   @ViewChild(IonModal)
   modal!: IonModal;
   isPickerOpen: boolean = false;
+  isEditMessageOpen: boolean = false;
+  messageText: any;
+  messageId: any;
+  index: any;
   constructor(
     private serfile: FilesService,
     private media: Media,
@@ -518,6 +522,20 @@ export class CircularsComponent implements OnInit {
   toggleDateSelection() {
     this.isPickerOpen = !this.isPickerOpen;
   }
+  toggleMessage(id: any, message: any, i: any) {
+    console.log('toggle', id);
+    if (id != 'cancel' && id != 'confirm') {
+      this.index = i;
+      this.messageId = id;
+      this.messageText = message;
+    }
+    if (id == 'confirm') {
+      console.log('message id', this.index);
+      this.last3days[this.index].message = this.messageText;
+      this.editMessage(this.messageId, this.messageText);
+    }
+    this.isEditMessageOpen = !this.isEditMessageOpen;
+  }
   onWillDismiss(event: Event, type: any) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'cancel') {
@@ -527,5 +545,22 @@ export class CircularsComponent implements OnInit {
         this.select_datas1.s_date = null;
       }
     }
+  }
+  editMessage(id: any, message: any) {
+    this.loading.present();
+    this.authservice
+      .post('editMessage', { messageId: id, messageText: message })
+      .subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.getgroupMessage();
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
+          console.log(err);
+        }
+      );
   }
 }

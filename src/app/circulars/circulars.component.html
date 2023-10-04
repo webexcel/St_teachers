@@ -494,7 +494,7 @@
               </div>
             </div>
             <div
-              class="card-body card_body border border-primary p-0 bodytable"
+              class="card-body card_body border border-primary p-0 bodytable table-responsive"
             >
               <table *ngIf="senditems.length" class="table table-bordered">
                 <thead>
@@ -502,10 +502,12 @@
                     <th style="width: 15%">{{ "class" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
                     <th>delete</th>
+                    <th>Edit</th>
+                    <th>View</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let s of senditems">
+                  <tr *ngFor="let s of senditems; let i = index">
                     <td class="text-center">{{ s.Group_name }}</td>
                     <td class="multi_lines_text">
                       {{ s.message }}
@@ -583,6 +585,29 @@
                         ></ion-icon>
                       </button>
                     </td>
+                    <td>
+                      <button
+                        class="btn bg-white ml-1"
+                        (click)="toggleMessage(s.ID, s.message, i)"
+                      >
+                        <ion-icon
+                          class="text-black"
+                          [md]="'create-outline'"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn bg-white ml-1"
+                        (click)="deletecirculars1(s.ID)"
+                      >
+                        <ion-icon
+                          class="text-danger"
+                          [md]="'trash-sharp'"
+                        ></ion-icon>
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -599,7 +624,7 @@
               </div>
             </div>
             <div
-              class="card-body card_body border border-primary p-0 bodytable"
+              class="card-body card_body border border-primary p-0 bodytable table-responsive"
             >
               <table *ngIf="last3days.length" class="table table-bordered">
                 <thead>
@@ -607,10 +632,12 @@
                     <th style="width: 15%">{{ "class" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
                     <th>delete</th>
+                    <th>Edit</th>
+                    <th>View</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let s of last3days">
+                  <tr *ngFor="let s of last3days; let i = index">
                     <td class="text-center">{{ s.Group_name }}</td>
                     <td class="multi_lines_text">
                       {{ s.message }}
@@ -685,6 +712,29 @@
                         <ion-icon
                           class="text-danger"
                           [md]="'trash-sharp'"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        class="btn bg-white ml-1"
+                        (click)="toggleMessage(s.ID, s.message, i)"
+                      >
+                        <ion-icon
+                          class="text-black"
+                          [md]="'create-outline'"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn bg-white ml-1"
+                        (click)="deletecirculars1(s.ID)"
+                      >
+                        <ion-icon
+                          class="text-blue"
+                          [md]="'eye-outline'"
                         ></ion-icon>
                       </button>
                     </td>
@@ -792,7 +842,7 @@
               </div>
             </div>
             <div
-              class="card-body card_body border border-primary p-0 bodytable"
+              class="card-body card_body border border-primary p-0 bodytable table-responsive"
             >
               <table *ngIf="senditems1.length" class="table table-bordered">
                 <thead>
@@ -800,10 +850,12 @@
                     <th style="width: 15%">{{ "class" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
                     <th>delete</th>
+                    <th>Edit</th>
+                    <th>View</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let s of senditems1">
+                  <tr *ngFor="let s of senditems1; let i = index">
                     <td class="text-center">{{ s.Group_name }}</td>
                     <td class="multi_lines_text">
                       {{ s.message }}
@@ -877,6 +929,29 @@
                       >
                         <ion-icon
                           class="text-danger"
+                          [md]="'create-outline'"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        class="btn bg-white ml-1"
+                        (click)="toggleMessage(s.ID, s.message, i)"
+                      >
+                        <ion-icon
+                          class="text-black"
+                          [md]="'create-outline'"
+                        ></ion-icon>
+                      </button>
+                    </td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn bg-white ml-1"
+                        (click)="deletecirculars1(s.ID)"
+                      >
+                        <ion-icon
+                          class="text-danger"
                           [md]="'trash-sharp'"
                         ></ion-icon>
                       </button>
@@ -890,4 +965,41 @@
       </tabset>
     </div>
   </div>
+  <ion-modal
+    [isOpen]="isEditMessageOpen"
+    (willDismiss)="onWillDismiss($event, 'edit')"
+    [initialBreakpoint]="0.5"
+    [breakpoints]="[0, 0.25, 0.5, 0.75]"
+    animated="true"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="toggleMessage('cancel', 'cancel', 'cancel')">{{
+              "cancel" | translate
+            }}</ion-button>
+          </ion-buttons>
+          <ion-title>{{ "edit_message" | translate }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button
+              (click)="toggleMessage('confirm', 'confirm', 'cancel')"
+              [strong]="true"
+              >{{ "confirm" | translate }}</ion-button
+            >
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Enter Message</ion-label>
+          <ion-input
+            type="text"
+            placeholder="Your message"
+            [(ngModel)]="messageText"
+          ></ion-input>
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

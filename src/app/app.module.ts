@@ -27,11 +27,14 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicSelectableComponent } from 'ionic-selectable';
 // import { IonicSelectableComponent } from 'ionic-selectable';
+import { FormsModule } from '@angular/forms';
+import { ReportDetailsComponent } from './report-details/report-details.component';
+import { ReportFormsComponent } from './report-forms/report-forms.component';
 import { JwtInterceptor } from './service/jwt.interceptor';
 import { LoadingService } from './service/loading.service';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ReportFormsComponent, ReportDetailsComponent],
   // entryComponents: [],
   imports: [
     BrowserModule,
@@ -44,6 +47,7 @@ import { LoadingService } from './service/loading.service';
     ModalModule.forRoot(),
     IonicSelectableComponent,
     CommonModule,
+    FormsModule,
   ],
   exports: [],
   providers: [

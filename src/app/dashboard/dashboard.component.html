@@ -2,10 +2,14 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button
-        ><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon
+        ><ion-icon
+          [ios]="'menu-sharp'"
+          [md]="'menu-sharp'"
+          class="menuIcon"
+        ></ion-icon
       ></ion-menu-button>
     </ion-buttons>
-    <ion-title slot="start">{{ "dashboard" | translate }}</ion-title>
+    <ion-title>{{ "dashboard" | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 

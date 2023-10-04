@@ -1,0 +1,445 @@
+{
+  "project_info": {
+    "project_number": "194329587171",
+    "project_id": "iosproject-96e27",
+    "storage_bucket": "iosproject-96e27.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:92c05ab44df50c523144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.alphaInternational"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:3fb261a2bbcc89243144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.alphamatric"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:4c3008ad55a3fa183144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.amutha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:e7f00ded0d4401e13144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.anatomy_teachers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:93f5aec78a92db763144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.balakrishna"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:71926e2ee3bfa2a73144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.baynes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:a272c1407618970a3144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.carmel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:9b860d909c13fae93144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.homechruch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:9d21c39d35cdcd6c3144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.janet_maduravoyal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:b5b3c94785d5638d3144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.janet_tvk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:c4b3672f2bd54d4c3144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.jawaharlal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:6d31912e3f5c2cb93144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.joshuamodel"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:eabd5ce43d1cc6e33144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.sahayamatha"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:fcee1b1977a8d7c23144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.shining_angels"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:194329587171:android:7008f893078c4af13144d6",
+        "android_client_info": {
+          "package_name": "com.schooltree.sinthea"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCu6rKfJp8jOeNZA14Bgj1GmWP_yrUv7cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "194329587171-uagudfkebg6u604a0atnk3320958td02.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
