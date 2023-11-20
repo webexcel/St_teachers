@@ -6,9 +6,19 @@
       </ion-menu-button>
     </ion-buttons>
     <ion-title>{{ "daily_reports" | translate }}</ion-title>
+    <ion-buttons
+      style="margin-right: 16px; color: #505050; font-weight: 500"
+      slot="end"
+      color="light"
+      class="box-shadow-none"
+      (click)="filterDetails()"
+    >
+      <!-- {{sort_value}} &nbsp;&nbsp; -->
+      <ion-icon name="funnel" style="font-size: 20px"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-header no-border>
+<ion-header no-border *ngIf="level == 3">
   <ion-segment (ionChange)="segmentChanged($event)" value="1">
     <ion-segment-button value="1">
       <ion-label>My Reports</ion-label>
@@ -33,63 +43,207 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <div *ngIf="enable_filter">
+    <div
+      class="form-group"
+      style="margin-left: 20px; margin-right: 20px; margin-top: 10px"
+    >
+      <label>Start Date</label>
+      <input type="date" class="form-control" [(ngModel)]="s_date" />
+    </div>
+    <br />
+    <div class="form-group" style="margin-left: 20px; margin-right: 20px">
+      <label>End Date</label>
+      <input type="date" class="form-control" [(ngModel)]="e_date" />
+    </div>
+
+    <ion-button class="date-cls" (click)="getData()">Submit</ion-button>
+    <ion-button
+      class="date-cls"
+      (click)="reset()"
+      color="danger"
+      style="float: right"
+      >Reset</ion-button
+    >
+  </div>
+
+  <ion-list *ngIf="level == 3">
     <ion-label *ngIf="listType == 1">
-      <ion-item lines="full" tappable *ngFor="let item of formData">
-        <ion-row>
-          <ion-col size="8">
-            <ion-label class="avatar_label">
-              <h4 class="user-name color-colorgray">
-                <b>Date</b>: {{ item.date }}
-              </h4>
-              <p class="font-13p" style="white-space: normal">
-                Day: {{ item.day }}
-              </p>
-              <p class="font-13p">Arrival: {{ item.arrival }}</p>
-            </ion-label>
-          </ion-col>
-          <ion-col size="4" style="align-self: flex-end">
-            <ion-button
-              (click)="setOpen(true, item)"
-              style="align-self: flex-end"
-              >Details</ion-button
-            >
-          </ion-col>
-        </ion-row>
+      <ion-item
+        lines="full"
+        tappable
+        *ngFor="let item of formData; let index = index"
+      >
+        <ion-label>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <section
+                  style="width: 50%; float: left"
+                  (click)="setOpen(true, item)"
+                >
+                  <h4 class="user-name color-colorgray">
+                    <b>{{ index + 1 }} . Day: {{ item.day }}</b>
+                  </h4>
+                </section>
+                <section style="width: 50%; float: left">
+                  <ion-icon
+                    name="ellipsis-vertical-outline"
+                    style="float: right"
+                    (click)="expandMessageOptions(item, index)"
+                  ></ion-icon>
+                </section>
+                <br />
+                <div (click)="setOpen(true, item)">
+                  <p class="font-13p">Arrival time: {{ item.arrival }}</p>
+                  <p class="font-13p">Dispersal report: {{ item.dispersal }}</p>
+                  <p class="font-13p">Date: {{ item.date }}</p>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-label>
       </ion-item>
     </ion-label>
     <ion-label *ngIf="listType == 2">
-      <ion-item lines="full" tappable *ngFor="let item of formData">
-        <ion-label class="avatar_label">
-          <h4 class="user-name color-colorgray">
-            <b>Date</b>: {{ item.date }}
-          </h4>
-          <p class="font-13p" style="white-space: normal">
-            Day: {{ item.day }}
-          </p>
-          <p class="font-13p">Arrival: {{ item.arrival }}</p>
-          <!--<p class="font-13p">{{item.meeting_to_date_time}}</p>-->
-          <!--<p>{{item.request_reason}}</p>-->
-          <p class="color-blue">
-            <b style="float: right; color: blue"
-              ><ion-button
-                (click)="setOpen(true, item)"
-                style="align-self: flex-end"
-                >Details</ion-button
-              ></b
-            >
-          </p>
+      <ion-item
+        lines="full"
+        tappable
+        *ngFor="let item of otherReports; let index = index"
+      >
+        <ion-label (click)="setOpen(true, item)">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <section style="width: 100%; float: left">
+                  <h4 class="user-name color-colorgray">
+                    <b
+                      >{{ index + 1 }} . Submitted By: {{ item.DisplayName }}</b
+                    >
+                  </h4>
+                </section>
+
+                <br />
+                <p class="font-13p">Day: {{ item.day }}</p>
+                <p class="font-13p">Arrival time: {{ item.arrival }}</p>
+                <p class="font-13p">Dispersal report: {{ item.dispersal }}</p>
+                <p class="font-13p">Date: {{ item.date }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
         </ion-label>
       </ion-item>
     </ion-label>
   </ion-list>
-  <ion-modal [isOpen]="isModalOpen">
+
+  <ion-list *ngIf="level == 4">
+    <ion-label>
+      <ion-item
+        lines="full"
+        tappable
+        *ngFor="let item of formData; let index = index"
+      >
+        <ion-label>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <section
+                  style="width: 50%; float: left"
+                  (click)="setOpen(true, item)"
+                >
+                  <h4 class="user-name color-colorgray">
+                    <b>{{ index + 1 }} . Day: {{ item.day }}</b>
+                  </h4>
+                </section>
+                <section style="width: 50%; float: left">
+                  <ion-icon
+                    name="ellipsis-vertical-outline"
+                    style="float: right"
+                    (click)="expandMessageOptions(item, index)"
+                  ></ion-icon>
+                </section>
+                <br />
+                <div (click)="setOpen(true, item)">
+                  <p class="font-13p">Arrival time: {{ item.arrival }}</p>
+                  <p class="font-13p">Dispersal report: {{ item.dispersal }}</p>
+                  <p class="font-13p">Date: {{ item.date }}</p>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-label>
+      </ion-item>
+    </ion-label>
+  </ion-list>
+
+  <ion-list *ngIf="level == 2 || level == 1">
+    <ion-label>
+      <ion-item
+        lines="full"
+        tappable
+        *ngFor="let item of formData1; let index = index"
+      >
+        <ion-label (click)="setOpen(true, item)">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <section style="width: 100%; float: left">
+                  <h4 class="user-name color-colorgray">
+                    <b>Submitted by : {{ item.DisplayName }}</b>
+                  </h4>
+                </section>
+
+                <br />
+                <p class="font-13p">Day: {{ item.day }}</p>
+                <p class="font-13p">Arrival time: {{ item.arrival }}</p>
+                <p class="font-13p">Dispersal report: {{ item.dispersal }}</p>
+                <p class="font-13p">Date: {{ item.date }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-label>
+      </ion-item>
+    </ion-label>
+
+    <ion-label>
+      <ion-item
+        lines="full"
+        tappable
+        *ngFor="let item of formData; let index = index"
+      >
+        <ion-label (click)="setOpen(true, item)">
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <section style="width: 100%; float: left">
+                  <h4 class="user-name color-colorgray">
+                    <b>Submitted by : {{ item.DisplayName }}</b>
+                  </h4>
+                </section>
+
+                <br />
+                <p class="font-13p">Day: {{ item.day }}</p>
+                <p class="font-13p">Arrival time: {{ item.arrival }}</p>
+                <p class="font-13p">Dispersal report: {{ item.dispersal }}</p>
+                <p class="font-13p">Date: {{ item.date }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-label>
+      </ion-item>
+    </ion-label>
+  </ion-list>
+
+  <ion-modal
+    [isOpen]="isModalOpen"
+    *ngIf="isModalOpen && oneItem.act_status == 4"
+  >
     <ng-template>
       <ion-header>
         <ion-toolbar>
           <ion-title>Report Details</ion-title>
           <ion-buttons slot="end">
-            <ion-button (click)="setOpen(false, 'any')">Close</ion-button>
+            <ion-button (click)="setOpenClose(false)">Close</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
@@ -195,14 +349,157 @@
       </ion-content>
     </ng-template>
   </ion-modal>
+  <ion-modal
+    [isOpen]="isModalOpen"
+    *ngIf="isModalOpen && oneItem.act_status == 3"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Report Details</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpenClose(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label class="custom-label"
+            >Date : <b>{{ oneItem.date }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Day : <b>{{ oneItem.day }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Arrival observation : <b>{{ oneItem.arrival }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Teachers on leave :
+            <b>{{ oneItem.teachers_on_leave }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Morning break observation :
+            <b>{{ oneItem.mrng_break_obs }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Teacher's positive observation :
+            <b>{{ oneItem.teachers_pos_obs }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Teacher observation to be improved and fixed :
+            <b>{{ oneItem.teachers_obs_improved_fixed }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Class observation Report :
+            <b>{{ oneItem.cls_obs_rpt }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Notebook Checking Report :
+            <b>{{ oneItem.notbook_chk_rpt }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Bookback exercises/ Diary checking Report :
+            <b>{{ oneItem.bookback_exercise_diary_chk_rpt }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Students discipline issues :
+            <b>{{ oneItem.stu_discipline_issue }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Lunch break report : <b>{{ oneItem.lunch_brk_rpt }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Program related works done :
+            <b>{{ oneItem.prgrm_rltd_wks_dn }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Transport dispersal report :
+            <b>{{ oneItem.transport_dis_rpt }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label">
+            Dispersal report : <b>{{ oneItem.dispersal }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Parents Met : <b>{{ oneItem.parent_met }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >ECA report : <b>{{ oneItem.eca_rpt }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >General report : <b>{{ oneItem.general_rpt }}</b></ion-label
+          >
+        </ion-item>
+        <ion-item>
+          <ion-label class="custom-label"
+            >Parent Complaint : <b>{{ oneItem.parent_complaint }}</b></ion-label
+          >
+        </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <!-- <ion-modal [isOpen]="enable_filter">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Report Details</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpenClose(false, 'any')">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding"> Helloo </ion-content>
+    </ng-template>
+  </ion-modal> -->
+
+  <!-- <ion-modal
+    [isOpen]="enable_filter"
+    [initialBreakpoint]="1"
+    [breakpoints]="[0, 1]"
+  >
+    <ng-template> </ng-template>
+  </ion-modal> -->
   <ion-fab
     vertical="bottom"
-    *ngIf="listType == 1"
+    *ngIf="listType == 1 && (level == 4 || level == 3)"
     horizontal="end"
     slot="fixed"
     tappable
   >
-    <ion-fab-button (click)="openModal()">
+    <ion-fab-button (click)="openModal('new', 'new')">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>

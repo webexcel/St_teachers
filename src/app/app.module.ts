@@ -33,6 +33,7 @@ import { ReportFormsComponent } from './report-forms/report-forms.component';
 import { JwtInterceptor } from './service/jwt.interceptor';
 import { LoadingService } from './service/loading.service';
 
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
   declarations: [AppComponent, ReportFormsComponent, ReportDetailsComponent],
   // entryComponents: [],
@@ -48,6 +49,7 @@ import { LoadingService } from './service/loading.service';
     IonicSelectableComponent,
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [],
   providers: [

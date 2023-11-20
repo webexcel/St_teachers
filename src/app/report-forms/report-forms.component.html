@@ -10,218 +10,817 @@
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <form (ngSubmit)="submitForm()" class="custom-form">
+  <form
+    (ngSubmit)="confirm()"
+    [formGroup]="formGroup"
+    class="custom-form"
+    *ngIf="level == 4"
+  >
     <div class="custom-input" lines="full">
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Date"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.date"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Day"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.day"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full"
-        ><ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Arrival Time"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.arrival"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full"
-        ><ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Period 1"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.period1"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea
-      ></ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Period 2"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.period2"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea
-      ></ion-item>
+      <div class="form-group">
+        <label>Date</label>
+        <input
+          type="date"
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          formControlName="date"
+        />
+        <ion-text
+          color="danger"
+          *ngIf="formGroup.get('date')?.hasError('required') && submitStatus"
+        >
+          Date is required.
+        </ion-text>
+      </div>
 
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Period 3"
-          labelPlacement="floating"
+      <br />
+      <div class="form-group">
+        <label>Day</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="day"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="formGroup.get('day')?.hasError('required') && submitStatus"
+        >
+          Day is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Arrival Time</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="arrival"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="formGroup.get('arrival')?.hasError('required') && submitStatus"
+        >
+          Arrival Time is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Period 1</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="period1"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="formGroup.get('period1')?.hasError('required') && submitStatus"
+        >
+          Period 1 is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Period 2</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="period2"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="formGroup.get('period2')?.hasError('required') && submitStatus"
+        >
+          Period 2 is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Period 3</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="period3"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="formGroup.get('period3')?.hasError('required') && submitStatus"
+        >
+          Period 3 is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Period 4</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="period4"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="formGroup.get('period4')?.hasError('required') && submitStatus"
+        >
+          Period 4 is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Period 5</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="period5"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="formGroup.get('period5')?.hasError('required') && submitStatus"
+        >
+          Period 5 is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Period 6</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="period6"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="formGroup.get('period6')?.hasError('required') && submitStatus"
+        >
+          Period 6 is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Period 7</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="period7"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="formGroup.get('period7')?.hasError('required') && submitStatus"
+        >
+          Period 7 is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Period 8</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="period8"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="formGroup.get('period8')?.hasError('required') && submitStatus"
+        >
+          Period 8 is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Period 9</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="period9"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="formGroup.get('period9')?.hasError('required') && submitStatus"
+        >
+          Period 9 is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Period 10</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="period10"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroup.get('period10')?.hasError('required') && submitStatus
+          "
+        >
+          Period 10 is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Dispersal Report</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="dispersal"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroup.get('dispersal')?.hasError('required') && submitStatus
+          "
+        >
+          Dispersal Report is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>After Dispersal workdone</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="after_dispersal"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroup.get('after_dispersal')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          After Dispersal workdone is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Parents Met</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="parent_met"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroup.get('parent_met')?.hasError('required') && submitStatus
+          "
+        >
+          Parents Met is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Students Discipline Issues</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="stu_dis_issues"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroup.get('stu_dis_issues')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Students Discipline Issues is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Chronic Latecomers</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="chronic_late"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroup.get('chronic_late')?.hasError('required') && submitStatus
+          "
+        >
+          Chronic Latecomers is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Chronic Defaulters</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="chronic_default"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroup.get('chronic_default')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Chronic Defaulters is required.
+        </ion-text>
+      </div>
+    </div>
+
+    <ion-button
+      type="submit"
+      expand="full"
+      class="custom-button"
+      (click)="confirm()"
+      >Submit</ion-button
+    >
+  </form>
+
+  <form
+    (ngSubmit)="confirm()"
+    [formGroup]="formGroupTop"
+    class="custom-form"
+    *ngIf="level == 3"
+  >
+    <div class="custom-input" lines="full">
+      <div class="form-group">
+        <label>Date</label>
+        <input
+          type="date"
+          class="form-control"
+          id="exampleFormControlTextarea1"
+          formControlName="date"
+        />
+        <ion-text
+          color="danger"
+          *ngIf="formGroupTop.get('date')?.hasError('required') && submitStatus"
+        >
+          Date is required.
+        </ion-text>
+      </div>
+      <!-- </ion-item> -->
+      <br />
+      <div class="form-group">
+        <label>Day</label>
+        <textarea
+          class="form-control"
+          rows="3"
           placeholder="Enter text"
-          [(ngModel)]="formData.period3"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Period 4"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.period4"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Period 5"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.period5"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Period 6"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.period6"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Period 7"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.period7"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Period 8"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.period8"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Period 9"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.period9"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Period 10"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.period10"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Dispersal Report"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.dispersal"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="After Dispersal workdone"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.after_dispersal"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Parents Met"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.parent_met"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Students Discipline Issues"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.stu_dis_issues"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Chronic Latecomers"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.chronic_late"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
-      <ion-item lines="full">
-        <ion-textarea
-          class="custom-textarea"
-          ion-input
-          label="Chronic Defaulters"
-          labelPlacement="floating"
-          placeholder="Enter text"
-          [(ngModel)]="formData.chronic_default"
-          [ngModelOptions]="{ standalone: true }"
-        ></ion-textarea>
-      </ion-item>
+          formControlName="day"
+        ></textarea>
+        <div
+          *ngIf="formGroupTop.get('day')?.hasError('required') && submitStatus"
+        >
+          <p style="color: red">Day is required.</p>
+        </div>
+      </div>
+      <br />
+      <div class="form-group">
+        <label>Arrival observation</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="arrival"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('arrival')?.hasError('required') && submitStatus
+          "
+        >
+          Arrival observation is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Teachers on leave</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="teachers_on_leave"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('teachers_on_leave')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Teachers on leave is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Morning break observation</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="mrng_break_obs"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('mrng_break_obs')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Morning break observation is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Teacher's positive observation</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="teachers_pos_obs"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('teachers_pos_obs')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Teacher's positive observation is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label> Teacher observation to be improved and fixed </label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="teachers_obs_improved_fixed"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop
+              .get('teachers_obs_improved_fixed')
+              ?.hasError('required') && submitStatus
+          "
+        >
+          Teacher observation to be improved and fixed is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label> Class observation Report</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="cls_obs_rpt"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('cls_obs_rpt')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Class observation Report is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label> Notebook Checking Report</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="notbook_chk_rpt"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('notbook_chk_rpt')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Notebook Checking Report is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label> Bookback exercises/ Diary checking Report</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="bookback_exercise_diary_chk_rpt"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop
+              .get('bookback_exercise_diary_chk_rpt')
+              ?.hasError('required') && submitStatus
+          "
+        >
+          Bookback exercises/ Diary checking Report is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Students discipline issues</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="stu_discipline_issue"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('stu_discipline_issue')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Students discipline issues is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Lunch break report</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="lunch_brk_rpt"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('lunch_brk_rpt')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Lunch break report is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Program related works done</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="prgrm_rltd_wks_dn"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('prgrm_rltd_wks_dn')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Program related works done is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Transport dispersal report</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="transport_dis_rpt"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('transport_dis_rpt')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Transport dispersal report is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Dispersal report</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="dispersal"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('dispersal')?.hasError('required') && submitStatus
+          "
+        >
+          Dispersal report is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>ECA report</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="eca_rpt"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('eca_rpt')?.hasError('required') && submitStatus
+          "
+        >
+          ECA report is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>General report</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="general_rpt"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('general_rpt')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          General report is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Parent Complaint</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="parent_complaint"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('parent_complaint')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Parent Complaint is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Parent Complaint</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="parent_complaint"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('parent_complaint')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Parent Complaint is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Parents met</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="parent_met"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('parent_met')?.hasError('required') && submitStatus
+          "
+        >
+          Parents met is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Teachers issue handled</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="teachers_issue_handled"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('teachers_issue_handled')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Teachers issue handled is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Plan of Action for next day</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="next_day_plan"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('next_day_plan')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Plan of Action for next day is required.
+        </ion-text>
+      </div>
+
+      <br />
+      <div class="form-group">
+        <label>Other works done</label>
+        <textarea
+          class="form-control"
+          rows="3"
+          placeholder=""
+          formControlName="other_works"
+        ></textarea>
+        <ion-text
+          color="danger"
+          *ngIf="
+            formGroupTop.get('other_works')?.hasError('required') &&
+            submitStatus
+          "
+        >
+          Other works done is required.
+        </ion-text>
+      </div>
     </div>
 
     <ion-button
