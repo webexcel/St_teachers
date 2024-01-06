@@ -140,6 +140,12 @@ export class DashboardComponent implements OnInit {
         if (flashmes.status) {
           this.disabledValue = false;
           this.flashData = flashmes.data;
+          var i = 0;
+          for (i = 0; i < this.flashData.length; i++) {
+            this.flashData[i].Discription = this.authservice.extractUrl(
+              this.flashData[i].Discription
+            );
+          }
           this.flashindex = 0;
           if (this.flashData[0].Title != 'Update') {
             this.openmodel();

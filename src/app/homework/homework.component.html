@@ -320,7 +320,10 @@
               <tr>
                 <td width="20%">{{ d.CLASS }} - {{ d.subject }}</td>
                 <td width="70%" class="textleft multi_lines_text">
-                  {{ d.MESSAGE }}
+                  <span
+                    *ngIf="d.MESSAGE"
+                    [innerHTML]="authservice.sanitizeHtml(d.MESSAGE)"
+                  ></span>
                   <br *ngIf="d.event_image && d.event_image.length > 0" />
                   <img
                     alt=""

@@ -289,7 +289,12 @@
       [class.d-none]="flashData[flashindex].event_image.length == 0"
     />
     <p class="text-center multi_lines_text">
-      {{ flashData[flashindex].Discription }}
+      <span
+        *ngIf="flashData[flashindex].Discription"
+        [innerHTML]="
+          authservice.sanitizeHtml(flashData[flashindex].Discription)
+        "
+      ></span>
     </p>
   </div>
 </ng-template>

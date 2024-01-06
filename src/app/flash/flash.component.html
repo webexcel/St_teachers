@@ -282,7 +282,12 @@
           <tr *ngFor="let s of flashlist">
             <td>
               Title: {{ s.Title }}<br />
-              Description: {{ s.Discription }}<br />
+              Description:
+              <span
+                *ngIf="s.Discription"
+                [innerHTML]="authservice.sanitizeHtml(s.Discription)"
+              ></span
+              ><br />
               Date: {{ s.start_date }} - {{ s.NewsADate }}<br />
               <img src="{{ s.event_image }}" class="w-100" alt="" /><br />
               <br />

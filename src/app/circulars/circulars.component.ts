@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
@@ -132,6 +132,25 @@ export class CircularsComponent implements OnInit {
     );
   }
 
+  // Function to sanitize HTML content
+  sanitizeHtml(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
+  extractUrl(text: string) {
+    var urlRegex =
+      /(https?:\/\/(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)|((?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)/g;
+    return text.replace(urlRegex, function (url) {
+      return (
+        '<a href="' +
+        (url.startsWith('http') ? url : 'http://' + url) +
+        '" target="_blank">' +
+        url +
+        '</a>'
+      );
+    });
+  }
+
   getgroupMessage() {
     //Is_Admin
     this.loading.present();
@@ -146,6 +165,10 @@ export class CircularsComponent implements OnInit {
           this.loading.dismissAll();
           if (res['status']) {
             this.grpmes = res['data'];
+            var i = 0;
+            for (i = 0; i < this.grpmes.length; i++) {
+              this.grpmes[i].message = this.extractUrl(this.grpmes[i].message);
+            }
             this.senditems = res['senditem'];
             this.last3days = res['last3senditem'];
           }

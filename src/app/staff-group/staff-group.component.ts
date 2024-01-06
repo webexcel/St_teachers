@@ -158,6 +158,12 @@ export class StaffGroupComponent implements OnInit {
           this.loading.dismissAll();
           if (res['status']) {
             this.grpmes = res['data'];
+            var i = 0;
+            for (i = 0; i < this.grpmes.length; i++) {
+              this.grpmes[i].message = this.authservice.extractUrl(
+                this.grpmes[i].message
+              );
+            }
             this.senditems = res['senditem'];
             this.last3days = res['last3senditem'];
           } else {

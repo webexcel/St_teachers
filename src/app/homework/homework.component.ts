@@ -135,7 +135,13 @@ export class HomeworkComponent implements OnInit {
                 this.recentdates.push(d);
                 this.recentdata1[d] = [];
               }
+              console.log('recent data', recentdata[i]);
+              recentdata[i].MESSAGE = this.authservice.extractUrl(
+                recentdata[i].MESSAGE
+              );
+
               this.recentdata1[d].push(recentdata[i]);
+              console.log('datatatatata', this.recentdata1);
             }
           }
         },

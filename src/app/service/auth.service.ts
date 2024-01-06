@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import {
   InAppBrowser,
   InAppBrowserOptions,
@@ -18,7 +19,8 @@ export class AuthService {
     private iab: InAppBrowser,
     private platform: Platform,
     private http: HttpClient,
-    private storage: StorageService
+    private storage: StorageService,
+    private sanitizer: DomSanitizer
   ) {}
 
   post(url: any, data: any) {
@@ -37,6 +39,23 @@ export class AuthService {
   download(url: string): Observable<Blob> {
     return this.http.get(url, {
       responseType: 'blob',
+    });
+  }
+  sanitizeHtml(html: string): SafeHtml {
+    return this.sanitizer.bypassSecurityTrustHtml(html);
+  }
+
+  extractUrl(text: string) {
+    var urlRegex =
+      /(https?:\/\/(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)|((?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)/g;
+    return text.replace(urlRegex, function (url) {
+      return (
+        '<a href="' +
+        (url.startsWith('http') ? url : 'http://' + url) +
+        '" target="_blank">' +
+        url +
+        '</a>'
+      );
     });
   }
 

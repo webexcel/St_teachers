@@ -359,7 +359,10 @@
         </div>
       </div>
       <div class="card-body card_body border border-primary multi_lines_text">
-        {{ d.message }}
+        <span
+          *ngIf="d.message"
+          [innerHTML]="authservice.sanitizeHtml(d.message)"
+        ></span>
         <br *ngIf="d.event_image && d.event_image.length > 0" />
         <img
           alt=""

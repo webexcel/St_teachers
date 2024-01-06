@@ -66,6 +66,12 @@ export class FlashComponent implements OnInit {
         flashmes = result;
         if (flashmes.status) {
           this.flashlist = flashmes.data;
+          var i = 0;
+          for (i = 0; i < this.flashlist.length; i++) {
+            this.flashlist[i].Discription = this.authservice.extractUrl(
+              this.flashlist[i].Discription
+            );
+          }
         }
 
         console.log(this.flashlist);
