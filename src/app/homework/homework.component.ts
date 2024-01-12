@@ -73,7 +73,7 @@ export class HomeworkComponent implements OnInit {
     this.ios = this.authservice.isiso();
     this.translate.set();
     this.translate
-      .getparam('delete_circulars')
+      .getparam('delete_homework')
       .then((v) => (this.delete_homework = v));
     this.translate.getparam('cancel').then((v) => (this.cancel = v));
     this.translate.getparam('delete').then((v) => (this.delete = v));

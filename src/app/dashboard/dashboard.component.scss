@@ -180,3 +180,60 @@ ion-content {
   margin: 0 auto;
   background: url("../../assets/imgs/dashboard/round.png") no-repeat !important;
 }
+
+/* Add these styles to your global or component stylesheet */
+
+.message-container {
+  /* Add container styles as needed */
+}
+
+.borbot {
+  /* Add styles for the ion-card with class "borbot" */
+}
+
+.message-header {
+  /* Add styles for the header section with student name */
+}
+
+.message-content {
+  /* Add styles for the main message content section */
+}
+
+.image-section,
+.audio-section,
+.video-section,
+.document-section {
+  /* Add common styles for media sections */
+  margin-top: 10px;
+}
+
+.document-section {
+  /* Additional styles for document section */
+}
+
+.dm {
+  /* Styles for Date and Avatar section */
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.avatar {
+  /* Styles for ion-avatar */
+  margin-right: 10px;
+}
+
+.date {
+  /* Styles for date */
+}
+
+/* Styles for Modal */
+ion-modal {
+  --backdrop-opacity: 0.5;
+}
+
+ion-content {
+  background-color: #fff; /* Set background color as needed */
+}
+
+/* Add any other specific styles you need */

@@ -461,17 +461,17 @@
       </div>
     </div>
 
-    <div class="m-3">
+    <div class="m-3 table-cls">
       <tabset>
         <tab heading="Today">
-          <div *ngIf="getwhdates.length > 0">
+          <div *ngIf="getwhdates.length > 0" class="table-cls">
             <accordion [closeOthers]="true" [isAnimated]="true">
               <accordion-group
                 heading="{{ l }}"
                 *ngFor="let l of getwhdates; let i = index"
                 [isOpen]="i === 0"
               >
-                <table class="table table-bordered">
+                <table class="table table-bordered table-cls">
                   <tbody *ngFor="let d of gethw[l]">
                     <tr>
                       <td width="20%">{{ d.CLASS }} - {{ d.subject }}</td>
@@ -550,14 +550,18 @@
           </div>
         </tab>
         <tab heading="Last 3 Days">
-          <div *ngIf="last3daysdates.length > 0">
-            <accordion [closeOthers]="true" [isAnimated]="true">
+          <div *ngIf="last3daysdates.length > 0" class="table-cls">
+            <accordion
+              [closeOthers]="true"
+              [isAnimated]="true"
+              class="table-cls"
+            >
               <accordion-group
                 heading="{{ l }}"
                 *ngFor="let l of last3daysdates; let i = index"
                 [isOpen]="i === 0"
               >
-                <table class="table table-bordered">
+                <table class="table table-bordered table-cls">
                   <tbody *ngFor="let d of last3days[l]">
                     <tr>
                       <td width="20%">{{ d.CLASS }} - {{ d.subject }}</td>

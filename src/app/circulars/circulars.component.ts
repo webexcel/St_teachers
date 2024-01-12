@@ -46,6 +46,14 @@ export class CircularsComponent implements OnInit {
   messageText: any;
   messageId: any;
   index: any;
+  dropdownItems = [
+    { label: 'Item 1', value: 'item1' },
+    { label: 'Item 2', value: 'item2' },
+    { label: 'Item 3', value: 'item3' },
+    // Add more items as needed
+  ];
+
+  selectedItems: any[] = [];
   constructor(
     private serfile: FilesService,
     private media: Media,
@@ -65,7 +73,20 @@ export class CircularsComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     });
   }
+  selectAll() {
+    console.log('select all');
+    this.select_datas.class = this.classs.map((item: any) => item.id);
+  }
 
+  deSelectAll() {
+    console.log('deselect all');
+    this.select_datas.class = [];
+
+    // this.selectedItems = [];
+  }
+  handleSelectChange(e: any) {
+    console.log('event', e);
+  }
   ngOnInit() {
     this.ios = this.authservice.isiso();
     this.translate.set();

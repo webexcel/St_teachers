@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { AuthService } from '../service/auth.service';
 import { StorageService } from '../service/storage.service';
 
+import { DomSanitizer } from '@angular/platform-browser';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 import {
   InAppBrowser,
@@ -31,12 +32,14 @@ export class DashboardComponent implements OnInit {
   disabledValue: boolean = false;
   modalRef?: BsModalRef;
   storeSMSDetails: any = [];
+  topMessages: any;
   ing: any = 0;
   // @TODO - get correct value
   ADNO: any = 0;
 
   public appPages = environment.pages;
-
+  isModalOpen = false;
+  modalImage: any;
   constructor(
     private modalService: BsModalService,
     private iab: InAppBrowser,
@@ -49,7 +52,8 @@ export class DashboardComponent implements OnInit {
     public authservice: AuthService,
     public storage: StorageService,
     public loading: LoadingService,
-    private serfile: FilesService
+    private serfile: FilesService,
+    public sanitizer: DomSanitizer
   ) {
     this.platform.backButton.subscribe(() => {
       let p = this.storage.get('page');
@@ -57,6 +61,35 @@ export class DashboardComponent implements OnInit {
         this.appMinimize.minimize();
       }
     });
+    this.topMessages = {
+      status: true,
+      message: 'Get All Messages Successfully',
+      data: [
+        {
+          ADNO: 'KG108',
+          SMSdate: '11,Jan-12:34',
+          STUDENTNAME: 'Praburajan E',
+          Message: 'G jgh thjldkhgk dhsg jhdjghjdsglhdsgh;a goawroowto hrwrye',
+          event_image: 'https://demo.schooltree.in/uploads/demosch/af1.jpg',
+        },
+        {
+          ADNO: 'KG108',
+          SMSdate: '11,Jan-12:34',
+          STUDENTNAME: 'Praburajan E',
+          Message:
+            'You have a homework to do today (2024-01-11) Check homework page',
+          event_image: null,
+        },
+        {
+          ADNO: 'KG108',
+          SMSdate: '10,Jan-19:33',
+          STUDENTNAME: 'Praburajan E',
+          Message:
+            'Dear Parents, Your Ward  Praburajan E  is Late for school today 10-01-2024 - Principal',
+          event_image: null,
+        },
+      ],
+    };
   }
 
   ngOnInit() {
@@ -339,5 +372,28 @@ export class DashboardComponent implements OnInit {
     f = f.split('/');
     f = f[f.length - 1];
     return f;
+  }
+
+  setOpen(isOpen: boolean, image: any) {
+    console.log(image);
+    this.modalImage = image;
+    this.isModalOpen = isOpen;
+  }
+
+  checkmp4(f: any) {
+    if (f) {
+      f = f.split('.');
+      f = f[f.length - 1].toLowerCase();
+      if (f == 'mp4') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+  getSafeUrl(url: any) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

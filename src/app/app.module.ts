@@ -8,10 +8,10 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { TranModule } from './tran.module';
-
 //service
 import { CommonModule } from '@angular/common';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
@@ -73,7 +73,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     NativeAudio,
   ],
   bootstrap: [AppComponent],
-  // schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 // @Component({
 //   standalone: true,

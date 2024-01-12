@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {DashboardComponent} from './dashboard.component';
-import {DashboardRoutingModule} from './dashboard-routing.module';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
-import { TranModule } from "../tran.module";
-
-
+import { PinchZoomModule } from '@meddv/ngx-pinch-zoom';
+import { TranModule } from '../tran.module';
+import { DashboardRoutingModule } from './dashboard-routing.module';
+import { DashboardComponent } from './dashboard.component';
 
 @NgModule({
   declarations: [DashboardComponent],
@@ -13,7 +12,9 @@ import { TranModule } from "../tran.module";
     CommonModule,
     DashboardRoutingModule,
     IonicModule,
-    TranModule
+    TranModule,
+    PinchZoomModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class DashboardModule { }
+export class DashboardModule {}
