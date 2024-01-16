@@ -1,0 +1,77 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ "timetable" | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+    <ion-toolbar class="p-0">
+      <ion-buttons slot="start">
+        <ion-menu-button>
+          <ion-icon
+            class="text-white"
+            [ios]="'menu-sharp'"
+            [md]="'menu-sharp'"
+          ></ion-icon>
+        </ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ "timetable" | translate }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card class="card-cls" *ngIf="data.length > 0 && show">
+    <ion-card-content>
+      <div class="table-container">
+        <table class="custom-table">
+          <thead>
+            <tr style="background-color: rgb(85, 120, 180); color: aliceblue">
+              <th style="text-align: center">Period</th>
+
+              <th style="text-align: center" *ngFor="let d of subject">
+                {{ d }}
+              </th>
+            </tr>
+          </thead>
+          <!-- <tbody>
+          <tr *ngFor="let s of data"> 
+            <td *ngFor="let k of keys" [ngClass]="s[k] == '-' ? 'my_class1' : 'my_class2'">{{ s[k] }}</td>
+          </tr>
+        </tbody> -->
+
+          <tbody>
+            <tr
+              *ngFor="let s of data; let even = even; let odd = odd"
+              [ngClass]="{ 'even-row': even, 'odd-row': odd }"
+            >
+              <td
+                style="text-align: center"
+                *ngFor="let k of keys"
+                [ngClass]="s[k] == '-' ? 'my_class1' : 'my_class2'"
+              >
+                <ng-container *ngIf="s[k] && s[k].includes('/')">
+                  <ng-container
+                    *ngFor="let part of s[k].split('/'); let last = last"
+                  >
+                    <div *ngIf="!last" style="border-bottom: 1px solid grey">
+                      {{ part }}<br />
+                    </div>
+                    <div *ngIf="last">{{ part }}</div>
+                  </ng-container>
+                </ng-container>
+                <span *ngIf="s[k] && !s[k].includes('/')">
+                  {{ s[k] }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

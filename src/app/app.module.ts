@@ -28,6 +28,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicSelectableComponent } from 'ionic-selectable';
 // import { IonicSelectableComponent } from 'ionic-selectable';
 import { FormsModule } from '@angular/forms';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import { ReportDetailsComponent } from './report-details/report-details.component';
 import { ReportFormsComponent } from './report-forms/report-forms.component';
 import { JwtInterceptor } from './service/jwt.interceptor';
@@ -71,6 +72,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     InAppBrowser,
     Badge,
     NativeAudio,
+    ScreenOrientation,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

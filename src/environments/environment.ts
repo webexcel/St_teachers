@@ -71,6 +71,14 @@ export const environment = {
       admin: 'Y',
     },
     {
+      title: 'TImetable',
+      url: '/timetable',
+      icon: 'assets/imgs/speakers/training.png',
+      filter:
+        'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
+      admin: 'Y',
+    },
+    {
       title: 'Daily Reports',
       url: '/daily-reports',
       icon: 'assets/imgs/speakers/training.png',

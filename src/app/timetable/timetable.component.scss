@@ -1,0 +1,57 @@
+.attendance {
+  .card_body {
+    padding-top: 0px !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
+  }
+  .card-header {
+    padding: 12px !important;
+    padding-left: 20px !important;
+  }
+}
+.table-cls {
+  margin-left: 0px !important;
+  margin-right: 0px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+table {
+  border-collapse: border;
+  width: 100%;
+  border: 2px solid black;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 8px;
+  border: 2px solid black;
+}
+
+tr:nth-child(even) {
+  background-color: #e9ebeb;
+}
+.my_class1 {
+  background-color: rgb(251, 215, 215);
+}
+.my_class2 {
+  background-color: rgb(255, 255, 255);
+}
+
+.break-after-slash::after {
+  content: "\A";
+  white-space: pre;
+}
+.table-container {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+}

@@ -472,7 +472,7 @@
                 [isOpen]="i === 0"
               >
                 <table class="table table-bordered table-cls">
-                  <tbody *ngFor="let d of gethw[l]">
+                  <tbody *ngFor="let d of gethw[l]; let i = index">
                     <tr>
                       <td width="20%">{{ d.CLASS }} - {{ d.subject }}</td>
                       <td width="80%" class="textleft multi_lines_text">
@@ -542,6 +542,29 @@
                           </audio>
                         </div>
                       </td>
+                      <td>
+                        <button
+                          class="btn bg-white ml-1"
+                          (click)="toggleHomework(d.MSG_ID, d.MESSAGE, i)"
+                        >
+                          <ion-icon
+                            class="text-black"
+                            [md]="'create-outline'"
+                          ></ion-icon>
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn bg-white ml-1"
+                          (click)="deletehomework1(d.MSG_ID)"
+                        >
+                          <ion-icon
+                            class="text-danger"
+                            [md]="'trash-sharp'"
+                          ></ion-icon>
+                        </button>
+                      </td>
                     </tr>
                   </tbody>
                 </table>
@@ -562,7 +585,7 @@
                 [isOpen]="i === 0"
               >
                 <table class="table table-bordered table-cls">
-                  <tbody *ngFor="let d of last3days[l]">
+                  <tbody *ngFor="let d of last3days[l]; let i = index">
                     <tr>
                       <td width="20%">{{ d.CLASS }} - {{ d.subject }}</td>
                       <td width="80%" class="textleft multi_lines_text">
@@ -631,6 +654,29 @@
                             />
                           </audio>
                         </div>
+                      </td>
+                      <td>
+                        <button
+                          class="btn bg-white ml-1"
+                          (click)="toggleHomework(d.MSG_ID, d.MESSAGE, i)"
+                        >
+                          <ion-icon
+                            class="text-black"
+                            [md]="'create-outline'"
+                          ></ion-icon>
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn bg-white ml-1"
+                          (click)="deletehomework1(d.MSG_ID)"
+                        >
+                          <ion-icon
+                            class="text-danger"
+                            [md]="'trash-sharp'"
+                          ></ion-icon>
+                        </button>
                       </td>
                     </tr>
                   </tbody>
@@ -736,7 +782,7 @@
                 [isOpen]="i === 0"
               >
                 <table class="table table-bordered">
-                  <tbody *ngFor="let d of senditems1[l]">
+                  <tbody *ngFor="let d of senditems1[l]; let i = index">
                     <tr>
                       <td width="20%">{{ d.CLASS }} - {{ d.subject }}</td>
                       <td width="80%" class="textleft multi_lines_text">
@@ -805,6 +851,29 @@
                             />
                           </audio>
                         </div>
+                      </td>
+                      <td>
+                        <button
+                          class="btn bg-white ml-1"
+                          (click)="toggleHomework(d.MSG_ID, d.MESSAGE, i)"
+                        >
+                          <ion-icon
+                            class="text-black"
+                            [md]="'create-outline'"
+                          ></ion-icon>
+                        </button>
+                      </td>
+                      <td>
+                        <button
+                          type="button"
+                          class="btn bg-white ml-1"
+                          (click)="deletehomework1(d.MSG_ID)"
+                        >
+                          <ion-icon
+                            class="text-danger"
+                            [md]="'trash-sharp'"
+                          ></ion-icon>
+                        </button>
                       </td>
                     </tr>
                   </tbody>

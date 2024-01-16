@@ -49,6 +49,11 @@ export class HomeworkComponent implements OnInit {
   @ViewChild(IonModal)
   modal!: IonModal;
   isPickerOpen: boolean = false;
+  messageText: any;
+  messageId: any;
+  index: any;
+  isEditMessageOpen: boolean = false;
+
   constructor(
     private serfile: FilesService,
     private media: Media,
@@ -261,7 +266,71 @@ export class HomeworkComponent implements OnInit {
     });
     await alert.present();
   }
-
+  async deletehomework1(ID: any) {
+    let alert = await this.alertCtrl.create({
+      header: this.delete_homework,
+      //subTitle: this.name,
+      //message:message,
+      buttons: [
+        {
+          text: this.cancel,
+          role: 'cancel',
+          handler: (data) => {
+            console.log('Cancel clicked');
+          },
+        },
+        {
+          text: this.delete,
+          handler: (data) => {
+            this.loading.present();
+            this.authservice.post('sentdeletehomework', { id: ID }).subscribe(
+              (res) => {
+                this.loading.dismissAll();
+                this.getSaveHomeworkDraft();
+              },
+              (err) => {
+                this.loading.dismissAll();
+              }
+            );
+          },
+        },
+      ],
+    });
+    await alert.present();
+  }
+  toggleHomework(id: any, message: any, i: any) {
+    console.log('toggle', id);
+    if (id != 'cancel' && id != 'confirm') {
+      this.index = i;
+      this.messageId = id;
+      this.messageText = message;
+    }
+    if (id == 'confirm') {
+      console.log('message id', this.index);
+      this.last3days[this.index].message = this.messageText;
+      this.editMessage(this.messageId, this.messageText);
+    }
+    this.isEditMessageOpen = !this.isEditMessageOpen;
+  }
+  editMessage(id: any, message: any) {
+    this.loading.present();
+    this.authservice
+      .post('editHomework', { messageId: id, messageText: message })
+      .subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.getSaveHomeworkDraft();
+            this.getallsubject();
+            this.getSaveHomework();
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
+          console.log(err);
+        }
+      );
+  }
   formatPorts(classs: any) {
     return classs.map((port: any) => port.name).join(', ');
   }

@@ -82,6 +82,12 @@ const routes: Routes = [
     canActivate: [Guard],
   },
   {
+    path: 'timetable',
+    loadChildren: () =>
+      import('./timetable/timetable.module').then((m) => m.TImetableModule),
+    canActivate: [Guard],
+  },
+  {
     path: 'daily-reports',
     loadChildren: () =>
       import('./daily-reports/daily-reports.module').then(
