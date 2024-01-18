@@ -99,169 +99,6 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
-  <!-- Wrap the entire content in a container -->
-  <div class="message-container" *ngIf="topMessages.data.length > 0">
-    <!-- Loop through the top messages -->
-    <ion-card *ngFor="let smsData of topMessages.data.slice(0, 1)">
-      <ion-card-content no-padding>
-        <!-- Header section with student name -->
-        <div class="message-header">
-          <div class="nameDate">
-            <ion-row>
-              <ion-col size="6">
-                <div class="name">{{ smsData.STUDENTNAME }}</div></ion-col
-              >
-              <ion-col size="6">
-                <div class="date">{{ smsData.SMSdate }}</div></ion-col
-              >
-            </ion-row>
-          </div>
-        </div>
-
-        <!-- Message content section -->
-        <ion-row class="dm">
-          <ion-col size="3">
-            <ion-avatar class="avatar">
-              <img
-                *ngIf="storage.get(smsData.ADNO + 'img')"
-                [src]="storage.get(smsData.ADNO + 'img')"
-              />
-              <img
-                *ngIf="!storage.get(smsData.ADNO + 'img')"
-                src="../../assets/imgs/student.png"
-              />
-            </ion-avatar>
-          </ion-col>
-          <ion-col size="9">
-            <div class="message-content">
-              <div
-                class="multi_lines_text"
-                [innerHTML]="authservice.urlify(smsData.Message)"
-              ></div>
-
-              <!-- Image section -->
-              <hr />
-              <div
-                *ngIf="checkimage(smsData.event_image)"
-                class="image-section"
-              >
-                <div
-                  class="openImage"
-                  (click)="setOpen(true, smsData.event_image)"
-                >
-                  <div>
-                    <a (click)="setOpen(true, smsData.event_image)"
-                      >Click here to open the Image</a
-                    >
-                  </div>
-                  <img
-                    class="card-img-top w-100"
-                    style="width: 35px; padding-right: 10px"
-                    src="../../assets/imgs/speakers/picture.png"
-                    alt=""
-                  />
-                </div>
-              </div>
-
-              <!-- Audio section -->
-              <div *ngIf="checkmp3(smsData.event_image)" class="audio-section">
-                <audio controls controlsList="noplaybackrate nodownload">
-                  <source
-                    [src]="
-                      smsData.base64.length > 0
-                        ? smsData.base64
-                        : smsData.event_image
-                    "
-                    type="audio/mpeg"
-                  />
-                </audio>
-              </div>
-
-              <!-- Video section -->
-              <div *ngIf="checkmp4(smsData.event_image)" class="video-section">
-                <iframe
-                  [src]="getSafeUrl(smsData.event_image)"
-                  frameborder="0"
-                  width="100%"
-                  height="100%"
-                  webkitallowfullscreen
-                  mozallowfullscreen
-                  allowfullscreen
-                ></iframe>
-              </div>
-
-              <!-- PDF/Excel section -->
-              <div
-                *ngIf="
-                  checkpdf(smsData.event_image) || checkxls(smsData.event_image)
-                "
-                class="document-section"
-              >
-                <div class="row w-100 align-items-center m-0">
-                  <div
-                    [ngClass]="checkpdf(smsData.event_image) ? 'pdf' : 'xls'"
-                  >
-                    <div class="col-6" style="padding-top: 10px">
-                      <a (click)="authservice.open(smsData.event_image)">
-                        Click here to
-                        {{
-                          checkpdf(smsData.event_image)
-                            ? "open the PDF"
-                            : "Download the Excel"
-                        }}
-                      </a>
-                    </div>
-                    <div class="col-6 text-right m-0 p-0">
-                      <button
-                        type="button"
-                        (click)="authservice.open(smsData.event_image)"
-                      >
-                        <div class="row w-100 align-items-center">
-                          <div
-                            class="col-6 w-100 mx-0 px-0"
-                            style="padding-right: 10px"
-                          >
-                            <img
-                              class="w-50 m-auto"
-                              [src]="
-                                checkpdf(smsData.event_image)
-                                  ? '../../assets/imgs/speakers/spdf.png'
-                                  : '../../assets/imgs/Icons_new/Microsoft Excel.png'
-                              "
-                            />
-                          </div>
-                        </div>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ion-col>
-        </ion-row>
-
-        <!-- Date and Avatar section -->
-
-        <!-- Modal for Image -->
-        <ion-modal [isOpen]="isModalOpen">
-          <ng-template>
-            <ion-header>
-              <ion-toolbar>
-                <ion-buttons slot="end">
-                  <ion-button (click)="setOpen(false, 't')">Close</ion-button>
-                </ion-buttons>
-              </ion-toolbar>
-            </ion-header>
-            <ion-content class="ion-padding">
-              <div>
-                <img class="card-img-top w-100" [src]="modalImage" alt="" />
-              </div>
-            </ion-content>
-          </ng-template>
-        </ion-modal>
-      </ion-card-content>
-    </ion-card>
-  </div>
 
   <ion-grid>
     <ion-row class="align-items-center">
@@ -284,24 +121,19 @@
     </ion-row>
   </ion-grid>
   <div class="message-container" *ngIf="topMessages.data.length > 0">
-    <swiper-container>
-      <swiper-slide *ngFor="let smsData of topMessages.data.slice(1, 3)">
-        <ion-card>
+    <swiper-container
+      #swiper
+      (afterinit)="swiperReady()"
+      (slidechange)="swiperSlideChanged($event)"
+      [loop]="true"
+      [pagination]="true"
+    >
+      <swiper-slide *ngFor="let smsData of topMessages.data">
+        <ion-card
+          *ngFor="let smsData of topMessages.data.slice(0, 1)"
+          class="ion-card-rounded"
+        >
           <ion-card-content no-padding>
-            <!-- Header section with student name -->
-            <div class="message-header">
-              <div class="nameDate">
-                <ion-row>
-                  <ion-col size="6">
-                    <div class="name">{{ smsData.STUDENTNAME }}</div></ion-col
-                  >
-                  <ion-col size="6">
-                    <div class="date">{{ smsData.SMSdate }}</div></ion-col
-                  >
-                </ion-row>
-              </div>
-            </div>
-
             <!-- Message content section -->
             <ion-row class="dm">
               <ion-col size="3">
@@ -318,34 +150,11 @@
               </ion-col>
               <ion-col size="9">
                 <div class="message-content">
+                  <div class="name">{{ smsData.STUDENTNAME }}</div>
                   <div
                     class="multi_lines_text"
                     [innerHTML]="authservice.urlify(smsData.Message)"
                   ></div>
-
-                  <!-- Image section -->
-                  <hr />
-                  <div
-                    *ngIf="checkimage(smsData.event_image)"
-                    class="image-section"
-                  >
-                    <div
-                      class="openImage"
-                      (click)="setOpen(true, smsData.event_image)"
-                    >
-                      <div>
-                        <a (click)="setOpen(true, smsData.event_image)"
-                          >Click here to open the Image</a
-                        >
-                      </div>
-                      <img
-                        class="card-img-top w-100"
-                        style="width: 35px; padding-right: 10px"
-                        src="../../assets/imgs/speakers/picture.png"
-                        alt=""
-                      />
-                    </div>
-                  </div>
 
                   <!-- Audio section -->
                   <div
@@ -432,6 +241,39 @@
                 </div>
               </ion-col>
             </ion-row>
+
+            <!-- Header section with student name -->
+            <div class="message-header">
+              <hr />
+              <div class="nameDate" style="margin-top: 4px">
+                <ion-row>
+                  <ion-col
+                    size="6"
+                    style="
+                      align-items: flex-start;
+                      justify-content: flex-start;
+                      align-self: flex-start;
+                      align-content: flex-start;
+                    "
+                  >
+                    <ion-text class="text-bold">{{ smsData.SMSdate }}</ion-text>
+                  </ion-col>
+                  <ion-col
+                    *ngIf="checkimage(smsData.event_image)"
+                    (click)="setOpen(true, smsData.event_image)"
+                  >
+                    <div style="float: right; align-items: center">
+                      <ion-text class="text-bold">View Image</ion-text>
+                      <img
+                        style="width: 35px !important; padding-left: 10px"
+                        src="../../assets/imgs/speakers/image.png"
+                        alt=""
+                      />
+                    </div>
+                  </ion-col>
+                </ion-row>
+              </div>
+            </div>
 
             <!-- Date and Avatar section -->
 
@@ -529,7 +371,7 @@
         class="card-img-top"
         src="{{ smsData.event_image }}"
         alt=""
-        *ngIf="checkimage(smsData.event_image) && smsData.base64.length == 0"
+        *ngIf="checkimage(smsData.event_image) && smsData.base64.length === 0"
       />
       <div *ngIf="checkmp3(smsData.event_image)">
         <audio controls controlsList="noplaybackrate nodownload">
@@ -541,7 +383,7 @@
           <source
             src="{{ smsData.event_image }}"
             type="audio/mpeg"
-            *ngIf="smsData.base64.length == 0"
+            *ngIf="smsData.base64.length === 0"
           />
         </audio>
       </div>
@@ -625,7 +467,7 @@
     <img
       [src]="flashData[flashindex].event_image"
       alt=""
-      [class.d-none]="flashData[flashindex].event_image.length == 0"
+      [class.d-none]="flashData[flashindex].event_image.length === 0"
     />
     <p class="text-center multi_lines_text">
       <span

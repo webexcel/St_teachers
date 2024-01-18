@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../environments/environment';
 import { AuthService } from '../service/auth.service';
@@ -12,6 +12,7 @@ import {
 } from '@ionic-native/in-app-browser/ngx';
 import { Platform } from '@ionic/angular';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Swiper } from 'swiper';
 import { DataService } from '../service/data.service';
 import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
@@ -26,6 +27,9 @@ export class DashboardComponent implements OnInit {
   ios: any = false;
   teachersDetail: any = this.storage.getjson('teachersDetail');
   @ViewChild('flash_template', { static: false }) flash_template: any;
+  @ViewChild('swiper')
+  swiperRef: ElementRef | undefined;
+  swiper?: Swiper;
   flamessage: any;
   flashindex: any = 0;
   flashData: any;
@@ -395,5 +399,21 @@ export class DashboardComponent implements OnInit {
   }
   getSafeUrl(url: any) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+
+  swiperSlideChanged(e: any) {
+    console.log('changed: ', e);
+  }
+
+  swiperReady() {
+    this.swiper = this.swiperRef?.nativeElement.swiper;
+  }
+
+  goNext() {
+    this.swiper?.slideNext();
+  }
+
+  goPrev() {
+    this.swiper?.slidePrev();
   }
 }

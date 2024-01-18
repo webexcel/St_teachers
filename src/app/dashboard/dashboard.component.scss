@@ -146,10 +146,11 @@ audio::-webkit-media-controls-panel {
 }
 
 .name {
-  color: #45406e;
-  font-weight: 600;
-  font-family: "roboto";
-  font-size: 14.5px;
+  color: #45406e !important;
+  font-weight: 600 !important;
+  font-family: "roboto" !important;
+  font-size: 14.5px !important;
+  margin-bottom: 4px;
 }
 
 .staffCode {
@@ -234,6 +235,24 @@ ion-modal {
 
 ion-content {
   background-color: #fff; /* Set background color as needed */
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Add any other specific styles you need */
+
+.ion-card-rounded {
+  border-radius: 16px !important;
+  box-shadow: none;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.text-bold {
+  font-weight: 500;
+}
+swiper-container {
+  --swiper-pagination-bullet-inactive-color: var(--ion-color-step-200, #cccccc);
+  --swiper-pagination-color: var(--ion-color-primary, #3880ff);
+}
