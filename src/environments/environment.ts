@@ -99,7 +99,7 @@ export const environment = {
   login_logo: 'assets/imgs/appicon.png',
   school_name: 'DEMO SCH',
   app_versionCode: '5',
-  apiBaseUrl: 'http://demo.schooltree.in/baseTeacherS.php/api/',
+  apiBaseUrl: 'https://demo.schooltree.in/baseTeacherS.php/api/',
   version: '5',
   package: 'com.parentalert.in.schoolapp1',
   packageid: '',
