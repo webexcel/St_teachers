@@ -1,4 +1,5 @@
-$colors: #00cccc;
+$colors: #4475de;
+// #00cccc;
 
 .blink_me {
   animation: blinker 1s linear infinite;
@@ -130,7 +131,8 @@ audio::-webkit-media-controls-panel {
 .dashcard {
   border-radius: 20px;
   margin: 25px;
-  background-color: white;
+  background-color: #4475de;
+  color: white;
 }
 
 .dashcardContent {
@@ -146,7 +148,8 @@ audio::-webkit-media-controls-panel {
 }
 
 .name {
-  color: #45406e !important;
+  // color: #fff !important;
+  // color: white !important;
   font-weight: 600 !important;
   font-family: "roboto" !important;
   font-size: 14.5px !important;
@@ -154,7 +157,7 @@ audio::-webkit-media-controls-panel {
 }
 
 .staffCode {
-  color: #45406e;
+  color: #fff;
   font-weight: 500;
   font-family: "roboto";
   font-size: 13.5px;
@@ -175,11 +178,13 @@ ion-content {
 }
 
 .imgBg {
-  line-height: 60px;
+  line-height: 30px;
   width: 65px;
-  height: 65px;
+  height: 40px;
   margin: 0 auto;
-  background: url("../../assets/imgs/dashboard/round.png") no-repeat !important;
+  // background: url("../../assets/imgs/dashboard/round.png") no-repeat !important;
+  // width: 80px;
+  // height: 80px;
 }
 
 /* Add these styles to your global or component stylesheet */

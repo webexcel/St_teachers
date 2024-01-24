@@ -6,13 +6,23 @@ export const environment = {
   production: false,
   senderID: '427864482679',
   pages: [
+    // {
+    //   title: 'circulars',
+    //   url: '/circulars',
+    //   icon: 'assets/imgs/speakers/sms_log.png',
+    //   filter:
+    //     'invert(96%) sepia(27%) saturate(2344%) hue-rotate(287deg) brightness(83%) contrast(121%)',
+    //   admin: 'N',
+    // },
     {
       title: 'circulars',
       url: '/circulars',
-      icon: 'assets/imgs/speakers/sms_log.png',
-      filter:
-        'invert(96%) sepia(27%) saturate(2344%) hue-rotate(287deg) brightness(83%) contrast(121%)',
-      admin: 'N',
+      icon: 'assets/imgs/Icons_new/Featured play list.png',
+      // filter:
+      //   'invert(96%) sepia(27%) saturate(2344%) hue-rotate(287deg) brightness(83%) contrast(121%)',
+      // admin: 'N',
+      menu_icon: 'assets/imgs/dashboard/circular.png',
+      borderColor: '#000000',
     },
     {
       title: 'homework',

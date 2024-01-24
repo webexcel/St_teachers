@@ -75,7 +75,7 @@
 
   <ion-card class="dashcard">
     <ion-card-content class="dashcardContent">
-      <ion-grid>
+      <ion-grid class="frame">
         <ion-row style="padding: 8px">
           <ion-col size="3">
             <img
@@ -133,7 +133,7 @@
           *ngFor="let smsData of topMessages.data.slice(0, 1)"
           class="ion-card-rounded"
         >
-          <ion-card-content no-padding>
+          <ion-card-content no-padding class="frame">
             <!-- Message content section -->
             <ion-row class="dm">
               <ion-col size="3">

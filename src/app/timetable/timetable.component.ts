@@ -48,7 +48,7 @@ export class TimetableComponent implements OnInit {
     private screenOrientation: ScreenOrientation,
     public storage: StorageService
   ) {
-    this.currentOrientation = this.screenOrientation.type;
+    //this.currentOrientation = this.screenOrientation.type;
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
     });
