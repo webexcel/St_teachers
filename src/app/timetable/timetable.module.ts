@@ -20,4 +20,4 @@ import { TimetableComponent } from './timetable.component';
     TabsModule.forRoot(),
   ],
 })
-export class TImetableModule {}
+export class TimetableModule {}

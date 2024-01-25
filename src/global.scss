@@ -26,10 +26,12 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 :root {
-  --ion-color-primary: #00cccc;
+  --ion-color-primary: #4475de;
+  // #00cccc;
 }
 
-$colors: #00cccc !important;
+$colors: #4475de !important;
+// #00cccc
 $filter: invert(21%) sepia(81%) saturate(1905%) hue-rotate(239deg)
   brightness(93%) contrast(96%);
 
