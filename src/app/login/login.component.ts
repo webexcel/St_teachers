@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   usernametr: any;
   passwordtr: any;
   teachersDetail: any = [];
+  storeFirBaseStatus: any;
 
   constructor(
     private platform: Platform,
@@ -122,14 +123,22 @@ export class LoginComponent implements OnInit {
     };
     this.authservice.post('updateFirebaseId', sendingValue).subscribe(
       (result: any) => {
-        if (result['status']) {
+        let fireBaseResponse = result;
+        this.storeFirBaseStatus = fireBaseResponse;
+        console.log(
+          'FireBase ID Send Response Data',
+          this.storeFirBaseStatus.status
+        );
+        if (this.storeFirBaseStatus.status) {
           this.getClass();
         } else {
           this.loading.dismissAll();
+          this.openalert('FIRE BASE ALERT', this.storeFirBaseStatus.data);
         }
       },
       (err) => {
         this.loading.dismissAll();
+
         //Connection failed message
       }
     );
@@ -161,5 +170,13 @@ export class LoginComponent implements OnInit {
         this.loading.dismissAll();
       }
     );
+  }
+  async openalert(message: any, title = 'ALERT') {
+    let alert = await this.alertCtrl.create({
+      header: title,
+      message: message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 }
