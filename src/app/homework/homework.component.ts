@@ -138,6 +138,7 @@ export class HomeworkComponent implements OnInit {
               let d = recentdata[i]['MSG_DATE'];
               if (this.recentdates.indexOf(d) == -1) {
                 this.recentdates.push(d);
+                console.log('recent ddatesss', this.recentdates);
                 this.recentdata1[d] = [];
               }
               console.log('recent data', recentdata[i]);
@@ -158,9 +159,9 @@ export class HomeworkComponent implements OnInit {
   }
 
   getSaveHomework() {
-    this.gethw = {};
+    //this.gethw = {};
     this.getwhdates = [];
-    this.last3days = {};
+    //this.last3days = {};
     this.last3daysdates = [];
     this.loading.present();
     this.authservice
@@ -173,24 +174,28 @@ export class HomeworkComponent implements OnInit {
         (res: any) => {
           this.loading.dismissAll();
           if (res['status']) {
-            let gethw = res['data'];
-            let last3days = res['last3senditem'];
-            for (let i = 0; i < gethw.length; i++) {
-              let d = gethw[i]['MSG_DATE'];
-              if (this.getwhdates.indexOf(d) == -1) {
-                this.getwhdates.push(d);
-                this.gethw[d] = [];
-              }
-              this.gethw[d].push(gethw[i]);
-            }
-            for (let i = 0; i < last3days.length; i++) {
-              let d = last3days[i]['MSG_DATE'];
-              if (this.last3daysdates.indexOf(d) == -1) {
-                this.last3daysdates.push(d);
-                this.last3days[d] = [];
-              }
-              this.last3days[d].push(last3days[i]);
-            }
+            this.gethw = res['data'];
+            // let gethw = res['data'];
+            this.last3days = res['last3senditem'];
+            console.log('Madhavan', this.gethw);
+            console.log('Madhavan', this.gethw);
+            // for (let i = 0; i < gethw.length; i++) {
+            //   let d = gethw[i]['MSG_DATE'];
+            //   if (this.getwhdates.indexOf(d) == -1) {
+            //     this.getwhdates.push(d);
+            //     this.gethw[d] = [];
+            //   }
+            //   this.gethw[d].push(gethw[i]);
+            // }
+            // for (let i = 0; i < last3days.length; i++) {
+            //   let d = last3days[i]['MSG_DATE'];
+            //   if (this.last3daysdates.indexOf(d) == -1) {
+            //     this.last3daysdates.push(d);
+            //     this.last3days[d] = [];
+            //     console.log('Madhavan', this.last3days);
+            //   }
+            //   this.last3days[d].push(last3days[i]);
+            // }
           }
         },
         (err) => {
@@ -283,10 +288,10 @@ export class HomeworkComponent implements OnInit {
           text: this.delete,
           handler: (data) => {
             this.loading.present();
-            this.authservice.post('sentdeletehomework', { id: ID }).subscribe(
+            this.authservice.post('senddeletehomework', { id: ID }).subscribe(
               (res) => {
                 this.loading.dismissAll();
-                this.getSaveHomeworkDraft();
+                this.getSaveHomework();
               },
               (err) => {
                 this.loading.dismissAll();

@@ -120,6 +120,7 @@ export class LoginComponent implements OnInit {
     let sendingValue = {
       firebase_id: fireBaseIDValues,
       staff_id: this.teachersDetail[0]['staff_id'],
+      contact: this.teachersDetail[0]['contact'],
     };
     this.authservice.post('updateFirebaseId', sendingValue).subscribe(
       (result: any) => {
@@ -155,6 +156,7 @@ export class LoginComponent implements OnInit {
       os_version: info.osVersion,
       deviceid: await Device.getId(),
       staff_id: this.teachersDetail[0]['staff_id'],
+      contact: this.teachersDetail[0]['contact'],
       app_version_code: this.app_versionCode,
     };
     this.authservice.post('mobileinstallsnew', value).subscribe(

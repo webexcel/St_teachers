@@ -308,145 +308,179 @@
       </div>
     </div>
 
-    <div class="m-3" *ngIf="recentdates.length > 0">
-      <accordion [closeOthers]="true" [isAnimated]="true">
-        <accordion-group
-          heading="{{ l }}"
-          *ngFor="let l of recentdates; let i = index"
-          [isOpen]="i === 0"
-        >
-          <table class="table table-bordered">
-            <tbody *ngFor="let d of recentdata1[l]">
-              <tr>
-                <td width="20%">{{ d.CLASS }} - {{ d.subject }}</td>
-                <td width="70%" class="textleft multi_lines_text">
-                  <span
-                    *ngIf="d.MESSAGE"
-                    [innerHTML]="authservice.sanitizeHtml(d.MESSAGE)"
-                  ></span>
-                  <br *ngIf="d.event_image && d.event_image.length > 0" />
-                  <img
-                    alt=""
-                    [src]="d.event_image"
-                    class="w-100"
-                    *ngIf="checkimage(d.event_image)"
-                  />
+    <div class="m-3">
+      <div>
+        <div *ngFor="let l of recentdates" class="dateHead">
+          {{ recentdates }}
+        </div>
+        <table class="table table-bordered">
+          <tbody *ngFor="let d of recentdata">
+            <tr>
+              <td width="20%">
+                <div class="txtCenter topBg">{{ d.CLASS }}</div>
+                <div class="txtCenter">{{ d.subject }}</div>
+              </td>
+              <td width="70%" class="textleft multi_lines_text">
+                <span
+                  *ngIf="d.MESSAGE"
+                  [innerHTML]="authservice.sanitizeHtml(d.MESSAGE)"
+                ></span>
+                <br *ngIf="d.event_image && d.event_image.length > 0" />
+                <img
+                  alt=""
+                  [src]="d.event_image"
+                  class="w-100"
+                  *ngIf="checkimage(d.event_image)"
+                />
 
-                  <div
-                    class="row w-100 align-items-center m-0 p-0"
-                    *ngIf="checkpdf(d.event_image)"
-                  >
-                    <div class="col-12">
-                      {{ getfilename(d.event_image) }}
-                    </div>
-                    <div class="col-12">
-                      <button
-                        type="button"
-                        class="btn btn-primary m-0 px-0"
-                        (click)="authservice.open(d.event_image)"
-                      >
-                        <img
-                          class="logo_img"
-                          src="../../assets/imgs/speakers/pdf.png"
-                        />
-                        Download
-                      </button>
-                    </div>
+                <div
+                  class="row w-100 align-items-center m-0 p-0"
+                  *ngIf="checkpdf(d.event_image)"
+                >
+                  <div class="col-12">
+                    {{ getfilename(d.event_image) }}
                   </div>
-
-                  <div
-                    class="row w-100 align-items-center m-0 p-0"
-                    *ngIf="checkxls(d.event_image)"
-                  >
-                    <div class="col-12">
-                      {{ getfilename(d.event_image) }}
-                    </div>
-                    <div class="col-12">
-                      <button
-                        type="button"
-                        class="btn btn-primary m-0 px-0"
-                        (click)="authservice.open(d.event_image)"
-                      >
-                        <img
-                          class="logo_img"
-                          src="../../assets/imgs/speakers/xls.png"
-                        />
-                        Download
-                      </button>
-                    </div>
-                  </div>
-
-                  <div *ngIf="checkmp3(d.event_image)">
-                    <audio
-                      controls
-                      controlsList="noplaybackrate nodownload"
-                      class="w-100"
+                  <div class="col-12">
+                    <button
+                      type="button"
+                      class="btn btn-primary m-0 px-0"
+                      (click)="authservice.open(d.event_image)"
                     >
-                      <source src="{{ d.event_image }}" type="audio/mpeg" />
-                    </audio>
+                      <img
+                        class="logo_img"
+                        src="../../assets/imgs/speakers/pdf.png"
+                      />
+                      Download
+                    </button>
                   </div>
-                </td>
-                <td class="text-right">
-                  <button type="button" class="btn bg-white ml-1">
-                    <ion-icon
-                      class="text-danger"
-                      [md]="'trash-sharp'"
-                      (click)="deletehomework(d.MSG_ID)"
-                    ></ion-icon>
-                  </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </accordion-group>
-      </accordion>
+                </div>
 
-      <!-- <div class="cardlist" *ngFor="let d of recentdata;">
+                <div
+                  class="row w-100 align-items-center m-0 p-0"
+                  *ngIf="checkxls(d.event_image)"
+                >
+                  <div class="col-12">
+                    {{ getfilename(d.event_image) }}
+                  </div>
+                  <div class="col-12">
+                    <button
+                      type="button"
+                      class="btn btn-primary m-0 px-0"
+                      (click)="authservice.open(d.event_image)"
+                    >
+                      <img
+                        class="logo_img"
+                        src="../../assets/imgs/speakers/xls.png"
+                      />
+                      Download
+                    </button>
+                  </div>
+                </div>
+
+                <div *ngIf="checkmp3(d.event_image)">
+                  <audio
+                    controls
+                    controlsList="noplaybackrate nodownload"
+                    class="w-100"
+                  >
+                    <source src="{{ d.event_image }}" type="audio/mpeg" />
+                  </audio>
+                </div>
+              </td>
+              <td class="text-right">
+                <button type="button" class="btn bg-white ml-1">
+                  <ion-icon
+                    class="text-danger"
+                    [md]="'trash-sharp'"
+                    (click)="deletehomework(d.MSG_ID)"
+                  ></ion-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- 
+      <div class="cardlist" *ngFor="let d of recentdata">
         <div class="card-header py-1">
           <div class="row align-items-center">
-            <div class="col">
-              {{d.CLASS}} - {{d.subject}}
-            </div>
+            <div class="col">{{ d.CLASS }} - {{ d.subject }}</div>
             <div class="col text-right">
               <button type="button" class="btn bg-white ml-1">
-                <ion-icon class="text-danger" [md]="'trash-sharp'" (click)="deletehomework(d.MSG_ID)"></ion-icon>
+                <ion-icon
+                  class="text-danger"
+                  [md]="'trash-sharp'"
+                  (click)="deletehomework(d.MSG_ID)"
+                ></ion-icon>
               </button>
-
             </div>
           </div>
         </div>
         <div class="card-body card_body border border-primary multi_lines_text">
-          {{d.MESSAGE}}
-          <br *ngIf="d.event_image && d.event_image.length>0">
-          <img alt="" [src]="d.event_image" class="w-100" *ngIf="checkimage(d.event_image)">
+          {{ d.MESSAGE }}
+          <br *ngIf="d.event_image && d.event_image.length > 0" />
+          <img
+            alt=""
+            [src]="d.event_image"
+            class="w-100"
+            *ngIf="checkimage(d.event_image)"
+          />
 
-          <div class="row w-100 align-items-center m-0 p-0" *ngIf="checkpdf(d.event_image)">
+          <div
+            class="row w-100 align-items-center m-0 p-0"
+            *ngIf="checkpdf(d.event_image)"
+          >
             <div class="col-12">
-              {{getfilename(d.event_image)}}
+              {{ getfilename(d.event_image) }}
             </div>
             <div class="col-12">
-              <button type="button" class="btn btn-primary m-0 px-0" (click)="authservice.open(d.event_image)"><img
-                  class="logo_img" src="../../assets/imgs/speakers/pdf.png"> Download</button>
+              <button
+                type="button"
+                class="btn btn-primary m-0 px-0"
+                (click)="authservice.open(d.event_image)"
+              >
+                <img
+                  class="logo_img"
+                  src="../../assets/imgs/speakers/pdf.png"
+                />
+                Download
+              </button>
             </div>
           </div>
 
-          <div class="row w-100 align-items-center m-0 p-0" *ngIf="checkxls(d.event_image)">
+          <div
+            class="row w-100 align-items-center m-0 p-0"
+            *ngIf="checkxls(d.event_image)"
+          >
             <div class="col-12">
-              {{getfilename(d.event_image)}}
+              {{ getfilename(d.event_image) }}
             </div>
             <div class="col-12">
-              <button type="button" class="btn btn-primary m-0 px-0" (click)="authservice.open(d.event_image)"><img
-                  class="logo_img" src="../../assets/imgs/speakers/xls.png"> Download</button>
+              <button
+                type="button"
+                class="btn btn-primary m-0 px-0"
+                (click)="authservice.open(d.event_image)"
+              >
+                <img
+                  class="logo_img"
+                  src="../../assets/imgs/speakers/xls.png"
+                />
+                Download
+              </button>
             </div>
           </div>
 
           <div *ngIf="checkmp3(d.event_image)">
-            <audio controls controlsList="noplaybackrate nodownload" class="w-100">
-              <source src="{{d.event_image}}" type="audio/mpeg">
+            <audio
+              controls
+              controlsList="noplaybackrate nodownload"
+              class="w-100"
+            >
+              <source src="{{ d.event_image }}" type="audio/mpeg" />
             </audio>
           </div>
         </div>
-      </div> -->
+      </div>-->
     </div>
 
     <div class="" *ngIf="recentdata.length > 0">
@@ -460,429 +494,391 @@
         </button>
       </div>
     </div>
+    <!-- Tab Stars Here-->
+    <div style="padding: 20px">
+      <div class="m-3 table-cls">
+        <tabset>
+          <tab heading="Today">
+            <table class="table table-bordered">
+              <tbody *ngFor="let d of gethw">
+                <tr>
+                  <td width="20%">
+                    <div class="txtCenter topBg">{{ d.CLASS }}</div>
+                    <div class="txtCenter">{{ d.subject }}</div>
+                  </td>
+                  <td width="70%" class="textleft multi_lines_text">
+                    <span
+                      *ngIf="d.MESSAGE"
+                      [innerHTML]="authservice.sanitizeHtml(d.MESSAGE)"
+                    ></span>
+                    <br *ngIf="d.event_image && d.event_image.length > 0" />
+                    <img
+                      alt=""
+                      [src]="d.event_image"
+                      class="w-100"
+                      *ngIf="checkimage(d.event_image)"
+                    />
 
-    <div class="m-3 table-cls">
-      <tabset>
-        <tab heading="Today">
-          <div *ngIf="getwhdates.length > 0" class="table-cls">
-            <accordion [closeOthers]="true" [isAnimated]="true">
-              <accordion-group
-                heading="{{ l }}"
-                *ngFor="let l of getwhdates; let i = index"
-                [isOpen]="i === 0"
-              >
-                <table class="table table-bordered table-cls">
-                  <tbody *ngFor="let d of gethw[l]; let i = index">
-                    <tr>
-                      <td width="20%">{{ d.CLASS }} - {{ d.subject }}</td>
-                      <td width="80%" class="textleft multi_lines_text">
-                        {{ d.MESSAGE }}
-                        <br *ngIf="d.event_image && d.event_image.length > 0" />
-                        <img
-                          alt=""
-                          [src]="d.event_image"
-                          class="w-100"
-                          *ngIf="checkimage(d.event_image)"
-                        />
-
-                        <div
-                          class="row w-100 align-items-center m-0 p-0"
-                          *ngIf="checkpdf(d.event_image)"
-                        >
-                          <div class="col-12">
-                            {{ getfilename(d.event_image) }}
-                          </div>
-                          <div class="col-12">
-                            <button
-                              type="button"
-                              class="btn btn-primary m-0 px-0"
-                              (click)="authservice.open(d.event_image)"
-                            >
-                              <img
-                                class="logo_img"
-                                src="../../assets/imgs/speakers/pdf.png"
-                              />
-                              Download
-                            </button>
-                          </div>
-                        </div>
-
-                        <div
-                          class="row w-100 align-items-center m-0 p-0"
-                          *ngIf="checkxls(d.event_image)"
-                        >
-                          <div class="col-12">
-                            {{ getfilename(d.event_image) }}
-                          </div>
-                          <div class="col-12">
-                            <button
-                              type="button"
-                              class="btn btn-primary m-0 px-0"
-                              (click)="authservice.open(d.event_image)"
-                            >
-                              <img
-                                class="logo_img"
-                                src="../../assets/imgs/speakers/xls.png"
-                              />
-                              Download
-                            </button>
-                          </div>
-                        </div>
-
-                        <div *ngIf="checkmp3(d.event_image)">
-                          <audio
-                            controls
-                            controlsList="noplaybackrate nodownload"
-                            class="w-100"
-                          >
-                            <source
-                              src="{{ d.event_image }}"
-                              type="audio/mpeg"
-                            />
-                          </audio>
-                        </div>
-                      </td>
-                      <td>
-                        <button
-                          class="btn bg-white ml-1"
-                          (click)="toggleHomework(d.MSG_ID, d.MESSAGE, i)"
-                        >
-                          <ion-icon
-                            class="text-black"
-                            [md]="'create-outline'"
-                          ></ion-icon>
-                        </button>
-                      </td>
-                      <td>
+                    <div
+                      class="row w-100 align-items-center m-0 p-0"
+                      *ngIf="checkpdf(d.event_image)"
+                    >
+                      <div class="col-12">
+                        {{ getfilename(d.event_image) }}
+                      </div>
+                      <div class="col-12">
                         <button
                           type="button"
-                          class="btn bg-white ml-1"
-                          (click)="deletehomework1(d.MSG_ID)"
+                          class="btn btn-primary m-0 px-0"
+                          (click)="authservice.open(d.event_image)"
                         >
-                          <ion-icon
-                            class="text-danger"
-                            [md]="'trash-sharp'"
-                          ></ion-icon>
+                          <img
+                            class="logo_img"
+                            src="../../assets/imgs/speakers/pdf.png"
+                          />
+                          Download
                         </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </accordion-group>
-            </accordion>
-          </div>
-        </tab>
-        <tab heading="Last 3 Days">
-          <div *ngIf="last3daysdates.length > 0" class="table-cls">
-            <accordion
-              [closeOthers]="true"
-              [isAnimated]="true"
-              class="table-cls"
+                      </div>
+                    </div>
+
+                    <div
+                      class="row w-100 align-items-center m-0 p-0"
+                      *ngIf="checkxls(d.event_image)"
+                    >
+                      <div class="col-12">
+                        {{ getfilename(d.event_image) }}
+                      </div>
+                      <div class="col-12">
+                        <button
+                          type="button"
+                          class="btn btn-primary m-0 px-0"
+                          (click)="authservice.open(d.event_image)"
+                        >
+                          <img
+                            class="logo_img"
+                            src="../../assets/imgs/speakers/xls.png"
+                          />
+                          Download
+                        </button>
+                      </div>
+                    </div>
+
+                    <div *ngIf="checkmp3(d.event_image)">
+                      <audio
+                        controls
+                        controlsList="noplaybackrate nodownload"
+                        class="w-100"
+                      >
+                        <source src="{{ d.event_image }}" type="audio/mpeg" />
+                      </audio>
+                    </div>
+                  </td>
+                  <td class="text-right">
+                    <button type="button" class="btn bg-white ml-1">
+                      <ion-icon
+                        class="text-danger"
+                        [md]="'trash-sharp'"
+                        (click)="deletehomework(d.MSG_ID)"
+                      ></ion-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </tab>
+          <tab heading="Last 3 Days">
+            <table class="table table-bordered">
+              <tbody *ngFor="let d of last3days">
+                <tr>
+                  <td width="20%">
+                    <div class="txtCenter topBg">{{ d.CLASS }}</div>
+                    <div class="txtCenter">{{ d.subject }}</div>
+                  </td>
+                  <td width="70%" class="textleft multi_lines_text">
+                    <span
+                      *ngIf="d.MESSAGE"
+                      [innerHTML]="authservice.sanitizeHtml(d.MESSAGE)"
+                    ></span>
+                    <br *ngIf="d.event_image && d.event_image.length > 0" />
+                    <img
+                      alt=""
+                      [src]="d.event_image"
+                      class="w-100"
+                      *ngIf="checkimage(d.event_image)"
+                    />
+
+                    <div
+                      class="row w-100 align-items-center m-0 p-0"
+                      *ngIf="checkpdf(d.event_image)"
+                    >
+                      <div class="col-12">
+                        {{ getfilename(d.event_image) }}
+                      </div>
+                      <div class="col-12">
+                        <button
+                          type="button"
+                          class="btn btn-primary m-0 px-0"
+                          (click)="authservice.open(d.event_image)"
+                        >
+                          <img
+                            class="logo_img"
+                            src="../../assets/imgs/speakers/pdf.png"
+                          />
+                          Download
+                        </button>
+                      </div>
+                    </div>
+
+                    <div
+                      class="row w-100 align-items-center m-0 p-0"
+                      *ngIf="checkxls(d.event_image)"
+                    >
+                      <div class="col-12">
+                        {{ getfilename(d.event_image) }}
+                      </div>
+                      <div class="col-12">
+                        <button
+                          type="button"
+                          class="btn btn-primary m-0 px-0"
+                          (click)="authservice.open(d.event_image)"
+                        >
+                          <img
+                            class="logo_img"
+                            src="../../assets/imgs/speakers/xls.png"
+                          />
+                          Download
+                        </button>
+                      </div>
+                    </div>
+
+                    <div *ngIf="checkmp3(d.event_image)">
+                      <audio
+                        controls
+                        controlsList="noplaybackrate nodownload"
+                        class="w-100"
+                      >
+                        <source src="{{ d.event_image }}" type="audio/mpeg" />
+                      </audio>
+                    </div>
+                  </td>
+                  <td class="text-right">
+                    <button type="button" class="btn bg-white ml-1">
+                      <ion-icon
+                        class="text-danger"
+                        [md]="'trash-sharp'"
+                        (click)="deletehomework(d.MSG_ID)"
+                      ></ion-icon>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </tab>
+          <tab heading="Search By Date">
+            <form
+              name="form"
+              (ngSubmit)="f.form.valid && onSubmit1()"
+              #f1="ngForm"
+              novalidate
+              class="border border-primary"
             >
-              <accordion-group
-                heading="{{ l }}"
-                *ngFor="let l of last3daysdates; let i = index"
-                [isOpen]="i === 0"
-              >
-                <table class="table table-bordered table-cls">
-                  <tbody *ngFor="let d of last3days[l]; let i = index">
-                    <tr>
-                      <td width="20%">{{ d.CLASS }} - {{ d.subject }}</td>
-                      <td width="80%" class="textleft multi_lines_text">
-                        {{ d.MESSAGE }}
-                        <br *ngIf="d.event_image && d.event_image.length > 0" />
-                        <img
-                          alt=""
-                          [src]="d.event_image"
-                          class="w-100"
-                          *ngIf="checkimage(d.event_image)"
-                        />
+              <div class="row text-center align-items-center">
+                <div class="col-8">
+                  <!-- <ion-item>
+              <ion-datetime
+                name="s_date"
+                displayFormat="DD/MM/YYYY"
+                pickerFormat="DD/MM/YYYY"
+                [(ngModel)]="select_datas1.s_date"
+                #s_date="ngModel"
+                required
+              ></ion-datetime>
+            </ion-item> -->
 
-                        <div
-                          class="row w-100 align-items-center m-0 p-0"
-                          *ngIf="checkpdf(d.event_image)"
-                        >
-                          <div class="col-12">
-                            {{ getfilename(d.event_image) }}
-                          </div>
-                          <div class="col-12">
-                            <button
-                              type="button"
-                              class="btn btn-primary m-0 px-0"
-                              (click)="authservice.open(d.event_image)"
-                            >
-                              <img
-                                class="logo_img"
-                                src="../../assets/imgs/speakers/pdf.png"
-                              />
-                              Download
-                            </button>
-                          </div>
-                        </div>
-
-                        <div
-                          class="row w-100 align-items-center m-0 p-0"
-                          *ngIf="checkxls(d.event_image)"
-                        >
-                          <div class="col-12">
-                            {{ getfilename(d.event_image) }}
-                          </div>
-                          <div class="col-12">
-                            <button
-                              type="button"
-                              class="btn btn-primary m-0 px-0"
-                              (click)="authservice.open(d.event_image)"
-                            >
-                              <img
-                                class="logo_img"
-                                src="../../assets/imgs/speakers/xls.png"
-                              />
-                              Download
-                            </button>
-                          </div>
-                        </div>
-
-                        <div *ngIf="checkmp3(d.event_image)">
-                          <audio
-                            controls
-                            controlsList="noplaybackrate nodownload"
-                            class="w-100"
+                  <ion-item lines="full">
+                    <ion-label
+                      id="open-modal1"
+                      class="selected-date"
+                      *ngIf="select_datas1.s_date"
+                      (click)="toggleDateSelection()"
+                    >
+                      {{ formatDate(select_datas1.s_date) }}
+                    </ion-label>
+                    <ion-modal
+                      [isOpen]="isPickerOpen"
+                      (willDismiss)="onWillDismiss($event, 'second')"
+                      [initialBreakpoint]="0.5"
+                      [breakpoints]="[0, 0.25, 0.5, 0.75]"
+                      animated="true"
+                    >
+                      <ng-template>
+                        <ion-header>
+                          <ion-toolbar>
+                            <ion-buttons slot="start">
+                              <ion-button (click)="toggleDateSelection()">{{
+                                "cancel" | translate
+                              }}</ion-button>
+                            </ion-buttons>
+                            <ion-title>{{
+                              "select_date" | translate
+                            }}</ion-title>
+                            <ion-buttons slot="end">
+                              <ion-button
+                                (click)="toggleDateSelection()"
+                                [strong]="true"
+                                >{{ "confirm" | translate }}</ion-button
+                              >
+                            </ion-buttons>
+                          </ion-toolbar>
+                        </ion-header>
+                        <ion-content class="ion-padding">
+                          <ion-datetime
+                            name="dob"
+                            displayFormat="DD/MM/YYYY"
+                            pickerFormat="DD/MM/YYYY"
+                            [(ngModel)]="select_datas1.s_date"
+                            #dob="ngModel"
+                            presentation="date"
+                            mode="md"
+                            #datetime
+                            (ionChange)="showHideDatePicker()"
+                            required
                           >
-                            <source
-                              src="{{ d.event_image }}"
-                              type="audio/mpeg"
-                            />
-                          </audio>
-                        </div>
-                      </td>
-                      <td>
-                        <button
-                          class="btn bg-white ml-1"
-                          (click)="toggleHomework(d.MSG_ID, d.MESSAGE, i)"
-                        >
-                          <ion-icon
-                            class="text-black"
-                            [md]="'create-outline'"
-                          ></ion-icon>
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          type="button"
-                          class="btn bg-white ml-1"
-                          (click)="deletehomework1(d.MSG_ID)"
-                        >
-                          <ion-icon
-                            class="text-danger"
-                            [md]="'trash-sharp'"
-                          ></ion-icon>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </accordion-group>
-            </accordion>
-          </div>
-        </tab>
-        <tab heading="Search By Date">
-          <form
-            name="form"
-            (ngSubmit)="f.form.valid && onSubmit1()"
-            #f1="ngForm"
-            novalidate
-            class="border border-primary"
-          >
-            <div class="row text-center align-items-center">
-              <div class="col-8">
-                <!-- <ion-item>
-                  <ion-datetime
-                    name="s_date"
-                    displayFormat="DD/MM/YYYY"
-                    pickerFormat="DD/MM/YYYY"
-                    [(ngModel)]="select_datas1.s_date"
-                    #s_date="ngModel"
-                    required
-                  ></ion-datetime>
-                </ion-item> -->
-
-                <ion-item lines="full">
-                  <ion-label
-                    id="open-modal1"
-                    class="selected-date"
-                    *ngIf="select_datas1.s_date"
-                    (click)="toggleDateSelection()"
+                          </ion-datetime>
+                        </ion-content>
+                      </ng-template>
+                    </ion-modal>
+                  </ion-item>
+                </div>
+                <div class="col-4">
+                  <button
+                    type="button"
+                    (click)="onSubmit1()"
+                    class="btn btn-success"
                   >
-                    {{ formatDate(select_datas1.s_date) }}
-                  </ion-label>
-                  <ion-modal
-                    [isOpen]="isPickerOpen"
-                    (willDismiss)="onWillDismiss($event, 'second')"
-                    [initialBreakpoint]="0.5"
-                    [breakpoints]="[0, 0.25, 0.5, 0.75]"
-                    animated="true"
-                  >
-                    <ng-template>
-                      <ion-header>
-                        <ion-toolbar>
-                          <ion-buttons slot="start">
-                            <ion-button (click)="toggleDateSelection()">{{
-                              "cancel" | translate
-                            }}</ion-button>
-                          </ion-buttons>
-                          <ion-title>{{ "select_date" | translate }}</ion-title>
-                          <ion-buttons slot="end">
-                            <ion-button
-                              (click)="toggleDateSelection()"
-                              [strong]="true"
-                              >{{ "confirm" | translate }}</ion-button
-                            >
-                          </ion-buttons>
-                        </ion-toolbar>
-                      </ion-header>
-                      <ion-content class="ion-padding">
-                        <ion-datetime
-                          name="dob"
-                          displayFormat="DD/MM/YYYY"
-                          pickerFormat="DD/MM/YYYY"
-                          [(ngModel)]="select_datas1.s_date"
-                          #dob="ngModel"
-                          presentation="date"
-                          mode="md"
-                          #datetime
-                          (ionChange)="showHideDatePicker()"
-                          required
-                        >
-                        </ion-datetime>
-                      </ion-content>
-                    </ng-template>
-                  </ion-modal>
-                </ion-item>
+                    Get
+                    <ion-icon
+                      [ios]="'arrow-forward-sharp'"
+                      [md]="'arrow-forward-sharp'"
+                    ></ion-icon>
+                  </button>
+                </div>
               </div>
-              <div class="col-4">
-                <button
-                  type="button"
-                  (click)="onSubmit1()"
-                  class="btn btn-success"
+            </form>
+            <div *ngIf="senditems1dates.length > 0">
+              <accordion [closeOthers]="true" [isAnimated]="true">
+                <accordion-group
+                  heading="{{ l }}"
+                  *ngFor="let l of senditems1dates; let i = index"
+                  [isOpen]="i === 0"
                 >
-                  Get
-                  <ion-icon
-                    [ios]="'arrow-forward-sharp'"
-                    [md]="'arrow-forward-sharp'"
-                  ></ion-icon>
-                </button>
-              </div>
-            </div>
-          </form>
-          <div *ngIf="senditems1dates.length > 0">
-            <accordion [closeOthers]="true" [isAnimated]="true">
-              <accordion-group
-                heading="{{ l }}"
-                *ngFor="let l of senditems1dates; let i = index"
-                [isOpen]="i === 0"
-              >
-                <table class="table table-bordered">
-                  <tbody *ngFor="let d of senditems1[l]; let i = index">
-                    <tr>
-                      <td width="20%">{{ d.CLASS }} - {{ d.subject }}</td>
-                      <td width="80%" class="textleft multi_lines_text">
-                        {{ d.MESSAGE }}
-                        <br *ngIf="d.event_image && d.event_image.length > 0" />
-                        <img
-                          alt=""
-                          [src]="d.event_image"
-                          class="w-100"
-                          *ngIf="checkimage(d.event_image)"
-                        />
-
-                        <div
-                          class="row w-100 align-items-center m-0 p-0"
-                          *ngIf="checkpdf(d.event_image)"
-                        >
-                          <div class="col-12">
-                            {{ getfilename(d.event_image) }}
-                          </div>
-                          <div class="col-12">
-                            <button
-                              type="button"
-                              class="btn btn-primary m-0 px-0"
-                              (click)="authservice.open(d.event_image)"
-                            >
-                              <img
-                                class="logo_img"
-                                src="../../assets/imgs/speakers/pdf.png"
-                              />
-                              Download
-                            </button>
-                          </div>
-                        </div>
-
-                        <div
-                          class="row w-100 align-items-center m-0 p-0"
-                          *ngIf="checkxls(d.event_image)"
-                        >
-                          <div class="col-12">
-                            {{ getfilename(d.event_image) }}
-                          </div>
-                          <div class="col-12">
-                            <button
-                              type="button"
-                              class="btn btn-primary m-0 px-0"
-                              (click)="authservice.open(d.event_image)"
-                            >
-                              <img
-                                class="logo_img"
-                                src="../../assets/imgs/speakers/xls.png"
-                              />
-                              Download
-                            </button>
-                          </div>
-                        </div>
-
-                        <div *ngIf="checkmp3(d.event_image)">
-                          <audio
-                            controls
-                            controlsList="noplaybackrate nodownload"
+                  <table class="table table-bordered">
+                    <tbody *ngFor="let d of senditems1[l]; let i = index">
+                      <tr>
+                        <td width="20%">{{ d.CLASS }} - {{ d.subject }}</td>
+                        <td width="80%" class="textleft multi_lines_text">
+                          {{ d.MESSAGE }}
+                          <br
+                            *ngIf="d.event_image && d.event_image.length > 0"
+                          />
+                          <img
+                            alt=""
+                            [src]="d.event_image"
                             class="w-100"
+                            *ngIf="checkimage(d.event_image)"
+                          />
+
+                          <div
+                            class="row w-100 align-items-center m-0 p-0"
+                            *ngIf="checkpdf(d.event_image)"
                           >
-                            <source
-                              src="{{ d.event_image }}"
-                              type="audio/mpeg"
-                            />
-                          </audio>
-                        </div>
-                      </td>
-                      <td>
-                        <button
-                          class="btn bg-white ml-1"
-                          (click)="toggleHomework(d.MSG_ID, d.MESSAGE, i)"
-                        >
-                          <ion-icon
-                            class="text-black"
-                            [md]="'create-outline'"
-                          ></ion-icon>
-                        </button>
-                      </td>
-                      <td>
-                        <button
-                          type="button"
-                          class="btn bg-white ml-1"
-                          (click)="deletehomework1(d.MSG_ID)"
-                        >
-                          <ion-icon
-                            class="text-danger"
-                            [md]="'trash-sharp'"
-                          ></ion-icon>
-                        </button>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </accordion-group>
-            </accordion>
-          </div>
-        </tab>
-      </tabset>
+                            <div class="col-12">
+                              {{ getfilename(d.event_image) }}
+                            </div>
+                            <div class="col-12">
+                              <button
+                                type="button"
+                                class="btn btn-primary m-0 px-0"
+                                (click)="authservice.open(d.event_image)"
+                              >
+                                <img
+                                  class="logo_img"
+                                  src="../../assets/imgs/speakers/pdf.png"
+                                />
+                                Download
+                              </button>
+                            </div>
+                          </div>
+
+                          <div
+                            class="row w-100 align-items-center m-0 p-0"
+                            *ngIf="checkxls(d.event_image)"
+                          >
+                            <div class="col-12">
+                              {{ getfilename(d.event_image) }}
+                            </div>
+                            <div class="col-12">
+                              <button
+                                type="button"
+                                class="btn btn-primary m-0 px-0"
+                                (click)="authservice.open(d.event_image)"
+                              >
+                                <img
+                                  class="logo_img"
+                                  src="../../assets/imgs/speakers/xls.png"
+                                />
+                                Download
+                              </button>
+                            </div>
+                          </div>
+
+                          <div *ngIf="checkmp3(d.event_image)">
+                            <audio
+                              controls
+                              controlsList="noplaybackrate nodownload"
+                              class="w-100"
+                            >
+                              <source
+                                src="{{ d.event_image }}"
+                                type="audio/mpeg"
+                              />
+                            </audio>
+                          </div>
+                        </td>
+                        <td>
+                          <button
+                            class="btn bg-white ml-1"
+                            (click)="toggleHomework(d.MSG_ID, d.MESSAGE, i)"
+                          >
+                            <ion-icon
+                              class="text-black"
+                              [md]="'create-outline'"
+                            ></ion-icon>
+                          </button>
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn bg-white ml-1"
+                            (click)="deletehomework1(d.MSG_ID)"
+                          >
+                            <ion-icon
+                              class="text-danger"
+                              [md]="'trash-sharp'"
+                            ></ion-icon>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </accordion-group>
+              </accordion>
+            </div>
+          </tab>
+        </tabset>
+      </div>
     </div>
+
+    <!-- Tab Ends Here-->
   </div>
 </ion-content>
