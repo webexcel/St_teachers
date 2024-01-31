@@ -13,6 +13,7 @@ import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
 import { TranslateConfigService } from '../service/translate-config.service';
+
 @Component({
   selector: 'app-circulars',
   templateUrl: './circulars.component.html',
@@ -345,7 +346,7 @@ export class CircularsComponent implements OnInit {
         console.log(uri);
         this.filePath.resolveNativePath(uri).then(
           (res) => {
-            console.log(res);
+            console.log('@log res: ', res);
             let f: any = res.split('/');
             this.select_datas.filename = f[f.length - 1].toLowerCase();
             let l: any = res.split('.');
@@ -370,15 +371,12 @@ export class CircularsComponent implements OnInit {
                 l = `data:image/${l};base64,`;
               }
               this.base64.encodeFile(res).then(
-                (res) => {
-                  this.select_datas.image =
-                    this.sanitizer.bypassSecurityTrustUrl(
-                      l + res.split('ase64,')[1]
-                    );
-                  console.log(this.select_datas.image);
+                (result) => {
+                  this.select_datas.image = `${l}${result.split('base64,')[1]}`;
                 },
                 (err) => {
-                  console.log(err);
+                  console.log('@log file open error: ', err);
+                  this.error = true;
                 }
               );
             } else {
@@ -386,11 +384,11 @@ export class CircularsComponent implements OnInit {
             }
           },
           (err) => {
-            console.log(err);
+            console.log('@log file error: ', err);
           }
         );
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log('@log file errorZZ: ', e));
   }
 
   checkimage(f: any) {
