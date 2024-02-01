@@ -338,10 +338,14 @@
                 brightness(88%) contrast(86%);
             "
             src="../../assets/imgs/speakers/microphone.png"
-            (click)="startRecord()"
+            (click)="onStartRecording()"
             *ngIf="!recording"
           />
-          <span class="text-success" *ngIf="!recording" (click)="startRecord()">
+          <span
+            class="text-success"
+            *ngIf="!recording"
+            (click)="onStartRecording()"
+          >
             Start</span
           >
           <img
@@ -352,12 +356,20 @@
                 brightness(119%) contrast(120%);
             "
             src="../../assets/imgs/speakers/microphone-off.png"
-            (click)="stopRecord()"
+            (click)="onStopRecording()"
             *ngIf="recording"
           />
-          <span style="color: #ff0000" *ngIf="recording" (click)="stopRecord()">
+          <span
+            style="color: #ff0000"
+            *ngIf="recording"
+            (click)="onStopRecording()"
+          >
             Stop</span
           >
+          <br />
+          <span style="font-size: 10px" *ngIf="recording">{{
+            formatTime(recordingTimer)
+          }}</span>
         </div>
         <!-- <div class="col-12" *ngIf="select_datas.filename.length>0">
           <hr class="bg-info">f
@@ -372,16 +384,14 @@
         </div>
         <div
           class="col-10"
-          *ngIf="
-            select_datas.filename.length > 0 && select_datas.type === 'mp3'
-          "
+          *ngIf="audioData.fileName.length > 0 && select_datas.type === 'mp3'"
         >
           <audio
             controls
             controlsList="noplaybackrate nodownload"
             class="w-100"
           >
-            <source [src]="select_datas.image" type="audio/mpeg" />
+            <source [src]="audioData.base64" type="audio/mpeg" />
           </audio>
         </div>
         <div class="col-2" *ngIf="select_datas.filename.length > 0">
