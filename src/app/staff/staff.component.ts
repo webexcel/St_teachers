@@ -8,11 +8,18 @@ import { FilePath } from '@ionic-native/file-path/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { AlertController, IonModal, Platform } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
+import {
+  Base64String,
+  GenericResponse,
+  RecordingData,
+  VoiceRecorder,
+} from 'capacitor-voice-recorder';
 import { AuthService } from '../service/auth.service';
 import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
 import { TranslateConfigService } from '../service/translate-config.service';
+
 @Component({
   selector: 'app-staff',
   templateUrl: './staff.component.html',
@@ -48,6 +55,17 @@ export class StaffComponent implements OnInit {
   messageText: any;
   messageId: any;
   index: any;
+  recordingTimer = 0;
+  timer!: NodeJS.Timeout;
+  audioData: {
+    fileName: string;
+    base64: Base64String | null;
+    duration: number;
+  } = {
+    fileName: '',
+    base64: null,
+    duration: 0,
+  };
   constructor(
     private serfile: FilesService,
     private media: Media,
@@ -612,5 +630,101 @@ export class StaffComponent implements OnInit {
       ],
     });
     await alert.present();
+  }
+  checkRecordingAbility() {
+    VoiceRecorder.requestAudioRecordingPermission().then(
+      (result: GenericResponse) => console.log(result.value)
+    );
+    VoiceRecorder.canDeviceVoiceRecord()
+      .then((result: GenericResponse) => true)
+      .catch(() => false);
+  }
+
+  onStartRecording() {
+    this.audioData = {
+      base64: null,
+      duration: 0,
+      fileName: '',
+    };
+    this.checkRecordingAbility();
+    this.fileName =
+      'record' +
+      new Date().getDate() +
+      new Date().getMonth() +
+      new Date().getFullYear() +
+      new Date().getHours() +
+      new Date().getMinutes() +
+      new Date().getSeconds() +
+      '.mp3';
+    // VoiceRecorder.hasAudioRecordingPermission.then((result: GenericResponse) => console.log(result.value))
+    VoiceRecorder.startRecording()
+      .then((result: GenericResponse) => {
+        this.select_datas.ftype = '';
+        this.select_datas.image = '';
+        this.select_datas.filename = '';
+        this.recording = true;
+        if (!this.timer) {
+          this.timer = setInterval(() => {
+            console.log('@log: this.recordingTimer: ', this.recordingTimer);
+            this.recordingTimer += 1;
+          }, 1000);
+        }
+        this.error = false;
+        this.audioData = {
+          base64: null,
+          duration: 0,
+          fileName: this.fileName ?? '',
+        };
+        console.log('@log recording value: ', result.value);
+      })
+      .catch((error) => {
+        this.error = true;
+        console.log('@log recording error: ', error);
+      });
+  }
+
+  onStopRecording() {
+    VoiceRecorder.stopRecording()
+      .then((result: RecordingData) => {
+        this.recording = false;
+        if (this.timer) {
+          clearInterval(this.timer);
+        }
+        console.log('@log recorded value: ', result.value);
+        const { mimeType, recordDataBase64, msDuration } = result.value;
+        this.select_datas.filename = this.fileName;
+        this.select_datas.ftype = 'mp3';
+        this.error = false;
+        this.audioData = {
+          ...this.audioData,
+          base64: `data:${mimeType};base64,${recordDataBase64}`,
+          duration: Math.floor(msDuration / 1000),
+          fileName: this.fileName ?? '',
+        };
+        this.select_datas.image = recordDataBase64;
+      })
+      .catch((error) => {
+        this.error = true;
+        console.log('@log recorded error: ', error);
+      });
+  }
+
+  formatTime(duration: number) {
+    // Hours, minutes and seconds
+    const hrs = ~~(duration / 3600);
+    const mins = ~~((duration % 3600) / 60);
+    const secs = ~~duration % 60;
+
+    // Output like "1:01" or "4:03:59" or "123:03:59"
+    let ret = '';
+
+    if (hrs > 0) {
+      ret += '' + hrs + ':' + (mins < 10 ? '0' : '');
+    }
+
+    ret += '' + mins + ':' + (secs < 10 ? '0' : '');
+    ret += '' + secs;
+
+    return ret;
   }
 }

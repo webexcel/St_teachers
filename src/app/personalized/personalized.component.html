@@ -195,7 +195,7 @@
               [(ngModel)]="select_datas.message"
               #message="ngModel"
               placeholder="Type Here"
-              [required]="select_datas.filename.length == 0"
+              [required]="select_datas.filename.length === 0"
             >
             </ion-textarea>
           </ion-item>
@@ -204,7 +204,7 @@
           >
           <ion-item lines="full">
             <div class="row w-100 align-items-center text-center">
-              <div class="col-6" *ngIf="select_datas.filename.length == 0">
+              <div class="col-6" *ngIf="select_datas.filename.length === 0">
                 <img
                   alt=""
                   style="width: 30px"
@@ -212,7 +212,7 @@
                   (click)="open()"
                 />
               </div>
-              <div class="col-6" *ngIf="select_datas.filename.length == 0">
+              <div class="col-6" *ngIf="select_datas.filename.length === 0">
                 <img
                   alt=""
                   style="
@@ -221,13 +221,13 @@
                       hue-rotate(81deg) brightness(88%) contrast(86%);
                   "
                   src="../../assets/imgs/speakers/microphone.png"
-                  (click)="startRecord()"
+                  (click)="onStartRecording()"
                   *ngIf="!recording"
                 />
                 <span
                   class="text-success"
                   *ngIf="!recording"
-                  (click)="startRecord()"
+                  (click)="onStartRecording()"
                 >
                   Start</span
                 >
@@ -239,16 +239,20 @@
                       hue-rotate(358deg) brightness(119%) contrast(120%);
                   "
                   src="../../assets/imgs/speakers/microphone-off.png"
-                  (click)="stopRecord()"
+                  (click)="onStopRecording()"
                   *ngIf="recording"
                 />
                 <span
                   style="color: #ff0000"
                   *ngIf="recording"
-                  (click)="stopRecord()"
+                  (click)="onStopRecording()"
                 >
                   Stop</span
                 >
+                <br />
+                <span style="font-size: 10px" *ngIf="recording">{{
+                  formatTime(recordingTimer)
+                }}</span>
               </div>
               <!-- <div class="col-12" *ngIf="select_datas.filename.length>0">
                 <hr class="bg-info">
@@ -257,7 +261,7 @@
                 class="col-10"
                 *ngIf="
                   select_datas.filename.length > 0 &&
-                  select_datas.ftype != 'mp3'
+                  select_datas.ftype !== 'mp3'
                 "
               >
                 {{ select_datas.filename }}
@@ -266,7 +270,7 @@
                 class="col-10"
                 *ngIf="
                   select_datas.filename.length > 0 &&
-                  select_datas.ftype == 'mp3'
+                  select_datas.ftype === 'mp3'
                 "
               >
                 <audio
@@ -274,7 +278,7 @@
                   controlsList="noplaybackrate nodownload"
                   class="w-100"
                 >
-                  <source [src]="select_datas.image" type="audio/mpeg" />
+                  <source [src]="audioData.base64" type="audio/mpeg" />
                 </audio>
               </div>
               <div class="col-2" *ngIf="select_datas.filename.length > 0">
