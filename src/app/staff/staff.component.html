@@ -206,9 +206,9 @@
           <span *ngIf="f.submitted && staff.invalid" class="text-danger"
             >Select Staffs</span
           >
-          <ion-item>
+          <!-- <ion-item>
             <ion-label>{{ "message" | translate }}</ion-label>
-          </ion-item>
+          </ion-item> -->
 
           <ion-item lines="full">
             <ion-textarea
@@ -216,7 +216,7 @@
               name="message"
               [(ngModel)]="select_datas.message"
               #message="ngModel"
-              placeholder="Type Here"
+              placeholder="Enter the message here"
               [required]="select_datas.filename.length == 0"
             >
             </ion-textarea>

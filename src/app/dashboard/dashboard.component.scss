@@ -253,11 +253,56 @@ ion-content {
   align-items: flex-start;
   justify-content: flex-start;
 }
+.ion-card-rounded-right {
+  border-top-right-radius: 16px !important;
+  border-bottom-right-radius: 16px !important;
+  // box-shadow: none;
+  //align-items: flex-start;
+  //justify-content: flex-start;
+}
 
 .text-bold {
   font-weight: 500;
 }
 swiper-container {
+  // width: 90%;
   --swiper-pagination-bullet-inactive-color: var(--ion-color-step-200, #cccccc);
   --swiper-pagination-color: var(--ion-color-primary, #3880ff);
+}
+
+.message-container {
+  display: flex;
+}
+
+.left {
+  float: left;
+  width: 10%;
+}
+
+.right {
+  float: right;
+  width: 88%;
+}
+.view {
+  background-color: aliceblue;
+  vertical-align: middle;
+  width: 100%;
+  line-height: 170px;
+}
+
+swiper-slide {
+  width: 90%;
+}
+
+.card-content-md {
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-inline-start: 6px;
+  padding-inline-end: 6px;
+}
+
+.element.style {
+  flex: 0;
+  width: 0;
+  max-width: 0;
 }

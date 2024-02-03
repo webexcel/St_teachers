@@ -184,17 +184,13 @@
           <span *ngIf="f.submitted && student.invalid" class="text-danger"
             >Select Student</span
           >
-          <ion-item>
-            <ion-label>{{ "message" | translate }}</ion-label>
-          </ion-item>
-
           <ion-item lines="full">
             <ion-textarea
               type="text"
               name="message"
               [(ngModel)]="select_datas.message"
               #message="ngModel"
-              placeholder="Type Here"
+              placeholder="Enter the message here"
               [required]="select_datas.filename.length == 0"
             >
             </ion-textarea>
@@ -205,6 +201,7 @@
           <ion-item lines="full">
             <div class="row w-100 align-items-center text-center">
               <div class="col-6" *ngIf="select_datas.filename.length == 0">
+                <span class="text-success" (click)="open()">Attach Files</span>
                 <img
                   alt=""
                   style="width: 30px"
@@ -229,7 +226,7 @@
                   *ngIf="!recording"
                   (click)="startRecord()"
                 >
-                  Start</span
+                  Start Recording</span
                 >
                 <img
                   alt=""
@@ -247,7 +244,7 @@
                   *ngIf="recording"
                   (click)="stopRecord()"
                 >
-                  Stop</span
+                  Stop Recording</span
                 >
               </div>
               <!-- <div class="col-12" *ngIf="select_datas.filename.length>0">
@@ -336,71 +333,102 @@
       </div>
     </div>
 
-    <div class="cardlist" *ngFor="let d of grpmes">
-      <div class="card-header py-1">
-        <div class="row align-items-center">
-          <div class="col">{{ d.name }} ({{ d.CLASSSEC }})</div>
-          <div class="col text-right">
-            <button type="button" class="btn bg-white mx-1">
-              <ion-icon
-                class="text-success"
-                [md]="'send-sharp'"
-                (click)="movegrouptofinal([{ ID: d.ID }])"
-              ></ion-icon>
-            </button>
-            <button
-              type="button"
-              class="btn bg-white ml-1"
-              (click)="deletecirculars(d.ID)"
-            >
-              <ion-icon class="text-danger" [md]="'trash-sharp'"></ion-icon>
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="card-body card_body border border-primary multi_lines_text">
-        <span
-          *ngIf="d.message"
-          [innerHTML]="authservice.sanitizeHtml(d.message)"
-        ></span>
-        <br *ngIf="d.event_image && d.event_image.length > 0" />
-        <img
-          alt=""
-          [src]="d.event_image"
-          class="w-100"
-          *ngIf="checkimage(d.event_image)"
-        />
+    <!-- Start of Drafted Message -->
 
-        <div
-          class="row w-100 align-items-center m-0 p-0"
-          *ngIf="checkpdf(d.event_image)"
-        >
-          <div class="col-12">
-            {{ getfilename(d.event_image) }}
-          </div>
-          <div class="col-12">
-            <button
-              type="button"
-              class="btn btn-primary m-0 px-0"
-              (click)="authservice.open(d.event_image)"
-            >
-              <img class="logo_img" src="../../assets/imgs/speakers/pdf.png" />
-              Download
-            </button>
-          </div>
+    <div class="m-3">
+      <div *ngFor="let d of grpmes">
+        <div class="dateHead" *ngIf="d.message">
+          {{ formatDate(select_datas.s_date) }}
         </div>
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td width="30%">
+                <div class="txtCenter topBg">{{ d.name }}</div>
+                <div class="txtCenter" style="font-size: 14px">
+                  {{ d.CLASSSEC }}
+                </div>
+              </td>
+              <td width="60%" class="textleft multi_lines_text">
+                <span>{{ d.message }}</span>
+                <br *ngIf="d.event_image && d.event_image.length > 0" />
+                <img
+                  alt=""
+                  [src]="d.event_image"
+                  class="w-100"
+                  *ngIf="checkimage(d.event_image)"
+                />
 
-        <div *ngIf="checkmp3(d.event_image)">
-          <audio
-            controls
-            controlsList="noplaybackrate nodownload"
-            class="w-100"
-          >
-            <source src="{{ d.event_image }}" type="audio/mpeg" />
-          </audio>
-        </div>
+                <div
+                  class="row w-100 align-items-center m-0 p-0"
+                  *ngIf="checkpdf(d.event_image)"
+                >
+                  <div class="col-12">
+                    {{ getfilename(d.event_image) }}
+                  </div>
+                  <div class="col-12">
+                    <button
+                      type="button"
+                      class="btn btn-primary m-0 px-0"
+                      (click)="authservice.open(d.event_image)"
+                    >
+                      <img
+                        class="logo_img"
+                        src="../../assets/imgs/speakers/pdf.png"
+                      />
+                      Download
+                    </button>
+                  </div>
+                </div>
+
+                <div
+                  class="row w-100 align-items-center m-0 p-0"
+                  *ngIf="checkxls(d.event_image)"
+                >
+                  <div class="col-12">
+                    {{ getfilename(d.event_image) }}
+                  </div>
+                  <div class="col-12">
+                    <button
+                      type="button"
+                      class="btn btn-primary m-0 px-0"
+                      (click)="authservice.open(d.event_image)"
+                    >
+                      <img
+                        class="logo_img"
+                        src="../../assets/imgs/speakers/xls.png"
+                      />
+                      Download
+                    </button>
+                  </div>
+                </div>
+
+                <div *ngIf="checkmp3(d.event_image)">
+                  <audio
+                    controls
+                    controlsList="noplaybackrate nodownload"
+                    class="w-100"
+                  >
+                    <source src="{{ d.event_image }}" type="audio/mpeg" />
+                  </audio>
+                </div>
+              </td>
+              <td class="text-right">
+                <button type="button" class="btn bg-white ml-1">
+                  <ion-icon
+                    class="text-danger"
+                    [md]="'trash-sharp'"
+                    (click)="deletecirculars(d.ID)"
+                  ></ion-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
+
+    <!-- End of Drafted Message -->
 
     <div class="" *ngIf="grpmes.length > 0">
       <div class="card-body card_body">
