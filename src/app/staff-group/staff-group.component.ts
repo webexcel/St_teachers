@@ -312,6 +312,7 @@ export class StaffGroupComponent implements OnInit {
               l == 'png' ||
               l == 'pdf' ||
               l == 'mp3' ||
+              l == 'mp4' ||
               l == 'xls' ||
               l == 'xlsx'
             ) {
@@ -319,18 +320,18 @@ export class StaffGroupComponent implements OnInit {
               this.error = false;
               if (l == 'mp3') {
                 l = `data:audio/mpeg;base64,`;
+              } else if (l == 'mp4') {
+                l = '';
               } else {
                 l = `data:image/${l};base64,`;
               }
               this.base64.encodeFile(res).then(
-                (res) => {
-                  this.select_datas.image =
-                    this.sanitizer.bypassSecurityTrustUrl(
-                      l + res.split('ase64,')[1]
-                    );
+                (result) => {
+                  this.select_datas.image = `${l}${result.split('base64,')[1]}`;
                 },
                 (err) => {
-                  console.log(err);
+                  console.log('@log file open error: ', err);
+                  this.error = true;
                 }
               );
             } else {
