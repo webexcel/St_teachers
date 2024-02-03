@@ -27,6 +27,7 @@ import { TranslateConfigService } from '../service/translate-config.service';
 })
 export class CircularsComponent implements OnInit {
   ios: any = false;
+  optionsSelected: any = [];
   classs: any;
   select_datas: any = {};
   select_datas1: any = {};
@@ -359,7 +360,7 @@ export class CircularsComponent implements OnInit {
     this.fileChooser
       .open()
       .then((uri) => {
-        console.log(uri);
+        console.log('testtt', uri);
         this.filePath.resolveNativePath(uri).then(
           (res) => {
             console.log('@log res: ', res);
@@ -471,6 +472,7 @@ export class CircularsComponent implements OnInit {
   }
 
   startRecord() {
+    console.log('audio');
     this.fileName =
       'record' +
       new Date().getDate() +

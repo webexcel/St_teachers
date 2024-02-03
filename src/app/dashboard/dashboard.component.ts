@@ -110,6 +110,10 @@ export class DashboardComponent implements OnInit {
     this.router.navigate([url]);
   }
 
+  redirectToModule() {
+    const moduleRoute = 'CircularsRoutingModule';
+  }
+
   getosversion() {
     this.loading.present();
     this.authservice.get('getosversion').subscribe(
