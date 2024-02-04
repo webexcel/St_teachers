@@ -70,6 +70,14 @@ export class DashboardComponent implements OnInit {
       message: 'Get All Messages Successfully',
       data: [
         {
+          ADNO: 'KG107',
+          SMSdate: '10,Jan-19:33',
+          STUDENTNAME: 'Praburajan E',
+          Message:
+            'Dear Parents, Your Ward  Praburajan E  is Late for school today 10-01-2024 - Principal',
+          event_image: null,
+        },
+        {
           ADNO: 'KG108',
           SMSdate: '11,Jan-12:34',
           STUDENTNAME: 'Praburajan E',
@@ -77,19 +85,11 @@ export class DashboardComponent implements OnInit {
           event_image: 'https://demo.schooltree.in/uploads/demosch/af1.jpg',
         },
         {
-          ADNO: 'KG108',
+          ADNO: 'KG109',
           SMSdate: '11,Jan-12:34',
           STUDENTNAME: 'Praburajan E',
           Message:
             'You have a homework to do today (2024-01-11) Check homework page',
-          event_image: null,
-        },
-        {
-          ADNO: 'KG108',
-          SMSdate: '10,Jan-19:33',
-          STUDENTNAME: 'Praburajan E',
-          Message:
-            'Dear Parents, Your Ward  Praburajan E  is Late for school today 10-01-2024 - Principal',
           event_image: null,
         },
       ],
@@ -111,7 +111,7 @@ export class DashboardComponent implements OnInit {
   }
 
   redirectToModule() {
-    const moduleRoute = 'CircularsRoutingModule';
+    this.router.navigate(['/messages']);
   }
 
   getosversion() {
@@ -316,6 +316,7 @@ export class DashboardComponent implements OnInit {
       this.ing = this.ing + 1;
       this.getbase64();
     }
+    console.log(this.storeSMSDetails, 'aaaaaaaaaa');
   }
 
   checkimage(f: any) {

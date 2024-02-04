@@ -28,56 +28,49 @@ export const environment = {
       title: 'homework',
       url: '/homework',
       icon: 'assets/imgs/Icons_new/Ereader.png',
-      filter:
-        'invert(15%) sepia(100%) saturate(2860%) hue-rotate(238deg) brightness(101%) contrast(170%)',
+      // filter:        'invert(15%) sepia(100%) saturate(2860%) hue-rotate(238deg) brightness(101%) contrast(170%)',
       admin: 'N',
     },
     {
       title: 'personalized-messages',
       url: '/personalized-messages',
       icon: 'assets/imgs/Workspace.png',
-      filter:
-        'invert(10%) sepia(51%) saturate(5820%) hue-rotate(291deg) brightness(110%) contrast(115%)',
+      // filter: 'invert(10%) sepia(51%) saturate(5820%) hue-rotate(291deg) brightness(110%) contrast(115%)',
       admin: 'N',
     },
     {
       title: 'attendance',
       url: '/attendance',
       icon: 'assets/imgs/dashboard/attendance.png',
-      filter:
-        'invert(22%) sepia(32%) saturate(6676%) hue-rotate(349deg) brightness(75%) contrast(81%)',
+      // filter:'invert(22%) sepia(32%) saturate(6676%) hue-rotate(349deg) brightness(75%) contrast(81%)',
       admin: 'N',
     },
     {
       title: 'Flash Message',
       url: '/flash',
       icon: 'assets/imgs/flash.png',
-      filter:
-        'invert(77%) sepia(26%) saturate(7148%) hue-rotate(347deg) brightness(101%) contrast(98%)',
+      // filter: 'invert(77%) sepia(26%) saturate(7148%) hue-rotate(347deg) brightness(101%) contrast(98%)',
       admin: 'Y',
     },
     {
       title: 'report-card',
       url: '/report-card',
       icon: 'assets/imgs/Icons_new/Smart Card.png',
-      filter:
-        'invert(17%) sepia(65%) saturate(5213%) hue-rotate(337deg) brightness(85%) contrast(112%)',
+      // filter: 'invert(17%) sepia(65%) saturate(5213%) hue-rotate(337deg) brightness(85%) contrast(112%)',
       admin: 'N',
     },
     {
       title: 'Staff',
       url: '/staff',
       icon: 'assets/imgs/Badge.png',
-      filter:
-        'invert(10%) sepia(98%) saturate(6683%) hue-rotate(247deg) brightness(62%) contrast(131%)',
+      // filter:'invert(10%) sepia(98%) saturate(6683%) hue-rotate(247deg) brightness(62%) contrast(131%)',
       admin: 'Y',
     },
     {
       title: 'Staff Group',
       url: '/staff-group',
       icon: 'assets/imgs/Management.png',
-      filter:
-        'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
+      // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
       admin: 'Y',
     },
     //{ title: 'Study Material',url: '/study-material', icon: 'assets/imgs/speakers/books.png',filter:"invert(17%) sepia(65%) saturate(5213%) hue-rotate(337deg) brightness(85%) contrast(112%)"},
@@ -90,15 +83,13 @@ export const environment = {
       title: 'timetable',
       url: '/timetable',
       icon: 'assets/imgs/speakers/timetable.png',
-      filter:
-        'invert(26%) sepia(99%) saturate(5099%) hue-rotate(294deg) brightness(112%) contrast(131%)',
+      // filter: 'invert(26%) sepia(99%) saturate(5099%) hue-rotate(294deg) brightness(112%) contrast(131%)',
     },
     {
       title: 'Daily Reports',
       url: '/daily-reports',
       icon: 'assets/imgs/Presentation.png',
-      filter:
-        'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
+      // filter: 'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
       admin: 'Y',
     },
     // { title: 'language',url: '/language', icon: 'assets/imgs/speakers/language.png',filter:"invert(10%) sepia(98%) saturate(6683%) hue-rotate(247deg) brightness(62%) contrast(131%)"},

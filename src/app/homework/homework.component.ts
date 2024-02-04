@@ -195,23 +195,6 @@ export class HomeworkComponent implements OnInit {
             this.gethw = res['data'];
             // let gethw = res['data'];
             this.last3days = res['last3senditem'];
-            // for (let i = 0; i < gethw.length; i++) {
-            //   let d = gethw[i]['MSG_DATE'];
-            //   if (this.getwhdates.indexOf(d) == -1) {
-            //     this.getwhdates.push(d);
-            //     this.gethw[d] = [];
-            //   }
-            //   this.gethw[d].push(gethw[i]);
-            // }
-            // for (let i = 0; i < last3days.length; i++) {
-            //   let d = last3days[i]['MSG_DATE'];
-            //   if (this.last3daysdates.indexOf(d) == -1) {
-            //     this.last3daysdates.push(d);
-            //     this.last3days[d] = [];
-            //     console.log('Madhavan', this.last3days);
-            //   }
-            //   this.last3days[d].push(last3days[i]);
-            // }
           }
         },
         (err) => {

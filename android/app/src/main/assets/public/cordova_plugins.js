@@ -32,22 +32,6 @@
         "clobbers": [
           "window.FilePath"
         ]
-        },
-      {
-          "id": "cordova-plugin-media.Media",
-          "file": "plugins/cordova-plugin-media/www/Media.js",
-          "pluginId": "cordova-plugin-media",
-        "clobbers": [
-          "window.Media"
-        ]
-        },
-      {
-          "id": "cordova-plugin-media.MediaError",
-          "file": "plugins/cordova-plugin-media/www/MediaError.js",
-          "pluginId": "cordova-plugin-media",
-        "clobbers": [
-          "window.MediaError"
-        ]
         }
     ];
     module.exports.metadata =
@@ -56,8 +40,7 @@
       "com-badrit-base64": "0.2.0",
       "cordova-plugin-device": "2.1.0",
       "cordova-plugin-filechooser": "1.2.0",
-      "cordova-plugin-filepath": "1.6.0",
-      "cordova-plugin-media": "7.0.0"
+      "cordova-plugin-filepath": "1.6.0"
     };
     // BOTTOM OF METADATA
     });
