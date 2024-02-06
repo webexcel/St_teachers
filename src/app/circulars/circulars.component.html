@@ -603,12 +603,6 @@
                   <td class="text-center">
                     {{ s.Group_name }}<br />
 
-                    <!-- <ion-icon class="eye" name="eye" color="primary"></ion-icon>
-                    <ion-icon
-                      class="eye"
-                      name="eye-off"
-                      color="medium"
-                    ></ion-icon> -->
                     <button
                       type="button"
                       class="btn bg-white px-1"
@@ -740,7 +734,23 @@
               </thead>
               <tbody>
                 <tr *ngFor="let s of last3days; let i = index">
-                  <td class="text-center">{{ s.Group_name }}</td>
+                  <td class="text-center">
+                    {{ s.Group_name }}
+
+                    <button
+                      type="button"
+                      class="btn bg-white px-1"
+                      (click)="seencirculars1(s.ID)"
+                      (click)="toggleMessage1()"
+                    >
+                      <ion-icon
+                        class="eye"
+                        [name]="showPassword ? 'eye' : 'eye-off'"
+                        [color]="showPassword ? 'primary' : 'medium'"
+                      ></ion-icon>
+                    </button>
+                  </td>
+
                   <td class="multi_lines_text">
                     {{ s.message }}
                     <br *ngIf="s.event_image && s.event_image.length > 0" />
