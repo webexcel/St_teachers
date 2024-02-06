@@ -11,7 +11,7 @@ import { StorageService } from '../service/storage.service';
 })
 export class MessagesComponent implements OnInit {
   ing: any = 0;
-  storeSMSDetails: any = [];
+  storeSMSDetails: any = [1, 2, 3, 4];
   teachersDetail: any = this.storage.getjson('teachersDetail');
 
   constructor(

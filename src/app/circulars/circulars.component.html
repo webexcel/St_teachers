@@ -90,31 +90,12 @@
                   </ion-row>
                 </ion-toolbar>
               </ng-template>
-              <!-- <ng-template ionicSelectableCloseButtonTemplate>
-                <ion-icon
-                  [md]="'close-circle'"
-                  [ios]="'close-circle'"
-                  style="font-size: 24px"
-                ></ion-icon>
-              </ng-template> -->
             </ionic-selectable>
           </ion-item>
+
           <span *ngIf="f.submitted && class.invalid" class="text-danger"
             >Select Class</span
           >
-          <!-- <ion-item class="input-group">
-        <ion-label>{{ "date" | translate }}</ion-label>
-
-        <ion-datetime
-          class="form-control"
-          name="s_date"
-          displayFormat="DD/MM/YYYY"
-          pickerFormat="DD/MM/YYYY"
-          [(ngModel)]="select_datas.s_date"
-          #s_date="ngModel"
-          required
-        ></ion-datetime>
-      </ion-item> -->
 
           <ion-item lines="full">
             <ion-label
@@ -196,7 +177,7 @@
             </ion-textarea>
           </ion-item>
           <span *ngIf="f.submitted && message.invalid" class="text-danger"
-            >Enter Message</span
+            >Entersss Message</span
           >
           <!-- <ion-grid class="align-items-center text-center">
         <ion-row>
@@ -619,7 +600,28 @@
 
               <tbody>
                 <tr *ngFor="let s of senditems; let i = index">
-                  <td class="text-center">{{ s.Group_name }}</td>
+                  <td class="text-center">
+                    {{ s.Group_name }}<br />
+
+                    <!-- <ion-icon class="eye" name="eye" color="primary"></ion-icon>
+                    <ion-icon
+                      class="eye"
+                      name="eye-off"
+                      color="medium"
+                    ></ion-icon> -->
+                    <button
+                      type="button"
+                      class="btn bg-white px-1"
+                      (click)="seencirculars1(s.ID)"
+                      (click)="toggleMessage1()"
+                    >
+                      <ion-icon
+                        class="eye"
+                        [name]="showPassword ? 'eye' : 'eye-off'"
+                        [color]="showPassword ? 'primary' : 'medium'"
+                      ></ion-icon>
+                    </button>
+                  </td>
                   <td class="multi_lines_text">
                     {{ s.message }}
                     <br *ngIf="s.event_image && s.event_image.length > 0" />
@@ -910,7 +912,7 @@
             </div>
           </div>
         </form>
-        <div class="cardlist" *ngIf="senditems1.length > 0">
+        <div class="cardlist" *m="senditems1.length > 0">
           <div class="card-header table-cls">
             <div class="row align-items-center">
               <div class="col" style="margin-left: 10px !important">
@@ -1062,6 +1064,45 @@
             [(ngModel)]="messageText"
           ></ion-input>
         </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+  <ion-modal
+    [isOpen]="isEditMessageOpen1"
+    (willDismiss)="onWillDismiss($event, 'edit')"
+    [initialBreakpoint]="1"
+    [breakpoints]="[0, 0.25, 0.5, 0.75]"
+    animated="true"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button>{{ "List" | translate }}</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button (click)="toggleMessage2()">{{
+              "cancel" | translate
+            }}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <table style="text-align: center" class="table table-bordered">
+          <thead>
+            <td>S.No</td>
+            <td>Name</td>
+            <td>Seen Status</td>
+          </thead>
+          <tr
+            *ngFor="let se of seengrpmes; let i = index"
+            [ngClass]="se.seen_status == 0 ? 'bg' : 'bgg'"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ se.STUDENTNAME }}</td>
+            <td>{{ se.seen_status }}</td>
+          </tr>
+        </table>
       </ion-content>
     </ng-template>
   </ion-modal>

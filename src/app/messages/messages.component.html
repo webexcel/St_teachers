@@ -1,26 +1,27 @@
-<div class="teachercirculars" *ngIf="storeSMSDetails.length > 0">
+<div class="teachercirculars">
   <div class="borbot" *ngFor="let smsData of storeSMSDetails">
     <div class="message">
-      <div class="date">{{ smsData.SMSdate }}</div>
-      <div class="name">Message From Admin</div>
-      <div
+      <div class="date">{{ smsData }}</div>
+      <!-- <div class="date">{{ smsData.SMSdate }}</div>
+      <div class="name">Message From Admin</div> -->
+      <!-- <div
         class="multi_lines_text"
         [innerHTML]="authservice.urlify(smsData.message)"
-      ></div>
+      ></div> -->
     </div>
-    <img
+    <!-- <img
       class="card-img-top"
       src="{{ smsData.base64 }}"
       alt=""
       *ngIf="checkimage(smsData.event_image) && smsData.base64.length > 0"
-    />
-    <img
+    /> -->
+    <!-- <img
       class="card-img-top"
       src="{{ smsData.event_image }}"
       alt=""
       *ngIf="checkimage(smsData.event_image) && smsData.base64.length === 0"
-    />
-    <div *ngIf="checkmp3(smsData.event_image)">
+    /> -->
+    <!-- <div *ngIf="checkmp3(smsData.event_image)">
       <audio controls controlsList="noplaybackrate nodownload">
         <source
           src="{{ smsData.base64 }}"
@@ -33,8 +34,8 @@
           *ngIf="smsData.base64.length === 0"
         />
       </audio>
-    </div>
-    <div class="card-header" *ngIf="checkpdf(smsData.event_image)">
+    </div> -->
+    <!-- <div class="card-header" *ngIf="checkpdf(smsData.event_image)">
       <div class="row w-100 align-items-center m-0">
         <div class="col-6">
           {{ getfilename(smsData.event_image) }}
@@ -57,8 +58,8 @@
           </button>
         </div>
       </div>
-    </div>
-    <div class="card-header" *ngIf="checkxls(smsData.event_image)">
+    </div> -->
+    <!-- <div class="card-header" *ngIf="checkxls(smsData.event_image)">
       <div class="row w-100 align-items-center m-0">
         <div class="col-6">
           {{ getfilename(smsData.event_image) }}
@@ -81,6 +82,6 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

@@ -1,10 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from '../../environments/environment';
-import { AuthService } from '../service/auth.service';
-import { StorageService } from '../service/storage.service';
-
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 import {
   InAppBrowser,
@@ -13,9 +9,12 @@ import {
 import { Platform } from '@ionic/angular';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Swiper } from 'swiper';
+import { environment } from '../../environments/environment';
+import { AuthService } from '../service/auth.service';
 import { DataService } from '../service/data.service';
 import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
+import { StorageService } from '../service/storage.service';
 import { TranslateConfigService } from '../service/translate-config.service';
 
 @Component({
