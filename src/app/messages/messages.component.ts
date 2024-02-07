@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AuthService } from '../service/auth.service';
 import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
@@ -10,23 +11,71 @@ import { StorageService } from '../service/storage.service';
   styleUrls: ['./messages.component.scss'],
 })
 export class MessagesComponent implements OnInit {
+  ios: any = false;
   ing: any = 0;
   storeSMSDetails: any = [1, 2, 3, 4];
   teachersDetail: any = this.storage.getjson('teachersDetail');
+  isModalOpen = false;
+  modalImage: any;
+  grpmes: any;
+  senditems: any;
+  last3days: any;
 
   constructor(
     public storage: StorageService,
     public authservice: AuthService,
     public loading: LoadingService,
-    private serfile: FilesService
+    private serfile: FilesService,
+    public sanitizer: DomSanitizer
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.ios = this.authservice.isiso();
+    this.getgroupMessage();
+    this.getSMSLogDetails();
+  }
 
-  getfilename(f: any) {
-    f = f.split('/');
-    f = f[f.length - 1];
-    return f;
+  extractUrl(text: string) {
+    var urlRegex =
+      /(https?:\/\/(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)|((?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)/g;
+    return text.replace(urlRegex, function (url) {
+      return (
+        '<a href="' +
+        (url.startsWith('http') ? url : 'http://' + url) +
+        '" target="_blank">' +
+        url +
+        '</a>'
+      );
+    });
+  }
+
+  getgroupMessage() {
+    //Is_Admin
+    this.loading.present();
+    this.authservice
+      .post('getgroupMessage', {
+        staff_id: this.storage.getjson('teachersDetail')[0]['staff_id'],
+        Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
+        classid: this.authservice.classids(),
+      })
+      .subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.grpmes = res['data'];
+            var i = 0;
+            for (i = 0; i < this.grpmes.length; i++) {
+              this.grpmes[i].message = this.extractUrl(this.grpmes[i].message);
+            }
+            // this.senditems = res['senditem'];
+            this.last3days = res['last3senditem'];
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
+          console.log(err);
+        }
+      );
   }
 
   getSMSLogDetails() {
@@ -129,5 +178,92 @@ export class MessagesComponent implements OnInit {
       this.getbase64();
     }
     console.log(this.storeSMSDetails, 'aaaaaaaaaa');
+  }
+
+  checkimage(f: any) {
+    if (f) {
+      f = f.split('.');
+      f = f[f.length - 1].toLowerCase();
+      if (f != 'pdf' && f != 'mp3' && f != 'xls' && f != 'xlsx') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return true;
+    }
+    //image.event_image.split('.')[image.event_image.split('.').length-1]!='pdf'
+  }
+
+  checkmp3(f: any) {
+    if (f) {
+      f = f.split('.');
+      f = f[f.length - 1].toLowerCase();
+      if (f == 'mp3') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  checkxls(f: any) {
+    if (f) {
+      f = f.split('.');
+      f = f[f.length - 1].toLowerCase();
+      if (f == 'xls' || f == 'xlsx') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  checkpdf(f: any) {
+    if (f) {
+      f = f.split('.');
+      f = f[f.length - 1].toLowerCase();
+      if (f == 'pdf') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  getfilename(f: any) {
+    f = f.split('/');
+    f = f[f.length - 1];
+    return f;
+  }
+
+  setOpen(isOpen: boolean, image: any) {
+    console.log(image);
+    this.modalImage = image;
+    this.isModalOpen = isOpen;
+  }
+
+  checkmp4(f: any) {
+    if (f) {
+      f = f.split('.');
+      f = f[f.length - 1].toLowerCase();
+      if (f == 'mp4') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  getSafeUrl(url: any) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 }

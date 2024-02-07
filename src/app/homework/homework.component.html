@@ -428,7 +428,8 @@
 
     <tabset>
       <tab heading="Today">
-        <div class="cardlist" *ngIf="recentdata.length">
+        <div class="cardlist">
+          <!-- *ngIf="recentdata.length > 0" -->
           <div class="card-header table-cls">
             <div class="row align-items-center">
               <div class="col" style="margin-left: 10px !important">
@@ -451,7 +452,21 @@
 
               <tbody>
                 <tr *ngFor="let d of gethw">
-                  <td class="text-center">{{ d.CLASS }}</td>
+                  <td class="text-center">
+                    {{ d.CLASS }}
+                    <button
+                      type="button"
+                      class="btn bg-white px-1"
+                      (click)="seenHomework(d.MSG_ID)"
+                      (click)="toggleMessage3()"
+                    >
+                      <ion-icon
+                        class="eye"
+                        [name]="showPassword ? 'eye' : 'eye-off'"
+                        [color]="showPassword ? 'primary' : 'medium'"
+                      ></ion-icon>
+                    </button>
+                  </td>
 
                   <!-- <div class="txtCenter topBg">{{ d.CLASS }}</div>
                     <div class="txtCenter">{{ d.subject }}</div> -->
@@ -575,7 +590,21 @@
 
               <tbody>
                 <tr *ngFor="let d of last3days; let i = index">
-                  <td class="text-center">{{ d.CLASS }}</td>
+                  <td class="text-center">
+                    {{ d.CLASS }}
+                    <button
+                      type="button"
+                      class="btn bg-white px-1"
+                      (click)="seenHomework(d.MSG_ID)"
+                      (click)="toggleMessage3()"
+                    >
+                      <ion-icon
+                        class="eye"
+                        [name]="showPassword ? 'eye' : 'eye-off'"
+                        [color]="showPassword ? 'primary' : 'medium'"
+                      ></ion-icon>
+                    </button>
+                  </td>
                   <td class="multi_lines_text">
                     <span
                       *ngIf="d.MESSAGE"
@@ -760,17 +789,34 @@
             </div>
           </div>
         </form>
-        <div *ngIf="senditems1dates.length > 0">
+        <div class="cardlist" *ngIf="senditems1dates.length > 0">
+          <div class="card-header table-cls">
+            <div class="row align-items-center">
+              <div class="col" style="margin-left: 10px !important">
+                {{ "sended_message" | translate }}
+              </div>
+            </div>
+          </div>
           <accordion [closeOthers]="true" [isAnimated]="true">
-            <accordion-group
-              heading="{{ l }}"
-              *ngFor="let l of senditems1dates; let i = index"
-              [isOpen]="i === 0"
-            >
+            <div *ngFor="let l of senditems1dates; let i = index">
               <table class="table table-bordered">
                 <tbody *ngFor="let d of senditems1[l]; let i = index">
                   <tr>
-                    <td width="20%">{{ d.CLASS }} - {{ d.subject }}</td>
+                    <td width="20%">
+                      {{ d.CLASS }} - {{ d.subject }}
+                      <button
+                        type="button"
+                        class="btn bg-white px-1"
+                        (click)="seenHomework(d.MSG_ID)"
+                        (click)="toggleMessage3()"
+                      >
+                        <ion-icon
+                          class="eye"
+                          [name]="showPassword ? 'eye' : 'eye-off'"
+                          [color]="showPassword ? 'primary' : 'medium'"
+                        ></ion-icon>
+                      </button>
+                    </td>
                     <td width="80%" class="textleft multi_lines_text">
                       {{ d.MESSAGE }}
                       <br *ngIf="d.event_image && d.event_image.length > 0" />
@@ -861,12 +907,51 @@
                   </tr>
                 </tbody>
               </table>
-            </accordion-group>
+            </div>
           </accordion>
         </div>
       </tab>
     </tabset>
 
     <!-- Tab Ends Here-->
+    <ion-modal
+      [isOpen]="isEditMessageOpen3"
+      (willDismiss)="onWillDismiss($event, 'edit')"
+      [initialBreakpoint]="1"
+      [breakpoints]="[0, 0.25, 0.5, 0.75]"
+      animated="true"
+    >
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-button>{{ "List" | translate }}</ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end">
+              <ion-button (click)="toggleMessage3()">{{
+                "cancel" | translate
+              }}</ion-button>
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <table style="text-align: center" class="table table-bordered">
+            <thead>
+              <td>S.No</td>
+              <td>Name</td>
+              <td>Seen Status</td>
+            </thead>
+            <tr
+              *ngFor="let seen of seenhrkmes; let i = index"
+              [ngClass]="seen.seen_status == 0 ? 'bg' : 'bgg'"
+            >
+              <td>{{ i + 1 }}</td>
+              <td>{{ seen.STUDENTNAME }}</td>
+              <td>{{ seen.seen_status }}</td>
+            </tr>
+          </table>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
   </div>
 </ion-content>

@@ -82,7 +82,7 @@ export const environment = {
     {
       title: 'timetable',
       url: '/timetable',
-      icon: 'assets/imgs/speakers/timetable.png',
+      icon: 'assets/imgs/dashboard/language.png',
       // filter: 'invert(26%) sepia(99%) saturate(5099%) hue-rotate(294deg) brightness(112%) contrast(131%)',
     },
     {

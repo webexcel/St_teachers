@@ -218,6 +218,7 @@ export class CircularsComponent implements OnInit {
             }
             this.senditems = res['senditem'];
             this.last3days = res['last3senditem'];
+            console.log(this.senditems, '12345');
           }
         },
         (err) => {
@@ -292,6 +293,7 @@ export class CircularsComponent implements OnInit {
     });
     await alert.present();
   }
+
   seencirculars1(ID: any) {
     //Is_Admin
     this.loading.present();

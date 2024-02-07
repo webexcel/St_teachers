@@ -43,6 +43,8 @@ export class DashboardComponent implements OnInit {
   public appPages = environment.pages;
   isModalOpen = false;
   modalImage: any;
+  grpmes: any;
+  senditems: any = [];
   constructor(
     private modalService: BsModalService,
     private iab: InAppBrowser,
@@ -64,35 +66,35 @@ export class DashboardComponent implements OnInit {
         this.appMinimize.minimize();
       }
     });
-    this.topMessages = {
-      status: true,
-      message: 'Get All Messages Successfully',
-      data: [
-        {
-          ADNO: 'KG107',
-          SMSdate: '10,Jan-19:33',
-          STUDENTNAME: 'Praburajan E',
-          Message:
-            'Dear Parents, Your Ward  Praburajan E  is Late for school today 10-01-2024 - Principal',
-          event_image: null,
-        },
-        {
-          ADNO: 'KG108',
-          SMSdate: '11,Jan-12:34',
-          STUDENTNAME: 'Praburajan E',
-          Message: 'G jgh thjldkhgk dhsg jhdjghjdsglhdsgh;a goawroowto hrwrye',
-          event_image: 'https://demo.schooltree.in/uploads/demosch/af1.jpg',
-        },
-        {
-          ADNO: 'KG109',
-          SMSdate: '11,Jan-12:34',
-          STUDENTNAME: 'Praburajan E',
-          Message:
-            'You have a homework to do today (2024-01-11) Check homework page',
-          event_image: null,
-        },
-      ],
-    };
+    // this.topMessages = {
+    //   status: true,
+    //   message: 'Get All Messages Successfully',
+    //   data: [
+    //     {
+    //       ADNO: 'KG107',
+    //       SMSdate: '10,Jan-19:33',
+    //       STUDENTNAME: 'Praburajan E',
+    //       Message:
+    //         'Dear Parents, Your Ward  Praburajan E  is Late for school today 10-01-2024 - Principal',
+    //       event_image: null,
+    //     },
+    //     {
+    //       ADNO: 'KG108',
+    //       SMSdate: '11,Jan-12:34',
+    //       STUDENTNAME: 'Praburajan E',
+    //       Message: 'G jgh thjldkhgk dhsg jhdjghjdsglhdsgh;a goawroowto hrwrye',
+    //       event_image: 'https://demo.schooltree.in/uploads/demosch/af1.jpg',
+    //     },
+    //     {
+    //       ADNO: 'KG109',
+    //       SMSdate: '11,Jan-12:34',
+    //       STUDENTNAME: 'Praburajan E',
+    //       Message:
+    //         'You have a homework to do today (2024-01-11) Check homework page',
+    //       event_image: null,
+    //     },
+    //   ],
+    // };
   }
 
   ngOnInit() {
@@ -103,6 +105,7 @@ export class DashboardComponent implements OnInit {
     this.getosversion();
     this.flashmessage();
     this.getSMSLogDetails();
+    this.getgroupMessage();
   }
 
   go(url: any) {
@@ -418,5 +421,48 @@ export class DashboardComponent implements OnInit {
 
   goPrev() {
     this.swiper?.slidePrev();
+  }
+
+  extractUrl(text: string) {
+    var urlRegex =
+      /(https?:\/\/(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)|((?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)/g;
+    return text.replace(urlRegex, function (url) {
+      return (
+        '<a href="' +
+        (url.startsWith('http') ? url : 'http://' + url) +
+        '" target="_blank">' +
+        url +
+        '</a>'
+      );
+    });
+  }
+
+  getgroupMessage() {
+    //Is_Admin
+    this.loading.present();
+    this.authservice
+      .post('getgroupMessage', {
+        staff_id: this.storage.getjson('teachersDetail')[0]['staff_id'],
+        Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
+        classid: this.authservice.classids(),
+      })
+      .subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.grpmes = res['data'];
+            var i = 0;
+            for (i = 0; i < this.grpmes.length; i++) {
+              this.grpmes[i].message = this.extractUrl(this.grpmes[i].message);
+            }
+            this.senditems = res['senditem'];
+            console.log(this.senditems);
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
+          console.log(err);
+        }
+      );
   }
 }

@@ -922,7 +922,7 @@
             </div>
           </div>
         </form>
-        <div class="cardlist" *m="senditems1.length > 0">
+        <div class="cardlist" *ngIf="senditems1.length > 0">
           <div class="card-header table-cls">
             <div class="row align-items-center">
               <div class="col" style="margin-left: 10px !important">
@@ -944,7 +944,21 @@
               </thead>
               <tbody>
                 <tr *ngFor="let s of senditems1; let i = index">
-                  <td class="text-center">{{ s.Group_name }}</td>
+                  <td class="text-center">
+                    {{ s.Group_name }}
+                    <button
+                      type="button"
+                      class="btn bg-white px-1"
+                      (click)="seencirculars1(s.ID)"
+                      (click)="toggleMessage1()"
+                    >
+                      <ion-icon
+                        class="eye"
+                        [name]="showPassword ? 'eye' : 'eye-off'"
+                        [color]="showPassword ? 'primary' : 'medium'"
+                      ></ion-icon>
+                    </button>
+                  </td>
                   <td class="multi_lines_text">
                     {{ s.message }}
                     <br *ngIf="s.event_image && s.event_image.length > 0" />
