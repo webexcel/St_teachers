@@ -19,7 +19,7 @@ export class MessagesComponent implements OnInit {
   modalImage: any;
   grpmes: any;
   senditems: any;
-  last3days: any;
+  last3days: any[] = [];
 
   constructor(
     public storage: StorageService,
@@ -33,6 +33,10 @@ export class MessagesComponent implements OnInit {
     this.ios = this.authservice.isiso();
     this.getgroupMessage();
     this.getSMSLogDetails();
+  }
+
+  get reversedLast3days(): any[] {
+    return this.last3days.slice().reverse();
   }
 
   extractUrl(text: string) {
@@ -53,7 +57,7 @@ export class MessagesComponent implements OnInit {
     //Is_Admin
     this.loading.present();
     this.authservice
-      .post('getgroupMessage', {
+      .post('getStaffMessageLastThree', {
         staff_id: this.storage.getjson('teachersDetail')[0]['staff_id'],
         Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
         classid: this.authservice.classids(),
@@ -62,13 +66,13 @@ export class MessagesComponent implements OnInit {
         (res: any) => {
           this.loading.dismissAll();
           if (res['status']) {
-            this.grpmes = res['data'];
+            this.grpmes = res['senditem'];
             var i = 0;
             for (i = 0; i < this.grpmes.length; i++) {
-              this.grpmes[i].message = this.extractUrl(this.grpmes[i].message);
+              this.grpmes[i].Message = this.extractUrl(this.grpmes[i].Message);
             }
             // this.senditems = res['senditem'];
-            this.last3days = res['last3senditem'];
+            this.last3days = res['senditem'];
           }
         },
         (err) => {

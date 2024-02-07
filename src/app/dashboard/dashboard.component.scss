@@ -13,6 +13,11 @@ $colors: #4475de;
   }
 }
 
+.message-header {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .dashboard-menu {
   .col-4 {
     height: 10vh !important;
@@ -305,4 +310,10 @@ swiper-slide {
   flex: 0;
   width: 0;
   max-width: 0;
+}
+
+.today-mes {
+  border-radius: 1px solid red;
+  padding-bottom: 10px;
+  font-weight: 400;
 }

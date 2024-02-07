@@ -47,10 +47,12 @@ export class PersonalizedComponent implements OnInit {
   audio!: MediaObject;
   Path!: string;
   showDatePicker: boolean = false;
+  showPassword: boolean = false;
   @ViewChild(IonModal)
   modal!: IonModal;
   isPickerOpen: boolean = false;
   isEditMessageOpen: boolean = false;
+  isEditMessageOpen1: boolean = false;
   messageText: any;
   messageId: any;
   index: any;
@@ -65,6 +67,8 @@ export class PersonalizedComponent implements OnInit {
     base64: null,
     duration: 0,
   };
+  seengrpmes: any;
+
   constructor(
     private serfile: FilesService,
     private media: Media,
@@ -682,5 +686,46 @@ export class PersonalizedComponent implements OnInit {
     ret += '' + secs;
 
     return ret;
+  }
+
+  extractUrl(text: string) {
+    var urlRegex =
+      /(https?:\/\/(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)|((?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)/g;
+    return text.replace(urlRegex, function (url) {
+      return (
+        '<a href="' +
+        (url.startsWith('http') ? url : 'http://' + url) +
+        '" target="_blank">' +
+        url +
+        '</a>'
+      );
+    });
+  }
+
+  seencirculars1(ID: any) {
+    //Is_Admin
+    this.loading.present();
+    this.authservice.post('seengroupmessage', { id: ID }).subscribe(
+      (res: any) => {
+        this.loading.dismissAll();
+        if (res['status']) {
+          this.seengrpmes = res['senditem'];
+          console.log('test', this.seengrpmes);
+          this.seengrpmes.sort(
+            (a: any, b: any) => b.seen_status - a.seen_status
+          );
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+        console.log(err);
+      }
+    );
+  }
+
+  toggleMessage1() {
+    // console.log('toggle', id);
+
+    this.isEditMessageOpen1 = !this.isEditMessageOpen1;
   }
 }

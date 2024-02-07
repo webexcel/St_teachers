@@ -2,11 +2,13 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
 import {
   InAppBrowser,
   InAppBrowserOptions,
 } from '@ionic-native/in-app-browser/ngx';
 import { Platform } from '@ionic/angular';
+import { Base64String } from 'capacitor-voice-recorder';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Swiper } from 'swiper';
 import { environment } from '../../environments/environment';
@@ -40,6 +42,16 @@ export class DashboardComponent implements OnInit {
   // @TODO - get correct value
   ADNO: any = 0;
 
+  audioData: {
+    fileName: string;
+    base64: Base64String | null;
+    duration: number;
+  } = {
+    fileName: '',
+    base64: null,
+    duration: 0,
+  };
+
   public appPages = environment.pages;
   isModalOpen = false;
   modalImage: any;
@@ -58,7 +70,8 @@ export class DashboardComponent implements OnInit {
     public storage: StorageService,
     public loading: LoadingService,
     private serfile: FilesService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    public base64: Base64
   ) {
     this.platform.backButton.subscribe(() => {
       let p = this.storage.get('page');
@@ -441,19 +454,19 @@ export class DashboardComponent implements OnInit {
     //Is_Admin
     this.loading.present();
     this.authservice
-      .post('getgroupMessage', {
+      .post('getStaffMessageToday', {
         staff_id: this.storage.getjson('teachersDetail')[0]['staff_id'],
-        Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
-        classid: this.authservice.classids(),
+        // Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
+        // classid: this.authservice.classids(),
       })
       .subscribe(
         (res: any) => {
           this.loading.dismissAll();
           if (res['status']) {
-            this.grpmes = res['data'];
+            this.grpmes = res['senditem'];
             var i = 0;
             for (i = 0; i < this.grpmes.length; i++) {
-              this.grpmes[i].message = this.extractUrl(this.grpmes[i].message);
+              this.grpmes[i].Message = this.extractUrl(this.grpmes[i].Message);
             }
             this.senditems = res['senditem'];
             console.log(this.senditems);

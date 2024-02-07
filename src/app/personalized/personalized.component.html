@@ -541,12 +541,14 @@
                     <td>
                       <button
                         type="button"
-                        class="btn bg-white ml-1"
-                        (click)="deletecirculars1(s.ID)"
+                        class="btn bg-white px-1"
+                        (click)="seencirculars1(s.ID)"
+                        (click)="toggleMessage1()"
                       >
                         <ion-icon
-                          class="text-danger"
-                          [md]="'trash-sharp'"
+                          class="eye"
+                          [name]="showPassword ? 'eye' : 'eye-off'"
+                          [color]="showPassword ? 'primary' : 'medium'"
                         ></ion-icon>
                       </button>
                     </td>
@@ -647,14 +649,13 @@
                       </button>
                     </td>
                     <td>
-                      <button
-                        type="button"
-                        class="btn bg-white ml-1"
-                        (click)="deletecirculars1(s.ID)"
-                      >
+                      <button type="button" class="btn bg-white px-1">
+                        <!-- (click)=""
+                      (click)="" -->
                         <ion-icon
-                          class="text-danger"
-                          [md]="'trash-sharp'"
+                          class="eye"
+                          [name]="showPassword ? 'eye' : 'eye-off'"
+                          [color]="showPassword ? 'primary' : 'medium'"
                         ></ion-icon>
                       </button>
                     </td>
