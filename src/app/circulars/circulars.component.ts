@@ -31,6 +31,7 @@ export class CircularsComponent implements OnInit {
   classs: any;
   select_datas: any = {};
   select_datas1: any = {};
+  senditem: any = [];
   senditems: any = [];
   senditems1: any = [];
   last3days: any = [];
@@ -51,6 +52,7 @@ export class CircularsComponent implements OnInit {
   modal!: IonModal;
   isPickerOpen: boolean = false;
   isEditMessageOpen: boolean = false;
+  isEditMessageOpen1: boolean = false;
   messageText: any;
   messageId: any;
   index: any;
@@ -73,6 +75,11 @@ export class CircularsComponent implements OnInit {
   };
   recordingTimer = 0;
   timer!: NodeJS.Timeout;
+  showPassword: boolean = true;
+
+  seengrpmes: any;
+  seenitems: any;
+
   constructor(
     private serfile: FilesService,
     private media: Media,
@@ -92,6 +99,7 @@ export class CircularsComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     });
   }
+
   selectAll() {
     console.log('select all');
     this.select_datas.class = this.classs.map((item: any) => item.id);
@@ -210,6 +218,7 @@ export class CircularsComponent implements OnInit {
             }
             this.senditems = res['senditem'];
             this.last3days = res['last3senditem'];
+            console.log(this.senditems, '12345');
           }
         },
         (err) => {
@@ -284,6 +293,33 @@ export class CircularsComponent implements OnInit {
     });
     await alert.present();
   }
+
+  seencirculars1(ID: any) {
+    //Is_Admin
+    this.loading.present();
+    this.authservice.post('seengroupmessage', { id: ID }).subscribe(
+      (res: any) => {
+        this.loading.dismissAll();
+        if (res['status']) {
+          this.seengrpmes = res['senditem'];
+          console.log('test', this.seengrpmes);
+          this.seengrpmes.sort(
+            (a: any, b: any) => b.seen_status - a.seen_status
+          );
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+        console.log(err);
+      }
+    );
+  }
+
+  // seencirculars1(id: any) {
+  //   this.messageId = id;
+
+  //   this.showPassword = !this.showPassword;
+  // }
 
   // async movegrouptofinal(ID){
   //   let alert = await this.alertCtrl.create({
@@ -581,8 +617,9 @@ export class CircularsComponent implements OnInit {
   toggleDateSelection() {
     this.isPickerOpen = !this.isPickerOpen;
   }
+
   toggleMessage(id: any, message: any, i: any) {
-    console.log('toggle', id);
+    // console.log('toggle', id);
     if (id != 'cancel' && id != 'confirm') {
       this.index = i;
       this.messageId = id;
@@ -595,6 +632,19 @@ export class CircularsComponent implements OnInit {
     }
     this.isEditMessageOpen = !this.isEditMessageOpen;
   }
+
+  toggleMessage2() {
+    // console.log('toggle', id);
+
+    this.isEditMessageOpen1 = !this.isEditMessageOpen1;
+  }
+
+  // toggleMessage1() {
+  //   // console.log('toggle', id);
+
+  //   this.isEditMessageOpen1 = !this.isEditMessageOpen1;
+  // }
+
   onWillDismiss(event: Event, type: any) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'cancel') {

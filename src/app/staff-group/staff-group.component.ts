@@ -66,6 +66,11 @@ export class StaffGroupComponent implements OnInit {
     base64: null,
     duration: 0,
   };
+
+  seengrpmes: any;
+  isEditMessageOpen1: boolean = false;
+  showPassword: boolean = true;
+
   constructor(
     private serfile: FilesService,
     private media: Media,
@@ -693,5 +698,30 @@ export class StaffGroupComponent implements OnInit {
     ret += '' + secs;
 
     return ret;
+  }
+
+  seencirculars1(ID: any) {
+    //Is_Admin
+    this.loading.present();
+    this.authservice.post('seengroupmessage', { id: ID }).subscribe(
+      (res: any) => {
+        this.loading.dismissAll();
+        if (res['status']) {
+          this.seengrpmes = res['senditem'];
+          console.log('test', this.seengrpmes);
+          this.seengrpmes.sort(
+            (a: any, b: any) => b.seen_status - a.seen_status
+          );
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+        console.log(err);
+      }
+    );
+  }
+
+  toggleMessage1() {
+    this.isEditMessageOpen1 = !this.isEditMessageOpen1;
   }
 }

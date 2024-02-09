@@ -60,6 +60,7 @@ export class HomeworkComponent implements OnInit {
   messageId: any;
   index: any;
   isEditMessageOpen: boolean = false;
+  isEditMessageOpen3: boolean = false;
   recordingTimer = 0;
   timer!: NodeJS.Timeout;
   audioData: {
@@ -71,6 +72,9 @@ export class HomeworkComponent implements OnInit {
     base64: null,
     duration: 0,
   };
+
+  showPassword: boolean = true;
+  seenhrkmes: any;
 
   constructor(
     private serfile: FilesService,
@@ -195,23 +199,7 @@ export class HomeworkComponent implements OnInit {
             this.gethw = res['data'];
             // let gethw = res['data'];
             this.last3days = res['last3senditem'];
-            // for (let i = 0; i < gethw.length; i++) {
-            //   let d = gethw[i]['MSG_DATE'];
-            //   if (this.getwhdates.indexOf(d) == -1) {
-            //     this.getwhdates.push(d);
-            //     this.gethw[d] = [];
-            //   }
-            //   this.gethw[d].push(gethw[i]);
-            // }
-            // for (let i = 0; i < last3days.length; i++) {
-            //   let d = last3days[i]['MSG_DATE'];
-            //   if (this.last3daysdates.indexOf(d) == -1) {
-            //     this.last3daysdates.push(d);
-            //     this.last3days[d] = [];
-            //     console.log('Madhavan', this.last3days);
-            //   }
-            //   this.last3days[d].push(last3days[i]);
-            // }
+            console.log(this.gethw, 'khfgs');
           }
         },
         (err) => {
@@ -716,5 +704,40 @@ export class HomeworkComponent implements OnInit {
     ret += '' + secs;
 
     return ret;
+  }
+
+  seenHomework(ID: any) {
+    //Is_Admin
+    this.loading.present();
+    this.authservice.post('seenHomeworkmessage', { id: ID }).subscribe(
+      (res: any) => {
+        this.loading.dismissAll();
+        if (res['status']) {
+          this.seenhrkmes = res['senditem'];
+          console.log('test', this.seenhrkmes);
+          this.seenhrkmes.sort(
+            (a: any, b: any) => b.seen_status - a.seen_status
+          );
+          // var i = 0;
+          // for (i = 0; i < this.seengrpmes.length; i++) {
+          //   this.seengrpmes[i].message = this.extractUrl(
+          //     this.seengrpmes[i].message
+          //   );
+          // }
+          // this.seengrpmes = res['seengrpmes'];
+          // this.last3days = res['last3senditem'];
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+        console.log(err);
+      }
+    );
+  }
+
+  toggleMessage3() {
+    // console.log('toggle', id);
+
+    this.isEditMessageOpen3 = !this.isEditMessageOpen3;
   }
 }

@@ -1,0 +1,133 @@
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+    <ion-toolbar class="p-0">
+      <ion-buttons slot="start">
+        <ion-menu-button>
+          <ion-icon class="text-white" [ios]="'menu-sharp'" [md]="'menu-sharp'">
+          </ion-icon>
+        </ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ "dashboard" | translate }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-header [translucent]="true" *ngIf="!ios">
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button>
+          <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+        </ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ "My Messages" | translate }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="cardlist">
+    <div
+      class="card-body card_body border border-primary p-0 bodytable table-responsive table-cls"
+    >
+      <table class="table-bordered">
+        <thead class="table-head">
+          <tr>
+            <th style="width: 25%">Date</th>
+            <th>Messages</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let s of reversedLast3days; let i = index">
+            <td class="text-center">
+              {{ s.SMSdate }}
+            </td>
+
+            <td class="multi_lines_text">
+              {{ s.Message }}
+              <br *ngIf="s.event_image && s.event_image.length > 0" />
+
+              <img
+                alt=""
+                [src]="s.event_image"
+                class="w-100"
+                *ngIf="checkimage(s.event_image)"
+              />
+
+              <div
+                class="row w-100 align-items-center m-0 p-0"
+                *ngIf="checkpdf(s.event_image)"
+              >
+                <div class="col-12">
+                  {{ getfilename(s.event_image) }}
+                </div>
+                <div class="col-12">
+                  <button
+                    type="button"
+                    style="padding: 0px"
+                    class="btn btn-primary m-0 px-0"
+                    (click)="authservice.open(s.event_image)"
+                  >
+                    <img
+                      class="logo_img"
+                      src="../../assets/imgs/speakers/pdf.png"
+                    />
+                    Download
+                  </button>
+                </div>
+              </div>
+
+              <div
+                class="row w-100 align-items-center m-0 p-0"
+                *ngIf="checkxls(s.event_image)"
+              >
+                <div class="col-12">
+                  {{ getfilename(s.event_image) }}
+                </div>
+                <div class="col-12">
+                  <button
+                    type="button"
+                    class="btn btn-primary m-0 px-0"
+                    (click)="authservice.open(s.event_image)"
+                  >
+                    <img
+                      class="logo_img"
+                      src="../../assets/imgs/speakers/xls.png"
+                    />
+                    Download
+                  </button>
+                </div>
+              </div>
+
+              <div *ngIf="checkmp3(s.event_image)">
+                <audio
+                  controls
+                  controlsList="noplaybackrate nodownload"
+                  class="w-100"
+                >
+                  <source src="{{ s.event_image }}" type="audio/mpeg" />
+                </audio>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- <ion-card *ngFor="let s of reversedLast3days; let i = index">
+        <ion-card-header>
+          <ion-card-title> Messages</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <span class="col-2">{{ s.SMSdate | date : "shortDate" }}</span>
+          <span class="multi_lines_text col-10">{{ s.Message }}</span>
+
+          <ion-img
+            *ngIf="
+              s.event_image &&
+              s.event_image.length > 0 &&
+              checkimage(s.event_image)
+            "
+            [src]="s.event_image"
+          ></ion-img>
+        </ion-card-content>
+      </ion-card> -->
+    </div>
+  </div>
+</ion-content>

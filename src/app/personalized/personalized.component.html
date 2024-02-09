@@ -417,6 +417,16 @@
                   </audio>
                 </div>
               </td>
+
+              <td class="text-right">
+                <button type="button" class="btn bg-white ml-1">
+                  <ion-icon
+                    class="EditColour"
+                    [md]="'create-outline'"
+                  ></ion-icon>
+                </button>
+              </td>
+
               <td class="text-right">
                 <button type="button" class="btn bg-white ml-1">
                   <ion-icon
@@ -466,7 +476,7 @@
                     <th style="width: 40%">{{ "name" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
                     <th>delete</th>
-                    <th>Edit</th>
+
                     <th>View</th>
                   </tr>
                 </thead>
@@ -527,7 +537,7 @@
                         ></ion-icon>
                       </button>
                     </td>
-                    <td>
+                    <!-- <td>
                       <button
                         class="btn bg-white ml-1"
                         (click)="toggleMessage(s.ID, s.message, i)"
@@ -537,16 +547,18 @@
                           [md]="'create-outline'"
                         ></ion-icon>
                       </button>
-                    </td>
+                    </td> -->
                     <td>
                       <button
                         type="button"
-                        class="btn bg-white ml-1"
-                        (click)="deletecirculars1(s.ID)"
+                        class="btn bg-white px-1"
+                        (click)="seencirculars1(s.ID)"
+                        (click)="toggleMessage1()"
                       >
                         <ion-icon
-                          class="text-danger"
-                          [md]="'trash-sharp'"
+                          class="eye"
+                          [name]="showPassword ? 'eye-off' : 'eye'"
+                          [color]="showPassword ? 'medium' : 'primary'"
                         ></ion-icon>
                       </button>
                     </td>
@@ -574,7 +586,6 @@
                     <th style="width: 40%">{{ "name" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
                     <th>delete</th>
-                    <th>Edit</th>
                     <th>View</th>
                   </tr>
                 </thead>
@@ -635,7 +646,7 @@
                         ></ion-icon>
                       </button>
                     </td>
-                    <td>
+                    <!-- <td>
                       <button
                         class="btn bg-white ml-1"
                         (click)="toggleMessage(s.ID, s.message, i)"
@@ -645,16 +656,18 @@
                           [md]="'create-outline'"
                         ></ion-icon>
                       </button>
-                    </td>
+                    </td> -->
                     <td>
                       <button
                         type="button"
-                        class="btn bg-white ml-1"
-                        (click)="deletecirculars1(s.ID)"
+                        class="btn bg-white px-1"
+                        (click)="seencirculars1(s.ID)"
+                        (click)="toggleMessage1()"
                       >
                         <ion-icon
-                          class="text-danger"
-                          [md]="'trash-sharp'"
+                          class="eye"
+                          [name]="showPassword ? 'eye-off' : 'eye'"
+                          [color]="showPassword ? 'medium' : 'primary'"
                         ></ion-icon>
                       </button>
                     </td>
@@ -764,7 +777,7 @@
                     <th style="width: 40%">{{ "name" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
                     <th>delete</th>
-                    <th>Edit</th>
+
                     <th>View</th>
                   </tr>
                 </thead>
@@ -825,26 +838,18 @@
                         ></ion-icon>
                       </button>
                     </td>
-                    <td>
-                      <button
-                        class="btn bg-white ml-1"
-                        (click)="toggleMessage(s.ID, s.message, i)"
-                      >
-                        <ion-icon
-                          class="text-black"
-                          [md]="'create-outline'"
-                        ></ion-icon>
-                      </button>
-                    </td>
+
                     <td>
                       <button
                         type="button"
-                        class="btn bg-white ml-1"
-                        (click)="deletecirculars1(s.ID)"
+                        class="btn bg-white px-1"
+                        (click)="seencirculars1(s.ID)"
+                        (click)="toggleMessage1()"
                       >
                         <ion-icon
-                          class="text-danger"
-                          [md]="'trash-sharp'"
+                          class="eye"
+                          [name]="showPassword ? 'eye-off' : 'eye'"
+                          [color]="showPassword ? 'medium' : 'primary'"
                         ></ion-icon>
                       </button>
                     </td>
@@ -891,6 +896,44 @@
             [(ngModel)]="messageText"
           ></ion-input>
         </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal
+    [isOpen]="isEditMessageOpen1"
+    (willDismiss)="onWillDismiss($event, 'edit')"
+    [initialBreakpoint]="1"
+    [breakpoints]="[0, 0.25, 0.5, 0.75]"
+    animated="true"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button>{{ "List" | translate }}</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button (click)="toggleMessage1()">{{
+              "cancel" | translate
+            }}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <table style="text-align: center" class="table table-bordered">
+          <thead>
+            <td>Name</td>
+            <td>Seen Status</td>
+          </thead>
+          <tr
+            *ngFor="let se of seengrpmes; let i = index"
+            [ngClass]="se.seen_status == 0 ? 'bg' : 'bgg'"
+          >
+            <td>{{ se.STUDENTNAME }}</td>
+            <td>{{ se.seen_status }}</td>
+          </tr>
+        </table>
       </ion-content>
     </ng-template>
   </ion-modal>

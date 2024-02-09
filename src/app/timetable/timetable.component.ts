@@ -30,7 +30,6 @@ export class TimetableComponent implements OnInit {
   modal!: IonModal;
   isPickerOpen: boolean = false;
 
-  currentOrientation: any;
   orientationChange: any;
   data: any = [];
   day: any = [];
@@ -47,7 +46,6 @@ export class TimetableComponent implements OnInit {
     public authservice: AuthService,
     public storage: StorageService
   ) {
-    //this.currentOrientation = this.screenOrientation.type;
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
     });

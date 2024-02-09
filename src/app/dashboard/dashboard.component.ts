@@ -1,21 +1,22 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from '../../environments/environment';
-import { AuthService } from '../service/auth.service';
-import { StorageService } from '../service/storage.service';
-
 import { DomSanitizer } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
+import { Base64 } from '@ionic-native/base64/ngx';
 import {
   InAppBrowser,
   InAppBrowserOptions,
 } from '@ionic-native/in-app-browser/ngx';
 import { Platform } from '@ionic/angular';
+import { Base64String } from 'capacitor-voice-recorder';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Swiper } from 'swiper';
+import { environment } from '../../environments/environment';
+import { AuthService } from '../service/auth.service';
 import { DataService } from '../service/data.service';
 import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
+import { StorageService } from '../service/storage.service';
 import { TranslateConfigService } from '../service/translate-config.service';
 
 @Component({
@@ -41,9 +42,21 @@ export class DashboardComponent implements OnInit {
   // @TODO - get correct value
   ADNO: any = 0;
 
+  audioData: {
+    fileName: string;
+    base64: Base64String | null;
+    duration: number;
+  } = {
+    fileName: '',
+    base64: null,
+    duration: 0,
+  };
+
   public appPages = environment.pages;
   isModalOpen = false;
   modalImage: any;
+  grpmes: any;
+  senditems: any = [];
   constructor(
     private modalService: BsModalService,
     private iab: InAppBrowser,
@@ -57,7 +70,8 @@ export class DashboardComponent implements OnInit {
     public storage: StorageService,
     public loading: LoadingService,
     private serfile: FilesService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    public base64: Base64
   ) {
     this.platform.backButton.subscribe(() => {
       let p = this.storage.get('page');
@@ -65,35 +79,35 @@ export class DashboardComponent implements OnInit {
         this.appMinimize.minimize();
       }
     });
-    this.topMessages = {
-      status: true,
-      message: 'Get All Messages Successfully',
-      data: [
-        {
-          ADNO: 'KG108',
-          SMSdate: '11,Jan-12:34',
-          STUDENTNAME: 'Praburajan E',
-          Message: 'G jgh thjldkhgk dhsg jhdjghjdsglhdsgh;a goawroowto hrwrye',
-          event_image: 'https://demo.schooltree.in/uploads/demosch/af1.jpg',
-        },
-        {
-          ADNO: 'KG108',
-          SMSdate: '11,Jan-12:34',
-          STUDENTNAME: 'Praburajan E',
-          Message:
-            'You have a homework to do today (2024-01-11) Check homework page',
-          event_image: null,
-        },
-        {
-          ADNO: 'KG108',
-          SMSdate: '10,Jan-19:33',
-          STUDENTNAME: 'Praburajan E',
-          Message:
-            'Dear Parents, Your Ward  Praburajan E  is Late for school today 10-01-2024 - Principal',
-          event_image: null,
-        },
-      ],
-    };
+    // this.topMessages = {
+    //   status: true,
+    //   message: 'Get All Messages Successfully',
+    //   data: [
+    //     {
+    //       ADNO: 'KG107',
+    //       SMSdate: '10,Jan-19:33',
+    //       STUDENTNAME: 'Praburajan E',
+    //       Message:
+    //         'Dear Parents, Your Ward  Praburajan E  is Late for school today 10-01-2024 - Principal',
+    //       event_image: null,
+    //     },
+    //     {
+    //       ADNO: 'KG108',
+    //       SMSdate: '11,Jan-12:34',
+    //       STUDENTNAME: 'Praburajan E',
+    //       Message: 'G jgh thjldkhgk dhsg jhdjghjdsglhdsgh;a goawroowto hrwrye',
+    //       event_image: 'https://demo.schooltree.in/uploads/demosch/af1.jpg',
+    //     },
+    //     {
+    //       ADNO: 'KG109',
+    //       SMSdate: '11,Jan-12:34',
+    //       STUDENTNAME: 'Praburajan E',
+    //       Message:
+    //         'You have a homework to do today (2024-01-11) Check homework page',
+    //       event_image: null,
+    //     },
+    //   ],
+    // };
   }
 
   ngOnInit() {
@@ -104,6 +118,7 @@ export class DashboardComponent implements OnInit {
     this.getosversion();
     this.flashmessage();
     this.getSMSLogDetails();
+    this.getgroupMessage();
   }
 
   go(url: any) {
@@ -111,7 +126,7 @@ export class DashboardComponent implements OnInit {
   }
 
   redirectToModule() {
-    const moduleRoute = 'CircularsRoutingModule';
+    this.router.navigate(['/messages']);
   }
 
   getosversion() {
@@ -316,6 +331,7 @@ export class DashboardComponent implements OnInit {
       this.ing = this.ing + 1;
       this.getbase64();
     }
+    // console.log(this.storeSMSDetails, 'aaaaaaaaaa');
   }
 
   checkimage(f: any) {
@@ -418,5 +434,48 @@ export class DashboardComponent implements OnInit {
 
   goPrev() {
     this.swiper?.slidePrev();
+  }
+
+  extractUrl(text: string) {
+    var urlRegex =
+      /(https?:\/\/(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)|((?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?)/g;
+    return text.replace(urlRegex, function (url) {
+      return (
+        '<a href="' +
+        (url.startsWith('http') ? url : 'http://' + url) +
+        '" target="_blank">' +
+        url +
+        '</a>'
+      );
+    });
+  }
+
+  getgroupMessage() {
+    //Is_Admin
+    this.loading.present();
+    this.authservice
+      .post('getStaffMessageToday', {
+        staff_id: this.storage.getjson('teachersDetail')[0]['staff_id'],
+        // Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
+        // classid: this.authservice.classids(),
+      })
+      .subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.grpmes = res['senditem'];
+            var i = 0;
+            for (i = 0; i < this.grpmes.length; i++) {
+              this.grpmes[i].Message = this.extractUrl(this.grpmes[i].Message);
+            }
+            this.senditems = res['senditem'];
+            console.log(this.senditems);
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
+          console.log(err);
+        }
+      );
   }
 }

@@ -90,31 +90,12 @@
                   </ion-row>
                 </ion-toolbar>
               </ng-template>
-              <!-- <ng-template ionicSelectableCloseButtonTemplate>
-                <ion-icon
-                  [md]="'close-circle'"
-                  [ios]="'close-circle'"
-                  style="font-size: 24px"
-                ></ion-icon>
-              </ng-template> -->
             </ionic-selectable>
           </ion-item>
+
           <span *ngIf="f.submitted && class.invalid" class="text-danger"
             >Select Class</span
           >
-          <!-- <ion-item class="input-group">
-        <ion-label>{{ "date" | translate }}</ion-label>
-
-        <ion-datetime
-          class="form-control"
-          name="s_date"
-          displayFormat="DD/MM/YYYY"
-          pickerFormat="DD/MM/YYYY"
-          [(ngModel)]="select_datas.s_date"
-          #s_date="ngModel"
-          required
-        ></ion-datetime>
-      </ion-item> -->
 
           <ion-item lines="full">
             <ion-label
@@ -196,7 +177,7 @@
             </ion-textarea>
           </ion-item>
           <span *ngIf="f.submitted && message.invalid" class="text-danger"
-            >Enter Message</span
+            >Entersss Message</span
           >
           <!-- <ion-grid class="align-items-center text-center">
         <ion-row>
@@ -491,6 +472,16 @@
                   </audio>
                 </div>
               </td>
+
+              <td class="text-right">
+                <button type="button" class="btn bg-white ml-1">
+                  <ion-icon
+                    class="EditColour"
+                    [md]="'create-outline'"
+                  ></ion-icon>
+                </button>
+              </td>
+
               <td class="text-right">
                 <button
                   type="button"
@@ -501,78 +492,6 @@
                 </button>
               </td>
             </tr>
-
-            <!-- <div
-              class="card-body card_body border border-primary multi_lines_text"
-            >
-          
-              <span
-                *ngIf="d.message"
-                [innerHTML]="sanitizeHtml(d.message)"
-              ></span>
-
-              <br *ngIf="d.event_image && d.event_image.length > 0" />
-              <img
-                alt=""
-                [src]="d.event_image"
-                class="w-100"
-                *ngIf="checkimage(d.event_image)"
-              />
-
-              <div
-                class="row w-100 align-items-center m-0 p-0"
-                *ngIf="checkpdf(d.event_image)"
-              >
-                <div class="col-12">
-                  {{ getfilename(d.event_image) }}
-                </div>
-                <div class="col-12">
-                  <button
-                    type="button"
-                    class="btn btn-primary m-0 px-0"
-                    (click)="authservice.open(d.event_image)"
-                  >
-                    <img
-                      class="logo_img"
-                      src="../../assets/imgs/speakers/pdf.png"
-                    />
-                    Download
-                  </button>
-                </div>
-              </div>
-
-              <div
-                class="row w-100 align-items-center m-0 p-0"
-                *ngIf="checkxls(d.event_image)"
-              >
-                <div class="col-12">
-                  {{ getfilename(d.event_image) }}
-                </div>
-                <div class="col-12">
-                  <button
-                    type="button"
-                    class="btn btn-primary m-0 px-0"
-                    (click)="authservice.open(d.event_image)"
-                  >
-                    <img
-                      class="logo_img"
-                      src="../../assets/imgs/speakers/xls.png"
-                    />
-                    Download
-                  </button>
-                </div>
-              </div>
-
-              <div *ngIf="checkmp3(d.event_image)">
-                <audio
-                  controls
-                  controlsList="noplaybackrate nodownload"
-                  class="w-100"
-                >
-                  <source src="{{ d.event_image }}" type="audio/mpeg" />
-                </audio>
-              </div>
-            </div> -->
           </tbody>
         </table>
       </div>
@@ -613,13 +532,28 @@
                 <tr>
                   <th style="width: 15%">{{ "class" | translate }}</th>
                   <th>{{ "message" | translate }}</th>
-                  <th style="width: 12%">Manage</th>
+                  <th style="width: 12%">Delete</th>
                 </tr>
               </thead>
 
               <tbody>
                 <tr *ngFor="let s of senditems; let i = index">
-                  <td class="text-center">{{ s.Group_name }}</td>
+                  <td class="text-center">
+                    {{ s.Group_name }}<br />
+
+                    <button
+                      type="button"
+                      class="btn bg-white px-1"
+                      (click)="seencirculars1(s.ID)"
+                      (click)="toggleMessage2()"
+                    >
+                      <ion-icon
+                        class="eye"
+                        [name]="showPassword ? 'eye' : 'eye-off'"
+                        [color]="showPassword ? 'primary' : 'medium'"
+                      ></ion-icon>
+                    </button>
+                  </td>
                   <td class="multi_lines_text">
                     {{ s.message }}
                     <br *ngIf="s.event_image && s.event_image.length > 0" />
@@ -694,15 +628,6 @@
                       <ion-icon
                         class="text-danger"
                         [md]="'trash-sharp'"
-                      ></ion-icon>
-                    </button>
-                    <button
-                      class="btn bg-white px-0 text-right"
-                      (click)="toggleMessage(s.ID, s.message, i)"
-                    >
-                      <ion-icon
-                        class="text-black"
-                        [md]="'create-outline'"
                       ></ion-icon>
                     </button>
                   </td>
@@ -733,12 +658,28 @@
                 <tr>
                   <th style="width: 15%">{{ "class" | translate }}</th>
                   <th>{{ "message" | translate }}</th>
-                  <th style="width: 12%">Manage</th>
+                  <th style="width: 12%">Delete</th>
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let s of last3days; let i = index">
-                  <td class="text-center">{{ s.Group_name }}</td>
+                  <td class="text-center">
+                    {{ s.Group_name }}
+
+                    <button
+                      type="button"
+                      class="btn bg-white px-1"
+                      (click)="seencirculars1(s.ID)"
+                      (click)="toggleMessage2()"
+                    >
+                      <ion-icon
+                        class="eye"
+                        [name]="showPassword ? 'eye' : 'eye-off'"
+                        [color]="showPassword ? 'primary' : 'medium'"
+                      ></ion-icon>
+                    </button>
+                  </td>
+
                   <td class="multi_lines_text">
                     {{ s.message }}
                     <br *ngIf="s.event_image && s.event_image.length > 0" />
@@ -815,7 +756,7 @@
                         [md]="'trash-sharp'"
                       ></ion-icon>
                     </button>
-                    <button
+                    <!-- <button
                       class="btn bg-white px-0 text-right"
                       (click)="toggleMessage(s.ID, s.message, i)"
                     >
@@ -823,7 +764,7 @@
                         class="text-black"
                         [md]="'create-outline'"
                       ></ion-icon>
-                    </button>
+                    </button> -->
                   </td>
                 </tr>
               </tbody>
@@ -927,12 +868,26 @@
                   <th style="width: 15%">{{ "class" | translate }}</th>
                   <th>{{ "message" | translate }}</th>
                   <th>delete</th>
-                  <th>Edit</th>
+                  <!-- <th>Edit</th> -->
                 </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let s of senditems1; let i = index">
-                  <td class="text-center">{{ s.Group_name }}</td>
+                  <td class="text-center">
+                    {{ s.Group_name }}
+                    <button
+                      type="button"
+                      class="btn bg-white px-1"
+                      (click)="seencirculars1(s.ID)"
+                      (click)="toggleMessage2()"
+                    >
+                      <ion-icon
+                        class="eye"
+                        [name]="showPassword ? 'eye' : 'eye-off'"
+                        [color]="showPassword ? 'primary' : 'medium'"
+                      ></ion-icon>
+                    </button>
+                  </td>
                   <td class="multi_lines_text">
                     {{ s.message }}
                     <br *ngIf="s.event_image && s.event_image.length > 0" />
@@ -1005,11 +960,11 @@
                     >
                       <ion-icon
                         class="text-danger"
-                        [md]="'create-outline'"
+                        [md]="'trash-sharp'"
                       ></ion-icon>
                     </button>
                   </td>
-                  <td>
+                  <!-- <td>
                     <button
                       class="btn bg-white ml-1"
                       (click)="toggleMessage(s.ID, s.message, i)"
@@ -1019,7 +974,7 @@
                         [md]="'create-outline'"
                       ></ion-icon>
                     </button>
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>
@@ -1062,6 +1017,46 @@
             [(ngModel)]="messageText"
           ></ion-input>
         </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal
+    [isOpen]="isEditMessageOpen1"
+    (willDismiss)="onWillDismiss($event, 'edit')"
+    [initialBreakpoint]="1"
+    [breakpoints]="[0, 0.25, 0.5, 0.75]"
+    animated="true"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button>{{ "List" | translate }}</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button (click)="toggleMessage2()">{{
+              "cancel" | translate
+            }}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <table style="text-align: center" class="table table-bordered">
+          <thead>
+            <td>S.No</td>
+            <td>Name</td>
+            <td>Seen Status</td>
+          </thead>
+          <tr
+            *ngFor="let se of seengrpmes; let i = index"
+            [ngClass]="se.seen_status == 0 ? 'bg' : 'bgg'"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ se.STUDENTNAME }}</td>
+            <td>{{ se.seen_status }}</td>
+          </tr>
+        </table>
       </ion-content>
     </ng-template>
   </ion-modal>

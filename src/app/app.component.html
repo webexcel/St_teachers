@@ -59,11 +59,8 @@
               detail="false"
               routerLinkActive="selected"
             >
-              <img
-                class="icon-img"
-                [src]="p.icon"
-                [ngStyle]="{ filter: p.filter }"
-              />
+              <img class="icon-img" [src]="p.icon" />
+              <!-- [ngStyle]="{ filter: p.filter }" -->
               <ion-label class="after-img">{{ p.title | translate }}</ion-label>
             </ion-item>
           </ion-menu-toggle>

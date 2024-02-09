@@ -95,6 +95,13 @@ const routes: Routes = [
       ),
     canActivate: [Guard],
   },
+
+  {
+    path: 'messages',
+    loadChildren: () =>
+      import('./messages/messages.module').then((m) => m.MessagesModule),
+    canActivate: [Guard],
+  },
 ];
 
 @NgModule({
