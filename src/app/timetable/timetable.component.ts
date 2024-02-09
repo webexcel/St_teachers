@@ -48,7 +48,7 @@ export class TimetableComponent implements OnInit {
     private screenOrientation: ScreenOrientation,
     public storage: StorageService
   ) {
-    //this.currentOrientation = this.screenOrientation.type;
+    this.currentOrientation = this.screenOrientation.type;
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
     });
@@ -57,18 +57,20 @@ export class TimetableComponent implements OnInit {
   ngOnInit() {
     this.ios = this.authservice.isiso();
     this.translate.set();
-    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
-    // this.translate
-    //   .getparam('delete_attendance')
-    //   .then((v) => (this.delete_attendance = v));
-    // this.translate.getparam('cancel').then((v) => (this.cancel = v));
-    // this.translate
-    //   .getparam('send_attendance')
-    //   .then((v) => (this.send_attendance = v));
-    // this.translate.getparam('send').then((v) => (this.send = v));
-    // this.translate.getparam('delete').then((v) => (this.delete = v));
-    // this.select_datas1.s_date = new Date().toISOString();
-    // this.reset();
+
+    // Check if screen orientation lock is supported
+    if (this.screenOrientation && this.screenOrientation.lock) {
+      try {
+        this.screenOrientation.lock(
+          this.screenOrientation.ORIENTATIONS.LANDSCAPE
+        );
+      } catch (error) {
+        console.error('Error locking screen orientation:', error);
+      }
+    } else {
+      console.warn('Screen orientation lock not supported on this device.');
+    }
+
     this.getTimetable();
   }
 
@@ -115,6 +117,11 @@ export class TimetableComponent implements OnInit {
       );
   }
   ngOnDestroy() {
-    this.screenOrientation.unlock();
+    // Check if screen orientation unlock is supported
+    if (this.screenOrientation && this.screenOrientation.unlock) {
+      this.screenOrientation.unlock();
+    } else {
+      console.warn('Screen orientation unlock not supported on this device.');
+    }
   }
 }

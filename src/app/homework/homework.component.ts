@@ -269,7 +269,6 @@ export class HomeworkComponent implements OnInit {
                 this.loading.dismissAll();
               }
             );
-            this.loading.present();
           },
         },
       ],

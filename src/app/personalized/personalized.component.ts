@@ -705,7 +705,7 @@ export class PersonalizedComponent implements OnInit {
   seencirculars1(ID: any) {
     //Is_Admin
     this.loading.present();
-    this.authservice.post('seengroupmessage', { id: ID }).subscribe(
+    this.authservice.post('seenpersonalmessage', { id: ID }).subscribe(
       (res: any) => {
         this.loading.dismissAll();
         if (res['status']) {

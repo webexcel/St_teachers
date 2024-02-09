@@ -108,6 +108,26 @@
           </tr>
         </tbody>
       </table>
+
+      <ion-card *ngFor="let s of reversedLast3days; let i = index">
+        <!-- <ion-card-header>
+          <ion-card-title> Messages</ion-card-title>
+        </ion-card-header> -->
+
+        <ion-card-content>
+          <span class="col-2">{{ s.SMSdate | date : "shortDate" }}</span>
+          <span class="multi_lines_text col-10">{{ s.Message }}</span>
+
+          <ion-img
+            *ngIf="
+              s.event_image &&
+              s.event_image.length > 0 &&
+              checkimage(s.event_image)
+            "
+            [src]="s.event_image"
+          ></ion-img>
+        </ion-card-content>
+      </ion-card>
     </div>
   </div>
 </ion-content>

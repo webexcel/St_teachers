@@ -547,8 +547,8 @@
                       >
                         <ion-icon
                           class="eye"
-                          [name]="showPassword ? 'eye' : 'eye-off'"
-                          [color]="showPassword ? 'primary' : 'medium'"
+                          [name]="showPassword ? 'eye-off' : 'eye'"
+                          [color]="showPassword ? 'medium' : 'primary'"
                         ></ion-icon>
                       </button>
                     </td>
@@ -649,13 +649,16 @@
                       </button>
                     </td>
                     <td>
-                      <button type="button" class="btn bg-white px-1">
-                        <!-- (click)=""
-                      (click)="" -->
+                      <button
+                        type="button"
+                        class="btn bg-white px-1"
+                        (click)="seencirculars1(s.ID)"
+                        (click)="toggleMessage1()"
+                      >
                         <ion-icon
                           class="eye"
-                          [name]="showPassword ? 'eye' : 'eye-off'"
-                          [color]="showPassword ? 'primary' : 'medium'"
+                          [name]="showPassword ? 'eye-off' : 'eye'"
+                          [color]="showPassword ? 'medium' : 'primary'"
                         ></ion-icon>
                       </button>
                     </td>
@@ -840,12 +843,14 @@
                     <td>
                       <button
                         type="button"
-                        class="btn bg-white ml-1"
-                        (click)="deletecirculars1(s.ID)"
+                        class="btn bg-white px-1"
+                        (click)="seencirculars1(s.ID)"
+                        (click)="toggleMessage1()"
                       >
                         <ion-icon
-                          class="text-danger"
-                          [md]="'trash-sharp'"
+                          class="eye"
+                          [name]="showPassword ? 'eye-off' : 'eye'"
+                          [color]="showPassword ? 'medium' : 'primary'"
                         ></ion-icon>
                       </button>
                     </td>
@@ -892,6 +897,44 @@
             [(ngModel)]="messageText"
           ></ion-input>
         </ion-item>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal
+    [isOpen]="isEditMessageOpen1"
+    (willDismiss)="onWillDismiss($event, 'edit')"
+    [initialBreakpoint]="1"
+    [breakpoints]="[0, 0.25, 0.5, 0.75]"
+    animated="true"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button>{{ "List" | translate }}</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button (click)="toggleMessage1()">{{
+              "cancel" | translate
+            }}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <table style="text-align: center" class="table table-bordered">
+          <thead>
+            <td>Name</td>
+            <td>Seen Status</td>
+          </thead>
+          <tr
+            *ngFor="let se of seengrpmes; let i = index"
+            [ngClass]="se.seen_status == 0 ? 'bg' : 'bgg'"
+          >
+            <td>{{ se.STUDENTNAME }}</td>
+            <td>{{ se.seen_status }}</td>
+          </tr>
+        </table>
       </ion-content>
     </ng-template>
   </ion-modal>
