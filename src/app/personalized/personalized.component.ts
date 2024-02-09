@@ -47,12 +47,11 @@ export class PersonalizedComponent implements OnInit {
   audio!: MediaObject;
   Path!: string;
   showDatePicker: boolean = false;
-  showPassword: boolean = false;
+
   @ViewChild(IonModal)
   modal!: IonModal;
   isPickerOpen: boolean = false;
   isEditMessageOpen: boolean = false;
-  isEditMessageOpen1: boolean = false;
   messageText: any;
   messageId: any;
   index: any;
@@ -68,6 +67,8 @@ export class PersonalizedComponent implements OnInit {
     duration: 0,
   };
   seengrpmes: any;
+  isEditMessageOpen1: boolean = false;
+  showPassword: boolean = false;
 
   constructor(
     private serfile: FilesService,
@@ -724,8 +725,6 @@ export class PersonalizedComponent implements OnInit {
   }
 
   toggleMessage1() {
-    // console.log('toggle', id);
-
     this.isEditMessageOpen1 = !this.isEditMessageOpen1;
   }
 }

@@ -109,10 +109,10 @@
         </tbody>
       </table>
 
-      <ion-card *ngFor="let s of reversedLast3days; let i = index">
-        <!-- <ion-card-header>
+      <!-- <ion-card *ngFor="let s of reversedLast3days; let i = index">
+        <ion-card-header>
           <ion-card-title> Messages</ion-card-title>
-        </ion-card-header> -->
+        </ion-card-header>
 
         <ion-card-content>
           <span class="col-2">{{ s.SMSdate | date : "shortDate" }}</span>
@@ -127,7 +127,7 @@
             [src]="s.event_image"
           ></ion-img>
         </ion-card-content>
-      </ion-card>
+      </ion-card> -->
     </div>
   </div>
 </ion-content>

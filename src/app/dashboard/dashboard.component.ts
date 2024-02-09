@@ -331,7 +331,7 @@ export class DashboardComponent implements OnInit {
       this.ing = this.ing + 1;
       this.getbase64();
     }
-    console.log(this.storeSMSDetails, 'aaaaaaaaaa');
+    // console.log(this.storeSMSDetails, 'aaaaaaaaaa');
   }
 
   checkimage(f: any) {

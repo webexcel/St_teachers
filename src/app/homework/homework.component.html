@@ -399,6 +399,14 @@
               <td class="text-right">
                 <button type="button" class="btn bg-white ml-1">
                   <ion-icon
+                    class="EditColour"
+                    [md]="'create-outline'"
+                  ></ion-icon>
+                </button>
+              </td>
+              <td class="text-right">
+                <button type="button" class="btn bg-white ml-1">
+                  <ion-icon
                     class="text-danger"
                     [md]="'trash-sharp'"
                     (click)="deletehomework(d.MSG_ID)"
@@ -549,13 +557,13 @@
                         [md]="'trash-sharp'"
                       ></ion-icon>
                     </button>
-                    <button class="btn bg-white px-0 text-right">
-                      <!-- (click)="toggleMessage(s.ID, s.message, i)" -->
+                    <!-- <button class="btn bg-white px-0 text-right">
+                      (click)="toggleMessage(s.ID, s.message, i)"
                       <ion-icon
                         class="text-black"
                         [md]="'create-outline'"
                       ></ion-icon>
-                    </button>
+                    </button> -->
                   </td>
                 </tr>
               </tbody>
@@ -685,13 +693,13 @@
                         [md]="'trash-sharp'"
                       ></ion-icon>
                     </button>
-                    <button class="btn bg-white px-0 text-right">
-                      <!-- (click)="toggleMessage(s.ID, s.message, i)" -->
+                    <!-- <button class="btn bg-white px-0 text-right">
+                      (click)="toggleMessage(s.ID, s.message, i)"
                       <ion-icon
                         class="text-black"
                         [md]="'create-outline'"
                       ></ion-icon>
-                    </button>
+                    </button> -->
                   </td>
                 </tr>
               </tbody>
@@ -881,8 +889,8 @@
                         </audio>
                       </div>
                     </td>
-                    <td>
-                      <button
+
+                    <!-- <button
                         class="btn bg-white ml-1"
                         (click)="toggleHomework(d.MSG_ID, d.MESSAGE, i)"
                       >
@@ -890,8 +898,8 @@
                           class="text-black"
                           [md]="'create-outline'"
                         ></ion-icon>
-                      </button>
-                    </td>
+                      </button> -->
+
                     <td>
                       <button
                         type="button"

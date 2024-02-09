@@ -306,14 +306,6 @@ export class CircularsComponent implements OnInit {
           this.seengrpmes.sort(
             (a: any, b: any) => b.seen_status - a.seen_status
           );
-          // var i = 0;
-          // for (i = 0; i < this.seengrpmes.length; i++) {
-          //   this.seengrpmes[i].message = this.extractUrl(
-          //     this.seengrpmes[i].message
-          //   );
-          // }
-          // this.seengrpmes = res['seengrpmes'];
-          // this.last3days = res['last3senditem'];
         }
       },
       (err) => {
@@ -647,11 +639,11 @@ export class CircularsComponent implements OnInit {
     this.isEditMessageOpen1 = !this.isEditMessageOpen1;
   }
 
-  toggleMessage1() {
-    // console.log('toggle', id);
+  // toggleMessage1() {
+  //   // console.log('toggle', id);
 
-    this.isEditMessageOpen1 = !this.isEditMessageOpen1;
-  }
+  //   this.isEditMessageOpen1 = !this.isEditMessageOpen1;
+  // }
 
   onWillDismiss(event: Event, type: any) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;

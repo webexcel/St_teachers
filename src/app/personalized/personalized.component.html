@@ -417,6 +417,16 @@
                   </audio>
                 </div>
               </td>
+
+              <td class="text-right">
+                <button type="button" class="btn bg-white ml-1">
+                  <ion-icon
+                    class="EditColour"
+                    [md]="'create-outline'"
+                  ></ion-icon>
+                </button>
+              </td>
+
               <td class="text-right">
                 <button type="button" class="btn bg-white ml-1">
                   <ion-icon
@@ -466,7 +476,7 @@
                     <th style="width: 40%">{{ "name" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
                     <th>delete</th>
-                    <th>Edit</th>
+
                     <th>View</th>
                   </tr>
                 </thead>
@@ -527,7 +537,7 @@
                         ></ion-icon>
                       </button>
                     </td>
-                    <td>
+                    <!-- <td>
                       <button
                         class="btn bg-white ml-1"
                         (click)="toggleMessage(s.ID, s.message, i)"
@@ -537,7 +547,7 @@
                           [md]="'create-outline'"
                         ></ion-icon>
                       </button>
-                    </td>
+                    </td> -->
                     <td>
                       <button
                         type="button"
@@ -576,7 +586,6 @@
                     <th style="width: 40%">{{ "name" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
                     <th>delete</th>
-                    <th>Edit</th>
                     <th>View</th>
                   </tr>
                 </thead>
@@ -637,7 +646,7 @@
                         ></ion-icon>
                       </button>
                     </td>
-                    <td>
+                    <!-- <td>
                       <button
                         class="btn bg-white ml-1"
                         (click)="toggleMessage(s.ID, s.message, i)"
@@ -647,7 +656,7 @@
                           [md]="'create-outline'"
                         ></ion-icon>
                       </button>
-                    </td>
+                    </td> -->
                     <td>
                       <button
                         type="button"
@@ -768,7 +777,7 @@
                     <th style="width: 40%">{{ "name" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
                     <th>delete</th>
-                    <th>Edit</th>
+
                     <th>View</th>
                   </tr>
                 </thead>
@@ -829,17 +838,7 @@
                         ></ion-icon>
                       </button>
                     </td>
-                    <td>
-                      <button
-                        class="btn bg-white ml-1"
-                        (click)="toggleMessage(s.ID, s.message, i)"
-                      >
-                        <ion-icon
-                          class="text-black"
-                          [md]="'create-outline'"
-                        ></ion-icon>
-                      </button>
-                    </td>
+
                     <td>
                       <button
                         type="button"

@@ -472,6 +472,16 @@
                   </audio>
                 </div>
               </td>
+
+              <td class="text-right">
+                <button type="button" class="btn bg-white ml-1">
+                  <ion-icon
+                    class="EditColour"
+                    [md]="'create-outline'"
+                  ></ion-icon>
+                </button>
+              </td>
+
               <td class="text-right">
                 <button
                   type="button"
@@ -482,78 +492,6 @@
                 </button>
               </td>
             </tr>
-
-            <!-- <div
-              class="card-body card_body border border-primary multi_lines_text"
-            >
-          
-              <span
-                *ngIf="d.message"
-                [innerHTML]="sanitizeHtml(d.message)"
-              ></span>
-
-              <br *ngIf="d.event_image && d.event_image.length > 0" />
-              <img
-                alt=""
-                [src]="d.event_image"
-                class="w-100"
-                *ngIf="checkimage(d.event_image)"
-              />
-
-              <div
-                class="row w-100 align-items-center m-0 p-0"
-                *ngIf="checkpdf(d.event_image)"
-              >
-                <div class="col-12">
-                  {{ getfilename(d.event_image) }}
-                </div>
-                <div class="col-12">
-                  <button
-                    type="button"
-                    class="btn btn-primary m-0 px-0"
-                    (click)="authservice.open(d.event_image)"
-                  >
-                    <img
-                      class="logo_img"
-                      src="../../assets/imgs/speakers/pdf.png"
-                    />
-                    Download
-                  </button>
-                </div>
-              </div>
-
-              <div
-                class="row w-100 align-items-center m-0 p-0"
-                *ngIf="checkxls(d.event_image)"
-              >
-                <div class="col-12">
-                  {{ getfilename(d.event_image) }}
-                </div>
-                <div class="col-12">
-                  <button
-                    type="button"
-                    class="btn btn-primary m-0 px-0"
-                    (click)="authservice.open(d.event_image)"
-                  >
-                    <img
-                      class="logo_img"
-                      src="../../assets/imgs/speakers/xls.png"
-                    />
-                    Download
-                  </button>
-                </div>
-              </div>
-
-              <div *ngIf="checkmp3(d.event_image)">
-                <audio
-                  controls
-                  controlsList="noplaybackrate nodownload"
-                  class="w-100"
-                >
-                  <source src="{{ d.event_image }}" type="audio/mpeg" />
-                </audio>
-              </div>
-            </div> -->
           </tbody>
         </table>
       </div>
@@ -594,7 +532,7 @@
                 <tr>
                   <th style="width: 15%">{{ "class" | translate }}</th>
                   <th>{{ "message" | translate }}</th>
-                  <th style="width: 12%">Manage</th>
+                  <th style="width: 12%">Delete</th>
                 </tr>
               </thead>
 
@@ -607,7 +545,7 @@
                       type="button"
                       class="btn bg-white px-1"
                       (click)="seencirculars1(s.ID)"
-                      (click)="toggleMessage1()"
+                      (click)="toggleMessage2()"
                     >
                       <ion-icon
                         class="eye"
@@ -690,15 +628,6 @@
                       <ion-icon
                         class="text-danger"
                         [md]="'trash-sharp'"
-                      ></ion-icon>
-                    </button>
-                    <button
-                      class="btn bg-white px-0 text-right"
-                      (click)="toggleMessage(s.ID, s.message, i)"
-                    >
-                      <ion-icon
-                        class="text-black"
-                        [md]="'create-outline'"
                       ></ion-icon>
                     </button>
                   </td>
@@ -729,7 +658,7 @@
                 <tr>
                   <th style="width: 15%">{{ "class" | translate }}</th>
                   <th>{{ "message" | translate }}</th>
-                  <th style="width: 12%">Manage</th>
+                  <th style="width: 12%">Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -741,7 +670,7 @@
                       type="button"
                       class="btn bg-white px-1"
                       (click)="seencirculars1(s.ID)"
-                      (click)="toggleMessage1()"
+                      (click)="toggleMessage2()"
                     >
                       <ion-icon
                         class="eye"
@@ -827,7 +756,7 @@
                         [md]="'trash-sharp'"
                       ></ion-icon>
                     </button>
-                    <button
+                    <!-- <button
                       class="btn bg-white px-0 text-right"
                       (click)="toggleMessage(s.ID, s.message, i)"
                     >
@@ -835,7 +764,7 @@
                         class="text-black"
                         [md]="'create-outline'"
                       ></ion-icon>
-                    </button>
+                    </button> -->
                   </td>
                 </tr>
               </tbody>
@@ -939,7 +868,7 @@
                   <th style="width: 15%">{{ "class" | translate }}</th>
                   <th>{{ "message" | translate }}</th>
                   <th>delete</th>
-                  <th>Edit</th>
+                  <!-- <th>Edit</th> -->
                 </tr>
               </thead>
               <tbody>
@@ -950,7 +879,7 @@
                       type="button"
                       class="btn bg-white px-1"
                       (click)="seencirculars1(s.ID)"
-                      (click)="toggleMessage1()"
+                      (click)="toggleMessage2()"
                     >
                       <ion-icon
                         class="eye"
@@ -1031,11 +960,11 @@
                     >
                       <ion-icon
                         class="text-danger"
-                        [md]="'create-outline'"
+                        [md]="'trash-sharp'"
                       ></ion-icon>
                     </button>
                   </td>
-                  <td>
+                  <!-- <td>
                     <button
                       class="btn bg-white ml-1"
                       (click)="toggleMessage(s.ID, s.message, i)"
@@ -1045,7 +974,7 @@
                         [md]="'create-outline'"
                       ></ion-icon>
                     </button>
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>
