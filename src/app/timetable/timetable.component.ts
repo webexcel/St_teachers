@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { ScreenOrientation } from '@capacitor/screen-orientation';
 import { AlertController, IonModal, Platform } from '@ionic/angular';
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
@@ -45,7 +45,6 @@ export class TimetableComponent implements OnInit {
     private translate: TranslateConfigService,
     public loading: LoadingService,
     public authservice: AuthService,
-    private screenOrientation: ScreenOrientation,
     public storage: StorageService
   ) {
     //this.currentOrientation = this.screenOrientation.type;
@@ -57,7 +56,7 @@ export class TimetableComponent implements OnInit {
   ngOnInit() {
     this.ios = this.authservice.isiso();
     this.translate.set();
-    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
+
     // this.translate
     //   .getparam('delete_attendance')
     //   .then((v) => (this.delete_attendance = v));
@@ -70,6 +69,11 @@ export class TimetableComponent implements OnInit {
     // this.select_datas1.s_date = new Date().toISOString();
     // this.reset();
     this.getTimetable();
+    this.lock();
+  }
+
+  async lock() {
+    await ScreenOrientation.lock({ orientation: 'landscape' });
   }
 
   // reset() {
@@ -115,6 +119,9 @@ export class TimetableComponent implements OnInit {
       );
   }
   ngOnDestroy() {
-    this.screenOrientation.unlock();
+    this.unlock();
+  }
+  async unlock() {
+    await ScreenOrientation.lock({ orientation: 'portrait' });
   }
 }

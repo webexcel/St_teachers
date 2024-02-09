@@ -26,6 +26,15 @@
         ]
         },
       {
+          "id": "cordova-plugin-screen-orientation.screenorientation",
+          "file": "plugins/cordova-plugin-screen-orientation/www/screenorientation.js",
+          "pluginId": "cordova-plugin-screen-orientation",
+        "clobbers": [
+          "cordova.plugins.screenorientation",
+          "screen.orientation"
+        ]
+        },
+      {
           "id": "cordova-plugin-filepath.FilePath",
           "file": "plugins/cordova-plugin-filepath/www/FilePath.js",
           "pluginId": "cordova-plugin-filepath",
@@ -48,6 +57,12 @@
         "clobbers": [
           "window.MediaError"
         ]
+        },
+      {
+          "id": "es6-promise-plugin.Promise",
+          "file": "plugins/es6-promise-plugin/www/promise.js",
+          "pluginId": "es6-promise-plugin",
+        "runs": true
         }
     ];
     module.exports.metadata =
@@ -57,7 +72,9 @@
       "cordova-plugin-device": "2.1.0",
       "cordova-plugin-filechooser": "1.2.0",
       "cordova-plugin-filepath": "1.6.0",
-      "cordova-plugin-media": "7.0.0"
+      "cordova-plugin-media": "7.0.0",
+      "cordova-plugin-screen-orientation": "3.0.4",
+      "es6-promise-plugin": "4.2.2"
     };
     // BOTTOM OF METADATA
     });

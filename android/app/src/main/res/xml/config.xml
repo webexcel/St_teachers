@@ -23,5 +23,9 @@
     <param name="android-package" value="org.apache.cordova.media.AudioHandler"/>
   </feature>
 
+  <feature name="CDVOrientation">
+    <param name="android-package" value="cordova.plugins.screenorientation.CDVOrientation"/>
+  </feature>
+
   
 </widget>
