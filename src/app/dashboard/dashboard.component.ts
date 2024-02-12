@@ -51,8 +51,9 @@ export class DashboardComponent implements OnInit {
     base64: null,
     duration: 0,
   };
-
+  public circular = 'circulars';
   public appPages = environment.pages;
+  // public appPagess = environment.pagess;
   isModalOpen = false;
   modalImage: any;
   grpmes: any;

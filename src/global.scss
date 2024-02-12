@@ -93,10 +93,12 @@ app-login {
 .icon_menu {
   color: var(--ion-color-primary) !important;
 }
+
 .icon-img {
-  width: 30px;
-  //filter: $filter;
+  width: 35px;
+  height: 28px;
 }
+
 ion-content {
   --background: #fff;
   background-size: cover;
