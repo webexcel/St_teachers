@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { ScreenOrientation } from '@capacitor/screen-orientation';
 import { AlertController, IonModal, Platform } from '@ionic/angular';
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
@@ -30,7 +30,6 @@ export class TimetableComponent implements OnInit {
   modal!: IonModal;
   isPickerOpen: boolean = false;
 
-  currentOrientation: any;
   orientationChange: any;
   data: any = [];
   day: any = [];
@@ -45,10 +44,8 @@ export class TimetableComponent implements OnInit {
     private translate: TranslateConfigService,
     public loading: LoadingService,
     public authservice: AuthService,
-    private screenOrientation: ScreenOrientation,
     public storage: StorageService
   ) {
-    this.currentOrientation = this.screenOrientation.type;
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
     });
@@ -58,20 +55,23 @@ export class TimetableComponent implements OnInit {
     this.ios = this.authservice.isiso();
     this.translate.set();
 
-    // Check if screen orientation lock is supported
-    if (this.screenOrientation && this.screenOrientation.lock) {
-      try {
-        this.screenOrientation.lock(
-          this.screenOrientation.ORIENTATIONS.LANDSCAPE
-        );
-      } catch (error) {
-        console.error('Error locking screen orientation:', error);
-      }
-    } else {
-      console.warn('Screen orientation lock not supported on this device.');
-    }
-
+    // this.translate
+    //   .getparam('delete_attendance')
+    //   .then((v) => (this.delete_attendance = v));
+    // this.translate.getparam('cancel').then((v) => (this.cancel = v));
+    // this.translate
+    //   .getparam('send_attendance')
+    //   .then((v) => (this.send_attendance = v));
+    // this.translate.getparam('send').then((v) => (this.send = v));
+    // this.translate.getparam('delete').then((v) => (this.delete = v));
+    // this.select_datas1.s_date = new Date().toISOString();
+    // this.reset();
     this.getTimetable();
+    this.lock();
+  }
+
+  async lock() {
+    await ScreenOrientation.lock({ orientation: 'landscape' });
   }
 
   // reset() {
@@ -117,11 +117,9 @@ export class TimetableComponent implements OnInit {
       );
   }
   ngOnDestroy() {
-    // Check if screen orientation unlock is supported
-    if (this.screenOrientation && this.screenOrientation.unlock) {
-      this.screenOrientation.unlock();
-    } else {
-      console.warn('Screen orientation unlock not supported on this device.');
-    }
+    this.unlock();
+  }
+  async unlock() {
+    await ScreenOrientation.lock({ orientation: 'portrait' });
   }
 }
