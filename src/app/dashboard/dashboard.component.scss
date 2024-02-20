@@ -170,12 +170,6 @@ audio::-webkit-media-controls-panel {
 }
 
 .iconTitle {
-  // font-family: "roboto";
-  // margin-top: 0.15rem !important;
-  // font-size: 14px;
-  // font-weight: 600;
-  // color: #45406e;
-
   color: #646363;
   text-align: center;
   font-family: Inter;
@@ -183,6 +177,7 @@ audio::-webkit-media-controls-panel {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+  padding-top: 7px;
 }
 
 ion-content {
@@ -204,13 +199,13 @@ ion-col {
 }
 
 .iconn-img {
-  width: 35px;
-  height: 28px;
+  width: 40px;
+  height: 29px;
 }
 
 .iconnn-img {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
 }
 
 /* Add these styles to your global or component stylesheet */
@@ -385,6 +380,13 @@ swiper-slide {
   font-weight: 400;
 }
 
+// .empty-message {
+//   margin-left: 25px;
+//   margin-top: 35px;
+//   font-size: larger;
+//   color: white;
+// }
+
 .ion-card-rounded-right {
   color: white;
   border-top: 2px solid white;
@@ -393,4 +395,24 @@ swiper-slide {
   background-color: #5886fe;
   border-top-right-radius: 16px !important;
   border-bottom-right-radius: 16px !important;
+}
+
+@keyframes runningText {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.empty-message {
+  white-space: nowrap;
+  overflow: hidden;
+  width: 65%;
+  animation: runningText 8s linear infinite;
+  margin: 15px;
+  color: #1042c3;
+  margin-bottom: 22px;
+  font-size: large;
 }

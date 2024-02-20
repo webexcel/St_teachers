@@ -178,6 +178,11 @@ audio {
 }
 
 audio::-webkit-media-controls-panel {
-  background-color: gray;
+  background-color: none;
   color: #fff;
+}
+
+.textarea-label-placement-start.sc-ion-textarea-md-h
+  .textarea-wrapper.sc-ion-textarea-md {
+  height: 95px;
 }

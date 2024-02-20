@@ -26,33 +26,6 @@
     </ion-toolbar>
   </ion-header>
 
-  <!-- <ion-card class="dashcard">
-    <ion-card-content class="dashcardContent">
-      <ion-grid class="frame">
-        <ion-row style="padding: 8px">
-          <ion-col size="3">
-            <img
-              class="img-thumbnail dash"
-              *ngIf="storage.get(ADNO + 'img')"
-              [src]="storage.get(ADNO + 'img')"
-            />
-            <img
-              class="img-thumbnail dash"
-              *ngIf="!storage.get(ADNO + 'img')"
-              src="../../assets/imgs/student.png"
-            />
-          </ion-col>
-          <ion-col size="9">
-            <p class="name">{{ teachersDetail[0]["firstname"] }}</p>
-            <p class="staffCode">
-              Staff Code: {{ teachersDetail[0]["staff_id"] }}
-            </p>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card> -->
-
   <!-- 10/02 -->
   <!-- 1 -->
   <div class="dashboardName container">
@@ -81,197 +54,207 @@
   </div>
 
   <!-- 2 -->
-  <!-- <div class="row bg-primary">Abcdefgh</div> -->
+  <ng-container *ngIf="senditems.length > 0; else noItemsMessage">
+    <div class="container-fluid view-all" *ngIf="senditems.length > 0">
+      <div class="container-fluid message-container">
+        <div
+          (click)="redirectToModule()"
+          class="left ion-card-rounded-right"
+          style="height: 85px; text-align: center"
+        >
+          <div class="left-view">
+            View <br />
+            All
+          </div>
+        </div>
+        <div class="right">
+          <swiper-container
+            #swiper
+            (afterinit)="swiperReady()"
+            (slidechange)="swiperSlideChanged($event)"
+            [loop]="true"
+            [pagination]="true"
+          >
+            <swiper-slide
+              *ngFor="
+                let smsData of senditems.length >= 3
+                  ? senditems.slice(senditems.length - 3)
+                  : senditems
+              "
+            >
+              <ion-card class="ion-card-rounded" style="height: 88px">
+                <ion-card-content no-padding class="frame">
+                  <ion-row class="dm">
+                    <ion-col>
+                      <div class="message-content">
+                        <div
+                          class="multi_lines_text111"
+                          (click)="redirectToModule()"
+                        >
+                          Message :
+                          {{
+                            smsData.Message.length > 100
+                              ? (smsData.Message | slice : 0 : 100) + "..."
+                              : smsData.Message
+                          }}
+                        </div>
+                        <div
+                          *ngIf="checkmp3(smsData.event_image)"
+                          class="audio-section"
+                        ></div>
 
-  <div class="container-fluid view-all">
-    <div class="container-fluid message-container" *ngIf="senditems.length > 0">
-      <div
-        (click)="redirectToModule()"
-        class="left ion-card-rounded-right"
-        style="height: 85px; text-align: center"
-      >
-        <div class="left-view">
-          View <br />
-          All
+                        <!-- Video section -->
+                        <!-- <div
+                          *ngIf="checkmp4(smsData.event_image)"
+                          class="video-section"
+                        >
+                          <iframe
+                            [src]="getSafeUrl(smsData.event_image)"
+                            frameborder="0"
+                            width="100%"
+                            height="100%"
+                            webkitallowfullscreen
+                            mozallowfullscreen
+                            allowfullscreen
+                          ></iframe>
+                        </div> -->
+
+                        <!-- PDF/Excel section -->
+                        <!-- <div
+                          *ngIf="
+                            checkpdf(smsData.event_image) ||
+                            checkxls(smsData.event_image)
+                          "
+                          class="document-section"
+                        >
+                          <div class="row w-100 align-items-center m-0">
+                            <div
+                              [ngClass]="
+                                checkpdf(smsData.event_image) ? 'pdf' : 'xls'
+                              "
+                            >
+                              <div class="col-6" style="padding-top: 10px">
+                                <a
+                                  (click)="
+                                    authservice.open(smsData.event_image)
+                                  "
+                                >
+                                  Click here to
+                                  {{
+                                    checkpdf(smsData.event_image)
+                                      ? "open the PDF"
+                                      : "Download the Excel"
+                                  }}
+                                </a>
+                              </div>
+                              <div class="col-6 text-right m-0 p-0">
+                                <button
+                                  type="button"
+                                  (click)="
+                                    authservice.open(smsData.event_image)
+                                  "
+                                >
+                                  <div class="row w-100 align-items-center">
+                                    <div
+                                      class="col-6 w-100 mx-0 px-0"
+                                      style="padding-right: 10px"
+                                    >
+                                      <img
+                                        class="w-50 m-auto"
+                                        [src]="
+                                          checkpdf(smsData.event_image)
+                                            ? '../../assets/imgs/speakers/spdf.png'
+                                            : '../../assets/imgs/Icons_new/Microsoft Excel.png'
+                                        "
+                                      />
+                                    </div>
+                                  </div>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+                      </div>
+                    </ion-col>
+                  </ion-row>
+
+                  <!-- Header section with student name -->
+                  <!-- <div class="message-header">
+                    <div class="nameDate1" style="margin-top: 4px">
+                      <ion-row>
+                        <div *ngIf="smsData.event_image">
+                          <ion-col
+                            style="float: right"
+                            class="text-right"
+                            *ngIf="checkimage(smsData.event_image)"
+                            (click)="setOpen(true, smsData.event_image)"
+                          >
+                            <div style="float: right; align-items: center">
+                              <ion-text class="text-bold">View Image</ion-text>
+                              <img
+                                style="
+                                  width: 35px !important;
+                                  padding-left: 10px;
+                                "
+                                src="../../assets/imgs/speakers/image.png"
+                                alt=""
+                              />
+                            </div>
+                          </ion-col>
+                        </div>
+                      </ion-row>
+                    </div>
+                  </div> -->
+
+                  <!-- Date and Avatar section -->
+
+                  <!-- Modal for Image -->
+                  <ion-modal [isOpen]="isModalOpen">
+                    <ng-template>
+                      <ion-header>
+                        <ion-toolbar>
+                          <ion-buttons slot="end">
+                            <ion-button (click)="setOpen(false, 't')"
+                              >Close</ion-button
+                            >
+                          </ion-buttons>
+                        </ion-toolbar>
+                      </ion-header>
+                      <ion-content class="ion-padding">
+                        <div>
+                          <img
+                            class="card-img-top w-100"
+                            [src]="modalImage"
+                            alt=""
+                          />
+                        </div>
+                      </ion-content>
+                    </ng-template>
+                  </ion-modal>
+                </ion-card-content>
+              </ion-card>
+            </swiper-slide>
+          </swiper-container>
         </div>
       </div>
-      <div class="right">
-        <swiper-container
-          #swiper
-          (afterinit)="swiperReady()"
-          (slidechange)="swiperSlideChanged($event)"
-          [loop]="true"
-          [pagination]="true"
-        >
-          <swiper-slide
-            *ngFor="let smsData of senditems.slice(senditems.length - 3)"
-          >
-            <ion-card class="ion-card-rounded" style="height: 88px">
-              <ion-card-content no-padding class="frame">
-                <!-- Message content section -->
-                <ion-row class="dm">
-                  <ion-col>
-                    <div class="message-content">
-                      <!-- <div class="today-mes"><h2>Today Messages</h2></div> -->
-                      <!-- <div class="name">Staff ID : {{ smsData.ADNO }}</div> -->
-                      <div class="multi_lines_text111">
-                        Message : {{ smsData.Message | slice : 0 : 80 }}
-                      </div>
-                      <div
-                        *ngIf="checkmp3(smsData.event_image)"
-                        class="audio-section"
-                      >
-                        <!-- <audio controls controlsList="noplaybackrate nodownload">
-                        <source
-                          [src]="
-                            smsData.base64.length > 0
-                              ? smsData.base64
-                              : smsData.event_image
-                          "
-                          type="audio/mpeg"
-                        />
-                      </audio> -->
-                      </div>
-
-                      <!-- Video section -->
-                      <div
-                        *ngIf="checkmp4(smsData.event_image)"
-                        class="video-section"
-                      >
-                        <iframe
-                          [src]="getSafeUrl(smsData.event_image)"
-                          frameborder="0"
-                          width="100%"
-                          height="100%"
-                          webkitallowfullscreen
-                          mozallowfullscreen
-                          allowfullscreen
-                        ></iframe>
-                      </div>
-
-                      <!-- PDF/Excel section -->
-                      <div
-                        *ngIf="
-                          checkpdf(smsData.event_image) ||
-                          checkxls(smsData.event_image)
-                        "
-                        class="document-section"
-                      >
-                        <div class="row w-100 align-items-center m-0">
-                          <div
-                            [ngClass]="
-                              checkpdf(smsData.event_image) ? 'pdf' : 'xls'
-                            "
-                          >
-                            <div class="col-6" style="padding-top: 10px">
-                              <a
-                                (click)="authservice.open(smsData.event_image)"
-                              >
-                                Click here to
-                                {{
-                                  checkpdf(smsData.event_image)
-                                    ? "open the PDF"
-                                    : "Download the Excel"
-                                }}
-                              </a>
-                            </div>
-                            <div class="col-6 text-right m-0 p-0">
-                              <button
-                                type="button"
-                                (click)="authservice.open(smsData.event_image)"
-                              >
-                                <div class="row w-100 align-items-center">
-                                  <div
-                                    class="col-6 w-100 mx-0 px-0"
-                                    style="padding-right: 10px"
-                                  >
-                                    <img
-                                      class="w-50 m-auto"
-                                      [src]="
-                                        checkpdf(smsData.event_image)
-                                          ? '../../assets/imgs/speakers/spdf.png'
-                                          : '../../assets/imgs/Icons_new/Microsoft Excel.png'
-                                      "
-                                    />
-                                  </div>
-                                </div>
-                              </button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </ion-col>
-                </ion-row>
-
-                <!-- Header section with student name -->
-                <div class="message-header">
-                  <div class="nameDate1" style="margin-top: 4px">
-                    <ion-row>
-                      <div *ngIf="smsData.event_image">
-                        <ion-col
-                          style="float: right"
-                          class="text-right"
-                          *ngIf="checkimage(smsData.event_image)"
-                          (click)="setOpen(true, smsData.event_image)"
-                        >
-                          <div style="float: right; align-items: center">
-                            <ion-text class="text-bold">View Image</ion-text>
-                            <img
-                              style="width: 35px !important; padding-left: 10px"
-                              src="../../assets/imgs/speakers/image.png"
-                              alt=""
-                            />
-                          </div>
-                        </ion-col>
-                      </div>
-                    </ion-row>
-                  </div>
-                </div>
-
-                <!-- Date and Avatar section -->
-
-                <!-- Modal for Image -->
-                <ion-modal [isOpen]="isModalOpen">
-                  <ng-template>
-                    <ion-header>
-                      <ion-toolbar>
-                        <ion-buttons slot="end">
-                          <ion-button (click)="setOpen(false, 't')"
-                            >Close</ion-button
-                          >
-                        </ion-buttons>
-                      </ion-toolbar>
-                    </ion-header>
-                    <ion-content class="ion-padding">
-                      <div>
-                        <img
-                          class="card-img-top w-100"
-                          [src]="modalImage"
-                          alt=""
-                        />
-                      </div>
-                    </ion-content>
-                  </ng-template>
-                </ion-modal>
-              </ion-card-content>
-            </ion-card>
-          </swiper-slide>
-        </swiper-container>
-      </div>
     </div>
-  </div>
+  </ng-container>
+
+  <ng-template #noItemsMessage>
+    <div class="empty-message" (click)="redirectToModule()">
+      Click Here for your Messages
+    </div>
+  </ng-template>
 
   <!-- 10/02 -->
 
   <ion-grid style="margin-top: 15px">
     <ion-row class="align-items-center">
-      <ion-col size="3" *ngFor="let p of appPages; first as isFirst">
+      <ion-col size="4" *ngFor="let p of appPages; first as isFirst">
         <div class="text-center" *ngIf="isFirst">
           <div class="row" (click)="go(p.url)">
             <div class="imgBg">
               <img class="iconnn-img" [src]="p.icon" />
-              <!-- [ngStyle]="{ filter: p.filter }" -->
             </div>
             <div class="col-12">
               <p class="iconTitle">{{ p.title | translate }}</p>

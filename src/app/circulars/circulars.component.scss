@@ -1,22 +1,18 @@
 .circulars {
-  // .icon-width {
-  //   width: 30px !important;
-  //   height: 30px !important;
-  // }
   .card_body {
     padding-top: 0px !important;
     margin-left: 5px !important;
     margin-right: 5px !important;
+    padding-bottom: 0;
   }
   .card-header {
     padding: 12px !important;
     padding-left: 20px !important;
+    border-radius: none;
   }
 
   .borbot {
-    // border : 1px solid Grey;
     border-left: 5px solid rgb(252, 29, 215);
-    // padding: 5px;
   }
 
   .borbot:nth-of-type(odd) {
@@ -27,14 +23,8 @@
     background: #fff;
   }
   .flt-rgt {
-    // float: right;
     text-align: right;
   }
-
-  // .selected-date {
-  //   color: #000 !important;
-  //   background-color: #fff;
-  // }
 
   ion-card-content {
     border-radius: 0px 0px 10px 10px;
@@ -56,7 +46,6 @@
   .date {
     color: Red;
     float: right;
-    // border: 1px solid #00CCCC;
   }
 
   .message {
@@ -70,14 +59,14 @@
     margin-top: 3%;
   }
 
-  .textarea {
-    height: 10vh;
-    margin-bottom: 3%;
-    border: 1px solid rgb(230, 227, 227);
-    border-radius: 4px;
-    --padding-start: 8px;
-    --padding-end: 8px;
-  }
+  // .textarea {
+  //   height: 10vh;
+  //   margin-bottom: 3%;
+  //   border: 1px solid rgb(230, 227, 227);
+  //   border-radius: 4px;
+  //   --padding-start: 8px;
+  //   --padding-end: 8px;
+  // }
   hr {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -102,21 +91,6 @@
     font-size: 12px;
     color: red;
   }
-
-  // ion-label {
-  //   display: flex;
-  //   align-items: center;
-  //   padding: 0.375rem 0.75rem;
-  //   font-size: 1rem;
-  //   font-weight: 400;
-  //   line-height: 1.5;
-  //   color: #212529;
-  //   text-align: center;
-  //   white-space: nowrap;
-  //   background-color: #e9ecef;
-  //   border: 1px solid #ced4da;
-  //   border-radius: 0.25rem;
-  // }
 }
 
 .text-black {
@@ -130,8 +104,8 @@
 }
 
 .table-cls {
-  margin-left: 0px !important;
-  margin-right: 0px !important;
+  // margin-left: 0px !important;
+  // margin-right: 0px !important;
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
@@ -148,7 +122,7 @@
   background-color: #4475de;
   border: solid 1px #4475de;
   color: white;
-  padding: 5px;
+  padding: 8px;
 }
 
 .eye {
@@ -162,4 +136,63 @@
 }
 .EditColour {
   color: #198754;
+}
+
+// Latest Codes
+
+.dropdown {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #909090;
+}
+
+.messageArea {
+  border-radius: 4px;
+  border: 1px solid #909090;
+  // height: 115px;
+}
+
+.attach {
+  width: 148px;
+  height: 36px;
+  border-radius: 4px;
+  background: #5886fe;
+  padding-top: 2px;
+}
+
+.attach1 {
+  width: 148px;
+  height: 36px;
+  border-radius: 4px;
+  background: #00b712;
+  padding-top: 6px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-around;
+
+  /* Optional: Adjust the width based on your layout needs */
+}
+
+.cardlist {
+  margin-top: 10px;
+}
+
+.grey {
+  margin-left: 20px;
+  margin-right: 20px;
+  background-color: #656565;
+  height: 46px;
+  vertical-align: middle;
+  color: #fff;
+  font-size: 18px;
+  padding-top: 10px;
+}
+
+.calendar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

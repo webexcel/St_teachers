@@ -178,9 +178,6 @@ MIT
 @ionic-native/native-audio
 MIT
 
-@ionic-native/screen-orientation
-MIT
-
 @ionic-native/splash-screen
 MIT
 
