@@ -265,7 +265,7 @@
         <table
           style="width: 100%; table-layout: fixed"
           class="table table-bordered"
-          *ngFor="let d of grpmes"
+          *ngFor="let d of grpmes; let i=index;"
         >
           <tbody>
             <tr>
@@ -353,7 +353,8 @@
                   type="button"
                   style="padding: 4px"
                   class="btn bg-white ml-1"
-                  (click)="editMessage(d.ID, d.message)"
+                  (click)="toggleMessage(d.ID, d.message,i)"
+                  
                 >
                   <img
                     style="height: 18px; width: 20px"
@@ -1310,12 +1311,13 @@
       </ion-header>
       <ion-content class="ion-padding">
         <ion-item>
-          <ion-label position="stacked">Enter Message</ion-label>
-          <ion-input
+          <ion-label position="stacked">Edit Message</ion-label>
+          <ion-textarea
             type="text"
+            autoGrow="true"
             placeholder="Your message"
             [(ngModel)]="messageText"
-          ></ion-input>
+          ></ion-textarea>
         </ion-item>
       </ion-content>
     </ng-template>
@@ -1360,4 +1362,6 @@
       </ion-content>
     </ng-template>
   </ion-modal>
+
+ 
 </ion-content>

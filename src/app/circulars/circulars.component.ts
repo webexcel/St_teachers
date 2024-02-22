@@ -54,6 +54,7 @@ export class CircularsComponent implements OnInit {
   isPickerOpen: boolean = false;
   isEditMessageOpen: boolean = false;
   isEditMessageOpen1: boolean = false;
+  isEditMessageOpen2: boolean = false;
   messageText: any;
   messageId: any;
   index: any;
@@ -319,41 +320,6 @@ export class CircularsComponent implements OnInit {
     );
   }
 
-  // seencirculars1(id: any) {
-  //   this.messageId = id;
-
-  //   this.showPassword = !this.showPassword;
-  // }
-
-  // async movegrouptofinal(ID){
-  //   let alert = await this.alertCtrl.create({
-  //     header: this.delete_circulars,
-  //     //subTitle: this.name,
-  //     //message:message,
-  //     buttons: [
-  //       {
-  //         text: this.cancel,
-  //         role: 'cancel',
-  //         handler: data => {
-  //           console.log('Cancel clicked');
-  //         }
-  //       },
-  //       {
-  //         text: this.delete,
-  //         handler: data => {
-  //           this.loading.present()
-  //           this.authservice.post('deletecirculars', { id: ID }).subscribe(res => {
-  //             this.loading.dismissAll()
-  //             this.getgroupMessage()
-  //           }, err => {
-  //             this.loading.dismissAll()
-  //           })
-  //         }
-  //       }
-  //     ]
-  //   });
-  //   await alert.present();
-  // }
 
   async movegrouptofinal(ID: any) {
     let alert = await this.alertCtrl.create({
@@ -636,11 +602,9 @@ export class CircularsComponent implements OnInit {
   }
 
   toggleMessage2() {
-    // console.log('toggle', id);
-
     this.isEditMessageOpen1 = !this.isEditMessageOpen1;
   }
-
+  
   // toggleMessage1() {
   //   // console.log('toggle', id);
 
@@ -657,55 +621,26 @@ export class CircularsComponent implements OnInit {
       }
     }
   }
-
+/////////////////////////////
   async editMessage(id: any, message: any) {
-    let alert = await this.alertCtrl.create({
-      header: this.edit_the_message,
-
-      inputs: [
-        {
-          name: 'editedMessage',
-          type: 'textarea',
-          value: message,
+    this.loading.present();
+    this.authservice.post('editcirculars', {messageId: id,messageText: message})
+      .subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.getgroupMessage();
+          }
         },
-      ],
+        (err: any) => {
+          this.loading.dismissAll();
+          console.log(err);
+        }
+      );
+   }
 
-      buttons: [
-        {
-          text: this.cancel,
-          role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
-        },
-        {
-          text: this.send,
-          handler: (data) => {
-            this.loading.present();
-            this.authservice
-              .post('editcirculars', {
-                messageId: id,
-                messageText: data.editedMessage,
-              })
-              .subscribe(
-                (res: any) => {
-                  this.loading.dismissAll();
-                  if (res['status']) {
-                    this.getgroupMessage();
-                  }
-                },
-                (err: any) => {
-                  this.loading.dismissAll();
-                  console.log(err);
-                }
-              );
-          },
-        },
-      ],
-    });
-    await alert.present();
-  }
 
+//edit Circulars
   checkRecordingAbility() {
     VoiceRecorder.requestAudioRecordingPermission().then(
       (result: GenericResponse) => console.log(result.value)

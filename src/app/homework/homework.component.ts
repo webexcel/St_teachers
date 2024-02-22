@@ -307,6 +307,7 @@ export class HomeworkComponent implements OnInit {
     });
     await alert.present();
   }
+  
   toggleHomework(id: any, message: any, i: any) {
     console.log('toggle', id);
     if (id != 'cancel' && id != 'confirm') {
@@ -321,6 +322,8 @@ export class HomeworkComponent implements OnInit {
     }
     this.isEditMessageOpen = !this.isEditMessageOpen;
   }
+
+
   editMessage(id: any, message: any) {
     this.loading.present();
     this.authservice
