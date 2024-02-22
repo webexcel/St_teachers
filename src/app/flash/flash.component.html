@@ -26,6 +26,8 @@
   </ion-header>
 
   <div class="card m-3 shadow-lg">
+    <!-- Updated Styles -->
+
     <div class="card-body card_body">
       <form
         name="form"
@@ -33,228 +35,205 @@
         #f="ngForm"
         novalidate
       >
-        <ion-list>
-          <!-- <ion-item>
-            <ion-label>Class</ion-label>
-            <ionic-selectable #portComponent name="class" item-content [(ngModel)]="details.class" itemValueField="id"
-              itemTextField="name" [items]="classs" [canSearch]="true" [hasVirtualScroll]="true" [isMultiple]="true"
-              #class="ngModel" required>
-              <ng-template ionicSelectableCloseButtonTemplate>
-                <ion-icon [md]="'close-circle'" [ios]="'close-circle'" style="font-size: 24px;"></ion-icon>
-              </ng-template>
-              <ng-template ionicSelectableFooterTemplate>
+        <div style="margin-top: 12px">Title</div>
+        <ion-item class="dropdown" style="margin: 0px">
+          <!-- <ion-label>0 Classes Selected</ion-label> -->
+          <ion-input
+            type="text"
+            name="title"
+            [(ngModel)]="details.title"
+            #title="ngModel"
+            required
+          ></ion-input>
+        </ion-item>
+
+        <span *ngIf="f.submitted && title.invalid" class="text-danger"
+          >Select Class</span
+        >
+        <div style="margin-top: 12px">Description</div>
+        <ion-item lines="full" class="dropdown" style="margin: 0px">
+          <!-- <ion-label position="floating">Description</ion-label> -->
+          <ion-textarea
+            type="text"
+            name="description"
+            [(ngModel)]="details.description"
+            #description="ngModel"
+            required
+          >
+          </ion-textarea>
+        </ion-item>
+        <div style="margin-top: 12px">Select Start Date</div>
+        <ion-item lines="full" class="dropdown" style="margin: 0px">
+          <ion-label
+            id="open-modal"
+            class="selected-date"
+            *ngIf="details.startdate"
+          >
+            <span style="float: left">{{ formatDate(details.startdate) }}</span>
+            <span style="float: right !important">
+              <img
+                style="height: 6px; width: 10px; margin-right: 5px"
+                src="../../assets/imgs/speakers/Polygon 4.png"
+              />
+            </span>
+          </ion-label>
+          <ion-modal
+            trigger="open-modal"
+            (willDismiss)="onWillDismiss($event, 'first')"
+            [initialBreakpoint]="0.5"
+            [breakpoints]="[0, 0.25, 0.5, 0.75]"
+            animated="true"
+          >
+            <ng-template>
+              <ion-header>
                 <ion-toolbar>
-                  <ion-row>
-                    <ion-col [size]="4">
-                      <ion-button expand="full"
-                        (click)="toggleItems(true)">
-                        Select All
-                      </ion-button>
-                    </ion-col>
-                    <ion-col [size]="4">
-                      <ion-button expand="full"
-                        (click)="toggleItems(false)">
-                        Deselect All
-                      </ion-button>
-                    </ion-col>
-                    <ion-col [size]="4">
-                      <ion-button expand="full" (click)="confirm()">
-                        OK
-                      </ion-button>
-                    </ion-col>
-                  </ion-row>
+                  <ion-buttons slot="start">
+                    <ion-button (click)="cancel_date()">{{
+                      "cancel" | translate
+                    }}</ion-button>
+                  </ion-buttons>
+                  <ion-title>{{ "select_date" | translate }}</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="confirm_date()" [strong]="true">{{
+                      "confirm" | translate
+                    }}</ion-button>
+                  </ion-buttons>
                 </ion-toolbar>
-              </ng-template>
-            </ionic-selectable>
-          </ion-item>
-          <span *ngIf="f.submitted && class.invalid" class="text-danger">Select Class</span> -->
-          <ion-item>
-            <ion-label position="floating">Title</ion-label>
-            <ion-input
-              type="text"
-              name="title"
-              [(ngModel)]="details.title"
-              #title="ngModel"
-              required
-            ></ion-input>
-          </ion-item>
-          <span *ngIf="f.submitted && title.invalid" class="text-danger"
-            >Enter Title</span
+              </ion-header>
+              <ion-content class="ion-padding">
+                <ion-datetime
+                  name="dob"
+                  displayFormat="DD/MM/YYYY"
+                  pickerFormat="DD/MM/YYYY"
+                  [(ngModel)]="details.startdate"
+                  #dob="ngModel"
+                  presentation="date"
+                  mode="md"
+                  #datetime
+                  (ionChange)="showHideDatePicker()"
+                  required
+                >
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+        <div style="margin-top: 12px">Select End Date</div>
+        <ion-item lines="full" class="dropdown" style="margin: 0px">
+          <ion-label
+            id="open-modal1"
+            class="selected-date"
+            *ngIf="details.enddate"
+            (click)="toggleDateSelection()"
           >
-          <ion-item>
-            <ion-label position="floating">Description</ion-label>
-            <ion-textarea
-              type="text"
-              name="description"
-              [(ngModel)]="details.description"
-              #description="ngModel"
-              required
-            >
-            </ion-textarea>
-          </ion-item>
-          <span *ngIf="f.submitted && description.invalid" class="text-danger"
-            >Enter Description</span
+            <span style="float: left">{{ formatDate(details.enddate) }}</span>
+            <span style="float: right !important">
+              <img
+                style="height: 6px; width: 10px; margin-right: 5px"
+                src="../../assets/imgs/speakers/Polygon 4.png"
+              />
+            </span>
+          </ion-label>
+          <ion-modal
+            [isOpen]="isPickerOpen"
+            (willDismiss)="onWillDismiss($event, 'second')"
+            [initialBreakpoint]="0.5"
+            [breakpoints]="[0, 0.25, 0.5, 0.75]"
+            animated="true"
           >
-          <!-- <ion-item>
-            <ion-label position="floating">Start Date</ion-label>
-            <ion-datetime name="startdate" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="details.startdate" #startdate="ngModel" required></ion-datetime>
-          </ion-item> -->
-
-          <ion-item lines="full">
-            <ion-label
-              id="open-modal"
-              class="selected-date"
-              *ngIf="details.startdate"
-            >
-              <span style="float: left">Start Date</span>
-              <span style="float: right">{{
-                formatDate(details.startdate)
-              }}</span>
-            </ion-label>
-            <ion-modal
-              trigger="open-modal"
-              (willDismiss)="onWillDismiss($event, 'first')"
-              [initialBreakpoint]="0.5"
-              [breakpoints]="[0, 0.25, 0.5, 0.75]"
-              animated="true"
-            >
-              <ng-template>
-                <ion-header>
-                  <ion-toolbar>
-                    <ion-buttons slot="start">
-                      <ion-button (click)="cancel_date()">{{
-                        "cancel" | translate
-                      }}</ion-button>
-                    </ion-buttons>
-                    <ion-title>{{ "select_date" | translate }}</ion-title>
-                    <ion-buttons slot="end">
-                      <ion-button (click)="confirm_date()" [strong]="true">{{
-                        "confirm" | translate
-                      }}</ion-button>
-                    </ion-buttons>
-                  </ion-toolbar>
-                </ion-header>
-                <ion-content class="ion-padding">
-                  <ion-datetime
-                    name="dob"
-                    displayFormat="DD/MM/YYYY"
-                    pickerFormat="DD/MM/YYYY"
-                    [(ngModel)]="details.startdate"
-                    #dob="ngModel"
-                    presentation="date"
-                    mode="md"
-                    #datetime
-                    (ionChange)="showHideDatePicker()"
-                    required
-                  >
-                  </ion-datetime>
-                </ion-content>
-              </ng-template>
-            </ion-modal>
-          </ion-item>
-
-          <!-- <ion-item>
-            <ion-label position="floating">End Date</ion-label>
-            <ion-datetime name="enddate" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="details.enddate" #enddate="ngModel" required></ion-datetime>
-          </ion-item> -->
-
-          <ion-item lines="full">
-            <ion-label
-              id="open-modal1"
-              class="selected-date"
-              *ngIf="details.enddate"
-              (click)="toggleDateSelection()"
-            >
-              <span style="float: left">End Date</span>
-              <span style="float: right">{{
-                formatDate(details.enddate)
-              }}</span>
-            </ion-label>
-            <ion-modal
-              [isOpen]="isPickerOpen"
-              (willDismiss)="onWillDismiss($event, 'second')"
-              [initialBreakpoint]="0.5"
-              [breakpoints]="[0, 0.25, 0.5, 0.75]"
-              animated="true"
-            >
-              <ng-template>
-                <ion-header>
-                  <ion-toolbar>
-                    <ion-buttons slot="start">
-                      <ion-button (click)="toggleDateSelection()">{{
-                        "cancel" | translate
-                      }}</ion-button>
-                    </ion-buttons>
-                    <ion-title>{{ "select_date" | translate }}</ion-title>
-                    <ion-buttons slot="end">
-                      <ion-button
-                        (click)="toggleDateSelection()"
-                        [strong]="true"
-                        >{{ "confirm" | translate }}</ion-button
-                      >
-                    </ion-buttons>
-                  </ion-toolbar>
-                </ion-header>
-                <ion-content class="ion-padding">
-                  <ion-datetime
-                    name="dob"
-                    displayFormat="DD/MM/YYYY"
-                    pickerFormat="DD/MM/YYYY"
-                    [(ngModel)]="details.enddate"
-                    #dob="ngModel"
-                    presentation="date"
-                    mode="md"
-                    #datetime
-                    (ionChange)="showHideDatePicker()"
-                    required
-                  >
-                  </ion-datetime>
-                </ion-content>
-              </ng-template>
-            </ion-modal>
-          </ion-item>
-          <ion-item>
-            <div class="row w-100 align-items-center text-center">
-              <div class="col-8">
-                Attach Image Here
-                <img
-                  class="w-100"
-                  [src]="details.image"
-                  *ngIf="details.image.length != 0"
-                />
-              </div>
-              <div class="col-4">
-                <!-- <ion-icon [ios]="'folder-open-sharp'" [md]="'folder-open-sharp'" class="icon-width text-success" (click)="open()"></ion-icon> -->
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <ion-button (click)="toggleDateSelection()">{{
+                      "cancel" | translate
+                    }}</ion-button>
+                  </ion-buttons>
+                  <ion-title>{{ "select_date" | translate }}</ion-title>
+                  <ion-buttons slot="end">
+                    <ion-button
+                      (click)="toggleDateSelection()"
+                      [strong]="true"
+                      >{{ "confirm" | translate }}</ion-button
+                    >
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">
+                <ion-datetime
+                  name="dob"
+                  displayFormat="DD/MM/YYYY"
+                  pickerFormat="DD/MM/YYYY"
+                  [(ngModel)]="details.enddate"
+                  #dob="ngModel"
+                  presentation="date"
+                  mode="md"
+                  #datetime
+                  (ionChange)="showHideDatePicker()"
+                  required
+                >
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+        <ion-item>
+          <div class="row w-100 align-items-center text-center">
+            <!-- <div class="col-8">
+              Attach Image Here
+              <img
+                class="w-100"
+                [src]="details.image"
+                *ngIf="details.image.length != 0"
+              />
+            </div> -->
+            <div class="col-6"></div>
+            <div class="col-6">
+              <!-- <img
+                alt=""
+                style="width: 30px"
+                src="../../assets/imgs/speakers/attachment.png"
+                (click)="open()"
+                *ngIf="details.image.length == 0"
+              /> -->
+              <button
+                class="attach"
+                *ngIf="details.image.length == 0"
+                style="flex: 0 0 150px"
+              >
                 <img
                   alt=""
-                  style="width: 30px"
-                  src="../../assets/imgs/speakers/attachment.png"
+                  style="width: 12px; height: 22px"
+                  src="../../assets/imgs/speakers/attach.svg"
                   (click)="open()"
-                  *ngIf="details.image.length == 0"
                 />
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  (click)="deletefile()"
-                  *ngIf="details.image.length != 0"
+                <span style="color: #fff; margin-left: 8px" (click)="open()"
+                  >Attach Files</span
                 >
-                  <ion-icon
-                    [ios]="'trash-sharp'"
-                    [md]="'trash-sharp'"
-                  ></ion-icon>
-                </button>
-              </div>
-              <div class="col-12 text-danger" *ngIf="error">
-                only allow jpg, jpeg, png.
-              </div>
+              </button>
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="deletefile()"
+                *ngIf="details.image.length != 0"
+              >
+                <ion-icon [ios]="'trash-sharp'" [md]="'trash-sharp'"></ion-icon>
+              </button>
             </div>
-          </ion-item>
-        </ion-list>
-        <div padding>
-          <button type="submit" class="btn btn-primary">Save</button>
+            <div class="col-12 text-danger" *ngIf="error">
+              only allow jpg, jpeg, png.
+            </div>
+          </div>
+        </ion-item>
+
+        <div class="p-2 text-right">
+          <button type="submit" class="btn btn-primary" style="width: 100%">
+            {{ "save" | translate }}
+          </button>
         </div>
       </form>
     </div>
+    <!-- Updated Styles -->
   </div>
 
   <div class="cardlist" *ngIf="flashlist.length > 0">

@@ -39,6 +39,7 @@ export class CircularsComponent implements OnInit {
   delete_circulars: any;
   cancel: any;
   send_circulars: any;
+  edit_the_message: any;
   send: any;
   delete: any;
   error: any = false;
@@ -123,6 +124,9 @@ export class CircularsComponent implements OnInit {
     this.translate
       .getparam('send_circulars')
       .then((v) => (this.send_circulars = v));
+    this.translate
+      .getparam('edit_the_message')
+      .then((v) => (this.edit_the_message = v));
     this.translate.getparam('send').then((v) => (this.send = v));
     this.translate.getparam('delete').then((v) => (this.delete = v));
     this.select_datas1.s_date = new Date().toISOString();
@@ -354,8 +358,6 @@ export class CircularsComponent implements OnInit {
   async movegrouptofinal(ID: any) {
     let alert = await this.alertCtrl.create({
       header: this.send_circulars,
-      //subTitle: this.name,
-      //message:message,
       buttons: [
         {
           text: this.cancel,
@@ -655,22 +657,53 @@ export class CircularsComponent implements OnInit {
       }
     }
   }
-  editMessage(id: any, message: any) {
-    this.loading.present();
-    this.authservice
-      .post('editMessage', { messageId: id, messageText: message })
-      .subscribe(
-        (res: any) => {
-          this.loading.dismissAll();
-          if (res['status']) {
-            this.getgroupMessage();
-          }
+
+  async editMessage(id: any, message: any) {
+    let alert = await this.alertCtrl.create({
+      header: this.edit_the_message,
+
+      inputs: [
+        {
+          name: 'editedMessage',
+          type: 'textarea',
+          value: message,
         },
-        (err) => {
-          this.loading.dismissAll();
-          console.log(err);
-        }
-      );
+      ],
+
+      buttons: [
+        {
+          text: this.cancel,
+          role: 'cancel',
+          handler: (data) => {
+            console.log('Cancel clicked');
+          },
+        },
+        {
+          text: this.send,
+          handler: (data) => {
+            this.loading.present();
+            this.authservice
+              .post('editcirculars', {
+                messageId: id,
+                messageText: data.editedMessage,
+              })
+              .subscribe(
+                (res: any) => {
+                  this.loading.dismissAll();
+                  if (res['status']) {
+                    this.getgroupMessage();
+                  }
+                },
+                (err: any) => {
+                  this.loading.dismissAll();
+                  console.log(err);
+                }
+              );
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 
   checkRecordingAbility() {
