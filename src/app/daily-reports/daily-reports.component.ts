@@ -6,8 +6,7 @@ import {
   ModalController,
 } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
-import { ReportDetailsComponent } from '../report-details/report-details.component';
-import { ReportFormsComponent } from '../report-forms/report-forms.component';
+import { FlashComponent } from '../flash/flash.component';
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
@@ -200,7 +199,7 @@ export class DailyReportsComponent implements OnInit {
   }
   async openModal(type: any, item: any) {
     const modal = await this.modalCtrl.create({
-      component: ReportFormsComponent,
+      component: FlashComponent,
       componentProps: {
         type: type,
         data: item,
@@ -255,7 +254,7 @@ export class DailyReportsComponent implements OnInit {
   async openModalDetails(item: any) {
     console.log('open modal');
     const modal = await this.modalCtrl.create({
-      component: ReportDetailsComponent,
+      component: FlashComponent,
       componentProps: {
         data: item,
       },

@@ -33,6 +33,27 @@
         #f="ngForm"
         novalidate
       >
+        <!-- Added Code -->
+
+        <!-- <div style="margin-top: 12px">Select Class</div>
+        <ion-item>
+          <ion-label>Select Class</ion-label>
+          <ion-select
+            multiple
+            [(ngModel)]="select_datas.class"
+            [ngModelOptions]="{ standalone: true }"
+            cancelText="Cancel"
+            okText="OK"
+            required
+          >
+            <ion-select-option *ngFor="let item of classs" [value]="item.id">{{
+              item.name
+            }}</ion-select-option>
+          </ion-select>
+        </ion-item> -->
+
+        <!-- Added Code -->
+
         <div style="margin-top: 12px">Select Class</div>
         <ion-item class="dropdown" style="margin: 0px">
           <ion-label *ngIf="!select_datas.class">0 Classes Selected</ion-label>
@@ -92,6 +113,7 @@
         <span *ngIf="f.submitted && class.invalid" class="text-danger"
           >Select Class</span
         >
+
         <div style="margin-top: 12px">Select Date</div>
         <ion-item lines="full" class="dropdown" style="margin: 0px">
           <ion-label
@@ -265,7 +287,7 @@
         <table
           style="width: 100%; table-layout: fixed"
           class="table table-bordered"
-          *ngFor="let d of grpmes; let i=index;"
+          *ngFor="let d of grpmes; let i = index"
         >
           <tbody>
             <tr>
@@ -353,8 +375,7 @@
                   type="button"
                   style="padding: 4px"
                   class="btn bg-white ml-1"
-                  (click)="toggleMessage(d.ID, d.message,i)"
-                  
+                  (click)="toggleMessage(d.ID, d.message, i)"
                 >
                   <img
                     style="height: 18px; width: 20px"
@@ -1362,6 +1383,4 @@
       </ion-content>
     </ng-template>
   </ion-modal>
-
- 
 </ion-content>

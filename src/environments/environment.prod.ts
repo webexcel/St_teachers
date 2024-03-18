@@ -92,8 +92,24 @@ export const environment = {
     {
       title: 'News',
       url: '/news-events',
-      icon: 'assets/imgs/latest_Icons/reporting.svg',
+      icon: 'assets/imgs/latest_Icons/News.svg',
       // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
+      admin: 'Y',
+    },
+
+    {
+      title: 'Add Remarks',
+      url: '/reports',
+      icon: 'assets/imgs/latest_Icons/add.svg',
+      // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
+      admin: 'Y',
+    },
+
+    {
+      title: 'View Remarks',
+      url: '/view-remarks',
+      icon: 'assets/imgs/latest_Icons/view.svg',
+      // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
       admin: 'Y',
     },
 
@@ -106,7 +122,7 @@ export const environment = {
     // { title: 'language',url: '/language', icon: 'assets/imgs/speakers/language.png',filter:"invert(10%) sepia(98%) saturate(6683%) hue-rotate(247deg) brightness(62%) contrast(131%)"},
   ],
   login_logo: 'assets/imgs/appicon.png',
-  school_name: 'DEMO SCH',
+  school_name: 'Schooltree Teachers',
   app_versionCode: '5',
   apiBaseUrl: 'https://demo.schooltree.in/baseTeacherS.php/api/',
   version: '5',

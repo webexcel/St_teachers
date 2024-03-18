@@ -1,0 +1,208 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Add Students Remarks</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+    <ion-toolbar class="p-0">
+      <ion-buttons slot="start">
+        <ion-menu-button>
+          <ion-icon
+            class="text-white"
+            [ios]="'menu-sharp'"
+            [md]="'menu-sharp'"
+          ></ion-icon>
+        </ion-menu-button>
+      </ion-buttons>
+      <ion-title>Students Remarks</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="card-body card_body">
+    <form
+      name="form"
+      #f="ngForm"
+      novalidate
+      (ngSubmit)="f.form.valid && onSubmit(f)"
+    >
+      <div style="margin-top: 12px">Select Class</div>
+      <ion-item class="dropdown" style="margin: 0px">
+        <ion-label *ngIf="!select_datas.class">Select a Class</ion-label>
+
+        <ionic-selectable
+          name="class"
+          item-content
+          [(ngModel)]="select_datas.class"
+          itemValueField="id"
+          itemTextField="name"
+          [items]="classs"
+          [canSearch]="true"
+          (onChange)="classChange($event)"
+          #class="ngModel"
+          required
+        >
+          <ng-template ionicSelectableCloseButtonTemplate>
+            <ion-icon
+              [md]="'close-circle'"
+              [ios]="'close-circle'"
+              style="font-size: 24px"
+            ></ion-icon>
+          </ng-template>
+        </ionic-selectable>
+      </ion-item>
+
+      <span *ngIf="f.submitted && class.invalid" class="text-danger"
+        >Select Class</span
+      >
+
+      <div style="margin-top: 25px">Select Students</div>
+
+      <ion-item class="dropdown">
+        <ion-label>{{ "students" | translate }}</ion-label>
+        <ionic-selectable
+          #portComponent
+          name="student"
+          item-content
+          [(ngModel)]="select_datas.student"
+          [hasVirtualScroll]="true"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          [isMultiple]="true"
+          #student="ngModel"
+          [items]="students"
+          required
+        >
+          <ng-template ionicSelectableValueTemplate let-ports="value">
+            <div class="ionic-selectable-value-item">
+              {{ formatPorts(select_datas.student) }}
+            </div>
+          </ng-template>
+          <ng-template ionicSelectableCloseButtonTemplate>
+            <ion-icon
+              [md]="'close-circle'"
+              [ios]="'close-circle'"
+              style="font-size: 24px"
+            ></ion-icon>
+          </ng-template>
+          <ng-template ionicSelectableFooterTemplate>
+            <ion-toolbar>
+              <ion-row>
+                <ion-col [size]="4">
+                  <ion-button expand="full" (click)="toggleItems(true)">
+                    Select All
+                  </ion-button>
+                </ion-col>
+                <ion-col [size]="4">
+                  <ion-button expand="full" (click)="toggleItems(false)">
+                    Deselect All
+                  </ion-button>
+                </ion-col>
+                <ion-col [size]="4">
+                  <ion-button expand="full" (click)="confirm()">
+                    OK
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-toolbar>
+          </ng-template>
+        </ionic-selectable>
+      </ion-item>
+
+      <div style="margin-top: 25px">Select Subject</div>
+      <ion-item class="dropdown">
+        <ion-label>{{ "Subject" | translate }}</ion-label>
+        <ionic-selectable
+          #portComponent
+          name="subject"
+          item-content
+          [(ngModel)]="select_datas.subject"
+          [hasVirtualScroll]="true"
+          itemValueField="id"
+          itemTextField="name"
+          [canSearch]="true"
+          [isMultiple]="true"
+          #subject="ngModel"
+          [items]="subjects"
+          required
+        >
+          <ng-template ionicSelectableCloseButtonTemplate>
+            <ion-icon
+              [md]="'close-circle'"
+              [ios]="'close-circle'"
+              style="font-size: 24px"
+            ></ion-icon>
+          </ng-template>
+          <ng-template ionicSelectableFooterTemplate>
+            <ion-toolbar>
+              <ion-row>
+                <ion-col [size]="4">
+                  <ion-button expand="full" (click)="toggleItems(true)">
+                    Select All
+                  </ion-button>
+                </ion-col>
+                <ion-col [size]="4">
+                  <ion-button expand="full" (click)="toggleItems(false)">
+                    Deselect All
+                  </ion-button>
+                </ion-col>
+                <ion-col [size]="4">
+                  <ion-button expand="full" (click)="confirm()">
+                    OK
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-toolbar>
+          </ng-template>
+        </ionic-selectable>
+      </ion-item>
+
+      <div style="margin-top: 25px">Enter Message Here</div>
+      <ion-item lines="full" class="messageArea" style="height: 95px">
+        <ion-textarea
+          type="text"
+          name="message"
+          [(ngModel)]="select_datas.message"
+          #message="ngModel"
+        >
+          <!-- [required]="select_datas.filename.length === 0" -->
+        </ion-textarea>
+      </ion-item>
+
+      <div class="p-2 text-right">
+        <button type="submit" class="btn btn-primary" style="width: 100%">
+          {{ "save" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="m-3">
+    <div class="dateHead">Remarks</div>
+    <div *ngFor="let d of studentRemarks; let i = index">
+      <table class="table table-bordered">
+        <tbody>
+          <tr>
+            <td width="30%">
+              <div class="txtCenter topBg">{{ d.name }}</div>
+              <div class="txtCenter" style="font-size: 14px">
+                {{ d.CLASSSEC }}
+              </div>
+            </td>
+            <td width="60%" class="textleft multi_lines_text">
+              <span>{{ d.message }}</span>
+              <br *ngIf="d.event_image && d.event_image.length > 0" />
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</ion-content>

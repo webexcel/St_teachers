@@ -23,6 +23,10 @@ export class AttendanceComponent implements OnInit {
   students: any = [];
   select_datas: any = {};
   select_datas1: any = {};
+
+  selectedSessions: string[] = ['Full'];
+  select_sessions = ['Full', 'Session 1', 'Session 2'];
+
   delete_attendance: any;
   cancel: any;
   send_attendance: any;
@@ -116,10 +120,11 @@ export class AttendanceComponent implements OnInit {
       }
     );
   }
+
   getlist() {
     this.loading.present();
     this.authservice
-      .post('getpersonalmessagelist', {
+      .post('getpersonalAbsentmessagelist', {
         staff_id: this.storage.getjson('teachersDetail')[0]['staff_id'],
         type: 'ABSENTEES',
         classid: this.authservice.classids(),
@@ -147,9 +152,25 @@ export class AttendanceComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (this.select_datas.student.length) {
+      const selectedSessionsArray = Array.isArray(this.selectedSessions)
+        ? this.selectedSessions
+        : [this.selectedSessions];
+
+      // Get the indices of selected sessions
+      const selectedSessionIndices: number[] = selectedSessionsArray.map(
+        (sessionName) => this.select_sessions.indexOf(sessionName)
+      );
+
+      // Take the first element and convert it to a string
+      const abtypeValue: string = selectedSessionIndices[0]?.toString() || '';
+
+      // Assuming you want to send abtype as a string
+      this.select_datas.abtype = abtypeValue;
+
       console.log(this.select_datas);
+
       this.loading.present();
-      this.authservice.post('newpersonalsms', this.select_datas).subscribe(
+      this.authservice.post('newAbsentees', this.select_datas).subscribe(
         (res: any) => {
           this.loading.dismissAll();
           if (res['STATUS']) {
@@ -199,7 +220,7 @@ export class AttendanceComponent implements OnInit {
           handler: (data) => {
             this.loading.present();
             this.authservice
-              .post('getdeletepersonalmessagelist', { ID: ID })
+              .post('getdeletepersonalAbsentmessagelist', { ID: ID })
               .subscribe(
                 (res) => {
                   this.loading.dismissAll();
@@ -233,7 +254,9 @@ export class AttendanceComponent implements OnInit {
           handler: (data) => {
             this.loading.present();
             this.authservice
-              .post('senddeletepersonalmessagelist', { ID: ID })
+              // getdeletepersonalAbsentmessagelist
+              // .post('senddeletepersonalmessagelist', { ID: ID })
+              .post('getdeletepersonalAbsentmessagelist', { ID: ID })
               .subscribe(
                 (res) => {
                   this.loading.dismissAll();
@@ -267,7 +290,10 @@ export class AttendanceComponent implements OnInit {
           handler: (data) => {
             this.loading.present();
             this.authservice
-              .post('movepersonaltofinal', { ids: ID, msgtype: 'ABSENTEES' })
+              .post('movepersonalAbsenttofinal', {
+                ids: ID,
+                msgtype: 'ABSENTEES',
+              })
               .subscribe(
                 (res) => {
                   this.loading.dismissAll();

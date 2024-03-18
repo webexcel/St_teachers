@@ -112,22 +112,36 @@ export const environment = {
     {
       title: 'News',
       url: '/news-events',
-      icon: 'assets/imgs/latest_Icons/reporting.svg',
+      icon: 'assets/imgs/latest_Icons/News.svg',
       // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
       admin: 'Y',
     },
 
-    //{ title: 'Study Material',url: '/study-material', icon: 'assets/imgs/speakers/books.png',filter:"invert(17%) sepia(65%) saturate(5213%) hue-rotate(337deg) brightness(85%) contrast(112%)"},
-    /*{ title: 'report-card',url: '/report-card', icon: 'assets/imgs/speakers/marks.png', filter:"invert(10%) sepia(51%) saturate(5820%) hue-rotate(291deg) brightness(110%) contrast(115%)"},
-    { title: 'gallery',url: '/gallery', icon: 'assets/imgs/speakers/gallery.png', filter:"invert(50%) sepia(24%) saturate(1477%) hue-rotate(1deg) brightness(106%) contrast(89%)"},
-    { title: 'exam-schedule',url: '/exam-schedule', icon: 'assets/imgs/speakers/exam.png', filter:"invert(61%) sepia(99%) saturate(745%) hue-rotate(1deg) brightness(107%) contrast(103%)"},
-    { title: 'calender',url: '/calender', icon: 'assets/imgs/speakers/calendar.png',filter:"invert(23%) sepia(97%) saturate(4292%) hue-rotate(28deg) brightness(98%) contrast(101%)"},
-    
-    { title: 'timetable',url: '/timetable', icon: 'assets/imgs/speakers/timetable.png', filter:"invert(26%) sepia(99%) saturate(5099%) hue-rotate(294deg) brightness(112%) contrast(131%)"},*/
+    {
+      title: 'Add Remarks',
+      url: '/reports',
+      icon: 'assets/imgs/latest_Icons/add.svg',
+      // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
+      admin: 'Y',
+    },
+
+    {
+      title: 'View Remarks',
+      url: '/view-remarks',
+      icon: 'assets/imgs/latest_Icons/view.svg',
+      // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
+      admin: 'Y',
+    },
+
+    // { title: 'Study Material',url: '/study-material', icon: 'assets/imgs/speakers/books.png',filter:"invert(17%) sepia(65%) saturate(5213%) hue-rotate(337deg) brightness(85%) contrast(112%)"},
+    // { title: 'gallery',url: '/gallery', icon: 'assets/imgs/speakers/gallery.png', filter:"invert(50%) sepia(24%) saturate(1477%) hue-rotate(1deg) brightness(106%) contrast(89%)"},
+    // { title: 'exam-schedule',url: '/exam-schedule', icon: 'assets/imgs/speakers/exam.png', filter:"invert(61%) sepia(99%) saturate(745%) hue-rotate(1deg) brightness(107%) contrast(103%)"},
+    // { title: 'calender',url: '/calender', icon: 'assets/imgs/speakers/calendar.png',filter:"invert(23%) sepia(97%) saturate(4292%) hue-rotate(28deg) brightness(98%) contrast(101%)"},
+    // { title: 'timetable',url: '/timetable', icon: 'assets/imgs/speakers/timetable.png', filter:"invert(26%) sepia(99%) saturate(5099%) hue-rotate(294deg) brightness(112%) contrast(131%)"},*/
     // { title: 'language',url: '/language', icon: 'assets/imgs/speakers/language.png',filter:"invert(10%) sepia(98%) saturate(6683%) hue-rotate(247deg) brightness(62%) contrast(131%)"},
   ],
   login_logo: 'assets/imgs/appicon.png',
-  school_name: 'DEMO SCH',
+  school_name: 'Schooltree Teachers',
   app_versionCode: '5',
   apiBaseUrl: 'https://demo.schooltree.in/baseTeacherS.php/api/',
   version: '5',

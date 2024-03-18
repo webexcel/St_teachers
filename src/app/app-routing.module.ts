@@ -102,6 +102,22 @@ const routes: Routes = [
       import('./messages/messages.module').then((m) => m.MessagesModule),
     canActivate: [Guard],
   },
+
+  {
+    path: 'reports',
+    loadChildren: () =>
+      import('./add-remarks/reports.module').then((m) => m.ReportsModule),
+    canActivate: [Guard],
+  },
+
+  {
+    path: 'view-remarks',
+    loadChildren: () =>
+      import('./view-remarks/view-remarks.module').then(
+        (m) => m.ViewRemarksModule
+      ),
+    canActivate: [Guard],
+  },
 ];
 
 @NgModule({

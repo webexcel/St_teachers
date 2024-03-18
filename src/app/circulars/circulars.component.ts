@@ -4,6 +4,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
+//import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import { AlertController, IonModal, Platform } from '@ionic/angular';
@@ -102,16 +103,16 @@ export class CircularsComponent implements OnInit {
     });
   }
 
-  selectAll() {
-    console.log('select all');
-    this.select_datas.class = this.classs.map((item: any) => item.id);
-  }
+  // selectAll() {
+  //   console.log('select all');
+  //   this.select_datas.class = this.classs.map((item: any) => item.id);
+  // }
 
-  deSelectAll() {
-    this.select_datas.class = [];
+  // deSelectAll() {
+  //   this.select_datas.class = [];
 
-    // this.selectedItems = [];
-  }
+  //   // this.selectedItems = [];
+  // }
   handleSelectChange(e: any) {
     console.log('event', e);
   }
@@ -319,7 +320,6 @@ export class CircularsComponent implements OnInit {
       }
     );
   }
-
 
   async movegrouptofinal(ID: any) {
     let alert = await this.alertCtrl.create({
@@ -604,7 +604,7 @@ export class CircularsComponent implements OnInit {
   toggleMessage2() {
     this.isEditMessageOpen1 = !this.isEditMessageOpen1;
   }
-  
+
   // toggleMessage1() {
   //   // console.log('toggle', id);
 
@@ -621,10 +621,11 @@ export class CircularsComponent implements OnInit {
       }
     }
   }
-/////////////////////////////
+  /////////////////////////////
   async editMessage(id: any, message: any) {
     this.loading.present();
-    this.authservice.post('editcirculars', {messageId: id,messageText: message})
+    this.authservice
+      .post('editcirculars', { messageId: id, messageText: message })
       .subscribe(
         (res: any) => {
           this.loading.dismissAll();
@@ -637,10 +638,9 @@ export class CircularsComponent implements OnInit {
           console.log(err);
         }
       );
-   }
+  }
 
-
-//edit Circulars
+  //edit Circulars
   checkRecordingAbility() {
     VoiceRecorder.requestAudioRecordingPermission().then(
       (result: GenericResponse) => console.log(result.value)

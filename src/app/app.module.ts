@@ -14,6 +14,7 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { TranModule } from './tran.module';
 //service
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 import { Badge } from '@ionic-native/badge/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
@@ -26,16 +27,11 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicSelectableComponent } from 'ionic-selectable';
-// import { IonicSelectableComponent } from 'ionic-selectable';
-import { FormsModule } from '@angular/forms';
-import { ReportDetailsComponent } from './report-details/report-details.component';
-import { ReportFormsComponent } from './report-forms/report-forms.component';
 import { JwtInterceptor } from './service/jwt.interceptor';
 import { LoadingService } from './service/loading.service';
 
-import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  declarations: [AppComponent, ReportFormsComponent, ReportDetailsComponent],
+  declarations: [AppComponent],
   // entryComponents: [],
   imports: [
     BrowserModule,

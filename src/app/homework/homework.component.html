@@ -534,16 +534,13 @@
 
     <!-- Start of Drafted Message -->
 
-
-    
-
     <div class="m-3">
       <div>
         <div *ngFor="let l of recentdates" class="dateHead">
           Draft Messages {{ recentdates }}
         </div>
         <table class="table table-bordered">
-          <tbody *ngFor="let d of recentdata; let i=index;">
+          <tbody *ngFor="let d of recentdata; let i = index">
             <tr>
               <td width="20%">
                 <div class="txtCenter topBg">{{ d.CLASS }}</div>
@@ -616,14 +613,13 @@
                   </audio>
                 </div>
               </td>
-             
+
               <td class="text-right">
                 <button
                   type="button"
                   style="padding: 4px"
                   class="btn bg-white ml-1"
-                  (click)="toggleHomework(d.MSG_ID, d.MESSAGE,i)"
-                  
+                  (click)="toggleHomework(d.MSG_ID, d.MESSAGE, i)"
                 >
                   <img
                     style="height: 18px; width: 20px"
@@ -1188,44 +1184,43 @@
     </ion-modal>
 
     <ion-modal
-    [isOpen]="isEditMessageOpen"
-    (willDismiss)="onWillDismiss($event, 'edit')"
-    [initialBreakpoint]="0.5"
-    [breakpoints]="[0, 0.25, 0.5, 0.75]"
-    animated="true"
-  >
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-buttons slot="start">
-            <ion-button (click)="toggleHomework('cancel', 'cancel', 'cancel')">{{
-              "cancel" | translate
-            }}</ion-button>
-          </ion-buttons>
-          <ion-title>{{ "edit_message" | translate }}</ion-title>
-          <ion-buttons slot="end">
-            <ion-button
-              (click)="toggleHomework('confirm', 'confirm', 'cancel')"
-              [strong]="true"
-              >{{ "confirm" | translate }}</ion-button
-            >
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding">
-        <ion-item>
-          <ion-label position="stacked">Enter Message</ion-label>
-          <ion-textarea
-            type="text"
-            autoGrow="true"
-            placeholder="Your message"
-            [(ngModel)]="messageText"
-          ></ion-textarea>
-        </ion-item>
-      </ion-content>
-    </ng-template>
-
-    
-  </ion-modal>
+      [isOpen]="isEditMessageOpen"
+      (willDismiss)="onWillDismiss($event, 'edit')"
+      [initialBreakpoint]="0.5"
+      [breakpoints]="[0, 0.25, 0.5, 0.75]"
+      animated="true"
+    >
+      <ng-template>
+        <ion-header>
+          <ion-toolbar>
+            <ion-buttons slot="start">
+              <ion-button
+                (click)="toggleHomework('cancel', 'cancel', 'cancel')"
+                >{{ "cancel" | translate }}</ion-button
+              >
+            </ion-buttons>
+            <ion-title>{{ "edit_message" | translate }}</ion-title>
+            <ion-buttons slot="end">
+              <ion-button
+                (click)="toggleHomework('confirm', 'confirm', 'cancel')"
+                [strong]="true"
+                >{{ "confirm" | translate }}</ion-button
+              >
+            </ion-buttons>
+          </ion-toolbar>
+        </ion-header>
+        <ion-content class="ion-padding">
+          <ion-item>
+            <ion-label position="stacked">Enter Message</ion-label>
+            <ion-textarea
+              type="text"
+              autoGrow="true"
+              placeholder="Your message"
+              [(ngModel)]="messageText"
+            ></ion-textarea>
+          </ion-item>
+        </ion-content>
+      </ng-template>
+    </ion-modal>
   </div>
 </ion-content>

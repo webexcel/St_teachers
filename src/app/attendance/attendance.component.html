@@ -183,6 +183,56 @@
           </ionic-selectable>
         </ion-item>
 
+        <div style="margin-top: 12px">Select Session</div>
+        <ion-item class="dropdown" style="margin: 0px">
+          <ion-label>{{ "Session" | translate }}</ion-label>
+          <ionic-selectable
+            #portComponent
+            name="session"
+            item-content
+            [(ngModel)]="selectedSessions"
+            [hasVirtualScroll]="true"
+            [items]="select_sessions"
+            [canSearch]="true"
+            #session="ngModel"
+            required
+          >
+            <ng-template ionicSelectableValueTemplate let-item="item">
+              <div class="ionic-selectable-value-item">
+                {{ item }}
+              </div>
+            </ng-template>
+            <ng-template ionicSelectableCloseButtonTemplate>
+              <ion-icon
+                [md]="'close-circle'"
+                [ios]="'close-circle'"
+                style="font-size: 24px"
+              ></ion-icon>
+            </ng-template>
+          </ionic-selectable>
+          <!-- <ng-template ionicSelectableFooterTemplate>
+              <ion-toolbar>
+                <ion-row>
+                  <ion-col [size]="4">
+                    <ion-button expand="full" (click)="toggleItems(true)">
+                      Select All
+                    </ion-button>
+                  </ion-col>
+                  <ion-col [size]="4">
+                    <ion-button expand="full" (click)="toggleItems(false)">
+                      Deselect All
+                    </ion-button>
+                  </ion-col>
+                  <ion-col [size]="4">
+                    <ion-button expand="full" (click)="confirm()">
+                      OK
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-toolbar>
+            </ng-template>    -->
+        </ion-item>
+
         <div class="p-2 text-right">
           <button type="submit" class="btn btn-primary" style="width: 100%">
             {{ "save" | translate }}
@@ -227,6 +277,7 @@
         </button>
       </div>
     </div>
+
     <div class="m-3">
       <tabset>
         <tab heading="Today">
