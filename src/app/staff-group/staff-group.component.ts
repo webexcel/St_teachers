@@ -273,7 +273,7 @@ export class StaffGroupComponent implements OnInit {
             this.authservice
               .post('movegrouptofinalStaff', {
                 ids: ID,
-                msgtype: 'STAFFPERSONAL',
+                msgtype: 'STAFFGROUP',
               })
               .subscribe(
                 (res) => {
@@ -587,7 +587,7 @@ export class StaffGroupComponent implements OnInit {
           handler: (data) => {
             this.loading.present();
             this.authservice
-              .post('senddeletepersonalmessagelist', { ID: ID })
+              .post('senddeletegroupmessagelist', { ID: ID })
               .subscribe(
                 (res) => {
                   this.loading.dismissAll();

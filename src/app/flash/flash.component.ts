@@ -27,6 +27,8 @@ export class FlashComponent implements OnInit {
   @ViewChild(IonModal)
   modal!: IonModal;
   isPickerOpen: boolean = false;
+  fileAttached: boolean = false;
+
   constructor(
     public alertCtrl: AlertController,
     private sanitizer: DomSanitizer,
@@ -54,7 +56,12 @@ export class FlashComponent implements OnInit {
     this.details.image = '';
     this.details.type = '';
     this.flashmessage();
+    // this.reset();
   }
+
+  // reset() {
+  //   this.details;
+  // }
 
   flashmessage() {
     let flashmes;
@@ -97,24 +104,6 @@ export class FlashComponent implements OnInit {
     this.portComponent.close();
   }
 
-  onSubmit() {
-    console.log(this.details);
-    this.loading.present();
-    this.authservice.post('saveflase', this.details).subscribe(
-      (res: any) => {
-        this.loading.dismissAll();
-        if (res['status']) {
-          this.flashmessage();
-          this.show('Flash saved  Successfully');
-        }
-      },
-      (err) => {
-        this.loading.dismissAll();
-        console.log(err);
-      }
-    );
-  }
-
   open() {
     this.fileChooser
       .open()
@@ -150,6 +139,35 @@ export class FlashComponent implements OnInit {
       .catch((e) => console.log(e));
   }
 
+  onSubmit() {
+    console.log(this.details);
+    this.loading.present();
+    this.authservice.post('saveflase', this.details).subscribe(
+      (res: any) => {
+        this.loading.dismissAll();
+        if (res['status']) {
+          this.flashmessage();
+          this.show('Flash saved  Successfully');
+          this.reset();
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+        console.log(err);
+      }
+    );
+  }
+
+  reset() {
+    this.details.title = ''; // Reset title field
+    this.details.description = ''; // Reset description field
+    this.details.startdate = new Date().toISOString(); // Reset start date
+    this.details.enddate = new Date().toISOString(); // Reset end date
+    this.details.image = ''; // Reset image field
+    this.details.type = ''; // Reset type field
+    this.error = false; // Reset error status
+  }
+
   delete(id: any) {
     this.loading.present();
     this.authservice.post('deleteflase', { nid: id }).subscribe(
@@ -177,8 +195,8 @@ export class FlashComponent implements OnInit {
       header: msg,
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
+          text: 'Ok',
+          role: 'Ok',
           handler: (data) => {
             console.log('Cancel clicked');
           },

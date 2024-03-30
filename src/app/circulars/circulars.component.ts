@@ -361,55 +361,59 @@ export class CircularsComponent implements OnInit {
   }
 
   open() {
-    this.fileChooser
-      .open()
-      .then((uri) => {
-        console.log('testtt', uri);
-        this.filePath.resolveNativePath(uri).then(
-          (res) => {
-            console.log('@log res: ', res);
-            let f: any = res.split('/');
-            this.select_datas.filename = f[f.length - 1].toLowerCase();
-            let l: any = res.split('.');
-            l = l[l.length - 1].toLowerCase();
-            if (
-              l == 'jpg' ||
-              l == 'jpeg' ||
-              l == 'png' ||
-              l == 'pdf' ||
-              l == 'mp3' ||
-              l == 'mp4' ||
-              l == 'xls' ||
-              l == 'xlsx'
-            ) {
-              this.select_datas.type = l;
-              this.error = false;
-              if (l == 'mp3') {
-                l = `data:audio/mpeg;base64,`;
-              } else if (l == 'mp4') {
-                l = '';
-              } else {
-                l = `data:image/${l};base64,`;
-              }
-              this.base64.encodeFile(res).then(
-                (result) => {
-                  this.select_datas.image = `${l}${result.split('base64,')[1]}`;
-                },
-                (err) => {
-                  console.log('@log file open error: ', err);
-                  this.error = true;
-                }
-              );
+    this.fileChooser.open().then((uri) => {
+      console.log('testtt', uri);
+      this.filePath.resolveNativePath(uri).then(
+        (res) => {
+          // alert('@log res: ' + JSON.stringify(res));
+          let f: any = res.split('/');
+          this.select_datas.filename = f[f.length - 1].toLowerCase();
+          let l: any = res.split('.');
+          l = l[l.length - 1].toLowerCase();
+          if (
+            l == 'jpg' ||
+            l == 'jpeg' ||
+            l == 'png' ||
+            l == 'pdf' ||
+            l == 'mp3' ||
+            l == 'mp4' ||
+            l == 'xls' ||
+            l == 'xlsx'
+          ) {
+            // alert(1);
+            this.select_datas.type = l;
+            this.error = false;
+            if (l == 'mp3') {
+              l = `data:audio/mpeg;base64,`;
+            } else if (l == 'mp4') {
+              l = '';
             } else {
-              this.error = true;
+              l = `data:image/${l};base64,`;
             }
-          },
-          (err) => {
-            console.log('@log file error: ', err);
+            // alert(2);
+            this.base64.encodeFile(res).then(
+              (result) => {
+                alert(2.1);
+                this.select_datas.image = `${l}${result.split('base64,')[1]}`;
+              },
+              (err) => {
+                alert(2.2);
+                alert('@log file open error: ' + JSON.stringify(err));
+                this.error = true;
+              }
+            );
+            // alert(3);
+          } else {
+            // alert(4);
+            this.error = true;
           }
-        );
-      })
-      .catch((e) => console.log('@log file errorZZ: ', e));
+        },
+        (err) => {
+          // alert('@log file error: ' + JSON.stringify(err));
+        }
+      );
+    });
+    // .catch((e) => alert('@log file errorZZ: ' + JSON.stringify(e)));
   }
 
   checkimage(f: any) {
@@ -553,6 +557,7 @@ export class CircularsComponent implements OnInit {
         }
       );
   }
+
   showHideDatePicker() {
     this.showDatePicker = !this.showDatePicker;
   }

@@ -325,7 +325,7 @@ export class AttendanceComponent implements OnInit {
   onSubmit1() {
     this.loading.present();
     this.authservice
-      .post('searchpersonalmessagelist', {
+      .post('searchAbenteesmessagelist', {
         staff_id: this.storage.getjson('teachersDetail')[0]['staff_id'],
         type: 'ABSENTEES',
         classid: this.authservice.classids(),

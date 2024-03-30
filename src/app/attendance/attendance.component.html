@@ -241,259 +241,292 @@
       </form>
     </div>
 
-    <!-- updated styles -->
-    <div class="cardlist mb-3" *ngFor="let d of grpmes">
-      <div class="card-header py-1">
-        <div class="row align-items-center">
-          <div class="col">{{ d.name }} ({{ d.CLASSSEC }})</div>
-          <div class="col text-right">
-            <button type="button" class="btn bg-white mx-1">
-              <ion-icon
-                class="text-success"
-                [md]="'send-sharp'"
-                (click)="movegrouptofinal([{ ID: d.ID }])"
-              ></ion-icon>
-            </button>
-            <button
-              type="button"
-              class="btn bg-white ml-1"
-              (click)="deletecirculars(d.ID)"
-            >
-              <ion-icon class="text-danger" [md]="'trash-sharp'"></ion-icon>
-            </button>
-          </div>
-        </div>
+    <!-- Drafted Message -->
+
+    <div class="m-3" *ngIf="grpmes.length > 0">
+      <div>
+        <div class="dateHead">Draft Message</div>
+        <table
+          style="width: 100%; table-layout: fixed"
+          class="table table-bordered"
+          *ngFor="let d of grpmes; let i = index"
+        >
+          <tbody>
+            <tr>
+              <td width="25%">
+                <div class="txtCenter">
+                  <div style="padding: 6px; font-size: 16px">
+                    {{ d.CLASSSEC }}
+                  </div>
+                </div>
+              </td>
+              <td width="63%" class="textleft multi_lines_text">
+                <span>{{ d.name }}</span>
+              </td>
+
+              <td width="12%">
+                <button
+                  type="button"
+                  class="btn bg-white ml-1"
+                  style="padding: 4px; padding-top: 8px"
+                  (click)="movegrouptofinal([{ ID: d.ID }])"
+                >
+                  <img
+                    style="height: 18px; width: 20px"
+                    src="../../assets/imgs/speakers/send.svg"
+                  />
+                </button>
+
+                <button
+                  type="button"
+                  class="btn bg-white ml-1"
+                  style="padding: 4px; padding-top: 8px"
+                  (click)="deletecirculars(d.ID)"
+                >
+                  <img
+                    style="height: 18px; width: 20px"
+                    src="../../assets/imgs/speakers/delete.svg"
+                  />
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
 
+    <!-- End of Drafted Message -->
+
     <div class="" *ngIf="grpmes.length > 0">
-      <div class="card-body card_body">
+      <div class="card-body card_body d-flex justify-content-end">
         <button
           type="button"
-          class="btn btn-primary btn-lg btn-block"
+          class="btn btn-lg btn-block send_btn"
           (click)="moveFinalgroupAll()"
+          style="
+            background: #00b712;
+            width: 188px;
+            height: 42px;
+            font-size: 16px;
+            text-align: center;
+            color: #fff;
+          "
         >
           {{ "send_aLl_messages" | translate }}
         </button>
       </div>
     </div>
+  </div>
 
-    <div class="m-3">
-      <tabset>
-        <tab heading="Today">
-          <div class="cardlist" *ngIf="senditems.length > 0">
-            <div class="card-header table-cls">
-              <div class="row align-items-center">
-                <div class="col">
-                  {{ "sended_message" | translate }}
-                </div>
+  <div class="m-3">
+    <tabset>
+      <tab heading="Today">
+        <div class="cardlist" *ngIf="senditems.length > 0">
+          <div class="card-header table-cls">
+            <div class="row align-items-center">
+              <div class="col" style="padding-left: 16px">
+                {{ "sended_message" | translate }}
               </div>
             </div>
-            <div
-              class="card-body card_body border border-primary p-0 bodytable table-cls"
-            >
-              <table *ngIf="senditems.length" class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th style="width: 40%">{{ "name" | translate }}</th>
-                    <th>delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let s of senditems">
-                    <td style="width: 80%">
-                      {{ s.Admission_No }}-{{ s.name }}
-                    </td>
-                    <td>
-                      <button
-                        type="button"
-                        class="btn bg-white ml-1"
-                        (click)="deletecirculars1(s.ID)"
-                      >
-                        <ion-icon
-                          class="text-danger"
-                          [md]="'trash-sharp'"
-                        ></ion-icon>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
           </div>
-        </tab>
-        <tab heading="Last 3 Days">
-          <div class="cardlist" *ngIf="last3days.length > 0">
-            <div class="card-header table-cls">
-              <div class="row align-items-center">
-                <div class="col">
-                  {{ "sended_message" | translate }}
-                </div>
-              </div>
-            </div>
-            <div
-              class="card-body card_body border border-primary p-0 bodytable table-cls"
-            >
-              <table *ngIf="last3days.length" class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th style="width: 40%">{{ "name" | translate }}</th>
-                    <th>delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let s of last3days">
-                    <td style="width: 80%">
-                      {{ s.Admission_No }}-{{ s.name }}
-                    </td>
-                    <td>
-                      <button
-                        type="button"
-                        class="btn bg-white ml-1"
-                        (click)="deletecirculars1(s.ID)"
-                      >
-                        <ion-icon
-                          class="text-danger"
-                          [md]="'trash-sharp'"
-                        ></ion-icon>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </tab>
-        <tab heading="Search By Date">
-          <form
-            name="form"
-            (ngSubmit)="f.form.valid && onSubmit1()"
-            #f1="ngForm"
-            novalidate
-            class="border border-primary"
+          <div
+            class="card-body card_body border border-primary p-0 bodytable table-cls"
           >
-            <div class="row text-center align-items-center">
-              <div class="col-8">
-                <!-- <ion-item>
-                  <ion-datetime
-                    name="s_date"
-                    displayFormat="DD/MM/YYYY"
-                    pickerFormat="DD/MM/YYYY"
-                    [(ngModel)]="select_datas1.s_date"
-                    #s_date="ngModel"
-                    required
-                  ></ion-datetime>
-                </ion-item> -->
-                <ion-item lines="full">
-                  <ion-label
-                    id="open-modal1"
-                    class="selected-date"
-                    *ngIf="select_datas1.s_date"
-                    (click)="toggleDateSelection()"
-                  >
-                    {{ formatDate(select_datas1.s_date) }}
-                  </ion-label>
-                  <ion-modal
-                    [isOpen]="isPickerOpen"
-                    (willDismiss)="onWillDismiss($event, 'second')"
-                    [initialBreakpoint]="0.5"
-                    [breakpoints]="[0, 0.25, 0.5, 0.75]"
-                    animated="true"
-                  >
-                    <ng-template>
-                      <ion-header>
-                        <ion-toolbar>
-                          <ion-buttons slot="start">
-                            <ion-button (click)="toggleDateSelection()">{{
-                              "cancel" | translate
-                            }}</ion-button>
-                          </ion-buttons>
-                          <ion-title>{{ "select_date" | translate }}</ion-title>
-                          <ion-buttons slot="end">
-                            <ion-button
-                              (click)="toggleDateSelection()"
-                              [strong]="true"
-                              >{{ "confirm" | translate }}</ion-button
-                            >
-                          </ion-buttons>
-                        </ion-toolbar>
-                      </ion-header>
-                      <ion-content class="ion-padding">
-                        <ion-datetime
-                          name="dob"
-                          displayFormat="DD/MM/YYYY"
-                          pickerFormat="DD/MM/YYYY"
-                          [(ngModel)]="select_datas1.s_date"
-                          #dob="ngModel"
-                          presentation="date"
-                          mode="md"
-                          #datetime
-                          (ionChange)="showHideDatePicker()"
-                          required
-                        >
-                        </ion-datetime>
-                      </ion-content>
-                    </ng-template>
-                  </ion-modal>
-                </ion-item>
+            <table *ngIf="senditems.length" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="width: 40%">{{ "name" | translate }}</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let s of senditems">
+                  <td style="width: 88%">{{ s.Admission_No }}-{{ s.name }}</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn bg-white ml-1"
+                      (click)="deletecirculars1(s.ID)"
+                    >
+                      <img
+                        style="height: 18px"
+                        src="../../assets/imgs/speakers/delete.svg"
+                      />
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Last 3 Days">
+        <div class="cardlist" *ngIf="last3days.length > 0">
+          <div class="card-header table-cls">
+            <div class="row align-items-center">
+              <div class="col" style="padding-left: 16px">
+                {{ "sended_message" | translate }}
               </div>
-              <div class="col-4">
-                <button
-                  type="button"
-                  (click)="onSubmit1()"
-                  class="btn btn-success"
-                >
-                  Get
-                  <ion-icon
-                    [ios]="'arrow-forward-sharp'"
-                    [md]="'arrow-forward-sharp'"
-                  ></ion-icon>
-                </button>
-              </div>
-            </div>
-          </form>
-          <div class="cardlist" *ngIf="senditems1.length > 0">
-            <div class="card-header table-cls">
-              <div class="row align-items-center">
-                <div class="col">
-                  {{ "sended_message" | translate }}
-                </div>
-              </div>
-            </div>
-            <div
-              class="card-body card_body border border-primary p-0 bodytable table-cls"
-            >
-              <table *ngIf="senditems1.length" class="table table-bordered">
-                <thead>
-                  <tr>
-                    <th style="width: 40%">{{ "name" | translate }}</th>
-                    <th>delete</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr *ngFor="let s of senditems1">
-                    <td style="width: 80%">
-                      {{ s.Admission_No }}-{{ s.name }}
-                    </td>
-                    <td>
-                      <button
-                        type="button"
-                        class="btn bg-white ml-1"
-                        (click)="deletecirculars1(s.ID)"
-                      >
-                        <ion-icon
-                          class="text-danger"
-                          [md]="'trash-sharp'"
-                        ></ion-icon>
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
             </div>
           </div>
-        </tab>
-      </tabset>
-    </div>
+          <div
+            class="card-body card_body border border-primary p-0 bodytable table-cls"
+          >
+            <table *ngIf="last3days.length" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="width: 40%">{{ "name" | translate }}</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let s of last3days">
+                  <td style="width: 88%">{{ s.Admission_No }}-{{ s.name }}</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn bg-white ml-1"
+                      (click)="deletecirculars1(s.ID)"
+                    >
+                      <img
+                        style="height: 18px"
+                        src="../../assets/imgs/speakers/delete.svg"
+                      />
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Search By Date">
+        <form
+          name="form"
+          (ngSubmit)="f.form.valid && onSubmit1()"
+          #f1="ngForm"
+          novalidate
+          class="border border-primary"
+        >
+          <div class="row text-center align-items-center">
+            <div class="col-8">
+              <!-- <ion-item>
+                <ion-datetime
+                  name="s_date"
+                  displayFormat="DD/MM/YYYY"
+                  pickerFormat="DD/MM/YYYY"
+                  [(ngModel)]="select_datas1.s_date"
+                  #s_date="ngModel"
+                  required
+                ></ion-datetime>
+              </ion-item> -->
+              <ion-item lines="full">
+                <ion-label
+                  id="open-modal1"
+                  class="selected-date"
+                  *ngIf="select_datas1.s_date"
+                  (click)="toggleDateSelection()"
+                >
+                  {{ formatDate(select_datas1.s_date) }}
+                </ion-label>
+                <ion-modal
+                  [isOpen]="isPickerOpen"
+                  (willDismiss)="onWillDismiss($event, 'second')"
+                  [initialBreakpoint]="0.5"
+                  [breakpoints]="[0, 0.25, 0.5, 0.75]"
+                  animated="true"
+                >
+                  <ng-template>
+                    <ion-header>
+                      <ion-toolbar>
+                        <ion-buttons slot="start">
+                          <ion-button (click)="toggleDateSelection()">{{
+                            "cancel" | translate
+                          }}</ion-button>
+                        </ion-buttons>
+                        <ion-title>{{ "select_date" | translate }}</ion-title>
+                        <ion-buttons slot="end">
+                          <ion-button
+                            (click)="toggleDateSelection()"
+                            [strong]="true"
+                            >{{ "confirm" | translate }}</ion-button
+                          >
+                        </ion-buttons>
+                      </ion-toolbar>
+                    </ion-header>
+                    <ion-content class="ion-padding">
+                      <ion-datetime
+                        name="dob"
+                        displayFormat="DD/MM/YYYY"
+                        pickerFormat="DD/MM/YYYY"
+                        [(ngModel)]="select_datas1.s_date"
+                        #dob="ngModel"
+                        presentation="date"
+                        mode="md"
+                        #datetime
+                        (ionChange)="showHideDatePicker()"
+                        required
+                      >
+                      </ion-datetime>
+                    </ion-content>
+                  </ng-template>
+                </ion-modal>
+              </ion-item>
+            </div>
+            <div class="col-4">
+              <button
+                type="button"
+                (click)="onSubmit1()"
+                class="btn btn-success"
+              >
+                Get
+                <ion-icon
+                  [ios]="'arrow-forward-sharp'"
+                  [md]="'arrow-forward-sharp'"
+                ></ion-icon>
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="cardlist" *ngIf="senditems1.length > 0">
+          <div class="card-header table-cls">
+            <div class="row align-items-center">
+              <div class="col" style="padding-left: 16px">
+                {{ "sended_message" | translate }}
+              </div>
+            </div>
+          </div>
+          <div
+            class="card-body card_body border border-primary p-0 bodytable table-cls"
+          >
+            <table *ngIf="senditems1.length" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th style="width: 40%">{{ "name" | translate }}</th>
+                  <th>delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let s of senditems1">
+                  <td style="width: 88%">{{ s.Admission_No }}-{{ s.name }}</td>
+                  <td>
+                    <button
+                      type="button"
+                      class="btn bg-white ml-1"
+                      (click)="deletecirculars1(s.ID)"
+                    >
+                      <img
+                        style="height: 18px"
+                        src="../../assets/imgs/speakers/delete.svg"
+                      />
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </tab>
+    </tabset>
   </div>
 </ion-content>

@@ -22,6 +22,7 @@
   "delete_circulars": "Do you want to delete the following Circulars",
   "cancel": "Cancel",
   "send_circulars": "Send the following Circulars",
+  "send_homework": "Send the following Homework",
   "edit_the_message": "Edit the Message",
   "send": "Send",
   "delete": "Delete",

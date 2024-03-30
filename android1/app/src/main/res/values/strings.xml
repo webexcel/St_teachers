@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">demo-teachers</string>
+    <string name="title_activity_main">demo-teachers</string>
+    <string name="package_name">com.schooltree.schooltree</string>
+    <string name="custom_url_scheme">com.schooltree.schooltree</string>
+</resources>

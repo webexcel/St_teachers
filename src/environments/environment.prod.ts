@@ -51,19 +51,19 @@ export const environment = {
       admin: 'Y',
     },
 
-    {
-      title: 'Timetable',
-      url: '/timetable',
-      icon: 'assets/imgs/latest_Icons/timetable.svg',
-      // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-      admin: 'Y',
-    },
-    {
-      title: 'gallery',
-      url: '/gallery',
-      icon: 'assets/imgs/latest_Icons/gallery.svg',
-      // filter:"invert(50%) sepia(24%) saturate(1477%) hue-rotate(1deg) brightness(106%) contrast(89%)"
-    },
+    // {
+    //   title: 'Timetable',
+    //   url: '/timetable',
+    //   icon: 'assets/imgs/latest_Icons/timetable.svg',
+    //   // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
+    //   admin: 'Y',
+    // },
+    // {
+    //   title: 'gallery',
+    //   url: '/gallery',
+    //   icon: 'assets/imgs/latest_Icons/gallery.svg',
+    //   // filter:"invert(50%) sepia(24%) saturate(1477%) hue-rotate(1deg) brightness(106%) contrast(89%)"
+    // },
 
     {
       title: 'Staff Group',
@@ -89,13 +89,13 @@ export const environment = {
       admin: 'Y',
     },
 
-    {
-      title: 'News',
-      url: '/news-events',
-      icon: 'assets/imgs/latest_Icons/News.svg',
-      // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
-      admin: 'Y',
-    },
+    // {
+    //   title: 'News',
+    //   url: '/news-events',
+    //   icon: 'assets/imgs/latest_Icons/News.svg',
+    //   // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
+    //   admin: 'Y',
+    // },
 
     {
       title: 'Add Remarks',
@@ -113,10 +113,17 @@ export const environment = {
       admin: 'Y',
     },
 
+    {
+      title: 'exam-schedule',
+      url: '/exam-schedule',
+      icon: 'assets/imgs/latest_Icons/view.svg',
+      filter:
+        'invert(61%) sepia(99%) saturate(745%) hue-rotate(1deg) brightness(107%) contrast(103%)',
+    },
     //{ title: 'Study Material',url: '/study-material', icon: 'assets/imgs/speakers/books.png',filter:"invert(17%) sepia(65%) saturate(5213%) hue-rotate(337deg) brightness(85%) contrast(112%)"},
     /*{ title: 'report-card',url: '/report-card', icon: 'assets/imgs/speakers/marks.png', filter:"invert(10%) sepia(51%) saturate(5820%) hue-rotate(291deg) brightness(110%) contrast(115%)"},
     { title: 'gallery',url: '/gallery', icon: 'assets/imgs/speakers/gallery.png', filter:"invert(50%) sepia(24%) saturate(1477%) hue-rotate(1deg) brightness(106%) contrast(89%)"},
-    { title: 'exam-schedule',url: '/exam-schedule', icon: 'assets/imgs/speakers/exam.png', filter:"invert(61%) sepia(99%) saturate(745%) hue-rotate(1deg) brightness(107%) contrast(103%)"},
+    
     { title: 'calender',url: '/calender', icon: 'assets/imgs/speakers/calendar.png',filter:"invert(23%) sepia(97%) saturate(4292%) hue-rotate(28deg) brightness(98%) contrast(101%)"},
     { title: 'news-events',url: '/news-events', icon: 'assets/imgs/speakers/news.png',filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"},*/
     // { title: 'language',url: '/language', icon: 'assets/imgs/speakers/language.png',filter:"invert(10%) sepia(98%) saturate(6683%) hue-rotate(247deg) brightness(62%) contrast(131%)"},
@@ -126,7 +133,7 @@ export const environment = {
   app_versionCode: '5',
   apiBaseUrl: 'https://demo.schooltree.in/baseTeacherS.php/api/',
   version: '5',
-  package: 'com.parentalert.in.schoolapp1',
+  package: 'com.schooltree.schooltree',
   packageid: '',
   color: '#00CCCC',
 };

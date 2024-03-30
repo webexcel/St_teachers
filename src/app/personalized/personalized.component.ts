@@ -562,7 +562,6 @@ export class PersonalizedComponent implements OnInit {
     }
   }
 
-
   editMessage(id: any, message: any) {
     this.loading.present();
     this.authservice
@@ -581,17 +580,32 @@ export class PersonalizedComponent implements OnInit {
       );
   }
 
+  // toggleMessage(id: any, message: any, i: any) {
+  //   console.log('toggle', id);
+  //   if (id != 'cancel' && id != 'confirm') {
+  //     this.index = i;
+  //     this.messageId = id;
+  //     this.messageText = message;
+  //     console.log('toggle', this.messageId);
+  //   }
+  //   if (id == 'confirm') {
+  //     console.log('message id', this.index);
+  //     //this.last3days[this.index].message = this.messageText;
+  //     this.editMessage(this.messageId, this.messageText);
+  //   }
+  //   this.isEditMessageOpen = !this.isEditMessageOpen;
+  // }
+
   toggleMessage(id: any, message: any, i: any) {
     console.log('toggle', id);
-    if (id != 'cancel' && id != 'confirm') {
+    if (id && id !== 'cancel' && id !== 'confirm') {
       this.index = i;
       this.messageId = id;
       this.messageText = message;
       console.log('toggle', this.messageId);
     }
-    if (id == 'confirm') {
+    if (id === 'confirm') {
       console.log('message id', this.index);
-      //this.last3days[this.index].message = this.messageText;
       this.editMessage(this.messageId, this.messageText);
     }
     this.isEditMessageOpen = !this.isEditMessageOpen;

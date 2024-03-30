@@ -198,7 +198,7 @@
         </ion-item>
 
         <div class="row w-100 pt-3 m-0 button-container">
-          <button
+          <div
             class="attach"
             *ngIf="select_datas.filename.length === 0"
             style="flex: 0 0 150px"
@@ -212,8 +212,8 @@
             <span style="color: #fff; margin-left: 8px" (click)="open()"
               >Attach Files</span
             >
-          </button>
-          <button
+          </div>
+          <div
             class="attach1"
             *ngIf="select_datas.filename.length === 0"
             style="flex: 0 0 150px"
@@ -244,7 +244,7 @@
             <span style="font-size: 10px" *ngIf="recording">{{
               formatTime(recordingTimer)
             }}</span>
-          </button>
+          </div>
           <div
             class="col-10"
             *ngIf="
@@ -290,7 +290,7 @@
     <!-- Start of Drafted Message -->
 
     <div class="m-3">
-      <div *ngFor="let d of grpmes">
+      <div *ngFor="let d of grpmes; let i = index">
         <div class="row dateHead" style="margin-left: 2px; margin-right: 2px">
           <div class="col-5" *ngIf="d.message">
             {{ formatDate(select_datas.s_date) }}
@@ -385,6 +385,7 @@
                   <ion-icon
                     class="EditColour"
                     [md]="'create-outline'"
+                    (click)="toggleMessage(d.ID, d.message, i)"
                   ></ion-icon>
                 </button>
               </td>

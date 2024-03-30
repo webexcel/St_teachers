@@ -113,6 +113,32 @@ export class LoginComponent implements OnInit {
         console.log(err);
       }
     );
+    this.getmenu();
+  }
+
+  getmenu() {
+    this.loading.present();
+    let data = {
+      Is_Admin: this.teachersDetail[0]['Is_Admin'],
+      staff_id: this.teachersDetail[0]['staff_id'],
+    };
+    this.authservice.post('getmenu', data).subscribe(
+      (res: any) => {
+        this.loading.dismissAll();
+        if (res['status']) {
+          this.storage.addjson('menulist', res['data']);
+        } else {
+          this.storage.addjson('menulist', []);
+        }
+        this.dataservice.changeMenustatus(true);
+        this.router.navigate(['']);
+      },
+      (err) => {
+        this.storage.addjson('menulist', []);
+        this.loading.dismissAll();
+        console.log(err);
+      }
+    );
   }
 
   updateFireBaseID() {

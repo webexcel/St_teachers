@@ -52,8 +52,8 @@ export class DashboardComponent implements OnInit {
     duration: 0,
   };
   public circular = 'circulars';
+  // public appPages = this.storage.get('menulist');
   public appPages = environment.pages;
-  // public appPagess = environment.pagess;
   isModalOpen = false;
   modalImage: any;
   grpmes: any;
@@ -112,6 +112,8 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('aaaaaaaaaaa', this.appPages);
+    console.log('bbbbbbbbbbbb', this.storage.get('menulist'));
     this.ios = this.authservice.isiso();
     this.dataservice.currentMenustatus.subscribe((index) => {
       this.translate.set();

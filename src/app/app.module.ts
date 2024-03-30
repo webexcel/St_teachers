@@ -14,7 +14,6 @@ import { NgxUiLoaderModule } from 'ngx-ui-loader';
 import { TranModule } from './tran.module';
 //service
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 import { Badge } from '@ionic-native/badge/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
@@ -27,9 +26,11 @@ import { NativeAudio } from '@ionic-native/native-audio/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { IonicSelectableComponent } from 'ionic-selectable';
+// import { IonicSelectableComponent } from 'ionic-selectable';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 import { JwtInterceptor } from './service/jwt.interceptor';
 import { LoadingService } from './service/loading.service';
-
 @NgModule({
   declarations: [AppComponent],
   // entryComponents: [],
@@ -50,6 +51,7 @@ import { LoadingService } from './service/loading.service';
   exports: [],
   providers: [
     LoadingService,
+    AndroidPermissions,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     {
       provide: HTTP_INTERCEPTORS,

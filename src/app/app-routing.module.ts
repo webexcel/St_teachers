@@ -118,6 +118,15 @@ const routes: Routes = [
       ),
     canActivate: [Guard],
   },
+
+  {
+    path: 'exam-schedule',
+    loadChildren: () =>
+      import('./exam-schedule/exam-schedule.module').then(
+        (m) => m.ExamScheduleModule
+      ),
+    canActivate: [Guard],
+  },
 ];
 
 @NgModule({

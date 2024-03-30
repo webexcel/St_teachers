@@ -40,7 +40,8 @@ export class HomeworkComponent implements OnInit {
   recentdata: any = [];
   recentdata1: any = [];
   recentdates: any = [];
-
+  send_homework: any;
+  send: any;
   senditems1dates: any = [];
   senditems1: any = [];
 
@@ -102,6 +103,10 @@ export class HomeworkComponent implements OnInit {
     this.translate
       .getparam('delete_homework')
       .then((v) => (this.delete_homework = v));
+    this.translate
+      .getparam(' send_homework')
+      .then((v) => (this.send_homework = v));
+    this.translate.getparam('send').then((v) => (this.send = v));
     this.translate.getparam('cancel').then((v) => (this.cancel = v));
     this.translate.getparam('delete').then((v) => (this.delete = v));
     this.reset();
@@ -307,7 +312,7 @@ export class HomeworkComponent implements OnInit {
     });
     await alert.present();
   }
-  
+
   toggleHomework(id: any, message: any, i: any) {
     console.log('toggle', id);
     if (id != 'cancel' && id != 'confirm') {
@@ -322,7 +327,6 @@ export class HomeworkComponent implements OnInit {
     }
     this.isEditMessageOpen = !this.isEditMessageOpen;
   }
-
 
   editMessage(id: any, message: any) {
     this.loading.present();
@@ -545,6 +549,37 @@ export class HomeworkComponent implements OnInit {
         }
       );
   }
+
+  // async movesingletofinal(ID: any) {
+  //   let alert = await this.alertCtrl.create({
+  //     header: 'Send homework',
+  //     buttons: [
+  //       {
+  //         text: this.cancel,
+  //         role: 'cancel',
+  //         handler: (data) => {
+  //           console.log('Cancel clicked');
+  //         },
+  //       },
+  //       {
+  //         text: this.send,
+  //         handler: (data) => {
+  //           this.loading.present();
+  //           this.authservice.post('movehomeworktofinal', { ids: ID }).subscribe(
+  //             (res) => {
+  //               this.loading.dismissAll();
+  //               this.getSaveHomework();
+  //             },
+  //             (err) => {
+  //               this.loading.dismissAll();
+  //             }
+  //           );
+  //         },
+  //       },
+  //     ],
+  //   });
+  //   await alert.present();
+  // }
 
   movehomeworktofinal() {
     let data: any = [];

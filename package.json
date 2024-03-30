@@ -1,5 +1,5 @@
 {
-  "name": "demo-teachers",
+  "name": "Schooltree-teachers",
   "version": "0.0.1",
   "author": "Ionic Framework",
   "homepage": "https://ionicframework.com/",
@@ -34,6 +34,7 @@
     "@capacitor/push-notifications": "^5.0.6",
     "@capacitor/screen-orientation": "^5.0.7",
     "@capacitor/status-bar": "5.0.6",
+    "@ionic-native/android-permissions": "^5.36.0",
     "@ionic-native/app-minimize": "^5.36.0",
     "@ionic-native/badge": "^5.36.0",
     "@ionic-native/base64": "^5.36.0",

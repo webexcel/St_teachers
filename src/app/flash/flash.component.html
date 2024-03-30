@@ -47,9 +47,6 @@
           ></ion-input>
         </ion-item>
 
-        <span *ngIf="f.submitted && title.invalid" class="text-danger"
-          >Select Class</span
-        >
         <div style="margin-top: 12px">Description</div>
         <ion-item lines="full" class="dropdown" style="margin: 0px">
           <!-- <ion-label position="floating">Description</ion-label> -->
@@ -179,24 +176,9 @@
         </ion-item>
         <ion-item>
           <div class="row w-100 align-items-center text-center">
-            <!-- <div class="col-8">
-              Attach Image Here
-              <img
-                class="w-100"
-                [src]="details.image"
-                *ngIf="details.image.length != 0"
-              />
-            </div> -->
             <div class="col-6"></div>
             <div class="col-6">
-              <!-- <img
-                alt=""
-                style="width: 30px"
-                src="../../assets/imgs/speakers/attachment.png"
-                (click)="open()"
-                *ngIf="details.image.length == 0"
-              /> -->
-              <button
+              <div
                 class="attach"
                 *ngIf="details.image.length == 0"
                 style="flex: 0 0 150px"
@@ -210,7 +192,10 @@
                 <span style="color: #fff; margin-left: 8px" (click)="open()"
                   >Attach Files</span
                 >
-              </button>
+              </div>
+              <div class="col-10" *ngIf="details.image.length > 0">
+                {{ details.image.filename }}
+              </div>
               <button
                 type="button"
                 class="btn btn-danger"

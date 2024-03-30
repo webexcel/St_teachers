@@ -170,7 +170,7 @@
           >Enters Message</span> -->
 
         <div class="row w-100 pt-3 m-0 button-container">
-          <button
+          <div
             class="attach"
             *ngIf="select_datas.filename.length === 0"
             style="flex: 0 0 150px"
@@ -184,8 +184,8 @@
             <span style="color: #fff; margin-left: 8px" (click)="open()"
               >Attach Files</span
             >
-          </button>
-          <button
+          </div>
+          <div
             class="attach1"
             *ngIf="select_datas.filename.length === 0"
             style="flex: 0 0 150px"
@@ -216,7 +216,7 @@
             <span style="font-size: 10px" *ngIf="recording">{{
               formatTime(recordingTimer)
             }}</span>
-          </button>
+          </div>
           <div
             class="col-10"
             *ngIf="
@@ -534,15 +534,14 @@
 
     <!-- Start of Drafted Message -->
 
-    <div class="m-3">
+    <div class="m-3" *ngIf="recentdata.length > 0">
       <div>
-        <div *ngFor="let l of recentdates" class="dateHead">
-          Draft Messages {{ recentdates }}
-        </div>
+        <div class="dateHead">Draft Messages</div>
+        <!-- Draft Messages {{ recentdates }} -->
         <table class="table table-bordered">
           <tbody *ngFor="let d of recentdata; let i = index">
             <tr>
-              <td width="20%">
+              <td width="18%">
                 <div class="txtCenter topBg">{{ d.CLASS }}</div>
                 <div class="txtCenter">{{ d.subject }}</div>
               </td>
@@ -614,7 +613,7 @@
                 </div>
               </td>
 
-              <td class="text-right">
+              <td width="12%">
                 <button
                   type="button"
                   style="padding: 4px"
@@ -626,12 +625,17 @@
                     src="../../assets/imgs/speakers/edit.svg"
                   />
                 </button>
-                <button type="button" class="btn bg-white ml-1">
-                  <ion-icon
-                    class="text-danger"
-                    [md]="'trash-sharp'"
-                    (click)="deletehomework(d.MSG_ID)"
-                  ></ion-icon>
+
+                <button
+                  type="button"
+                  style="padding: 4px"
+                  class="btn bg-white ml-1"
+                  (click)="deletehomework(d.MSG_ID)"
+                >
+                  <img
+                    style="height: 18px; width: 20px"
+                    src="../../assets/imgs/speakers/delete.svg"
+                  />
                 </button>
               </td>
             </tr>
@@ -643,10 +647,18 @@
     <!-- End of Drafted Message -->
 
     <div class="" *ngIf="recentdata.length > 0">
-      <div class="card-body card_body">
+      <div class="card-body card_body d-flex justify-content-end">
         <button
           type="button"
-          class="btn btn-primary btn-lg btn-block"
+          class="btn btn-lg btn-block send_btn"
+          style="
+            background: #00b712;
+            width: 188px;
+            height: 42px;
+            font-size: 16px;
+            text-align: center;
+            color: #fff;
+          "
           (click)="movehomeworktofinal()"
         >
           Send All Homework
@@ -675,7 +687,7 @@
                 <tr>
                   <th style="width: 15%">{{ "class" | translate }}</th>
                   <th>{{ "message" | translate }}</th>
-                  <th style="width: 12%">Manage</th>
+                  <th style="width: 12%">Delete</th>
                 </tr>
               </thead>
 
@@ -767,8 +779,8 @@
                       </audio>
                     </div>
                   </td>
-                  <td>
-                    <button
+                  <td class="txtCenter">
+                    <!-- <button
                       type="button"
                       class="btn bg-white px-1"
                       (click)="deletehomework(d.MSG_ID)"
@@ -777,14 +789,18 @@
                         class="text-danger"
                         [md]="'trash-sharp'"
                       ></ion-icon>
-                    </button>
-                    <!-- <button class="btn bg-white px-0 text-right">
-                      (click)="toggleMessage(s.ID, s.message, i)"
-                      <ion-icon
-                        class="text-black"
-                        [md]="'create-outline'"
-                      ></ion-icon>
                     </button> -->
+                    <button
+                      type="button"
+                      style="padding: 4px"
+                      class="btn bg-white ml-1"
+                      (click)="deletehomework(d.MSG_ID)"
+                    >
+                      <img
+                        style="height: 18px; width: 20px"
+                        src="../../assets/imgs/speakers/delete.svg"
+                      />
+                    </button>
                   </td>
                 </tr>
               </tbody>
