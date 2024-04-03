@@ -7,7 +7,12 @@ import { FileChooser } from '@ionic-native/file-chooser/ngx';
 //import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
-import { AlertController, IonModal, Platform } from '@ionic/angular';
+import {
+  AlertController,
+  IonModal,
+  ModalController,
+  Platform,
+} from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import {
   Base64String,
@@ -15,6 +20,7 @@ import {
   RecordingData,
   VoiceRecorder,
 } from 'capacitor-voice-recorder';
+import { SelectModalComponent } from '../select-modal/select-modal.component';
 import { AuthService } from '../service/auth.service';
 import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
@@ -27,6 +33,9 @@ import { TranslateConfigService } from '../service/translate-config.service';
   styleUrls: ['./circulars.component.scss'],
 })
 export class CircularsComponent implements OnInit {
+  @ViewChild('portComponent', { static: false }) portComponent: any;
+  @ViewChild(IonModal) modal!: IonModal;
+
   ios: any = false;
   optionsSelected: any = [];
   classs: any;
@@ -44,14 +53,11 @@ export class CircularsComponent implements OnInit {
   send: any;
   delete: any;
   error: any = false;
-  @ViewChild('portComponent', { static: false }) portComponent: any;
   recording: boolean = false;
   fileName: string | undefined;
   audio!: MediaObject;
   Path: string | undefined;
   showDatePicker: boolean = false;
-  @ViewChild(IonModal)
-  modal!: IonModal;
   isPickerOpen: boolean = false;
   isEditMessageOpen: boolean = false;
   isEditMessageOpen1: boolean = false;
@@ -59,29 +65,29 @@ export class CircularsComponent implements OnInit {
   messageText: any;
   messageId: any;
   index: any;
+  selectedItems: any[] = [];
+  recordingTimer = 0;
+  timer!: NodeJS.Timeout;
+  showPassword: boolean = true;
+  seengrpmes: any;
+  seenitems: any;
+  className: any;
   dropdownItems = [
     { label: 'Item 1', value: 'item1' },
     { label: 'Item 2', value: 'item2' },
     { label: 'Item 3', value: 'item3' },
     // Add more items as needed
   ];
-
-  selectedItems: any[] = [];
   audioData: {
     fileName: string;
     base64: Base64String | null;
     duration: number;
   } = {
-    fileName: '',
-    base64: null,
-    duration: 0,
-  };
-  recordingTimer = 0;
-  timer!: NodeJS.Timeout;
-  showPassword: boolean = true;
-
-  seengrpmes: any;
-  seenitems: any;
+      fileName: '',
+      base64: null,
+      duration: 0,
+    };
+  attachment: any;
 
   constructor(
     private serfile: FilesService,
@@ -96,7 +102,8 @@ export class CircularsComponent implements OnInit {
     private translate: TranslateConfigService,
     public authservice: AuthService,
     public storage: StorageService,
-    public loading: LoadingService
+    public loading: LoadingService,
+    private modalController: ModalController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -113,9 +120,11 @@ export class CircularsComponent implements OnInit {
 
   //   // this.selectedItems = [];
   // }
+
   handleSelectChange(e: any) {
     console.log('event', e);
   }
+
   ngOnInit() {
     this.ios = this.authservice.isiso();
     this.translate.set();
@@ -134,6 +143,10 @@ export class CircularsComponent implements OnInit {
     this.select_datas1.s_date = new Date().toISOString();
     this.reset();
     this.getgroupMessage();
+  }
+
+  ionViewWillEnter() {
+    this.className = 'Select Classes';
   }
 
   reset() {
@@ -164,7 +177,40 @@ export class CircularsComponent implements OnInit {
   }
 
   classChange(event: any) {
-    // console.log(this.select_datas)
+    // console.log(event);
+    // console.log(this);
+  }
+
+  async openOptions(data: any, value: any) {
+    console.log('ZZZZZZZ', data);
+    console.log('ZZZZZZZ', value);
+    const modal = await this.modalController.create({
+      component: SelectModalComponent,
+      componentProps: {
+        optionsList: data,
+        value: value,
+        multi: true,
+        parameters: ['id', 'name'],
+      },
+    });
+
+    modal.onDidDismiss().then((result) => {
+      let datar = [];
+      let textData = [];
+      for (let i = 0; i < result.data.length; i++) {
+        if (result.data[i].checked) {
+          datar.push(result.data[i]);
+          //datar.push(result.data[i].name);
+        }
+      }
+      this.select_datas.class = datar;
+      console.log('ZZZZZZZ', this.select_datas.class);
+      this.className =
+        datar.length > 0
+          ? datar.length + ' Classes Selected'
+          : 'No Selected Classes';
+    });
+    return await modal.present();
   }
 
   onSubmit(form: NgForm) {
@@ -255,6 +301,7 @@ export class CircularsComponent implements OnInit {
               (res) => {
                 this.loading.dismissAll();
                 this.getgroupMessage();
+                this.onSubmit1();
               },
               (err) => {
                 this.loading.dismissAll();
@@ -361,59 +408,87 @@ export class CircularsComponent implements OnInit {
   }
 
   open() {
-    this.fileChooser.open().then((uri) => {
-      console.log('testtt', uri);
-      this.filePath.resolveNativePath(uri).then(
-        (res) => {
-          // alert('@log res: ' + JSON.stringify(res));
-          let f: any = res.split('/');
-          this.select_datas.filename = f[f.length - 1].toLowerCase();
-          let l: any = res.split('.');
-          l = l[l.length - 1].toLowerCase();
-          if (
-            l == 'jpg' ||
-            l == 'jpeg' ||
-            l == 'png' ||
-            l == 'pdf' ||
-            l == 'mp3' ||
-            l == 'mp4' ||
-            l == 'xls' ||
-            l == 'xlsx'
-          ) {
-            // alert(1);
-            this.select_datas.type = l;
-            this.error = false;
-            if (l == 'mp3') {
-              l = `data:audio/mpeg;base64,`;
-            } else if (l == 'mp4') {
-              l = '';
-            } else {
-              l = `data:image/${l};base64,`;
-            }
-            // alert(2);
-            this.base64.encodeFile(res).then(
-              (result) => {
-                alert(2.1);
-                this.select_datas.image = `${l}${result.split('base64,')[1]}`;
-              },
-              (err) => {
-                alert(2.2);
-                alert('@log file open error: ' + JSON.stringify(err));
-                this.error = true;
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept =
+      'image/*, application/pdf, .doc, .docx, .txt, .xls, .xlsx, .mp3, .mp4';
+
+    fileInput.onchange = (event: any) => {
+      const file = event.target.files[0];
+      if (file) {
+        this.readFile(file);
+      }
+    };
+
+    fileInput.click();
+  }
+
+  readFile(file: File) {
+    const reader = new FileReader();
+    reader.onload = async (e: any) => {
+      this.select_datas.image = e.target.result;
+      this.select_datas.filename = file.name;
+      this.select_datas.type = file.name.split('.').pop();
+    };
+    reader.readAsDataURL(file);
+  }
+
+  open1() {
+    this.fileChooser
+      .open()
+      .then((uri) => {
+        console.log('testtt', uri);
+        this.filePath.resolveNativePath(uri).then(
+          (res) => {
+            alert('@log res: ' + JSON.stringify(res));
+            let f: any = res.split('/');
+            this.select_datas.filename = f[f.length - 1].toLowerCase();
+            let l: any = res.split('.');
+            l = l[l.length - 1].toLowerCase();
+            if (
+              l == 'jpg' ||
+              l == 'jpeg' ||
+              l == 'png' ||
+              l == 'pdf' ||
+              l == 'mp3' ||
+              l == 'mp4' ||
+              l == 'xls' ||
+              l == 'xlsx'
+            ) {
+              alert(1);
+              this.select_datas.type = l;
+              this.error = false;
+              if (l == 'mp3') {
+                l = `data:audio/mpeg;base64,`;
+              } else if (l == 'mp4') {
+                l = '';
+              } else {
+                l = `data:image/${l};base64,`;
               }
-            );
-            // alert(3);
-          } else {
-            // alert(4);
-            this.error = true;
+              alert(2);
+              this.base64.encodeFile(res).then(
+                (result) => {
+                  alert(2.1);
+                  this.select_datas.image = `${l}${result.split('base64,')[1]}`;
+                },
+                (err) => {
+                  alert(2.2);
+                  alert('@log file open error: ' + JSON.stringify(err));
+                  this.error = true;
+                }
+              );
+              alert(3);
+            } else {
+              alert(4);
+              this.error = true;
+            }
+          },
+          (err) => {
+            alert('@log file error: ' + JSON.stringify(err));
           }
-        },
-        (err) => {
-          // alert('@log file error: ' + JSON.stringify(err));
-        }
-      );
-    });
-    // .catch((e) => alert('@log file errorZZ: ' + JSON.stringify(e)));
+        );
+      })
+      .catch((e) => alert('@log file errorZZ: ' + JSON.stringify(e)));
   }
 
   checkimage(f: any) {
@@ -557,7 +632,6 @@ export class CircularsComponent implements OnInit {
         }
       );
   }
-
   showHideDatePicker() {
     this.showDatePicker = !this.showDatePicker;
   }
@@ -591,12 +665,13 @@ export class CircularsComponent implements OnInit {
     this.isPickerOpen = !this.isPickerOpen;
   }
 
-  toggleMessage(id: any, message: any, i: any) {
+  toggleMessage(id: any, message: any, image: any, i: any) {
     // console.log('toggle', id);
     if (id != 'cancel' && id != 'confirm') {
       this.index = i;
       this.messageId = id;
       this.messageText = message;
+      this.attachment = image;
     }
     if (id == 'confirm') {
       console.log('message id', this.index);
@@ -609,12 +684,6 @@ export class CircularsComponent implements OnInit {
   toggleMessage2() {
     this.isEditMessageOpen1 = !this.isEditMessageOpen1;
   }
-
-  // toggleMessage1() {
-  //   // console.log('toggle', id);
-
-  //   this.isEditMessageOpen1 = !this.isEditMessageOpen1;
-  // }
 
   onWillDismiss(event: Event, type: any) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;

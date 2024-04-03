@@ -3,10 +3,11 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { IonModal, Platform } from '@ionic/angular';
+import { IonModal, ModalController, Platform } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Base64String } from 'capacitor-voice-recorder';
 import { tap } from 'rxjs/operators';
+import { SelectModalComponent } from '../select-modal/select-modal.component';
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
@@ -54,6 +55,9 @@ export class ReportsComponent implements OnInit {
   last3days: any = [];
   senditems: any = [];
   studentRemarks: any;
+  StudentsName: any;
+  SubjectName: any;
+  ClassName: any;
 
   constructor(
     public storage: StorageService,
@@ -63,7 +67,8 @@ export class ReportsComponent implements OnInit {
     private router: Router,
     public authservice: AuthService,
     public loading: LoadingService,
-    private translate: TranslateConfigService
+    private translate: TranslateConfigService,
+    private modalController: ModalController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -96,6 +101,62 @@ export class ReportsComponent implements OnInit {
     this.select_datas.Is_Admin =
       this.storage.getjson('teachersDetail')[0]['Is_Admin'];
     this.getlist();
+  }
+
+  async openOptions(data: any, value: any, bind: any, multi: any) {
+    console.log('aaaaaaaaaaaaaa', data);
+    console.log('aaaaaaaaaaaaaa', value);
+    // if (!multi && data[0].name != 0) {
+    //   data.splice(0, 0, { id: 0, name: 'Select Your Class' });
+    // }
+    const modal = await this.modalController.create({
+      component: SelectModalComponent,
+      componentProps: {
+        optionsList: data,
+        value: value,
+        multi: multi,
+        parameters: ['id', 'name'],
+      },
+    });
+
+    modal.onDidDismiss().then((result: any) => {
+      if (multi) {
+        let datar = [];
+        let textData = [];
+        if (result.data != undefined) {
+          for (let i = 0; i < result.data.length; i++) {
+            if (result.data[i].checked) {
+              datar.push(result.data[i]);
+              //datar.push(result.data[i].name);
+            }
+          }
+        }
+        if (bind == 'Students') {
+          this.select_datas.student = datar;
+          console.log('afsdf', this.select_datas.student);
+          this.StudentsName =
+            datar.length > 0
+              ? datar.length + ' Students Selected'
+              : 'No Students Selected';
+        } else if (bind == 'Subject') {
+          this.select_datas.subject = datar;
+          console.log('afsdf', this.select_datas.subject);
+          this.SubjectName =
+            datar.length > 0
+              ? datar.length + ' Subjects Selected'
+              : 'No Subjects Selected';
+        }
+      } else {
+        this.select_datas.class = result.data.id;
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx', this.select_datas.class);
+        this.getStudentsByClass(this.select_datas.class);
+        this.ClassName =
+          result.data.name != undefined && result.data.id != 0
+            ? result.data.name
+            : 'No Classes Selected';
+      }
+    });
+    return await modal.present();
   }
 
   onSubmit(form: NgForm) {
@@ -168,6 +229,8 @@ export class ReportsComponent implements OnInit {
         if (res['status']) {
           this.students = res['data'];
         }
+        this.select_datas.student = [];
+        this.StudentsName = 'No Students Selected';
       },
       (err) => {
         this.loading.dismissAll();

@@ -1,8 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, IonModal, Platform } from '@ionic/angular';
+import {
+  AlertController,
+  IonModal,
+  ModalController,
+  Platform,
+} from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
+import { SelectModalComponent } from '../select-modal/select-modal.component';
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
@@ -24,8 +30,13 @@ export class AttendanceComponent implements OnInit {
   select_datas: any = {};
   select_datas1: any = {};
 
-  selectedSessions: string[] = ['Full'];
-  select_sessions = ['Full', 'Session 1', 'Session 2'];
+  selectedSessions: any = '1';
+
+  select_sessions = [
+    { id: '1', name: 'Full' },
+    { id: '2', name: 'Morning' },
+    { id: '3', name: 'Afternoon' },
+  ];
 
   delete_attendance: any;
   cancel: any;
@@ -36,6 +47,11 @@ export class AttendanceComponent implements OnInit {
   @ViewChild(IonModal)
   modal!: IonModal;
   isPickerOpen: boolean = false;
+  className: any;
+  StudentsName: any;
+  Session: any;
+  SessionName: any;
+
   constructor(
     public alertCtrl: AlertController,
     private platform: Platform,
@@ -43,7 +59,8 @@ export class AttendanceComponent implements OnInit {
     private translate: TranslateConfigService,
     public loading: LoadingService,
     public authservice: AuthService,
-    public storage: StorageService
+    public storage: StorageService,
+    private modalController: ModalController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -150,24 +167,62 @@ export class AttendanceComponent implements OnInit {
       );
   }
 
+  async openOptions(data: any, value: any, multi: any, bind: any) {
+    // if (!multi && data[0].name != 0) {
+    //   data.splice(0, 0, { id: 0, name: 'Select Your Class' });
+    // }
+    const modal = await this.modalController.create({
+      component: SelectModalComponent,
+      componentProps: {
+        optionsList: data,
+        value: value,
+        multi: multi,
+        parameters: ['id', 'name'],
+      },
+    });
+
+    modal.onDidDismiss().then((result) => {
+      if (multi) {
+        let datar = [];
+        let textData = [];
+        if (result.data != undefined) {
+          for (let i = 0; i < result.data.length; i++) {
+            if (result.data[i].checked) {
+              datar.push(result.data[i]);
+              //datar.push(result.data[i].name);
+            }
+          }
+        }
+        if (bind == 'Students') {
+          this.select_datas.student = datar;
+          this.StudentsName =
+            datar.length > 0
+              ? datar.length + ' Students Selected'
+              : 'No Students Selected';
+        } else if (bind == 'Session') {
+          this.selectedSessions = datar;
+          this.SessionName =
+            datar.length > 0
+              ? datar.length + ' Sessions Selected'
+              : 'No Students Selected';
+        }
+        console.log('datarrrrrrrrrrrrrrr', this.select_datas.student);
+      } else {
+        this.select_datas.classid = result.data.id;
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx', this.select_datas.classid);
+        this.getStudentsByClass(this.select_datas.classid);
+        this.className =
+          result.data.name != undefined && result.data.id != 0
+            ? result.data.name
+            : 'No Classes Selected';
+      }
+    });
+    return await modal.present();
+  }
+
   onSubmit(form: NgForm) {
     if (this.select_datas.student.length) {
-      const selectedSessionsArray = Array.isArray(this.selectedSessions)
-        ? this.selectedSessions
-        : [this.selectedSessions];
-
-      // Get the indices of selected sessions
-      const selectedSessionIndices: number[] = selectedSessionsArray.map(
-        (sessionName) => this.select_sessions.indexOf(sessionName)
-      );
-
-      // Take the first element and convert it to a string
-      const abtypeValue: string = selectedSessionIndices[0]?.toString() || '';
-
-      // Assuming you want to send abtype as a string
-      this.select_datas.abtype = abtypeValue;
-
-      console.log(this.select_datas);
+      this.select_datas.abtype = this.selectedSessions;
 
       this.loading.present();
       this.authservice.post('newAbsentees', this.select_datas).subscribe(
@@ -184,6 +239,14 @@ export class AttendanceComponent implements OnInit {
         }
       );
     }
+  }
+
+  isSelected(sessionName: string): boolean {
+    return this.selectedSessions.includes(sessionName);
+  }
+
+  updateSelectedSession(sessionId: string) {
+    this.selectedSessions = sessionId;
   }
 
   async show(msg: any) {

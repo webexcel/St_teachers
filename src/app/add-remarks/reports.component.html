@@ -33,135 +33,53 @@
       (ngSubmit)="f.form.valid && onSubmit(f)"
     >
       <div style="margin-top: 12px">Select Class</div>
-      <ion-item class="dropdown" style="margin: 0px">
-        <ion-label *ngIf="!select_datas.class">Select a Class</ion-label>
 
-        <ionic-selectable
-          name="class"
-          item-content
-          [(ngModel)]="select_datas.class"
-          itemValueField="id"
-          itemTextField="name"
-          [items]="classs"
-          [canSearch]="true"
-          (onChange)="classChange($event)"
-          #class="ngModel"
-          required
+      <ion-item class="dropdown_select" style="margin: 0px">
+        <ion-input
+          readonly
+          [placeholder]="ClassName"
+          (click)="openOptions(classs, select_datas.class, 'Class', false)"
         >
-          <ng-template ionicSelectableCloseButtonTemplate>
-            <ion-icon
-              [md]="'close-circle'"
-              [ios]="'close-circle'"
-              style="font-size: 24px"
-            ></ion-icon>
-          </ng-template>
-        </ionic-selectable>
+          <ion-icon
+            name="caret-down"
+            style="margin-left: 10%; opacity: 0.5; position: absolute"
+          ></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
       </ion-item>
-
-      <span *ngIf="f.submitted && class.invalid" class="text-danger"
-        >Select Class</span
-      >
 
       <div style="margin-top: 25px">Select Students</div>
 
-      <ion-item class="dropdown">
-        <ion-label>{{ "students" | translate }}</ion-label>
-        <ionic-selectable
-          #portComponent
-          name="student"
-          item-content
-          [(ngModel)]="select_datas.student"
-          [hasVirtualScroll]="true"
-          itemValueField="id"
-          itemTextField="name"
-          [canSearch]="true"
-          [isMultiple]="true"
-          #student="ngModel"
-          [items]="students"
-          required
+      <ion-item class="dropdown_select" style="margin: 0px">
+        <ion-input
+          readonly
+          [placeholder]="StudentsName"
+          (click)="
+            openOptions(students, select_datas.student, 'Students', true)
+          "
         >
-          <ng-template ionicSelectableValueTemplate let-ports="value">
-            <div class="ionic-selectable-value-item">
-              {{ formatPorts(select_datas.student) }}
-            </div>
-          </ng-template>
-          <ng-template ionicSelectableCloseButtonTemplate>
-            <ion-icon
-              [md]="'close-circle'"
-              [ios]="'close-circle'"
-              style="font-size: 24px"
-            ></ion-icon>
-          </ng-template>
-          <ng-template ionicSelectableFooterTemplate>
-            <ion-toolbar>
-              <ion-row>
-                <ion-col [size]="4">
-                  <ion-button expand="full" (click)="toggleItems(true)">
-                    Select All
-                  </ion-button>
-                </ion-col>
-                <ion-col [size]="4">
-                  <ion-button expand="full" (click)="toggleItems(false)">
-                    Deselect All
-                  </ion-button>
-                </ion-col>
-                <ion-col [size]="4">
-                  <ion-button expand="full" (click)="confirm()">
-                    OK
-                  </ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-toolbar>
-          </ng-template>
-        </ionic-selectable>
+          <ion-icon
+            name="caret-down"
+            style="margin-left: 10%; opacity: 0.5; position: absolute"
+          ></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
       </ion-item>
 
       <div style="margin-top: 25px">Select Subject</div>
-      <ion-item class="dropdown">
-        <ion-label>{{ "Subject" | translate }}</ion-label>
-        <ionic-selectable
-          #portComponent
-          name="subject"
-          item-content
-          [(ngModel)]="select_datas.subject"
-          [hasVirtualScroll]="true"
-          itemValueField="id"
-          itemTextField="name"
-          [canSearch]="true"
-          [isMultiple]="true"
-          #subject="ngModel"
-          [items]="subjects"
-          required
+
+      <ion-item class="dropdown_select" style="margin: 0px">
+        <ion-input
+          readonly
+          [placeholder]="SubjectName"
+          (click)="openOptions(subjects, select_datas.subject, 'Subject', true)"
         >
-          <ng-template ionicSelectableCloseButtonTemplate>
-            <ion-icon
-              [md]="'close-circle'"
-              [ios]="'close-circle'"
-              style="font-size: 24px"
-            ></ion-icon>
-          </ng-template>
-          <ng-template ionicSelectableFooterTemplate>
-            <ion-toolbar>
-              <ion-row>
-                <ion-col [size]="4">
-                  <ion-button expand="full" (click)="toggleItems(true)">
-                    Select All
-                  </ion-button>
-                </ion-col>
-                <ion-col [size]="4">
-                  <ion-button expand="full" (click)="toggleItems(false)">
-                    Deselect All
-                  </ion-button>
-                </ion-col>
-                <ion-col [size]="4">
-                  <ion-button expand="full" (click)="confirm()">
-                    OK
-                  </ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-toolbar>
-          </ng-template>
-        </ionic-selectable>
+          <ion-icon
+            name="caret-down"
+            style="margin-left: 10%; opacity: 0.5; position: absolute"
+          ></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
       </ion-item>
 
       <div style="margin-top: 25px">Enter Message Here</div>

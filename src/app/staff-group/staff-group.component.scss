@@ -10,7 +10,7 @@
   }
   .card-header {
     padding: 12px !important;
-    padding-left: 20px !important; 
+    padding-left: 20px !important;
   }
 }
 .table-cls {
@@ -34,6 +34,13 @@
   border: solid 1px #4475de;
   color: white;
   padding: 5px;
+}
+
+.dropdown_select {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #909090;
 }
 
 .eye {
@@ -66,7 +73,7 @@
   height: 36px;
   border-radius: 4px;
   background: #5886fe;
-  padding-top: 2px;
+  padding-top: 6px;
 }
 
 .attach1 {

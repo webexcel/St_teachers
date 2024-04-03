@@ -34,7 +34,7 @@
         novalidate
       >
         <div style="margin-top: 12px">Select Class</div>
-        <ion-item class="dropdown" style="margin: 0px">
+        <!-- <ion-item class="dropdown" style="margin: 0px">
           <ion-label *ngIf="!select_datas.class">Select a Class</ion-label>
           <ionic-selectable
             #portComponent
@@ -49,53 +49,67 @@
             #class="ngModel"
             required
           >
-            <!-- <ng-template ionicSelectableValueTemplate let-ports="value">
-              <div class="ionic-selectable-value-item">
-                {{ formatPorts(select_datas.class) }}
-              </div>
-            </ng-template> -->
-
-            <ng-template ionicSelectableCloseButtonTemplate>
-              <ion-icon
-                [md]="'close-circle'"
-                [ios]="'close-circle'"
-                style="font-size: 24px"
-              ></ion-icon>
-            </ng-template>
           </ionic-selectable>
+        </ion-item> -->
+
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="className"
+            (click)="
+              openOptions(classs, select_datas.class, 'Class', false, [
+                'id',
+                'name'
+              ])
+            "
+          >
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
         </ion-item>
 
-        <span *ngIf="f.submitted && class.invalid" class="text-danger"
-          >Select Class</span
-        >
-
         <div style="margin-top: 12px">Select Subject</div>
-        <ion-item class="dropdown" style="margin: 0px">
+        <!-- <ion-item class="dropdown" style="margin: 0px">
           <ion-label>Subject</ion-label>
           <ionic-selectable
             name="subject"
             item-content
             [(ngModel)]="select_datas.subject"
             itemValueField="id"
-            itemTextField="name"
+            itemTextField="name" 
             [items]="subjects"
             [canSearch]="true"
             #subject="ngModel"
             required
             (onChange)="subjectChange($event)"
           >
-            <ng-template ionicSelectableCloseButtonTemplate>
-              <ion-icon
-                [md]="'close-circle'"
-                [ios]="'close-circle'"
-                style="font-size: 24px"
-              ></ion-icon>
-            </ng-template>
-          </ionic-selectable>
+         </ionic-selectable>
+        </ion-item> -->
+
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="SubjectName"
+            (click)="
+              openOptions(subjects, select_datas.subject, 'Subject', false, [
+                'id',
+                'name'
+              ])
+            "
+          >
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
         </ion-item>
 
         <div style="margin-top: 12px">Select Exam</div>
-        <ion-item class="dropdown" style="margin: 0px">
+        <!-- <ion-item class="dropdown" style="margin: 0px">
           <ion-label>Exam</ion-label>
           <ionic-selectable
             name="exam"
@@ -117,6 +131,25 @@
               ></ion-icon>
             </ng-template>
           </ionic-selectable>
+        </ion-item> -->
+
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="ExamName"
+            (click)="
+              openOptions(exams, select_datas.exams, 'Exams', false, [
+                'exam_type_id',
+                'exam_type_name'
+              ])
+            "
+          >
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
         </ion-item>
 
         <div *ngIf="students.length > 0 || g_btn">

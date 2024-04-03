@@ -35,7 +35,7 @@
         novalidate
       >
         <div style="margin-top: 12px">Select Staff Types</div>
-        <ion-item class="dropdown" style="margin: 0px">
+        <!-- <ion-item class="dropdown" style="margin: 0px">
           <ion-label *ngIf="!select_datas.stafftypes">Select Staff</ion-label>
           <ionic-selectable
             #portComponent
@@ -63,14 +63,34 @@
                 [md]="'close-circle'"
                 [ios]="'close-circle'"
                 style="font-size: 24px"
-              ></ion-icon>
+              ></ion-icon> 
             </ng-template>
           </ionic-selectable>
         </ion-item>
 
         <span *ngIf="f.submitted && class.invalid" class="text-danger"
           >Select Class</span
-        >
+        > -->
+
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="staffType"
+            (click)="
+              openOptions(stafftypes, select_datas.stafftypes, 'staffType', [
+                'staffclass',
+                'staffclass'
+              ])
+            "
+          >
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
+        </ion-item>
+
         <div style="margin-top: 12px">Select Date</div>
         <ion-item lines="full" class="dropdown" style="margin: 0px">
           <ion-label
@@ -133,7 +153,7 @@
         </ion-item>
 
         <div style="margin-top: 12px">Select Staff</div>
-        <ion-item class="dropdown" style="margin: 0px">
+        <!-- <ion-item class="dropdown" style="margin: 0px">
           <ion-label>Staffs</ion-label>
           <ionic-selectable
             #portComponent1
@@ -183,6 +203,25 @@
               </ion-toolbar>
             </ng-template>
           </ionic-selectable>
+        </ion-item> -->
+
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="staffName"
+            (click)="
+              openOptions(staffs, select_datas.staffinfo, 'staffName', [
+                'staff_code',
+                'staff_name'
+              ])
+            "
+          >
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
         </ion-item>
 
         <div style="margin-top: 25px">Enter Message Here</div>
@@ -240,10 +279,10 @@
             >
               Stop Recording</span
             >
-            <br />
-            <span style="font-size: 10px" *ngIf="recording">{{
+
+            <!-- <span style="font-size: 10px; margin-left: 5px" *ngIf="recording">{{
               formatTime(recordingTimer)
-            }}</span>
+            }}</span> -->
           </div>
           <div
             class="col-10"
@@ -289,33 +328,32 @@
 
     <!-- Start of Drafted Message -->
 
-    <div class="m-3">
-      <div *ngFor="let d of grpmes; let i = index">
-        <div class="row dateHead" style="margin-left: 2px; margin-right: 2px">
-          <div class="col-5" *ngIf="d.message">
-            {{ formatDate(select_datas.s_date) }}
-          </div>
-
-          <div class="col-5 text-right">
-            <button type="button" class="bg-white mx-1">
-              <ion-icon
-                class="text-success"
-                [md]="'send-sharp'"
-                (click)="movegrouptofinal([{ ID: d.ID }])"
-              ></ion-icon>
-            </button>
-          </div>
-        </div>
-        <table class="table table-bordered">
+    <div class="m-3" *ngIf="grpmes.length > 0">
+      <div>
+        <div class="dateHead">Draft Messages</div>
+        <table
+          style="width: 100%; table-layout: fixed"
+          class="table table-bordered"
+          *ngFor="let d of grpmes; let i = index"
+        >
           <tbody>
             <tr>
-              <td width="30%">
-                <div class="txtCenter topBg">{{ d.name }}</div>
-                <div class="txtCenter" style="font-size: 14px">
-                  {{ d.CLASSSEC }}
+              <td width="18%">
+                <div class="txtCenter">
+                  <div class="topBg">{{ d.name }}</div>
+                  <div style="font-size: 14px">
+                    {{ d.CLASSSEC }}
+                  </div>
+                  <button
+                    type="button"
+                    class="btn bg-white ml-1"
+                    (click)="deletecirculars(d.ID)"
+                  >
+                    <img src="../../assets/imgs/speakers/delete.svg" />
+                  </button>
                 </div>
               </td>
-              <td width="60%" class="textleft multi_lines_text">
+              <td width="70%" class="textleft multi_lines_text">
                 <span>{{ d.message }}</span>
                 <br *ngIf="d.event_image && d.event_image.length > 0" />
                 <img
@@ -380,23 +418,29 @@
                 </div>
               </td>
 
-              <td class="text-right">
-                <button type="button" class="btn bg-white ml-1">
-                  <ion-icon
-                    class="EditColour"
-                    [md]="'create-outline'"
-                    (click)="toggleMessage(d.ID, d.message, i)"
-                  ></ion-icon>
+              <td width="12%">
+                <button
+                  type="button"
+                  style="padding: 4px"
+                  class="btn bg-white ml-1"
+                  (click)="toggleMessage(d.ID, d.message, d.event_image, i)"
+                >
+                  <img
+                    style="height: 18px; width: 20px"
+                    src="../../assets/imgs/speakers/edit.svg"
+                  />
                 </button>
-              </td>
 
-              <td class="text-right">
-                <button type="button" class="btn bg-white ml-1">
-                  <ion-icon
-                    class="text-danger"
-                    [md]="'trash-sharp'"
-                    (click)="deletecirculars(d.ID)"
-                  ></ion-icon>
+                <button
+                  type="button"
+                  class="btn bg-white ml-1"
+                  style="padding: 4px; padding-top: 8px"
+                  (click)="movegrouptofinal([{ ID: d.ID }])"
+                >
+                  <img
+                    style="height: 18px; width: 20px"
+                    src="../../assets/imgs/speakers/send.svg"
+                  />
                 </button>
               </td>
             </tr>
@@ -408,10 +452,18 @@
     <!-- End of Drafted Message -->
 
     <div class="" *ngIf="grpmes.length > 0">
-      <div class="card-body card_body">
+      <div class="card-body card_body d-flex justify-content-end">
         <button
           type="button"
-          class="btn btn-primary btn-lg btn-block"
+          class="btn btn-lg btn-block send_btn"
+          style="
+            background: #00b712;
+            width: 188px;
+            height: 42px;
+            font-size: 16px;
+            text-align: center;
+            color: #fff;
+          "
           (click)="moveFinalgroupAll()"
         >
           {{ "send_aLl_messages" | translate }}
@@ -425,7 +477,7 @@
           <div class="cardlist" *ngIf="senditems.length > 0">
             <div class="card-header table-cls">
               <div class="row align-items-center">
-                <div class="col">
+                <div class="col" style="margin-left: 10px !important">
                   {{ "sended_message" | translate }}
                 </div>
               </div>
@@ -436,16 +488,31 @@
               <table *ngIf="senditems.length" class="table table-bordered">
                 <thead>
                   <tr>
-                    <th style="width: 40%">{{ "name" | translate }}</th>
+                    <th style="width: 15%">{{ "name" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
-                    <th>delete</th>
-
-                    <th>View</th>
+                    <th style="width: 12%">Delete</th>
                   </tr>
                 </thead>
+
                 <tbody>
                   <tr *ngFor="let s of senditems; let i = index">
-                    <td>{{ s.Admission_No }}-{{ s.name }}</td>
+                    <!-- {{ s.Admission_No }}- -->
+                    <td class="text-center">
+                      {{ s.name }}<br />
+
+                      <button
+                        type="button"
+                        class="btn bg-white px-1"
+                        (click)="seencirculars1(s.ID)"
+                        (click)="toggleMessage1()"
+                      >
+                        <ion-icon
+                          class="eye"
+                          [name]="showPassword ? 'eye-off' : 'eye'"
+                          [color]="showPassword ? 'medium' : 'primary'"
+                        ></ion-icon>
+                      </button>
+                    </td>
                     <td class="multi_lines_text">
                       {{ s.message }}
                       <br *ngIf="s.event_image && s.event_image.length > 0" />
@@ -466,6 +533,7 @@
                         <div class="col-12">
                           <button
                             type="button"
+                            style="padding: 0px"
                             class="btn btn-primary m-0 px-0"
                             (click)="authservice.open(s.event_image)"
                           >
@@ -494,25 +562,10 @@
                         class="btn bg-white ml-1"
                         (click)="deletecirculars1(s.ID)"
                       >
-                        <ion-icon
-                          class="text-danger"
-                          [md]="'trash-sharp'"
-                        ></ion-icon>
-                      </button>
-                    </td>
-
-                    <td>
-                      <button
-                        type="button"
-                        class="btn bg-white px-1"
-                        (click)="seencirculars1(s.ID)"
-                        (click)="toggleMessage1()"
-                      >
-                        <ion-icon
-                          class="eye"
-                          [name]="showPassword ? 'eye-off' : 'eye'"
-                          [color]="showPassword ? 'medium' : 'primary'"
-                        ></ion-icon>
+                        <img
+                          style="height: 18px; width: 20px"
+                          src="../../assets/imgs/speakers/delete.svg"
+                        />
                       </button>
                     </td>
                   </tr>
@@ -521,6 +574,7 @@
             </div>
           </div>
         </tab>
+
         <tab heading="Last 3 Days">
           <div class="cardlist" *ngIf="last3days.length > 0">
             <div class="card-header table-cls">
@@ -539,7 +593,6 @@
                     <th style="width: 40%">{{ "name" | translate }}</th>
                     <th>{{ "message" | translate }}</th>
                     <th>delete</th>
-
                     <th>View</th>
                   </tr>
                 </thead>
@@ -600,7 +653,17 @@
                         ></ion-icon>
                       </button>
                     </td>
-
+                    <!-- <td>
+                          <button
+                            class="btn bg-white ml-1"
+                            (click)="toggleMessage(s.ID, s.message, i)"
+                          >
+                            <ion-icon
+                              class="text-black"
+                              [md]="'create-outline'"
+                            ></ion-icon>
+                          </button>
+                        </td> -->
                     <td>
                       <button
                         type="button"
@@ -621,6 +684,7 @@
             </div>
           </div>
         </tab>
+
         <tab heading="Search By Date">
           <form
             name="form"
@@ -632,15 +696,10 @@
             <div class="row text-center align-items-center">
               <div class="col-8">
                 <!-- <ion-item>
-                  <ion-datetime
-                    name="s_date"
-                    displayFormat="DD/MM/YYYY"
-                    pickerFormat="DD/MM/YYYY"
-                    [(ngModel)]="select_datas1.s_date"
-                    #s_date="ngModel"
-                    required
-                  ></ion-datetime>
-                </ion-item> -->
+                      <ion-datetime name="s_date" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"
+                        [(ngModel)]="select_datas1.s_date" #s_date="ngModel" required></ion-datetime>
+                    </ion-item> -->
+
                 <ion-item lines="full">
                   <ion-label
                     id="open-modal1"
@@ -787,6 +846,7 @@
                         ></ion-icon>
                       </button>
                     </td>
+
                     <td>
                       <button
                         type="button"
@@ -815,7 +875,6 @@
     [isOpen]="isEditMessageOpen1"
     (willDismiss)="onWillDismiss($event, 'edit')"
     [initialBreakpoint]="1"
-    [breakpoints]="[0, 0.25, 0.5, 0.75]"
     animated="true"
   >
     <ng-template>
@@ -845,6 +904,60 @@
             <td>{{ se.seen_status }}</td>
           </tr>
         </table>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal
+    [isOpen]="isEditMessageOpen"
+    (willDismiss)="onWillDismiss($event, 'edit')"
+    [initialBreakpoint]="1"
+    [breakpoints]="[0, 0.25, 0.5, 0.75]"
+    animated="true"
+  >
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button
+              (click)="toggleMessage('cancel', 'cancel', 'cancel', 'cancel')"
+              >{{ "cancel" | translate }}</ion-button
+            >
+          </ion-buttons>
+          <ion-title>{{ "edit_message" | translate }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button
+              (click)="toggleMessage('confirm', 'confirm', 'confirm', 'cancel')"
+              [strong]="true"
+              >{{ "confirm" | translate }}</ion-button
+            >
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-item>
+          <ion-label position="stacked">Edit Message</ion-label>
+          <ion-textarea
+            type="text"
+            autoGrow="true"
+            placeholder="Your message"
+            [(ngModel)]="messageText"
+          ></ion-textarea>
+          <img
+            *ngIf="attachment && checkimage(attachment)"
+            [src]="attachment"
+            alt="Attachment"
+          />
+          <div *ngIf="attachment && checkmp3(attachment)">
+            <audio
+              controls
+              controlsList="noplaybackrate nodownload"
+              class="w-100"
+            >
+              <source [src]="attachment" type="audio/mpeg" />
+            </audio>
+          </div>
+        </ion-item>
       </ion-content>
     </ng-template>
   </ion-modal>

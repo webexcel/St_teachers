@@ -187,14 +187,13 @@
                   alt=""
                   style="width: 12px; height: 22px"
                   src="../../assets/imgs/speakers/attach.svg"
-                  (click)="open()"
                 />
                 <span style="color: #fff; margin-left: 8px" (click)="open()"
                   >Attach Files</span
                 >
               </div>
               <div class="col-10" *ngIf="details.image.length > 0">
-                {{ details.image.filename }}
+                {{ details.image.data }}
               </div>
               <button
                 type="button"

@@ -6,7 +6,12 @@ import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
-import { AlertController, IonModal, Platform } from '@ionic/angular';
+import {
+  AlertController,
+  IonModal,
+  ModalController,
+  Platform,
+} from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import {
   Base64String,
@@ -14,6 +19,7 @@ import {
   RecordingData,
   VoiceRecorder,
 } from 'capacitor-voice-recorder';
+import { SelectModalComponent } from '../select-modal/select-modal.component';
 import { AuthService } from '../service/auth.service';
 import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
@@ -69,6 +75,9 @@ export class StaffComponent implements OnInit {
   seengrpmes: any;
   isEditMessageOpen1: boolean = false;
   showPassword: boolean = false;
+  staffType: any;
+  staffName: any;
+  attachment: any;
 
   constructor(
     private serfile: FilesService,
@@ -83,7 +92,8 @@ export class StaffComponent implements OnInit {
     private router: Router,
     private translate: TranslateConfigService,
     public loading: LoadingService,
-    public authservice: AuthService
+    public authservice: AuthService,
+    private modalController: ModalController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -234,6 +244,50 @@ export class StaffComponent implements OnInit {
           console.log(err);
         }
       );
+  }
+
+  async openOptions(data: any, value: any, bind: any, parameters: any) {
+    console.log('aaaaaaaaaaaaaa', data);
+    console.log('aaaaaaaaaaaaaa', value);
+    const modal = await this.modalController.create({
+      component: SelectModalComponent,
+      componentProps: {
+        optionsList: data,
+        value: value,
+        multi: true,
+        parameters: parameters,
+      },
+    });
+
+    modal.onDidDismiss().then((result: any) => {
+      let datar = [];
+      let textData = [];
+      if (result.data != undefined) {
+        for (let i = 0; i < result.data.length; i++) {
+          if (result.data[i].checked) {
+            datar.push(result.data[i]);
+            //datar.push(result.data[i].name);
+          }
+        }
+      }
+      if (bind == 'staffType') {
+        this.select_datas.stafftypes = datar;
+        console.log('afsdf', this.select_datas.stafftypes);
+        this.staffType =
+          datar.length > 0
+            ? datar.length + ' Staff Type Selected'
+            : 'No Staff type Selected';
+        this.getStudentsByClass(this.select_datas.stafftypes);
+      } else if (bind == 'staffName') {
+        this.select_datas.staffinfo = datar;
+        console.log('afsdf', this.select_datas.staffinfo);
+        this.staffName =
+          datar.length > 0
+            ? datar.length + ' Staffs Selected'
+            : 'No Staffs Selected';
+      }
+    });
+    return await modal.present();
   }
 
   onSubmit(form: NgForm) {
@@ -389,7 +443,6 @@ export class StaffComponent implements OnInit {
     if (f) {
       f = f.split('.');
       f = f[f.length - 1].toLowerCase();
-      console.log(f);
       if (f != 'pdf' && f != 'mp3' && f != 'xls' && f != 'xlsx') {
         return true;
       } else {
@@ -586,17 +639,16 @@ export class StaffComponent implements OnInit {
   //   this.isEditMessageOpen = !this.isEditMessageOpen;
   // }
 
-  toggleMessage(id: any, message: any, i: any) {
+  toggleMessage(id: any, message: any, image: any, i: any) {
     console.log('toggle', id);
-    if (id != 'cancel' && id != 'confirm') {
+    if (id && id !== 'cancel' && id !== 'confirm') {
       this.index = i;
       this.messageId = id;
       this.messageText = message;
-      console.log('toggle', this.messageId);
+      this.attachment = image;
     }
-    if (id == 'confirm') {
+    if (id === 'confirm') {
       console.log('message id', this.index);
-      //this.last3days[this.index].message = this.messageText;
       this.editMessage(this.messageId, this.messageText);
     }
     this.isEditMessageOpen = !this.isEditMessageOpen;

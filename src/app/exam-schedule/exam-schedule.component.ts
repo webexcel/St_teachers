@@ -1,13 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertController, IonModal, Platform } from '@ionic/angular';
+import {
+  AlertController,
+  IonModal,
+  ModalController,
+  Platform,
+} from '@ionic/angular';
+
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
 import { TranslateConfigService } from '../service/translate-config.service';
 
 import { OverlayEventDetail } from '@ionic/core/components';
+import { SelectModalComponent } from '../select-modal/select-modal.component';
 
 @Component({
   selector: 'app-exam-schedule',
@@ -19,7 +26,7 @@ export class ExamScheduleComponent implements OnInit {
   classs: any = [];
   subjects: any = [];
   exams: any = [];
-  students: any = [];
+  students: any[] = [];
   select_datas: any = {};
   clid: any = '-1';
   g_btn: any = false;
@@ -32,6 +39,9 @@ export class ExamScheduleComponent implements OnInit {
   isEditMessageOpen1: boolean = false;
   isEditMessageOpen2: boolean = false;
   messageText: any;
+  ExamName: any;
+  ClassName: any;
+  SubjectName: any;
 
   constructor(
     private platform: Platform,
@@ -40,7 +50,8 @@ export class ExamScheduleComponent implements OnInit {
     public loading: LoadingService,
     public authservice: AuthService,
     public storage: StorageService,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController,
+    private modalController: ModalController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -70,6 +81,63 @@ export class ExamScheduleComponent implements OnInit {
 
   reset() {
     this.select_datas.s_date = new Date().toISOString();
+  }
+
+  async openOptions(
+    data: any,
+    value: any,
+    bind: any,
+    multi: any,
+    parameters: any
+  ) {
+    const modal = await this.modalController.create({
+      component: SelectModalComponent,
+      componentProps: {
+        optionsList: data,
+        value: value,
+        multi: multi,
+        parameters: parameters,
+      },
+    });
+
+    modal.onDidDismiss().then((result: any) => {
+      if (multi) {
+        let datar = [];
+        let textData = [];
+        if (result.data != undefined) {
+          for (let i = 0; i < result.data.length; i++) {
+            if (result.data[i].checked) {
+              datar.push(result.data[i]);
+              //datar.push(result.data[i].name);
+            }
+          }
+        }
+        this.select_datas.class = datar;
+        console.log('afsdf', this.select_datas.subject);
+        this.ClassName =
+          datar.length > 0
+            ? datar.length + ' Classes Selected'
+            : 'No Classes Selected';
+      } else {
+        if (bind == 'Subject') {
+          this.select_datas.subject = result.data;
+          console.log('afsdf', this.select_datas.class);
+          this.SubjectName =
+            result.data != undefined && result.data.name != undefined
+              ? result.data.name + ' Subject Selected'
+              : 'No Subject Selected';
+        } else if (bind == 'Exams') {
+          this.select_datas.exams = result.data;
+          console.log('afsdf', this.select_datas.class);
+          this.ExamName =
+            result.data != undefined && result.data.exam_type_name != undefined
+              ? result.data.exam_type_name + ' Exam Selected'
+              : 'No Exam Selected';
+          this.getallexams();
+        }
+      }
+    });
+    return await modal.present();
   }
 
   classChange(event: any) {

@@ -29,10 +29,11 @@ import { IonicSelectableComponent } from 'ionic-selectable';
 // import { IonicSelectableComponent } from 'ionic-selectable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { SelectModalComponent } from './select-modal/select-modal.component';
 import { JwtInterceptor } from './service/jwt.interceptor';
 import { LoadingService } from './service/loading.service';
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, SelectModalComponent],
   // entryComponents: [],
   imports: [
     BrowserModule,

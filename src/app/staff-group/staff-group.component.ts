@@ -6,7 +6,12 @@ import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
-import { AlertController, IonModal, Platform } from '@ionic/angular';
+import {
+  AlertController,
+  IonModal,
+  ModalController,
+  Platform,
+} from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import {
   Base64String,
@@ -14,6 +19,7 @@ import {
   RecordingData,
   VoiceRecorder,
 } from 'capacitor-voice-recorder';
+import { SelectModalComponent } from '../select-modal/select-modal.component';
 import { AuthService } from '../service/auth.service';
 import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
@@ -70,6 +76,8 @@ export class StaffGroupComponent implements OnInit {
   seengrpmes: any;
   isEditMessageOpen1: boolean = false;
   showPassword: boolean = true;
+  staffName: any;
+  attachment: any;
 
   constructor(
     private serfile: FilesService,
@@ -84,7 +92,8 @@ export class StaffGroupComponent implements OnInit {
     private router: Router,
     private translate: TranslateConfigService,
     public loading: LoadingService,
-    public authservice: AuthService
+    public authservice: AuthService,
+    private modalController: ModalController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -200,6 +209,40 @@ export class StaffGroupComponent implements OnInit {
           console.log(err);
         }
       );
+  }
+
+  async openOptions(data: any, value: any) {
+    console.log('aaaaaaaaaaaaaa', data);
+    console.log('aaaaaaaaaaaaaa', value);
+    const modal = await this.modalController.create({
+      component: SelectModalComponent,
+      componentProps: {
+        optionsList: data,
+        value: value,
+        multi: true,
+        parameters: ['staffclass', 'staffclass'],
+      },
+    });
+
+    modal.onDidDismiss().then((result) => {
+      let datar = [];
+      let textData = [];
+      if (result.data != undefined) {
+        for (let i = 0; i < result.data.length; i++) {
+          if (result.data[i].checked) {
+            datar.push(result.data[i]);
+            //datar.push(result.data[i].name);
+          }
+        }
+      }
+      this.select_datas.stafftypes = datar;
+      console.log('afsdf', this.select_datas.stafftypes);
+      this.staffName =
+        datar.length > 0
+          ? datar.length + ' Staff Type Selected'
+          : 'No Staff type Selected';
+    });
+    return await modal.present();
   }
 
   onSubmit(form: NgForm) {
@@ -537,12 +580,13 @@ export class StaffGroupComponent implements OnInit {
       }
     }
   }
-  toggleMessage(id: any, message: any, i: any) {
+  toggleMessage(id: any, message: any, image: any, i: any) {
     console.log('toggle', id);
     if (id != 'cancel' && id != 'confirm') {
       this.index = i;
       this.messageId = id;
       this.messageText = message;
+      this.attachment = image;
     }
     if (id == 'confirm') {
       console.log('message id', this.index);
@@ -551,10 +595,11 @@ export class StaffGroupComponent implements OnInit {
     }
     this.isEditMessageOpen = !this.isEditMessageOpen;
   }
+
   editMessage(id: any, message: any) {
     this.loading.present();
     this.authservice
-      .post('editMessage', { messageId: id, messageText: message })
+      .post('editcirculars', { messageId: id, messageText: message })
       .subscribe(
         (res: any) => {
           this.loading.dismissAll();

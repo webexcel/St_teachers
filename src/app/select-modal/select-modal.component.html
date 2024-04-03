@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" style="color: rgb(249, 248, 248)">
+      <ion-button (click)="dismissModal()">Close</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" [hidden]="selectAll">
+      <ion-button (click)="selectAllOption(filteredOptions)"
+        >Select All</ion-button
+      >
+    </ion-buttons>
+    <ion-buttons slot="end" [hidden]="clearAll">
+      <ion-button (click)="clearAllOption(filteredOptions)"
+        >Clear All</ion-button
+      >
+    </ion-buttons>
+    <ion-buttons slot="end" class="doneBtn" [hidden]="!multi">
+      <ion-button (click)="selectOption(filteredOptions)">Done</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionChange)="filterOptions(searchTerm)"
+  ></ion-searchbar> -->
+
+  <ion-list *ngIf="multi">
+    <ion-item *ngFor="let option of filteredOptions; let i = index">
+      <ion-checkbox [(ngModel)]="option.checked"></ion-checkbox>
+      <label style="margin-left: 30px; position: absolute">{{
+        option[parameters[1]]
+      }}</label>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="!multi">
+    <ion-item
+      *ngFor="let option of filteredOptions"
+      (click)="selectOption(option)"
+    >
+      <label>{{ option[parameters[1]] }}</label>
+    </ion-item>
+  </ion-list>
+</ion-content>

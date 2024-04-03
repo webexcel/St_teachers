@@ -120,25 +120,26 @@ export const environment = {
     {
       title: 'Add Remarks',
       url: '/reports',
-      icon: 'assets/imgs/latest_Icons/add.svg',
+      icon: 'assets/imgs/latest_Icons/edit_remarks.svg',
       // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-      admin: 'Y',
+      admin: 'N',
     },
 
     {
       title: 'View Remarks',
       url: '/view-remarks',
-      icon: 'assets/imgs/latest_Icons/view.svg',
+      icon: 'assets/imgs/latest_Icons/view_remarks.svg',
       // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-      admin: 'Y',
+      admin: 'N',
     },
 
     {
       title: 'exam-schedule',
       url: '/exam-schedule',
-      icon: 'assets/imgs/latest_Icons/view.svg',
+      icon: 'assets/imgs/latest_Icons/exam_schedule.svg',
       filter:
         'invert(61%) sepia(99%) saturate(745%) hue-rotate(1deg) brightness(107%) contrast(103%)',
+      admin: 'N',
     },
   ],
   login_logo: 'assets/imgs/appicon.png',
@@ -146,7 +147,7 @@ export const environment = {
   app_versionCode: '5',
   apiBaseUrl: 'https://demo.schooltree.in/baseTeacherS.php/api/',
   version: '5',
-  package: 'com.parentalert.in.schoolapp1',
+  package: 'com.schooltree.schooltree',
   packageid: '',
   color: '#00CCCC',
 };

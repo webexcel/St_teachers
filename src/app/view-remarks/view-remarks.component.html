@@ -33,7 +33,7 @@
       (ngSubmit)="f.form.valid && onSubmit(f)"
     >
       <div style="margin-top: 12px">Select Class</div>
-      <ion-item class="dropdown" style="margin: 0px">
+      <!-- <ion-item class="dropdown" style="margin: 0px">
         <ion-label *ngIf="!select_datas.class">Select a Class</ion-label>
 
         <ionic-selectable
@@ -47,22 +47,25 @@
           #class="ngModel"
           required
         >
-          <ng-template ionicSelectableCloseButtonTemplate>
-            <ion-icon
-              [md]="'close-circle'"
-              [ios]="'close-circle'"
-              style="font-size: 24px"
-            ></ion-icon>
-          </ng-template>
-        </ionic-selectable>
+        </ionic-selectable> 
+      </ion-item> -->
+
+      <ion-item class="dropdown_select" style="margin: 0px">
+        <ion-input
+          readonly
+          [placeholder]="className"
+          (click)="openOptions(classs, select_datas.class, 'Class', false)"
+        >
+          <ion-icon
+            name="caret-down"
+            style="margin-left: 10%; opacity: 0.5; position: absolute"
+          ></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
       </ion-item>
 
-      <span *ngIf="f.submitted && class.invalid" class="text-danger"
-        >Select Class</span
-      >
-
       <div style="margin-top: 25px">Select Subject</div>
-      <ion-item class="dropdown">
+      <!-- <ion-item class="dropdown">
         <ion-label>{{ "Subject" | translate }}</ion-label>
         <ionic-selectable
           #portComponent
@@ -77,40 +80,28 @@
           [items]="subjects"
           required
         >
-          <!-- <ng-template ionicSelectableCloseButtonTemplate>
-            <ion-icon
-              [md]="'close-circle'"
-              [ios]="'close-circle'"
-              style="font-size: 24px"
-            ></ion-icon>
-          </ng-template>
-          <ng-template ionicSelectableFooterTemplate>
-            <ion-toolbar>
-              <ion-row>
-                <ion-col [size]="4">
-                  <ion-button expand="full" (click)="toggleItems(true)">
-                    Select All
-                  </ion-button>
-                </ion-col>
-                <ion-col [size]="4">
-                  <ion-button expand="full" (click)="toggleItems(false)">
-                    Deselect All
-                  </ion-button>
-                </ion-col>
-                <ion-col [size]="4">
-                  <ion-button expand="full" (click)="confirm()">
-                    OK
-                  </ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-toolbar>
-          </ng-template> -->
         </ionic-selectable>
+      </ion-item> -->
+
+      <ion-item class="dropdown_select" style="margin: 0px">
+        <ion-input
+          readonly
+          [placeholder]="SubjectName"
+          (click)="
+            openOptions(subjects, select_datas.subject, 'Subject', false)
+          "
+        >
+          <ion-icon
+            name="caret-down"
+            style="margin-left: 10%; opacity: 0.5; position: absolute"
+          ></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
       </ion-item>
 
       <div class="p-2 text-right">
         <button type="submit" class="btn btn-primary" style="width: 100%">
-          Save
+          Submit
         </button>
       </div>
     </form>

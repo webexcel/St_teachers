@@ -34,42 +34,21 @@
         novalidate
       >
         <div style="margin-top: 12px">Select Class</div>
-        <ion-item class="dropdown" style="margin: 0px">
-          <ion-label *ngIf="!select_datas.class">0 Classes Selected</ion-label>
-          <ionic-selectable
-            #portComponent
-            name="class"
-            item-content
-            [(ngModel)]="select_datas.class"
-            itemValueField="id"
-            itemTextField="name"
-            [items]="classs"
-            [canSearch]="true"
-            [isMultiple]="true"
-            [hasVirtualScroll]="true"
-            (onChange)="classChange($event)"
-            #class="ngModel"
-            required
-          >
-            <ng-template ionicSelectableValueTemplate let-ports="value">
-              <div class="ionic-selectable-value-item">
-                {{ formatPorts(select_datas.class) }}
-              </div>
-            </ng-template>
 
-            <ng-template ionicSelectableCloseButtonTemplate>
-              <ion-icon
-                [md]="'close-circle'"
-                [ios]="'close-circle'"
-                style="font-size: 24px"
-              ></ion-icon>
-            </ng-template>
-          </ionic-selectable>
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="className"
+            (click)="openOptions(classs, select_datas.class, true)"
+          >
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
         </ion-item>
 
-        <span *ngIf="f.submitted && class.invalid" class="text-danger"
-          >Select Class</span
-        >
         <div style="margin-top: 12px">Select Date</div>
         <ion-item lines="full" class="dropdown" style="margin: 0px">
           <ion-label
@@ -131,8 +110,10 @@
           </ion-modal>
         </ion-item>
         <!--subject-->
+
         <div style="margin-top: 25px">Select Subject</div>
-        <ion-item class="dropdown" style="margin: 0px">
+
+        <!-- <ion-item class="dropdown" style="margin: 0px">
           <ion-label>{{ "subject" | translate }}</ion-label>
           <ionic-selectable
             name="subject"
@@ -153,7 +134,22 @@
               ></ion-icon>
             </ng-template>
           </ionic-selectable>
+        </ion-item> -->
+
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="SubjectName"
+            (click)="openOptions(subjects, select_datas.subject, false)"
+          >
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
         </ion-item>
+
         <!--dfgdghgf-->
         <div style="margin-top: 25px">Enter Message Here</div>
         <ion-item lines="full" class="messageArea" style="height: 95px">
@@ -212,10 +208,10 @@
             >
               Stop Recording</span
             >
-            <br />
+            <!-- <br />
             <span style="font-size: 10px" *ngIf="recording">{{
               formatTime(recordingTimer)
-            }}</span>
+            }}</span> -->
           </div>
           <div
             class="col-10"
@@ -262,276 +258,6 @@
     </div>
 
     <!-- End of new -->
-    <!-- <div class="">
-      <div class="card-header">
-        {{ "send_homework_to_classes" | translate }}
-      </div>
-      <div class="card-body card_body">
-        <form
-          name="form"
-          (ngSubmit)="f.form.valid && onSubmit(f)"
-          #f="ngForm"
-          novalidate
-          class="border border-primary"
-        >
-          <ion-item>
-            <ion-label>{{ "class" | translate }}</ion-label>
-            <ionic-selectable
-              #portComponent
-              name="class"
-              item-content
-              [(ngModel)]="select_datas.class"
-              itemValueField="id"
-              itemTextField="name"
-              [items]="classs"
-              [canSearch]="true"
-              [hasVirtualScroll]="true"
-              [isMultiple]="true"
-              (onChange)="classChange($event)"
-              #class="ngModel"
-              required
-            >
-              <ng-template ionicSelectableValueTemplate let-ports="value">
-                <div class="ionic-selectable-value-item">
-                  {{ formatPorts(select_datas.class) }}
-                </div>
-              </ng-template>
-
-              <ng-template ionicSelectableCloseButtonTemplate>
-                <ion-icon
-                  [md]="'close-circle'"
-                  [ios]="'close-circle'"
-                  style="font-size: 24px"
-                ></ion-icon>
-              </ng-template>
-              <ng-template ionicSelectableFooterTemplate>
-                <ion-toolbar>
-                  <ion-row>
-                    <ion-col [size]="4">
-                      <ion-button expand="full" (click)="toggleItems(true)">
-                        Select All
-                      </ion-button>
-                    </ion-col>
-                    <ion-col [size]="4">
-                      <ion-button expand="full" (click)="toggleItems(false)">
-                        Deselect All
-                      </ion-button>
-                    </ion-col>
-                    <ion-col [size]="4">
-                      <ion-button expand="full" (click)="confirm()">
-                        OK
-                      </ion-button>
-                    </ion-col>
-                  </ion-row>
-                </ion-toolbar>
-              </ng-template>
-            </ionic-selectable>
-          </ion-item>
-          <span *ngIf="f.submitted && class.invalid" class="text-danger"
-            >Select Class</span
-          >
-      
-
-          <ion-item lines="full">
-            <ion-label
-              id="open-modal"
-              class="selected-date"
-              *ngIf="select_datas.s_date"
-            >
-              <span style="float: left">{{ "date" | translate }}</span>
-
-              <span style="float: right">
-                {{ formatDate(select_datas.s_date) }}</span
-              >
-            </ion-label>
-
-            <ion-modal
-              trigger="open-modal"
-              (willDismiss)="onWillDismiss($event, 'first')"
-              [initialBreakpoint]="0.5"
-              [breakpoints]="[0, 0.25, 0.5, 0.75]"
-              animated="true"
-            >
-              <ng-template>
-                <ion-header>
-                  <ion-toolbar>
-                    <ion-buttons slot="start">
-                      <ion-button (click)="cancel_date()">{{
-                        "cancel" | translate
-                      }}</ion-button>
-                    </ion-buttons>
-                    <ion-title>{{ "select_date" | translate }}</ion-title>
-                    <ion-buttons slot="end">
-                      <ion-button (click)="confirm_date()" [strong]="true">{{
-                        "confirm" | translate
-                      }}</ion-button>
-                    </ion-buttons>
-                  </ion-toolbar>
-                </ion-header>
-                <ion-content class="ion-padding">
-                  <ion-datetime
-                    name="dob"
-                    displayFormat="DD/MM/YYYY"
-                    pickerFormat="DD/MM/YYYY"
-                    [(ngModel)]="select_datas.s_date"
-                    #dob="ngModel"
-                    presentation="date"
-                    mode="md"
-                    #datetime
-                    (ionChange)="showHideDatePicker()"
-                    required
-                  >
-                  </ion-datetime>
-                </ion-content>
-              </ng-template>
-            </ion-modal>
-          </ion-item>
-
-          <ion-item>
-            <ion-label>{{ "subject" | translate }}</ion-label>
-            <ionic-selectable
-              name="subject"
-              item-content
-              [(ngModel)]="select_datas.subject"
-              itemValueField="id"
-              itemTextField="name"
-              [items]="subjects"
-              [canSearch]="true"
-              #subject="ngModel"
-              required
-            >
-              <ng-template ionicSelectableCloseButtonTemplate>
-                <ion-icon
-                  [md]="'close-circle'"
-                  [ios]="'close-circle'"
-                  style="font-size: 24px"
-                ></ion-icon>
-              </ng-template>
-            </ionic-selectable>
-          </ion-item>
-          <span *ngIf="f.submitted && subject.invalid" class="text-danger"
-            >Select Subject</span
-          >
-      
-          <ion-item lines="full">
-            <ion-textarea
-              type="text"
-              name="message"
-              [(ngModel)]="select_datas.message"
-              #message="ngModel"
-              placeholder="Enter the message here"
-              [required]="select_datas.filename.length === 0"
-            >
-            </ion-textarea>
-          </ion-item>
-          <span *ngIf="f.submitted && message.invalid" class="text-danger"
-            >Enter Message</span
-          >
-          <ion-item lines="full">
-            <div class="row w-100 align-items-center text-center">
-              <div class="col-6" *ngIf="select_datas.filename.length === 0">
-                <span class="text-success" (click)="open()">Attach Files</span>
-                <img
-                  alt=""
-                  style="width: 30px"
-                  src="../../assets/imgs/speakers/attachment.png"
-                  (click)="open()"
-                />
-              </div>
-              <div class="col-6" *ngIf="select_datas.filename.length === 0">
-                <img
-                  alt=""
-                  style="
-                    width: 30px;
-                    filter: invert(58%) sepia(16%) saturate(2009%)
-                      hue-rotate(81deg) brightness(88%) contrast(86%);
-                  "
-                  src="../../assets/imgs/speakers/microphone.png"
-                  (click)="onStartRecording()"
-                  *ngIf="!recording"
-                />
-                <span
-                  class="text-success"
-                  *ngIf="!recording"
-                  (click)="onStartRecording()"
-                >
-                  Start Recording</span
-                >
-                <img
-                  alt=""
-                  style="
-                    width: 30px;
-                    filter: invert(13%) sepia(100%) saturate(6859%)
-                      hue-rotate(358deg) brightness(119%) contrast(120%);
-                  "
-                  src="../../assets/imgs/speakers/microphone-off.png"
-                  (click)="onStopRecording()"
-                  *ngIf="recording"
-                />
-                <span
-                  style="color: #ff0000"
-                  *ngIf="recording"
-                  (click)="onStopRecording()"
-                >
-                  Stop Recording</span
-                >
-                <br />
-                <span style="font-size: 10px" *ngIf="recording">{{
-                  formatTime(recordingTimer)
-                }}</span>
-              </div>
-             
-              <div
-                class="col-10"
-                *ngIf="
-                  select_datas.filename.length > 0 &&
-                  select_datas.type !== 'mp3'
-                "
-              >
-                {{ select_datas.filename }}
-              </div>
-              <div
-                class="col-10"
-                *ngIf="
-                  select_datas.filename.length > 0 &&
-                  select_datas.type === 'mp3'
-                "
-              >
-                <audio
-                  controls
-                  controlsList="noplaybackrate nodownload"
-                  class="w-100"
-                >
-                  <source [src]="audioData.base64" type="audio/mpeg" />
-                </audio>
-              </div>
-              <div class="col-2" *ngIf="select_datas.filename.length > 0">
-                <button
-                  type="button"
-                  class="btn btn-danger"
-                  (click)="deletefile()"
-                >
-                  <ion-icon
-                    [ios]="'trash-sharp'"
-                    [md]="'trash-sharp'"
-                  ></ion-icon>
-                </button>
-              </div>
-          
-              <div class="col-12 text-danger" *ngIf="error">
-                only allow jpg, jpeg, png, pdf, mp3, xls, xlsx.
-              </div>
-            </div>
-          </ion-item>
-          <div class="p-1">
-            <button type="submit" class="btn btn-primary">
-              {{ "save" | translate }}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div> -->
-
     <!-- Start of Drafted Message -->
 
     <div class="m-3" *ngIf="recentdata.length > 0">
@@ -618,7 +344,9 @@
                   type="button"
                   style="padding: 4px"
                   class="btn bg-white ml-1"
-                  (click)="toggleHomework(d.MSG_ID, d.MESSAGE, i)"
+                  (click)="
+                    toggleHomework(d.MSG_ID, d.MESSAGE, d.event_image, i)
+                  "
                 >
                   <img
                     style="height: 18px; width: 20px"
@@ -930,13 +658,6 @@
                         [md]="'trash-sharp'"
                       ></ion-icon>
                     </button>
-                    <!-- <button class="btn bg-white px-0 text-right">
-                      (click)="toggleMessage(s.ID, s.message, i)"
-                      <ion-icon
-                        class="text-black"
-                        [md]="'create-outline'"
-                      ></ion-icon>
-                    </button> -->
                   </td>
                 </tr>
               </tbody>
@@ -955,17 +676,6 @@
         >
           <div class="row text-center align-items-center">
             <div class="col-8">
-              <!-- <ion-item>
-              <ion-datetime
-                name="s_date"
-                displayFormat="DD/MM/YYYY"
-                pickerFormat="DD/MM/YYYY"
-                [(ngModel)]="select_datas1.s_date"
-                #s_date="ngModel"
-                required
-              ></ion-datetime>
-            </ion-item> -->
-
               <ion-item lines="full">
                 <ion-label
                   id="open-modal1"
@@ -1127,16 +837,6 @@
                       </div>
                     </td>
 
-                    <!-- <button
-                        class="btn bg-white ml-1"
-                        (click)="toggleHomework(d.MSG_ID, d.MESSAGE, i)"
-                      >
-                        <ion-icon
-                          class="text-black"
-                          [md]="'create-outline'"
-                        ></ion-icon>
-                      </button> -->
-
                     <td>
                       <button
                         type="button"
@@ -1202,8 +902,7 @@
     <ion-modal
       [isOpen]="isEditMessageOpen"
       (willDismiss)="onWillDismiss($event, 'edit')"
-      [initialBreakpoint]="0.5"
-      [breakpoints]="[0, 0.25, 0.5, 0.75]"
+      [initialBreakpoint]="1"
       animated="true"
     >
       <ng-template>
@@ -1211,14 +910,16 @@
           <ion-toolbar>
             <ion-buttons slot="start">
               <ion-button
-                (click)="toggleHomework('cancel', 'cancel', 'cancel')"
+                (click)="toggleHomework('cancel', 'cancel', 'cancel', 'cancel')"
                 >{{ "cancel" | translate }}</ion-button
               >
             </ion-buttons>
             <ion-title>{{ "edit_message" | translate }}</ion-title>
             <ion-buttons slot="end">
               <ion-button
-                (click)="toggleHomework('confirm', 'confirm', 'cancel')"
+                (click)="
+                  toggleHomework('confirm', 'confirm', 'confirm', 'confirm')
+                "
                 [strong]="true"
                 >{{ "confirm" | translate }}</ion-button
               >
@@ -1227,13 +928,27 @@
         </ion-header>
         <ion-content class="ion-padding">
           <ion-item>
-            <ion-label position="stacked">Enter Message</ion-label>
+            <ion-label position="stacked">Edit Message</ion-label>
             <ion-textarea
               type="text"
               autoGrow="true"
               placeholder="Your message"
               [(ngModel)]="messageText"
             ></ion-textarea>
+            <img
+              *ngIf="attachment && checkimage(attachment)"
+              [src]="attachment"
+              alt="Attachment"
+            />
+            <div *ngIf="attachment && checkmp3(attachment)">
+              <audio
+                controls
+                controlsList="noplaybackrate nodownload"
+                class="w-100"
+              >
+                <source [src]="attachment" type="audio/mpeg" />
+              </audio>
+            </div>
           </ion-item>
         </ion-content>
       </ng-template>

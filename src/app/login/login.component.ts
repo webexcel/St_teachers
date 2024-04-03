@@ -113,7 +113,7 @@ export class LoginComponent implements OnInit {
         console.log(err);
       }
     );
-    this.getmenu();
+    // this.getmenu();
   }
 
   getmenu() {

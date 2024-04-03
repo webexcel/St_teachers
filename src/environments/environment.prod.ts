@@ -100,25 +100,26 @@ export const environment = {
     {
       title: 'Add Remarks',
       url: '/reports',
-      icon: 'assets/imgs/latest_Icons/add.svg',
+      icon: 'assets/imgs/latest_Icons/edit_remarks.svg',
       // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-      admin: 'Y',
+      admin: 'N',
     },
 
     {
       title: 'View Remarks',
       url: '/view-remarks',
-      icon: 'assets/imgs/latest_Icons/view.svg',
+      icon: 'assets/imgs/latest_Icons/view_remarks.svg',
       // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-      admin: 'Y',
+      admin: 'N',
     },
 
     {
       title: 'exam-schedule',
       url: '/exam-schedule',
-      icon: 'assets/imgs/latest_Icons/view.svg',
+      icon: 'assets/imgs/latest_Icons/exam_schedule.svg',
       filter:
         'invert(61%) sepia(99%) saturate(745%) hue-rotate(1deg) brightness(107%) contrast(103%)',
+      admin: 'N',
     },
     //{ title: 'Study Material',url: '/study-material', icon: 'assets/imgs/speakers/books.png',filter:"invert(17%) sepia(65%) saturate(5213%) hue-rotate(337deg) brightness(85%) contrast(112%)"},
     /*{ title: 'report-card',url: '/report-card', icon: 'assets/imgs/speakers/marks.png', filter:"invert(10%) sepia(51%) saturate(5820%) hue-rotate(291deg) brightness(110%) contrast(115%)"},

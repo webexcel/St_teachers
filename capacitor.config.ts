@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.parentalert.in.schoolapp1',
+  appId: 'com.schooltree.schooltree',
   appName: 'Schooltree-teachers',
   webDir: 'www',
   server: {

@@ -186,3 +186,7 @@ audio::-webkit-media-controls-panel {
   .textarea-wrapper.sc-ion-textarea-md {
   height: 95px;
 }
+
+ion-buttons {
+  --color: unset !important;
+}

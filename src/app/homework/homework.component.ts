@@ -7,7 +7,12 @@ import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
-import { AlertController, IonModal, Platform } from '@ionic/angular';
+import {
+  AlertController,
+  IonModal,
+  ModalController,
+  Platform,
+} from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import {
   Base64String,
@@ -15,6 +20,7 @@ import {
   RecordingData,
   VoiceRecorder,
 } from 'capacitor-voice-recorder';
+import { SelectModalComponent } from '../select-modal/select-modal.component';
 import { AuthService } from '../service/auth.service';
 import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
@@ -76,6 +82,9 @@ export class HomeworkComponent implements OnInit {
 
   showPassword: boolean = true;
   seenhrkmes: any;
+  className: any;
+  SubjectName: any;
+  attachment: any;
 
   constructor(
     private serfile: FilesService,
@@ -90,7 +99,8 @@ export class HomeworkComponent implements OnInit {
     private router: Router,
     private translate: TranslateConfigService,
     public loading: LoadingService,
-    public authservice: AuthService
+    public authservice: AuthService,
+    private modalController: ModalController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -109,10 +119,11 @@ export class HomeworkComponent implements OnInit {
     this.translate.getparam('send').then((v) => (this.send = v));
     this.translate.getparam('cancel').then((v) => (this.cancel = v));
     this.translate.getparam('delete').then((v) => (this.delete = v));
-    this.reset();
-    this.getSaveHomeworkDraft();
+
     this.getallsubject();
     this.getSaveHomework();
+    this.reset();
+    this.getSaveHomeworkDraft();
   }
 
   reset() {
@@ -126,6 +137,11 @@ export class HomeworkComponent implements OnInit {
     this.select_datas.image = '';
     this.select_datas.type = '';
     this.select_datas.filename = '';
+  }
+
+  ionViewWillEnter() {
+    this.className = 'Select Classes';
+    this.SubjectName = 'Select homework';
   }
 
   toggleItems(status: any) {
@@ -269,6 +285,7 @@ export class HomeworkComponent implements OnInit {
               (res) => {
                 this.loading.dismissAll();
                 this.getSaveHomeworkDraft();
+                this.getSaveHomework();
               },
               (err) => {
                 this.loading.dismissAll();
@@ -280,6 +297,7 @@ export class HomeworkComponent implements OnInit {
     });
     await alert.present();
   }
+
   async deletehomework1(ID: any) {
     let alert = await this.alertCtrl.create({
       header: this.delete_homework,
@@ -300,6 +318,8 @@ export class HomeworkComponent implements OnInit {
             this.authservice.post('senddeletehomework', { id: ID }).subscribe(
               (res) => {
                 this.loading.dismissAll();
+                // this.getSaveHomework();
+                this.getSaveHomeworkDraft();
                 this.getSaveHomework();
               },
               (err) => {
@@ -313,12 +333,13 @@ export class HomeworkComponent implements OnInit {
     await alert.present();
   }
 
-  toggleHomework(id: any, message: any, i: any) {
-    console.log('toggle', id);
+  toggleHomework(id: any, message: any, image: any, i: any) {
+    // console.log('toggle', id);
     if (id != 'cancel' && id != 'confirm') {
       this.index = i;
       this.messageId = id;
       this.messageText = message;
+      this.attachment = image;
     }
     if (id == 'confirm') {
       console.log('message id', this.index);
@@ -328,7 +349,7 @@ export class HomeworkComponent implements OnInit {
     this.isEditMessageOpen = !this.isEditMessageOpen;
   }
 
-  editMessage(id: any, message: any) {
+  async editMessage(id: any, message: any) {
     this.loading.present();
     this.authservice
       .post('editHomework', { messageId: id, messageText: message })
@@ -347,67 +368,42 @@ export class HomeworkComponent implements OnInit {
         }
       );
   }
+
   formatPorts(classs: any) {
     return classs.map((port: any) => port.name).join(', ');
   }
 
   open() {
-    this.fileChooser
-      .open()
-      .then((uri) => {
-        console.log(uri);
-        this.filePath.resolveNativePath(uri).then(
-          (res) => {
-            console.log(res);
-            let f: any = res.split('/');
-            this.select_datas.filename = f[f.length - 1].toLowerCase();
-            let l: any = res.split('.');
-            l = l[l.length - 1].toLowerCase();
-            if (
-              l == 'jpg' ||
-              l == 'jpeg' ||
-              l == 'png' ||
-              l == 'pdf' ||
-              l == 'mp3' ||
-              l == 'mp4' ||
-              l == 'xls' ||
-              l == 'xlsx'
-            ) {
-              this.select_datas.type = l;
-              this.error = false;
-              if (l == 'mp3') {
-                l = `data:audio/mpeg;base64,`;
-              } else if (l == 'mp4') {
-                l = '';
-              } else {
-                l = `data:image/${l};base64,`;
-              }
-              this.base64.encodeFile(res).then(
-                (result) => {
-                  this.select_datas.image = `${l}${result.split('base64,')[1]}`;
-                },
-                (err) => {
-                  console.log('@log file open error: ', err);
-                  this.error = true;
-                }
-              );
-            } else {
-              this.error = true;
-            }
-          },
-          (err) => {
-            console.log(err);
-          }
-        );
-      })
-      .catch((e) => console.log(e));
+    const fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.accept =
+      'image/*, application/pdf, .doc, .docx, .txt, .xls, .xlsx, .mp3, .mp4';
+
+    fileInput.onchange = (event: any) => {
+      const file = event.target.files[0];
+      if (file) {
+        this.readFile(file);
+      }
+    };
+
+    fileInput.click();
+  }
+
+  readFile(file: File) {
+    const reader = new FileReader();
+    reader.onload = async (e: any) => {
+      this.select_datas.image = e.target.result;
+      this.select_datas.filename = file.name;
+      this.select_datas.type = file.name.split('.').pop();
+    };
+    reader.readAsDataURL(file);
   }
 
   checkimage(f: any) {
     if (f) {
       f = f.split('.');
       f = f[f.length - 1].toLowerCase();
-      console.log(f);
+      // console.log(f);
       if (f != 'pdf' && f != 'mp3' && f != 'xls' && f != 'xlsx') {
         return true;
       } else {
@@ -550,37 +546,6 @@ export class HomeworkComponent implements OnInit {
       );
   }
 
-  // async movesingletofinal(ID: any) {
-  //   let alert = await this.alertCtrl.create({
-  //     header: 'Send homework',
-  //     buttons: [
-  //       {
-  //         text: this.cancel,
-  //         role: 'cancel',
-  //         handler: (data) => {
-  //           console.log('Cancel clicked');
-  //         },
-  //       },
-  //       {
-  //         text: this.send,
-  //         handler: (data) => {
-  //           this.loading.present();
-  //           this.authservice.post('movehomeworktofinal', { ids: ID }).subscribe(
-  //             (res) => {
-  //               this.loading.dismissAll();
-  //               this.getSaveHomework();
-  //             },
-  //             (err) => {
-  //               this.loading.dismissAll();
-  //             }
-  //           );
-  //         },
-  //       },
-  //     ],
-  //   });
-  //   await alert.present();
-  // }
-
   movehomeworktofinal() {
     let data: any = [];
     for (let i = 0; i < this.recentdata.length; i++) {
@@ -636,6 +601,50 @@ export class HomeworkComponent implements OnInit {
   toggleDateSelection() {
     this.isPickerOpen = !this.isPickerOpen;
   }
+
+  async openOptions(data: any, value: any, multi: any) {
+    if (!multi && data[0].id != 0) {
+      data.splice(0, 0, { id: 0, name: 'Select Your Subject' });
+    }
+    const modal = await this.modalController.create({
+      component: SelectModalComponent,
+      componentProps: {
+        optionsList: data,
+        value: value,
+        multi: multi,
+        parameters: ['id', 'name'],
+      },
+    });
+
+    modal.onDidDismiss().then((result) => {
+      if (multi) {
+        let datar = [];
+        let textData = [];
+        for (let i = 0; i < result.data.length; i++) {
+          if (result.data[i].checked) {
+            datar.push(result.data[i]);
+            //datar.push(result.data[i].name);
+          }
+        }
+        this.select_datas.class = datar;
+        console.log('datar', this.select_datas.class);
+
+        this.className =
+          datar.length > 0
+            ? datar.length + ' Classes Selected'
+            : 'No Selected Classes';
+      } else {
+        this.select_datas.subjects = result.data;
+        console.log('afsdf', this.select_datas.subjects);
+        this.SubjectName =
+          result.data.name != undefined && result.data.id != 0
+            ? result.data.name + ' Selected'
+            : 'No Subject Selected';
+      }
+    });
+    return await modal.present();
+  }
+
   onWillDismiss(event: Event, type: any) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'cancel') {
@@ -756,14 +765,6 @@ export class HomeworkComponent implements OnInit {
           this.seenhrkmes.sort(
             (a: any, b: any) => b.seen_status - a.seen_status
           );
-          // var i = 0;
-          // for (i = 0; i < this.seengrpmes.length; i++) {
-          //   this.seengrpmes[i].message = this.extractUrl(
-          //     this.seengrpmes[i].message
-          //   );
-          // }
-          // this.seengrpmes = res['seengrpmes'];
-          // this.last3days = res['last3senditem'];
         }
       },
       (err) => {
@@ -774,8 +775,6 @@ export class HomeworkComponent implements OnInit {
   }
 
   toggleMessage3() {
-    // console.log('toggle', id);
-
     this.isEditMessageOpen3 = !this.isEditMessageOpen3;
   }
 }

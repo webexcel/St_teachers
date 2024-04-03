@@ -34,64 +34,19 @@
         novalidate
       >
         <div style="margin-top: 12px">Select Class</div>
-        <ion-item class="dropdown" style="margin: 0px">
-          <ion-label *ngIf="!select_datas.class">0 Classes Selected</ion-label>
-          <ionic-selectable
-            #portComponent
-            name="class"
-            item-content
-            [(ngModel)]="select_datas.class"
-            itemValueField="id"
-            itemTextField="name"
-            [items]="classs"
-            [canSearch]="true"
-            [isMultiple]="true"
-            [hasVirtualScroll]="true"
-            (onChange)="classChange($event)"
-            #class="ngModel"
-            required
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="className"
+            (click)="openOptions(classs, select_datas.class)"
           >
-            <ng-template ionicSelectableValueTemplate let-ports="value">
-              <div class="ionic-selectable-value-item">
-                {{ formatPorts(select_datas.class) }}
-              </div>
-            </ng-template>
-
-            <ng-template ionicSelectableCloseButtonTemplate>
-              <ion-icon
-                [md]="'close-circle'"
-                [ios]="'close-circle'"
-                style="font-size: 24px"
-              ></ion-icon>
-            </ng-template>
-
-            <ng-template ionicSelectableFooterTemplate>
-              <ion-toolbar>
-                <ion-row>
-                  <ion-col [size]="4">
-                    <ion-button expand="full" (click)="toggleItems(true)">
-                      Select All
-                    </ion-button>
-                  </ion-col>
-                  <ion-col [size]="4">
-                    <ion-button expand="full" (click)="toggleItems(false)">
-                      Deselect All
-                    </ion-button>
-                  </ion-col>
-                  <ion-col [size]="4">
-                    <ion-button expand="full" (click)="confirm()">
-                      OK
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-toolbar>
-            </ng-template>
-          </ionic-selectable>
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
         </ion-item>
-
-        <span *ngIf="f.submitted && class.invalid" class="text-danger"
-          >Select Class</span
-        >
 
         <div style="margin-top: 12px">Select Date</div>
         <ion-item lines="full" class="dropdown" style="margin: 0px">
@@ -135,7 +90,6 @@
                   </ion-buttons>
                 </ion-toolbar>
               </ion-header>
-
               <ion-content class="ion-padding">
                 <ion-datetime
                   name="dob"
@@ -182,7 +136,6 @@
               >Attach Files</span
             >
           </div>
-
           <div
             class="attach1"
             *ngIf="select_datas.filename.length === 0"
@@ -211,12 +164,10 @@
               Stop Recording</span
             >
             <br />
-
             <span style="font-size: 10px" *ngIf="recording">{{
               formatTime(recordingTimer)
             }}</span>
           </div>
-
           <div
             class="col-10"
             *ngIf="
@@ -239,7 +190,6 @@
               <source [src]="audioData.base64" type="audio/mpeg" />
             </audio>
           </div>
-
           <div class="col-2" *ngIf="select_datas.filename.length > 0">
             <button type="button" class="btn btn-danger" (click)="deletefile()">
               <ion-icon [ios]="'trash-sharp'" [md]="'trash-sharp'"></ion-icon>
@@ -276,7 +226,7 @@
             <tr>
               <td width="18%">
                 <div class="txtCenter">
-                  <div style="padding: 6px; font-size: 16px">
+                  <div>
                     {{ d.Group_name }}
                   </div>
                   <button
@@ -289,6 +239,7 @@
                 </div>
               </td>
               <td width="70%" class="textleft multi_lines_text">
+                <span></span>
                 <span>{{ d.message }}</span>
                 <br *ngIf="d.event_image && d.event_image.length > 0" />
                 <img
@@ -305,6 +256,7 @@
                   <div class="col-12">
                     {{ getfilename(d.event_image) }}
                   </div>
+
                   <div class="col-12">
                     <button
                       type="button"
@@ -356,12 +308,12 @@
               <td width="12%">
                 <button
                   type="button"
-                  style="padding: 4px"
+                  style="padding: 1px"
                   class="btn bg-white ml-1"
-                  (click)="toggleMessage(d.ID, d.message, i)"
+                  (click)="toggleMessage(d.ID, d.message, d.event_image, i)"
                 >
                   <img
-                    style="height: 18px; width: 20px"
+                    style="height: 16px; width: 16px"
                     src="../../assets/imgs/speakers/edit.svg"
                   />
                 </button>
@@ -369,11 +321,11 @@
                 <button
                   type="button"
                   class="btn bg-white ml-1"
-                  style="padding: 4px; padding-top: 8px"
+                  style="padding: 1px; padding-top: 8px"
                   (click)="movegrouptofinal([{ id: d.ID }])"
                 >
                   <img
-                    style="height: 18px; width: 20px"
+                    style="height: 16px; width: 16px"
                     src="../../assets/imgs/speakers/send.svg"
                   />
                 </button>
@@ -395,7 +347,7 @@
             background: #00b712;
             width: 188px;
             height: 42px;
-            font-size: 16px;
+            font-size: 12px;
             text-align: center;
             color: #fff;
           "
@@ -825,10 +777,10 @@
                     </audio>
                   </div>
                 </td>
-                <td class="txtCenter">
+                <td>
                   <button
                     type="button"
-                    class="btn bg-white ml-1"
+                    class="btn bg-white px-1"
                     (click)="deletecirculars1(s.ID)"
                     style="height: 23px; width: 26px; margin-left: 6px"
                   >
@@ -853,14 +805,15 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-button (click)="toggleMessage('cancel', 'cancel', 'cancel')">{{
-              "cancel" | translate
-            }}</ion-button>
+            <ion-button
+              (click)="toggleMessage('cancel', 'cancel', 'cancel', 'cancel')"
+              >{{ "cancel" | translate }}</ion-button
+            >
           </ion-buttons>
           <ion-title>{{ "edit_message" | translate }}</ion-title>
           <ion-buttons slot="end">
             <ion-button
-              (click)="toggleMessage('confirm', 'confirm', 'cancel')"
+              (click)="toggleMessage('confirm', 'confirm', 'confirm', 'cancel')"
               [strong]="true"
               >{{ "confirm" | translate }}</ion-button
             >
@@ -876,6 +829,20 @@
             placeholder="Your message"
             [(ngModel)]="messageText"
           ></ion-textarea>
+          <img
+            *ngIf="attachment && checkimage(attachment)"
+            [src]="attachment"
+            alt="Attachment"
+          />
+          <div *ngIf="attachment && checkmp3(attachment)">
+            <audio
+              controls
+              controlsList="noplaybackrate nodownload"
+              class="w-100"
+            >
+              <source [src]="attachment" type="audio/mpeg" />
+            </audio>
+          </div>
         </ion-item>
       </ion-content>
     </ng-template>
@@ -884,8 +851,7 @@
   <ion-modal
     [isOpen]="isEditMessageOpen1"
     (willDismiss)="onWillDismiss($event, 'edit')"
-    [initialBreakpoint]="0.5"
-    [breakpoints]="[0, 0.25, 0.5, 0.75]"
+    [initialBreakpoint]="1"
     animated="true"
   >
     <ng-template>

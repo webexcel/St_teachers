@@ -36,40 +36,21 @@
         novalidate
       >
         <div style="margin-top: 12px">Select Class</div>
-        <ion-item class="dropdown" style="margin: 0px">
-          <ion-label *ngIf="!select_datas.class">Select a Class</ion-label>
 
-          <ionic-selectable
-            name="class"
-            item-content
-            [(ngModel)]="select_datas.class"
-            itemValueField="id"
-            itemTextField="name"
-            [items]="classs"
-            [canSearch]="true"
-            (onChange)="classChange($event)"
-            #class="ngModel"
-            required
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="className"
+            (click)="openOptions(classs, select_datas.class, false)"
           >
-            <!-- <ng-template ionicSelectableValueTemplate let-ports="value">
-              <div class="ionic-selectable-value-item">
-                {{ formatPorts(select_datas.class) }}
-              </div>
-            </ng-template> -->
-
-            <ng-template ionicSelectableCloseButtonTemplate>
-              <ion-icon
-                [md]="'close-circle'"
-                [ios]="'close-circle'"
-                style="font-size: 24px"
-              ></ion-icon>
-            </ng-template>
-          </ionic-selectable>
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
         </ion-item>
 
-        <span *ngIf="f.submitted && class.invalid" class="text-danger"
-          >Select Class</span
-        >
         <div style="margin-top: 12px">Select Date</div>
         <ion-item lines="full" class="dropdown" style="margin: 0px">
           <ion-label
@@ -133,7 +114,7 @@
 
         <div style="margin-top: 25px">Select Students</div>
 
-        <ion-item class="dropdown">
+        <!-- <ion-item class="dropdown">
           <ion-label>{{ "students" | translate }}</ion-label>
           <ionic-selectable
             #portComponent
@@ -183,6 +164,20 @@
               </ion-toolbar>
             </ng-template>
           </ionic-selectable>
+        </ion-item> -->
+
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="StudentsName"
+            (click)="openOptions(students, select_datas.student, true)"
+          >
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
         </ion-item>
 
         <div style="margin-top: 25px">Enter Message Here</div>
@@ -240,10 +235,10 @@
             >
               Stop Recording</span
             >
-            <br />
+            <!-- <br />
             <span style="font-size: 10px" *ngIf="recording">{{
               formatTime(recordingTimer)
-            }}</span>
+            }}</span> -->
           </div>
           <div
             class="col-10"
@@ -306,14 +301,6 @@
                   <div style="font-size: 14px">
                     {{ d.CLASSSEC }}
                   </div>
-
-                  <!-- <button type="button" class="btn bg-white ml-1">
-                    <ion-icon
-                      class="text-danger"
-                      [md]="'trash-sharp'"
-                      (click)="deletecirculars(d.ID)"
-                    ></ion-icon>
-                  </button> -->
                   <button
                     type="button"
                     class="btn bg-white ml-1"
@@ -393,7 +380,7 @@
                   type="button"
                   style="padding: 4px"
                   class="btn bg-white ml-1"
-                  (click)="toggleMessage(d.ID, d.message, i)"
+                  (click)="toggleMessage(d.ID, d.message, d.event_image, i)"
                 >
                   <img
                     style="height: 18px; width: 20px"
@@ -533,7 +520,10 @@
                     class="btn bg-white ml-1"
                     (click)="deletecirculars1(s.ID)"
                   >
-                    <img src="../../assets/imgs/speakers/delete.svg" />
+                    <img
+                      style="height: 18px; width: 20px"
+                      src="../../assets/imgs/speakers/delete.svg"
+                    />
                   </button>
                 </td>
               </tr>
@@ -836,37 +826,38 @@
   <ion-modal
     [isOpen]="isEditMessageOpen1"
     (willDismiss)="onWillDismiss($event, 'edit')"
-    [initialBreakpoint]="0.5"
-    [breakpoints]="[0, 0.25, 0.5, 0.75]"
+    [initialBreakpoint]="1"
     animated="true"
   >
     <ng-template>
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-button (click)="toggleMessage('cancel', 'cancel', 'cancel')">{{
+            <ion-button>{{ "List" | translate }}</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button (click)="toggleMessage1()">{{
               "cancel" | translate
             }}</ion-button>
-          </ion-buttons>
-          <ion-title>{{ "edit_message" | translate }}</ion-title>
-          <ion-buttons slot="end">
-            <ion-button
-              (click)="toggleMessage('confirm', 'confirm', 'cancel')"
-              [strong]="true"
-              >{{ "confirm" | translate }}</ion-button
-            >
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-item>
-          <ion-label position="stacked">Enter Message</ion-label>
-          <ion-input
-            type="text"
-            placeholder="Your message"
-            [(ngModel)]="messageText"
-          ></ion-input>
-        </ion-item>
+        <table style="text-align: center" class="table table-bordered">
+          <thead>
+            <td>S.No</td>
+            <td>Name</td>
+            <td>Seen Status</td>
+          </thead>
+          <tr
+            *ngFor="let seen of seengrpmes; let i = index"
+            [ngClass]="seen.seen_status == 0 ? 'bg' : 'bgg'"
+          >
+            <td>{{ i + 1 }}</td>
+            <td>{{ seen.STUDENTNAME }}</td>
+            <td>{{ seen.seen_status }}</td>
+          </tr>
+        </table>
       </ion-content>
     </ng-template>
   </ion-modal>
@@ -874,7 +865,7 @@
   <ion-modal
     [isOpen]="isEditMessageOpen"
     (willDismiss)="onWillDismiss($event, 'edit')"
-    [initialBreakpoint]="0.5"
+    [initialBreakpoint]="1"
     [breakpoints]="[0, 0.25, 0.5, 0.75]"
     animated="true"
   >
@@ -882,14 +873,15 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-button (click)="toggleMessage('cancel', 'cancel', 'cancel')">{{
-              "cancel" | translate
-            }}</ion-button>
+            <ion-button
+              (click)="toggleMessage('cancel', 'cancel', 'cancel', 'cancel')"
+              >{{ "cancel" | translate }}</ion-button
+            >
           </ion-buttons>
           <ion-title>{{ "edit_message" | translate }}</ion-title>
           <ion-buttons slot="end">
             <ion-button
-              (click)="toggleMessage('confirm', 'confirm', 'cancel')"
+              (click)="toggleMessage('confirm', 'confirm', 'confirm', 'cancel')"
               [strong]="true"
               >{{ "confirm" | translate }}</ion-button
             >
@@ -898,13 +890,27 @@
       </ion-header>
       <ion-content class="ion-padding">
         <ion-item>
-          <ion-label position="stacked">Enter Message</ion-label>
+          <ion-label position="stacked">Edit Message</ion-label>
           <ion-textarea
             type="text"
             autoGrow="true"
             placeholder="Your message"
             [(ngModel)]="messageText"
           ></ion-textarea>
+          <img
+            *ngIf="attachment && checkimage(attachment)"
+            [src]="attachment"
+            alt="Attachment"
+          />
+          <div *ngIf="attachment && checkmp3(attachment)">
+            <audio
+              controls
+              controlsList="noplaybackrate nodownload"
+              class="w-100"
+            >
+              <source [src]="attachment" type="audio/mpeg" />
+            </audio>
+          </div>
         </ion-item>
       </ion-content>
     </ng-template>

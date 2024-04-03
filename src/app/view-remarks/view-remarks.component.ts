@@ -3,9 +3,10 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { IonModal, Platform } from '@ionic/angular';
+import { IonModal, ModalController, Platform } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Base64String } from 'capacitor-voice-recorder';
+import { SelectModalComponent } from '../select-modal/select-modal.component';
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
@@ -53,6 +54,8 @@ export class ViewRemarksComponent implements OnInit {
   last3days: any = [];
   senditems: any = [];
   studentRemarks: any;
+  className: any;
+  SubjectName: any;
 
   constructor(
     public storage: StorageService,
@@ -62,7 +65,8 @@ export class ViewRemarksComponent implements OnInit {
     private router: Router,
     public authservice: AuthService,
     public loading: LoadingService,
-    private translate: TranslateConfigService
+    private translate: TranslateConfigService,
+    private modalController: ModalController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -97,41 +101,75 @@ export class ViewRemarksComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (this.select_datas.subject) {
-      this.loading.present();
-      console.log(this.select_datas);
+    // if (this.select_datas.subject) {
+    this.loading.present();
+    console.log(this.select_datas);
 
-      this.authservice
-        .post('ViewstudentRemarks', {
-          class: this.select_datas.class,
-          subject: this.select_datas.subject,
-        })
-        .subscribe(
-          (res: any) => {
-            this.loading.dismissAll();
-            if (res['status']) {
-              this.students = res['data'];
-              // form.resetForm();
-              //   this.reset();
-              //   this.getlist();
-              this.studentRemarks = res['data'][0];
-              console.log(
-                'tesy',
-                this.studentRemarks.name,
-                this.studentRemarks.message
-              );
-            } else {
-              this.studentRemarks = [];
-            }
-          },
-          (err) => {
-            this.loading.dismissAll();
-            console.log(err);
+    this.authservice
+      .post('ViewstudentRemarks', {
+        class: this.select_datas.class,
+        subject: this.select_datas.subject,
+      })
+      .subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.students = res['data'];
+            // form.resetForm();
+            //   this.reset();
+            //   this.getlist();
+            this.studentRemarks = res['data'][0];
+            console.log(
+              'tesy',
+              this.studentRemarks.name,
+              this.studentRemarks.message
+            );
+          } else {
+            this.studentRemarks = [];
           }
-        );
-    } else {
-      // this.getIndividualStudentRemarks(); // If there are no students selected, still fetch remarks
+        },
+        (err) => {
+          this.loading.dismissAll();
+          console.log(err);
+        }
+      );
+    // } else {
+    //   // this.getIndividualStudentRemarks(); // If there are no students selected, still fetch remarks
+    // }
+  }
+
+  async openOptions(data: any, value: any, bind: any, multi: any) {
+    if (!multi && data[0].id != 0) {
+      data.splice(0, 0, { id: 0, name: 'Select Your Subject' });
     }
+    const modal = await this.modalController.create({
+      component: SelectModalComponent,
+      componentProps: {
+        optionsList: data,
+        value: value,
+        multi: multi,
+        parameters: ['id', 'name'],
+      },
+    });
+
+    modal.onDidDismiss().then((result) => {
+      if (bind == 'Class') {
+        this.select_datas.class = result.data;
+        console.log('afsdf', this.select_datas.class);
+        this.className =
+          result.data != undefined && result.data.name != undefined
+            ? result.data.name + ' Selected'
+            : 'No Class Selected';
+      } else if (bind == 'Subject') {
+        this.select_datas.subject = result.data;
+        console.log('afsdf', this.select_datas.subject);
+        this.SubjectName =
+          result.data != undefined && result.data.name != undefined
+            ? result.data.name + ' Selected'
+            : 'No Subjects Selected';
+      }
+    });
+    return await modal.present();
   }
 
   formatPorts(students: any) {

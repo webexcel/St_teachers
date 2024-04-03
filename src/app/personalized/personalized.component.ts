@@ -6,7 +6,12 @@ import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
-import { AlertController, IonModal, Platform } from '@ionic/angular';
+import {
+  AlertController,
+  IonModal,
+  ModalController,
+  Platform,
+} from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import {
   Base64String,
@@ -19,6 +24,8 @@ import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
 import { TranslateConfigService } from '../service/translate-config.service';
+
+import { SelectModalComponent } from '../select-modal/select-modal.component';
 
 @Component({
   selector: 'app-personalized',
@@ -69,6 +76,9 @@ export class PersonalizedComponent implements OnInit {
   seengrpmes: any;
   isEditMessageOpen1: boolean = false;
   showPassword: boolean = false;
+  className: any;
+  StudentsName: any;
+  attachment: any;
 
   constructor(
     private serfile: FilesService,
@@ -83,7 +93,8 @@ export class PersonalizedComponent implements OnInit {
     private router: Router,
     private translate: TranslateConfigService,
     public loading: LoadingService,
-    public authservice: AuthService
+    public authservice: AuthService,
+    private modalController: ModalController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -118,6 +129,11 @@ export class PersonalizedComponent implements OnInit {
     this.select_datas.ftype = '';
     this.select_datas.filename = '';
     this.getlist();
+  }
+
+  ionViewWillEnter() {
+    this.className = 'Select Class';
+    this.StudentsName = 'Select Students';
   }
 
   classChange(event: any) {
@@ -194,6 +210,16 @@ export class PersonalizedComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    if (this.select_datas.student.length > 0) {
+      let stud = [];
+      for (let i = 0; i < this.select_datas.student.length; i++) {
+        let obj: any = {};
+        obj['id'] = this.select_datas.student[i].id;
+        obj['name'] = this.select_datas.student[i].name;
+        stud.push(obj);
+      }
+      this.select_datas.student = stud;
+    }
     if (this.select_datas.student.length) {
       console.log(this.select_datas);
       this.loading.present();
@@ -596,13 +622,13 @@ export class PersonalizedComponent implements OnInit {
   //   this.isEditMessageOpen = !this.isEditMessageOpen;
   // }
 
-  toggleMessage(id: any, message: any, i: any) {
+  toggleMessage(id: any, message: any, image: any, i: any) {
     console.log('toggle', id);
     if (id && id !== 'cancel' && id !== 'confirm') {
       this.index = i;
       this.messageId = id;
       this.messageText = message;
-      console.log('toggle', this.messageId);
+      this.attachment = image;
     }
     if (id === 'confirm') {
       console.log('message id', this.index);
@@ -720,6 +746,51 @@ export class PersonalizedComponent implements OnInit {
         '</a>'
       );
     });
+  }
+
+  async openOptions(data: any, value: any, multi: any) {
+    console.log('zzzzzzzzzzzzzzzzz', data);
+    if (!multi && data[0].name != 0) {
+      data.splice(0, 0, { id: 0, name: 'Select Your Subject' });
+    }
+    const modal = await this.modalController.create({
+      component: SelectModalComponent,
+      componentProps: {
+        optionsList: data,
+        value: value,
+        multi: multi,
+        parameters: ['id', 'name'],
+      },
+    });
+
+    modal.onDidDismiss().then((result) => {
+      if (multi) {
+        let datar = [];
+        let textData = [];
+        for (let i = 0; i < result.data.length; i++) {
+          if (result.data[i].checked) {
+            datar.push(result.data[i]);
+            //datar.push(result.data[i].name);
+          }
+        }
+        this.select_datas.student = datar;
+        console.log('datar', this.select_datas.student);
+
+        this.StudentsName =
+          datar.length > 0
+            ? datar.length + ' Student Selected'
+            : 'No Students Selected';
+      } else {
+        this.select_datas.classid = result.data.id;
+        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx', this.select_datas.classid);
+        this.getStudentsByClass(this.select_datas.classid);
+        this.className =
+          result.data.name.length > 0
+            ? result.data.name + ' Selected'
+            : 'No Selected Classes';
+      }
+    });
+    return await modal.present();
   }
 
   seencirculars1(ID: any) {

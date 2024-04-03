@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Platform } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
+import { SelectModalComponent } from '../select-modal/select-modal.component';
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
 import { TranslateConfigService } from '../service/translate-config.service';
+
 @Component({
   selector: 'app-report-card',
   templateUrl: './report-card.component.html',
@@ -20,6 +22,9 @@ export class ReportCardComponent implements OnInit {
   select_datas: any = {};
   clid: any = '-1';
   g_btn: any = false;
+  className: any;
+  SubjectName: any;
+  ExamName: any;
 
   constructor(
     private platform: Platform,
@@ -27,7 +32,8 @@ export class ReportCardComponent implements OnInit {
     private translate: TranslateConfigService,
     public loading: LoadingService,
     public authservice: AuthService,
-    public storage: StorageService
+    public storage: StorageService,
+    private modalController: ModalController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -53,7 +59,7 @@ export class ReportCardComponent implements OnInit {
 
   //this.getStudentsByClass(this.select_datas.class.id)
 
-  classChange(event: any) {
+  classChange() {
     if (this.select_datas.exams && this.select_datas.subject) {
       this.g_btn = false;
       this.students = [];
@@ -62,7 +68,7 @@ export class ReportCardComponent implements OnInit {
     }
   }
 
-  subjectChange(event: any) {
+  subjectChange() {
     if (this.select_datas.class && this.select_datas.exams) {
       this.g_btn = false;
       this.students = [];
@@ -71,7 +77,7 @@ export class ReportCardComponent implements OnInit {
     }
   }
 
-  subjectExam(event: any) {
+  subjectExam() {
     if (this.select_datas.class && this.select_datas.subject) {
       this.g_btn = false;
       this.students = [];
@@ -214,6 +220,58 @@ export class ReportCardComponent implements OnInit {
     );
   }
 
+  async openOptions(
+    data: any,
+    value: any,
+    bind: any,
+    multi: any,
+    parameters: any
+  ) {
+    if (!multi && data[0][parameters[0]] != 0) {
+      data.splice(0, 0, {});
+      data[0][parameters[0]] = 0;
+      data[0][parameters[1]] = 'Select Your Option';
+    }
+    const modal = await this.modalController.create({
+      component: SelectModalComponent,
+      componentProps: {
+        optionsList: data,
+        value: value,
+        multi: multi,
+        parameters: parameters,
+      },
+    });
+
+    modal.onDidDismiss().then((result) => {
+      if (bind == 'Class') {
+        this.select_datas.class = result.data;
+        console.log('afsdf', this.select_datas.class);
+        this.className =
+          result.data != undefined && result.data.name != undefined
+            ? result.data.name + ' Selected'
+            : 'No Class Selected';
+        this.classChange();
+      }
+      if (bind == 'Subject') {
+        this.select_datas.subject = result.data;
+        console.log('afsdf', this.select_datas.subject);
+        this.SubjectName =
+          result.data != undefined && result.data.name != undefined
+            ? result.data.name + ' Selected'
+            : 'No Subjects Selected';
+        this.subjectChange();
+      } else if (bind == 'Exams') {
+        this.select_datas.exams = result.data;
+        console.log('afsdf', this.select_datas.exams);
+        this.ExamName =
+          result.data != undefined && result.data[parameters[0]] != undefined
+            ? result.data.exam_type_name + ' Selected'
+            : 'No Exam Selected';
+        this.subjectExam();
+      }
+    });
+    return await modal.present();
+  }
   getallexams() {
     this.loading.present();
     this.authservice.get('getallExam').subscribe(

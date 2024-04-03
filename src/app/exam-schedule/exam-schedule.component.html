@@ -34,7 +34,7 @@
         novalidate
       >
         <div style="margin-top: 12px">Select Exam</div>
-        <ion-item class="dropdown" style="margin: 0px">
+        <!-- <ion-item class="dropdown" style="margin: 0px">
           <ion-label>Exam</ion-label>
           <ionic-selectable
             name="exam"
@@ -48,18 +48,30 @@
             required
             (onChange)="subjectExam($event)"
           >
-            <ng-template ionicSelectableCloseButtonTemplate>
-              <ion-icon
-                [md]="'close-circle'"
-                [ios]="'close-circle'"
-                style="font-size: 24px"
-              ></ion-icon>
-            </ng-template>
           </ionic-selectable>
+        </ion-item> -->
+
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="ExamName"
+            (click)="
+              openOptions(exams, select_datas.exams, 'Exams', false, [
+                'exam_type_id',
+                'exam_type_name'
+              ])
+            "
+          >
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
         </ion-item>
 
         <div style="margin-top: 12px">Select Class</div>
-        <ion-item class="dropdown" style="margin: 0px">
+        <!-- <ion-item class="dropdown" style="margin: 0px">
           <ion-label *ngIf="!select_datas.class">Select a Class</ion-label>
           <ionic-selectable
             #portComponent
@@ -75,27 +87,30 @@
             #class="ngModel"
             required
           >
-            <ng-template ionicSelectableValueTemplate let-ports="value">
-              <div class="ionic-selectable-value-item">
-                {{ formatPorts(select_datas.class) }}
-              </div>
-            </ng-template>
+           </ionic-selectable>
+        </ion-item> -->
 
-            <ng-template ionicSelectableCloseButtonTemplate>
-              <ion-icon
-                [md]="'close-circle'"
-                [ios]="'close-circle'"
-                style="font-size: 24px"
-              ></ion-icon>
-            </ng-template>
-          </ionic-selectable>
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="ClassName"
+            (click)="
+              openOptions(classs, select_datas.class, 'Class', true, [
+                'id',
+                'name'
+              ])
+            "
+          >
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
         </ion-item>
-        <span *ngIf="f.submitted && class.invalid" class="text-danger"
-          >Select Class</span
-        >
 
         <div style="margin-top: 12px">Select Subject</div>
-        <ion-item class="dropdown" style="margin: 0px">
+        <!-- <ion-item class="dropdown" style="margin: 0px">
           <ion-label>Subject</ion-label>
           <ionic-selectable
             name="subject"
@@ -109,14 +124,25 @@
             required
             (onChange)="subjectChange($event)"
           >
-            <ng-template ionicSelectableCloseButtonTemplate>
-              <ion-icon
-                [md]="'close-circle'"
-                [ios]="'close-circle'"
-                style="font-size: 24px"
-              ></ion-icon>
-            </ng-template>
           </ionic-selectable>
+        </ion-item> -->
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input
+            readonly
+            [placeholder]="SubjectName"
+            (click)="
+              openOptions(subjects, select_datas.subject, 'Subject', false, [
+                'id',
+                'name'
+              ])
+            "
+          >
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
         </ion-item>
 
         <!-- ///////////////// -->
@@ -260,7 +286,7 @@
       </form>
 
       <div>
-        <div class="dateHead">Exam Schedule</div>
+        <div class="dateHead" *ngIf="students.length > 0">Exam Schedule</div>
         <table class="table table-bordered fsize">
           <tbody *ngFor="let d of students">
             <tr>
@@ -274,58 +300,22 @@
                 </div>
               </td>
               <td width="80%" class="textleft multi_lines_text">
-                <div>{{ d.subject }} {{ d.date | date : "dd-MM-yy" }}</div>
-
-                <div>{{ d.portion }} {{ d.time }}</div>
+                <div>
+                  {{ d.subject }}
+                  <span style="padding-left: 25px">{{
+                    d.date | date : "dd-MM-yyyy"
+                  }}</span>
+                  <span style="padding-left: 25px">{{ d.time }}</span>
+                </div>
+                <hr style="margin-top: 5px; margin-bottom: 5px" />
+                <div>
+                  {{ d.portion }}
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
-
-      <!-- <div>
-        <div class="dateHead">Exam Schedule</div>
-        <ion-card class="schedule-card">
-          <ion-card-content>
-            <ion-grid class="schedule-grid">
-              <ng-container *ngFor="let d of students">
-                <ion-row class="schedule-row">
-                  <ion-col size="6" class="exam-details">
-                    <div class="exam-name">{{ d.exam_name }}</div>
-                    <div class="class-section">{{ d.CLASSSEC }}</div>
-                    <div class="class-section">111</div>
-                  </ion-col>
-
-                  <ion-col size="6" class="date-time">
-                    <div class="date">
-                      Date: {{ d.date | date : "dd-MM-yyyy" }}
-                    </div>
-                    <div class="time">Time: {{ d.time }}</div>
-                    <div class="subject">Subject: {{ d.subject }}</div>
-                  </ion-col>
-                  <hr />
-                  <ion-col size="12" class="subject-details">
-                    <div class="portion">{{ d.portion }}</div>
-                    <div>
-                      <button
-                        type="button"
-                        style="padding: 4px"
-                        class="btn bg-white ml-1"
-                        (click)="deleteschedule(d.id)"
-                      >
-                        <img
-                          style="height: 18px; width: 20px"
-                          src="../../assets/imgs/speakers/delete.svg"
-                        />
-                      </button>
-                    </div>
-                  </ion-col>
-                </ion-row>
-              </ng-container>
-            </ion-grid>
-          </ion-card-content>
-        </ion-card>
-      </div> -->
     </div>
   </div>
 </ion-content>
