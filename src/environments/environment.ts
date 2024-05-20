@@ -67,16 +67,16 @@ export const environment = {
       url: '/flash',
       icon: 'assets/imgs/latest_Icons/flash.svg',
       // filter:'invert(77%) sepia(26%) saturate(7148%) hue-rotate(347deg) brightness(101%) contrast(98%)',
-      admin: 'Y',
+      admin: 'N',
     },
 
-    // {
-    //   title: 'Timetable',
-    //   url: '/timetable',
-    //   icon: 'assets/imgs/latest_Icons/timetable.svg',
-    //   // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-    //   admin: 'Y',
-    // },
+    {
+      title: 'Timetable',
+      url: '/timetable',
+      icon: 'assets/imgs/latest_Icons/timetable.svg',
+      // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
+      admin: 'N',
+    },
 
     // {
     //   title: 'gallery',
@@ -90,7 +90,7 @@ export const environment = {
       url: '/staff-group',
       icon: 'assets/imgs/latest_Icons/staffgroup.svg',
       // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-      admin: 'Y',
+      admin: 'N',
     },
 
     {
@@ -98,7 +98,7 @@ export const environment = {
       url: '/staff',
       icon: 'assets/imgs/latest_Icons/staff.svg',
       // filter:'invert(10%) sepia(98%) saturate(6683%) hue-rotate(247deg) brightness(62%) contrast(131%)',
-      admin: 'Y',
+      admin: 'N',
     },
 
     {
@@ -106,16 +106,8 @@ export const environment = {
       url: '/daily-reports',
       icon: 'assets/imgs/latest_Icons/reporting.svg',
       // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-      admin: 'Y',
+      admin: 'N',
     },
-
-    // {
-    //   title: 'News',
-    //   url: '/news-events',
-    //   icon: 'assets/imgs/latest_Icons/News.svg',
-    //   // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
-    //   admin: 'Y',
-    // },
 
     {
       title: 'Add Remarks',
@@ -141,22 +133,29 @@ export const environment = {
         'invert(61%) sepia(99%) saturate(745%) hue-rotate(1deg) brightness(107%) contrast(103%)',
       admin: 'N',
     },
+
+    {
+      title: 'fee-report',
+      url: '/fee-report',
+      icon: 'assets/imgs/latest_Icons/News.svg',
+      // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
+      admin: 'N',
+    },
+
+    // {
+    //   title: 'fee-student',
+    //   url: '/fee-student',
+    //   icon: 'assets/imgs/latest_Icons/News.svg',
+    //   // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
+    //   admin: 'N',
+    // },
   ],
   login_logo: 'assets/imgs/appicon.png',
   school_name: 'Schooltree Teachers',
-  app_versionCode: '5',
+  app_versionCode: '7',
   apiBaseUrl: 'https://demo.schooltree.in/baseTeacherS.php/api/',
-  version: '5',
+  version: '7',
   package: 'com.schooltree.schooltree',
   packageid: '',
   color: '#00CCCC',
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

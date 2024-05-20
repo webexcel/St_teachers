@@ -169,6 +169,9 @@ MIT
 @ionic-native/file-chooser
 MIT
 
+@ionic-native/file-opener
+MIT
+
 @ionic-native/file-path
 MIT
 

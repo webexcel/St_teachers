@@ -471,6 +471,7 @@
       </ion-content>
     </ng-template>
   </ion-modal>
+
   <!-- <ion-modal [isOpen]="enable_filter">
     <ng-template>
       <ion-header>
@@ -499,8 +500,88 @@
     slot="fixed"
     tappable
   >
-    <ion-fab-button (click)="openModal('new', 'new')">
+    <ion-fab-button (click)="toggleMessage()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 </ion-content>
+
+<ion-modal [isOpen]="isReportOpen" [initialBreakpoint]="1" animated="true">
+  <!-- (willDismiss)="onWillDismiss($event, 'edit')" -->
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <!-- <ion-buttons slot="start">
+          <ion-button>{{ "List" | translate }}</ion-button>
+        </ion-buttons> -->
+        <ion-buttons slot="end">
+          <ion-button (click)="toggleMessage()">{{
+            "cancel" | translate
+          }}</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <!-- <table style="text-align: center" class="table table-bordered">
+        <thead>
+          <td>S.No</td>
+          <td>Name</td>
+          <td>Seen Status</td>
+        </thead>
+        <tr>
+          <td>1111111</td>
+          <td>2222222</td>
+          <td>3333333</td>
+        </tr>
+      </table> -->
+
+      <form name="form" novalidate>
+        <div style="margin-top: 12px">Day</div>
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input readonly [placeholder]="">
+            <ion-icon
+              name="caret-down"
+              style="margin-left: 10%; opacity: 0.5; position: absolute"
+            ></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px">Date</div>
+        <ion-item lines="full" class="dropdown" style="margin: 0px">
+          <ion-label id="open-modal" class="selected-date">
+            <span style="float: left"> </span>
+
+            <span style="float: right !important">
+              <img
+                style="height: 6px; width: 10px; margin-right: 5px"
+                src="../../assets/imgs/speakers/Polygon 4.png"
+              />
+            </span>
+          </ion-label>
+        </ion-item>
+
+        <div style="margin-top: 25px">General Report</div>
+        <ion-item lines="full" class="messageArea" style="height: 95px">
+          <ion-textarea type="text" name="message"> </ion-textarea>
+        </ion-item>
+
+        <div style="margin-top: 25px">Parents Meet</div>
+        <ion-item lines="full" class="messageArea" style="height: 95px">
+          <ion-textarea type="text" name="message"> </ion-textarea>
+        </ion-item>
+
+        <div style="margin-top: 25px">Teachers Report</div>
+        <ion-item lines="full" class="messageArea" style="height: 95px">
+          <ion-textarea type="text" name="message"> </ion-textarea>
+        </ion-item>
+
+        <div class="p-2 text-right">
+          <button type="submit" class="btn btn-primary" style="width: 100%">
+            {{ "save" | translate }}
+          </button>
+        </div>
+      </form>
+    </ion-content>
+  </ng-template>
+</ion-modal>

@@ -1,0 +1,114 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button
+        ><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon
+      ></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Fee Report</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+    <ion-toolbar class="p-0">
+      <ion-buttons slot="start">
+        <ion-menu-button
+          ><ion-icon
+            class="text-white"
+            [ios]="'menu-sharp'"
+            [md]="'menu-sharp'"
+          ></ion-icon
+        ></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Fee Report</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="fee">
+    <div class="card-container">
+      <div class="card">
+        <div class="color" style="background-color: #feb805">Todays</div>
+        <hr />
+        <div *ngIf="!dataIsLoading">
+          <div class="text">
+            <!-- {{ TotalCollection.Student_History.DATE[0].AMT }} -->
+            {{ TotalCollection.Student_History.DATE[0].AMT ?? 0 }}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="color" style="background-color: #006dd1">Weekly</div>
+        <hr />
+        <div *ngIf="!dataIsLoading">
+          <div class="text">
+            {{ TotalCollection.Student_History.WEEK[0].AMT ?? 0 }}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="color" style="background-color: #088d16">Monthly</div>
+        <hr />
+        <div *ngIf="!dataIsLoading">
+          <div class="text">
+            {{ TotalCollection.Student_History.MONTH[0].AMT ?? 0 }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-container">
+      <div class="card">
+        <div class="color" style="background-color: #a005ae">Yearly</div>
+        <hr />
+        <div *ngIf="!dataIsLoading">
+          <div class="text">
+            {{ TotalCollection.Student_History.YEAR[0].AMT ?? 0 }}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="color" style="background-color: #ac0743">Concession</div>
+        <hr />
+        <div *ngIf="!dataIsLoading">
+          <div class="text">
+            {{ TotalCollection.Student_History.CONCESSION[0].AMT ?? 0 }}
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="color" style="background-color: #a6027b">Other</div>
+        <hr />
+        <div *ngIf="!dataIsLoading">
+          <div class="text">
+            {{ TotalCollection.Student_History.OTHER[0].AMT ?? 0 }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-container-main">
+      <div class="info-column">Class</div>
+      <div class="info-column">Total</div>
+      <div class="info-column">Paid</div>
+      <div class="info-column">Balance</div>
+    </div>
+
+    <div class="info-container" *ngIf="!dataIsLoading1">
+      <div class="row" *ngFor="let data of studentData">
+        <div class="info-column col-3" (click)="onClassClick(data.STD_SEC)">
+          {{ data.STD_SEC }}
+        </div>
+        <div class="info-column col-3">
+          {{ data.TOT_AMOUNT }}
+        </div>
+        <div class="info-column col-3">
+          {{ data.SEC_PAID }}
+        </div>
+        <div class="info-column col-3">
+          {{ data.BALANCE }}
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

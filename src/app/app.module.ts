@@ -18,6 +18,7 @@ import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 import { Badge } from '@ionic-native/badge/ngx';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { File } from '@ionic-native/file/ngx';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
@@ -29,6 +30,7 @@ import { IonicSelectableComponent } from 'ionic-selectable';
 // import { IonicSelectableComponent } from 'ionic-selectable';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { loginGuard } from './_guards';
 import { SelectModalComponent } from './select-modal/select-modal.component';
 import { JwtInterceptor } from './service/jwt.interceptor';
 import { LoadingService } from './service/loading.service';
@@ -70,12 +72,11 @@ import { LoadingService } from './service/loading.service';
     InAppBrowser,
     Badge,
     NativeAudio,
+    FileOpener,
+    loginGuard,
+    AppComponent,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-// @Component({
-//   standalone: true,
-//   imports: [IonicSelectableComponent],
-// })
 export class AppModule {}

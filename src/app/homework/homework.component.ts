@@ -181,22 +181,18 @@ export class HomeworkComponent implements OnInit {
               let d = recentdata[i]['MSG_DATE'];
               if (this.recentdates.indexOf(d) == -1) {
                 this.recentdates.push(d);
-                console.log('recent ddatesss', this.recentdates);
                 this.recentdata1[d] = [];
               }
-              console.log('recent data', recentdata[i]);
               recentdata[i].MESSAGE = this.authservice.extractUrl(
                 recentdata[i].MESSAGE
               );
 
               this.recentdata1[d].push(recentdata[i]);
-              console.log('datatatatata', this.recentdata1);
             }
           }
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -220,12 +216,10 @@ export class HomeworkComponent implements OnInit {
             this.gethw = res['data'];
             // let gethw = res['data'];
             this.last3days = res['last3senditem'];
-            console.log(this.gethw, 'khfgs');
           }
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -241,7 +235,6 @@ export class HomeworkComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -259,7 +252,6 @@ export class HomeworkComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -273,9 +265,6 @@ export class HomeworkComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.delete,
@@ -307,9 +296,6 @@ export class HomeworkComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.delete,
@@ -334,7 +320,6 @@ export class HomeworkComponent implements OnInit {
   }
 
   toggleHomework(id: any, message: any, image: any, i: any) {
-    // console.log('toggle', id);
     if (id != 'cancel' && id != 'confirm') {
       this.index = i;
       this.messageId = id;
@@ -342,7 +327,6 @@ export class HomeworkComponent implements OnInit {
       this.attachment = image;
     }
     if (id == 'confirm') {
-      console.log('message id', this.index);
       this.last3days[this.index].message = this.messageText;
       this.editMessage(this.messageId, this.messageText);
     }
@@ -364,7 +348,6 @@ export class HomeworkComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -403,7 +386,6 @@ export class HomeworkComponent implements OnInit {
     if (f) {
       f = f.split('.');
       f = f[f.length - 1].toLowerCase();
-      // console.log(f);
       if (f != 'pdf' && f != 'mp3' && f != 'xls' && f != 'xlsx') {
         return true;
       } else {
@@ -475,7 +457,6 @@ export class HomeworkComponent implements OnInit {
       '.mp3';
 
     this.Path = this.serfile.filepath() + this.fileName;
-    console.log(this.Path);
     this.audio = this.media.create(this.Path);
     this.select_datas.type = '';
     this.select_datas.image = '';
@@ -490,7 +471,6 @@ export class HomeworkComponent implements OnInit {
 
     this.serfile.read(this.fileName).then(
       (res) => {
-        console.log(res);
         let l = res.split('base64,');
         if (l[1].length != 0) {
           this.select_datas.filename = this.fileName;
@@ -501,9 +481,7 @@ export class HomeworkComponent implements OnInit {
           );
         }
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
 
@@ -541,7 +519,6 @@ export class HomeworkComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -565,7 +542,6 @@ export class HomeworkComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -594,7 +570,6 @@ export class HomeworkComponent implements OnInit {
   }
 
   confirm_date() {
-    console.log('confirm');
     this.modal.dismiss(null, 'confirm');
   }
 
@@ -627,15 +602,12 @@ export class HomeworkComponent implements OnInit {
           }
         }
         this.select_datas.class = datar;
-        console.log('datar', this.select_datas.class);
-
         this.className =
           datar.length > 0
             ? datar.length + ' Classes Selected'
             : 'No Selected Classes';
       } else {
         this.select_datas.subjects = result.data;
-        console.log('afsdf', this.select_datas.subjects);
         this.SubjectName =
           result.data.name != undefined && result.data.id != 0
             ? result.data.name + ' Selected'
@@ -681,7 +653,6 @@ export class HomeworkComponent implements OnInit {
       new Date().getMinutes() +
       new Date().getSeconds() +
       '.mp3';
-    // VoiceRecorder.hasAudioRecordingPermission.then((result: GenericResponse) => console.log(result.value))
     VoiceRecorder.startRecording()
       .then((result: GenericResponse) => {
         this.select_datas.type = '';
@@ -690,7 +661,6 @@ export class HomeworkComponent implements OnInit {
         this.recording = true;
         if (!this.timer) {
           this.timer = setInterval(() => {
-            console.log('@log: this.recordingTimer: ', this.recordingTimer);
             this.recordingTimer += 1;
           }, 1000);
         }
@@ -700,11 +670,9 @@ export class HomeworkComponent implements OnInit {
           duration: 0,
           fileName: this.fileName ?? '',
         };
-        console.log('@log recording value: ', result.value);
       })
       .catch((error) => {
         this.error = true;
-        console.log('@log recording error: ', error);
       });
   }
 
@@ -715,7 +683,6 @@ export class HomeworkComponent implements OnInit {
         if (this.timer) {
           clearInterval(this.timer);
         }
-        console.log('@log recorded value: ', result.value);
         const { mimeType, recordDataBase64, msDuration } = result.value;
         this.select_datas.filename = this.fileName;
         this.select_datas.type = 'mp3';
@@ -730,7 +697,6 @@ export class HomeworkComponent implements OnInit {
       })
       .catch((error) => {
         this.error = true;
-        console.log('@log recorded error: ', error);
       });
   }
 
@@ -761,7 +727,6 @@ export class HomeworkComponent implements OnInit {
         this.loading.dismissAll();
         if (res['status']) {
           this.seenhrkmes = res['senditem'];
-          console.log('test', this.seenhrkmes);
           this.seenhrkmes.sort(
             (a: any, b: any) => b.seen_status - a.seen_status
           );
@@ -769,7 +734,6 @@ export class HomeworkComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }

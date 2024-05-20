@@ -5,7 +5,9 @@ import { Router } from '@angular/router';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 //import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { File } from '@ionic-native/file/ngx';
 import { Media, MediaObject } from '@ionic-native/media/ngx';
 import {
   AlertController,
@@ -83,10 +85,10 @@ export class CircularsComponent implements OnInit {
     base64: Base64String | null;
     duration: number;
   } = {
-      fileName: '',
-      base64: null,
-      duration: 0,
-    };
+    fileName: '',
+    base64: null,
+    duration: 0,
+  };
   attachment: any;
 
   constructor(
@@ -103,27 +105,18 @@ export class CircularsComponent implements OnInit {
     public authservice: AuthService,
     public storage: StorageService,
     public loading: LoadingService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private file: File,
+    private fileOpener: FileOpener
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
     });
   }
 
-  // selectAll() {
-  //   console.log('select all');
-  //   this.select_datas.class = this.classs.map((item: any) => item.id);
+  // handleSelectChange(e: any) {
+
   // }
-
-  // deSelectAll() {
-  //   this.select_datas.class = [];
-
-  //   // this.selectedItems = [];
-  // }
-
-  handleSelectChange(e: any) {
-    console.log('event', e);
-  }
 
   ngOnInit() {
     this.ios = this.authservice.isiso();
@@ -176,14 +169,11 @@ export class CircularsComponent implements OnInit {
     this.portComponent.close();
   }
 
-  classChange(event: any) {
-    // console.log(event);
-    // console.log(this);
-  }
+  // classChange(event: any) {
+
+  // }
 
   async openOptions(data: any, value: any) {
-    console.log('ZZZZZZZ', data);
-    console.log('ZZZZZZZ', value);
     const modal = await this.modalController.create({
       component: SelectModalComponent,
       componentProps: {
@@ -204,7 +194,6 @@ export class CircularsComponent implements OnInit {
         }
       }
       this.select_datas.class = datar;
-      console.log('ZZZZZZZ', this.select_datas.class);
       this.className =
         datar.length > 0
           ? datar.length + ' Classes Selected'
@@ -226,7 +215,6 @@ export class CircularsComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -270,12 +258,10 @@ export class CircularsComponent implements OnInit {
             }
             this.senditems = res['senditem'];
             this.last3days = res['last3senditem'];
-            console.log(this.senditems, '12345');
           }
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -289,9 +275,6 @@ export class CircularsComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.delete,
@@ -323,9 +306,6 @@ export class CircularsComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.delete,
@@ -355,7 +335,6 @@ export class CircularsComponent implements OnInit {
         this.loading.dismissAll();
         if (res['status']) {
           this.seengrpmes = res['senditem'];
-          console.log('test', this.seengrpmes);
           this.seengrpmes.sort(
             (a: any, b: any) => b.seen_status - a.seen_status
           );
@@ -363,7 +342,6 @@ export class CircularsComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -375,9 +353,6 @@ export class CircularsComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.send,
@@ -407,6 +382,35 @@ export class CircularsComponent implements OnInit {
     this.movegrouptofinal(id);
   }
 
+  openFile(path: any, data: any) {
+    let ext: any = this.extention(path);
+    let type: any = this.getMIMEtype(ext);
+    var request = new XMLHttpRequest();
+    request.open('GET', path, true);
+    request.responseType = 'blob';
+
+    request.onloadend = () => {
+      if (request.readyState === XMLHttpRequest.DONE) {
+        if (request.status === 200) {
+          var reader = new FileReader();
+          reader.onloadend = (e) => {
+            if (reader.readyState === FileReader.DONE) {
+              if (e.target && e.target.result) {
+                this.writeFile(e.target.result, ext, type);
+              } else {
+                console.error('Error reading file data.');
+              }
+            }
+          };
+          reader.readAsDataURL(request.response);
+        } else {
+          console.error('Failed to load file. Status:', request.status);
+        }
+      }
+    };
+    request.send();
+  }
+
   open() {
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
@@ -416,28 +420,81 @@ export class CircularsComponent implements OnInit {
     fileInput.onchange = (event: any) => {
       const file = event.target.files[0];
       if (file) {
-        this.readFile(file);
+        const reader = new FileReader();
+        reader.onload = async (e: any) => {
+          this.select_datas.image = e.target.result;
+          this.select_datas.filename = file.name;
+          this.select_datas.type = file.name.split('.').pop();
+          this.writeFile(e.target.result, file.name, file.type);
+        };
+        reader.readAsDataURL(file);
       }
     };
 
     fileInput.click();
   }
 
-  readFile(file: File) {
-    const reader = new FileReader();
-    reader.onload = async (e: any) => {
-      this.select_datas.image = e.target.result;
-      this.select_datas.filename = file.name;
-      this.select_datas.type = file.name.split('.').pop();
+  extention(url: any) {
+    const parts = url.split('.');
+    const lastPart = parts[parts.length - 1];
+    const extension = lastPart.split('?')[0];
+    return extension;
+  }
+
+  getMIMEtype(extn: any) {
+    let ext: any = extn.toLowerCase();
+    let MIMETypes: any = {
+      txt: 'text/plain',
+      docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      doc: 'application/msword',
+      pdf: 'application/pdf',
+      jpg: 'image/jpg',
+      jpeg: 'image/jpeg',
+      bmp: 'image/bmp',
+      png: 'image/png',
+      xls: 'application/vnd.ms-excel',
+      xlsx: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      rtf: 'application/rtf',
+      ppt: 'application/vnd.ms-powerpoint',
+      pptx: 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
     };
-    reader.readAsDataURL(file);
+    return MIMETypes[ext];
+  }
+
+  writeFile(FileContents: any, FileName: any, FileType: any) {
+    let blob = this.b64toBlob(FileContents, FileType);
+    this.file
+      .writeFile(this.file.dataDirectory, FileName, blob, { replace: true })
+      .then((response) => {
+        this.fileOpener.open(this.file.dataDirectory + FileName, FileType);
+      })
+      .catch((err: any) => {});
+  }
+
+  b64toBlob(b64Data: any, contentType: any) {
+    let index = String(b64Data).lastIndexOf(',');
+    let data = String(b64Data).substring(index + 1);
+    contentType = contentType || '';
+    var sliceSize = 512;
+    var byteCharacters = atob(data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      var byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
   }
 
   open1() {
     this.fileChooser
       .open()
       .then((uri) => {
-        console.log('testtt', uri);
         this.filePath.resolveNativePath(uri).then(
           (res) => {
             alert('@log res: ' + JSON.stringify(res));
@@ -495,7 +552,13 @@ export class CircularsComponent implements OnInit {
     if (f) {
       f = f.split('.');
       f = f[f.length - 1].toLowerCase();
-      if (f != 'pdf' && f != 'mp3' && f != 'xls' && f != 'xlsx') {
+      if (
+        f != 'pdf' &&
+        f != 'mp3' &&
+        f != 'xls' &&
+        f != 'xlsx' &&
+        f != 'docx'
+      ) {
         return true;
       } else {
         return false;
@@ -534,6 +597,20 @@ export class CircularsComponent implements OnInit {
     }
   }
 
+  checkdocx(f: any) {
+    if (f) {
+      f = f.split('.');
+      f = f[f.length - 1].toLowerCase();
+      if (f == 'docx') {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
   checkpdf(f: any) {
     if (f) {
       f = f.split('.');
@@ -555,7 +632,6 @@ export class CircularsComponent implements OnInit {
   }
 
   startRecord() {
-    console.log('audio');
     this.fileName =
       'record' +
       new Date().getDate() +
@@ -567,7 +643,6 @@ export class CircularsComponent implements OnInit {
       '.mp3';
 
     this.Path = this.serfile.filepath() + this.fileName;
-    console.log(this.Path);
     this.audio = this.media.create(this.Path);
     this.select_datas.type = '';
     this.select_datas.image = '';
@@ -582,7 +657,6 @@ export class CircularsComponent implements OnInit {
 
     this.serfile.read(this.fileName).then(
       (res) => {
-        console.log(res);
         let l = res.split('base64,');
         if (l[1].length != 0) {
           this.select_datas.filename = this.fileName;
@@ -593,9 +667,7 @@ export class CircularsComponent implements OnInit {
           );
         }
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
 
@@ -628,7 +700,6 @@ export class CircularsComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -657,7 +728,6 @@ export class CircularsComponent implements OnInit {
   }
 
   confirm_date() {
-    console.log('confirm');
     this.modal.dismiss(null, 'confirm');
   }
 
@@ -666,7 +736,6 @@ export class CircularsComponent implements OnInit {
   }
 
   toggleMessage(id: any, message: any, image: any, i: any) {
-    // console.log('toggle', id);
     if (id != 'cancel' && id != 'confirm') {
       this.index = i;
       this.messageId = id;
@@ -674,7 +743,6 @@ export class CircularsComponent implements OnInit {
       this.attachment = image;
     }
     if (id == 'confirm') {
-      console.log('message id', this.index);
       this.last3days[this.index].message = this.messageText;
       this.editMessage(this.messageId, this.messageText);
     }
@@ -695,6 +763,7 @@ export class CircularsComponent implements OnInit {
       }
     }
   }
+
   /////////////////////////////
   async editMessage(id: any, message: any) {
     this.loading.present();
@@ -709,7 +778,6 @@ export class CircularsComponent implements OnInit {
         },
         (err: any) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -740,7 +808,6 @@ export class CircularsComponent implements OnInit {
       new Date().getMinutes() +
       new Date().getSeconds() +
       '.mp3';
-    // VoiceRecorder.hasAudioRecordingPermission.then((result: GenericResponse) => console.log(result.value))
     VoiceRecorder.startRecording()
       .then((result: GenericResponse) => {
         this.select_datas.type = '';
@@ -749,7 +816,6 @@ export class CircularsComponent implements OnInit {
         this.recording = true;
         if (!this.timer) {
           this.timer = setInterval(() => {
-            console.log('@log: this.recordingTimer: ', this.recordingTimer);
             this.recordingTimer += 1;
           }, 1000);
         }
@@ -759,11 +825,9 @@ export class CircularsComponent implements OnInit {
           duration: 0,
           fileName: this.fileName ?? '',
         };
-        console.log('@log recording value: ', result.value);
       })
       .catch((error) => {
         this.error = true;
-        console.log('@log recording error: ', error);
       });
   }
 
@@ -774,7 +838,6 @@ export class CircularsComponent implements OnInit {
         if (this.timer) {
           clearInterval(this.timer);
         }
-        console.log('@log recorded value: ', result.value);
         const { mimeType, recordDataBase64, msDuration } = result.value;
         this.select_datas.filename = this.fileName;
         this.select_datas.type = 'mp3';
@@ -789,7 +852,6 @@ export class CircularsComponent implements OnInit {
       })
       .catch((error) => {
         this.error = true;
-        console.log('@log recorded error: ', error);
       });
   }
 

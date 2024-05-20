@@ -9,6 +9,7 @@ import { DataService } from '../service/data.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
 import { TranslateConfigService } from '../service/translate-config.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -59,118 +60,41 @@ export class LoginComponent implements OnInit {
   }
 
   async submitForm() {
-    this.loading.present();
-    this.app_versionCode = environment.app_versionCode;
-    const info = await Device.getInfo();
-    let value: any = {
-      platform_type: info.platform,
-      manufacturer_name: info.manufacturer,
-      manufacturer_model: info.model,
-      os_version: info.osVersion,
-      deviceid: await Device.getId(),
-      username: this.authForm.username,
-      password: this.authForm.password,
-      app_version_code: this.app_versionCode,
-    };
-    this.authservice.post('userLogin', value).subscribe(
-      (result: any) => {
-        this.loading.dismissAll();
-        if (result['status']) {
-          if (result['data'].length > 0) {
-            this.teachersDetail = result['data'];
-            this.storage.addjson('teachersDetail', result['data']);
-
-            this.mobileinstall();
-          }
-        }
-      },
-      (err) => {
-        this.loading.dismissAll();
+    try {
+      this.loading.present();
+      this.app_versionCode = environment.app_versionCode;
+      const info = await Device.getInfo();
+      let value: any = {
+        platform_type: info.platform,
+        manufacturer_name: info.manufacturer,
+        manufacturer_model: info.model,
+        os_version: info.osVersion,
+        deviceid: await Device.getId(),
+        username: this.authForm.username,
+        password: this.authForm.password,
+        app_version_code: this.app_versionCode,
+      };
+      const result: any = await this.authservice
+        .post('userLogin', value)
+        .toPromise();
+      this.loading.dismissAll();
+      if (result['status'] && result['data'] && result['data'].length > 0) {
+        this.teachersDetail = result['data'];
+        this.storage.addjson('teachersDetail', result['data']);
+        this.mobileinstall();
+        //this.getimage(0);
+      } else {
+        // Handle case where no data is returned or data is empty
       }
-    );
+    } catch (error) {
+      console.error('Error occurred while submitting form:', error);
+      this.loading.dismissAll();
+      // Handle error appropriately (e.g., display error message)
+    }
   }
+  /////////////////////////////////////////////////////////////////////////
 
-  getClass() {
-    this.loading.present();
-    let data = {
-      Is_Admin: this.teachersDetail[0]['Is_Admin'],
-      staff_id: this.teachersDetail[0]['staff_id'],
-    };
-    this.authservice.post('getclass', data).subscribe(
-      (res: any) => {
-        this.loading.dismissAll();
-        if (res['status']) {
-          this.storage.addjson('classlist', res['data']);
-        } else {
-          this.storage.addjson('classlist', []);
-        }
-        this.dataservice.changeMenustatus(true);
-        this.router.navigate(['']);
-      },
-      (err) => {
-        this.storage.addjson('classlist', []);
-        this.loading.dismissAll();
-        console.log(err);
-      }
-    );
-    // this.getmenu();
-  }
-
-  getmenu() {
-    this.loading.present();
-    let data = {
-      Is_Admin: this.teachersDetail[0]['Is_Admin'],
-      staff_id: this.teachersDetail[0]['staff_id'],
-    };
-    this.authservice.post('getmenu', data).subscribe(
-      (res: any) => {
-        this.loading.dismissAll();
-        if (res['status']) {
-          this.storage.addjson('menulist', res['data']);
-        } else {
-          this.storage.addjson('menulist', []);
-        }
-        this.dataservice.changeMenustatus(true);
-        this.router.navigate(['']);
-      },
-      (err) => {
-        this.storage.addjson('menulist', []);
-        this.loading.dismissAll();
-        console.log(err);
-      }
-    );
-  }
-
-  updateFireBaseID() {
-    let fireBaseIDValues = this.storage.get('fireBaseID');
-    let sendingValue = {
-      firebase_id: fireBaseIDValues,
-      staff_id: this.teachersDetail[0]['staff_id'],
-      contact: this.teachersDetail[0]['contact'],
-    };
-    this.authservice.post('updateFirebaseId', sendingValue).subscribe(
-      (result: any) => {
-        let fireBaseResponse = result;
-        this.storeFirBaseStatus = fireBaseResponse;
-        console.log(
-          'FireBase ID Send Response Data',
-          this.storeFirBaseStatus.status
-        );
-        if (this.storeFirBaseStatus.status) {
-          this.getClass();
-        } else {
-          this.loading.dismissAll();
-          this.openalert('FIRE BASE ALERT', this.storeFirBaseStatus.data);
-        }
-      },
-      (err) => {
-        this.loading.dismissAll();
-
-        //Connection failed message
-      }
-    );
-  }
-
+  /////////////////////////////////////////////////////////////////////////
   async mobileinstall() {
     this.loading.present();
     this.app_versionCode = environment.app_versionCode;
@@ -199,6 +123,125 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+  getimage(i: any) {
+    if (
+      this.teachersDetail &&
+      this.teachersDetail.data &&
+      i < this.teachersDetail.data.length
+    ) {
+      if (i > this.teachersDetail.data.length - 1) {
+        this.storage.addjson('teachersDetail', this.teachersDetail.data);
+        this.dataservice.changeMenustatus(true);
+        this.storage.addjson('flashmsg', { Discription: '', event_image: '' });
+        this.loading.dismissAll();
+        this.router.navigate(['']);
+      } else {
+        if (this.teachersDetail.data[i]['ADNO'] != undefined) {
+          this.authservice
+            .post('getMobStudentPhoto', {
+              adno: this.teachersDetail.data[i]['ADNO'],
+            })
+            .subscribe(
+              (result: any) => {
+                if (result['status']) {
+                  if (result['data'] != 'data:image/jpg;base64,') {
+                    this.storage.add(
+                      this.teachersDetail.data[i]['ADNO'] + 'img',
+                      result['data']
+                    );
+                    // this.getStudentDetails.data[i]["stu_img"] = result['data']
+                  }
+                  this.getimage(i + 1);
+                }
+              },
+              (err) => {
+                this.loading.dismissAll();
+              }
+            );
+        } else {
+          this.getimage(i + 1);
+        }
+      }
+    } else {
+    }
+  }
+
+  getClass() {
+    this.loading.present();
+    let data = {
+      Is_Admin: this.teachersDetail[0]['Is_Admin'],
+      staff_id: this.teachersDetail[0]['staff_id'],
+    };
+    this.authservice.post('getclass', data).subscribe(
+      (res: any) => {
+        this.loading.dismissAll();
+        if (res['status']) {
+          this.storage.addjson('classlist', res['data']);
+        } else {
+          this.storage.addjson('classlist', []);
+        }
+        this.dataservice.changeMenustatus(true);
+        this.router.navigate(['']);
+      },
+      (err) => {
+        this.storage.addjson('classlist', []);
+        this.loading.dismissAll();
+      }
+    );
+    this.getmenu();
+  }
+
+  getmenu() {
+    this.loading.present();
+    let data = {
+      Is_Admin: this.teachersDetail[0]['Is_Admin'],
+      staff_id: this.teachersDetail[0]['staff_id'],
+    };
+    this.authservice.post('getmenu', data).subscribe(
+      (res: any) => {
+        this.loading.dismissAll();
+        if (res['status']) {
+          this.storage.addjson('menulist', res['data']);
+        } else {
+          this.storage.addjson('menulist', []);
+        }
+        this.dataservice.changeMenustatus(true);
+        this.router.navigate(['']);
+      },
+      (err) => {
+        this.storage.addjson('menulist', []);
+        this.loading.dismissAll();
+      }
+    );
+  }
+
+  updateFireBaseID() {
+    let fireBaseIDValues = this.storage.get('fireBaseID');
+    let sendingValue = {
+      firebase_id: fireBaseIDValues,
+      staff_id: this.teachersDetail[0]['staff_id'],
+      contact: this.teachersDetail[0]['contact'],
+    };
+    this.authservice.post('updateFirebaseId', sendingValue).subscribe(
+      (result: any) => {
+        let fireBaseResponse = result;
+        this.storeFirBaseStatus = fireBaseResponse;
+        if (this.storeFirBaseStatus.status) {
+          this.getClass();
+        } else {
+          this.loading.dismissAll();
+          this.openalert('FIRE BASE ALERT', this.storeFirBaseStatus.data);
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+
+        //Connection failed message
+      }
+    );
+  }
+
   async openalert(message: any, title = 'ALERT') {
     let alert = await this.alertCtrl.create({
       header: title,

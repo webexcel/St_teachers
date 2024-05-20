@@ -80,8 +80,6 @@ export class FlashComponent implements OnInit {
             );
           }
         }
-
-        console.log(this.flashlist);
       },
       (err) => {
         this.loading.dismissAll();
@@ -108,7 +106,6 @@ export class FlashComponent implements OnInit {
     this.fileChooser
       .open()
       .then((uri) => {
-        console.log(uri);
         this.filePath.resolveNativePath(uri).then(
           (res) => {
             let l: any = res.split('.');
@@ -123,24 +120,19 @@ export class FlashComponent implements OnInit {
                     l + res.split('ase64,')[1]
                   );
                 },
-                (err) => {
-                  console.log(err);
-                }
+                (err) => {}
               );
             } else {
               this.error = true;
             }
           },
-          (err) => {
-            console.log(err);
-          }
+          (err) => {}
         );
       })
       .catch((e) => console.log(e));
   }
 
   onSubmit() {
-    console.log(this.details);
     this.loading.present();
     this.authservice.post('saveflase', this.details).subscribe(
       (res: any) => {
@@ -153,7 +145,6 @@ export class FlashComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -180,7 +171,6 @@ export class FlashComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -197,9 +187,6 @@ export class FlashComponent implements OnInit {
         {
           text: 'Ok',
           role: 'Ok',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
       ],
     });
@@ -230,7 +217,6 @@ export class FlashComponent implements OnInit {
   }
 
   confirm_date() {
-    console.log('confirm');
     this.modal.dismiss(null, 'confirm');
   }
 

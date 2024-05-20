@@ -77,7 +77,6 @@ export class MessagesComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -131,19 +130,16 @@ export class MessagesComponent implements OnInit {
                   (err) => {
                     this.ing = this.ing + 1;
                     this.getbase64();
-                    console.log(err);
                   }
                 );
               },
               (err) => {
-                console.log(err);
                 this.authservice
                   .post('getbase64', { url: encodeURI(url) })
                   .subscribe(
                     (res: any) => {
                       if (res) {
                         this.storeSMSDetails[this.ing].base64 = res['data'];
-                        console.log(this.storeSMSDetails[this.ing].base64);
                         let k = this.serfile.download(filename, res['data']);
                         if (k) {
                           this.ing = this.ing + 1;
@@ -155,7 +151,6 @@ export class MessagesComponent implements OnInit {
                       }
                     },
                     (err) => {
-                      console.log(err);
                       this.storeSMSDetails[this.ing].base64 = '';
                       this.ing = this.ing + 1;
                       this.getbase64();
@@ -176,12 +171,10 @@ export class MessagesComponent implements OnInit {
         }
       }
     } catch (error) {
-      console.log(error);
       this.storeSMSDetails[this.ing].base64 = '';
       this.ing = this.ing + 1;
       this.getbase64();
     }
-    console.log(this.storeSMSDetails, 'aaaaaaaaaa');
   }
 
   checkimage(f: any) {
@@ -248,7 +241,6 @@ export class MessagesComponent implements OnInit {
   }
 
   setOpen(isOpen: boolean, image: any) {
-    console.log(image);
     this.modalImage = image;
     this.isModalOpen = isOpen;
   }

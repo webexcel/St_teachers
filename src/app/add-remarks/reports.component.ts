@@ -104,8 +104,6 @@ export class ReportsComponent implements OnInit {
   }
 
   async openOptions(data: any, value: any, bind: any, multi: any) {
-    console.log('aaaaaaaaaaaaaa', data);
-    console.log('aaaaaaaaaaaaaa', value);
     // if (!multi && data[0].name != 0) {
     //   data.splice(0, 0, { id: 0, name: 'Select Your Class' });
     // }
@@ -133,14 +131,12 @@ export class ReportsComponent implements OnInit {
         }
         if (bind == 'Students') {
           this.select_datas.student = datar;
-          console.log('afsdf', this.select_datas.student);
           this.StudentsName =
             datar.length > 0
               ? datar.length + ' Students Selected'
               : 'No Students Selected';
         } else if (bind == 'Subject') {
           this.select_datas.subject = datar;
-          console.log('afsdf', this.select_datas.subject);
           this.SubjectName =
             datar.length > 0
               ? datar.length + ' Subjects Selected'
@@ -148,7 +144,6 @@ export class ReportsComponent implements OnInit {
         }
       } else {
         this.select_datas.class = result.data.id;
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx', this.select_datas.class);
         this.getStudentsByClass(this.select_datas.class);
         this.ClassName =
           result.data.name != undefined && result.data.id != 0
@@ -167,8 +162,6 @@ export class ReportsComponent implements OnInit {
           student.name = student.name.substring(0, hyphenIndex).trim();
         }
       });
-
-      console.log(this.select_datas);
       this.loading.present();
       this.authservice
         .post('AddstudentRemarks', this.select_datas)
@@ -188,7 +181,6 @@ export class ReportsComponent implements OnInit {
           },
           (err) => {
             this.loading.dismissAll();
-            console.log(err);
           }
         );
     } else {
@@ -234,7 +226,6 @@ export class ReportsComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -288,7 +279,6 @@ export class ReportsComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -304,7 +294,6 @@ export class ReportsComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -314,11 +303,11 @@ export class ReportsComponent implements OnInit {
     this.authservice
       .post('getstudentRemarks', {
         staff_id: this.storage.getjson('teachersDetail')[0]['staff_id'],
+        Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
       })
       .subscribe(
         (res: any) => {
           this.loading.dismissAll();
-          console.log('Response:', res);
 
           if (res['status']) {
             this.studentRemarks = res['data'];

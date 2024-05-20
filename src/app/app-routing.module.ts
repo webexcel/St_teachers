@@ -127,6 +127,31 @@ const routes: Routes = [
       ),
     canActivate: [Guard],
   },
+
+  {
+    path: 'fee-report',
+    loadChildren: () =>
+      import('./fee-report/fee-report.module').then((m) => m.FeeReportModule),
+    canActivate: [Guard],
+  },
+
+  {
+    path: 'fee-class/:classId',
+    loadChildren: () =>
+      import('./fee-report/fee-class/fee-class.module').then(
+        (m) => m.FeeClassModule
+      ),
+    canActivate: [Guard],
+  },
+
+  {
+    path: 'fee-student/:classId/:studentId',
+    loadChildren: () =>
+      import('./fee-report/fee-student/fee-student.module').then(
+        (m) => m.FeeStudentModule
+      ),
+    canActivate: [Guard],
+  },
 ];
 
 @NgModule({

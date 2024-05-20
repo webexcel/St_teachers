@@ -155,7 +155,6 @@ export class PersonalizedComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -204,7 +203,6 @@ export class PersonalizedComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -221,7 +219,6 @@ export class PersonalizedComponent implements OnInit {
       this.select_datas.student = stud;
     }
     if (this.select_datas.student.length) {
-      console.log(this.select_datas);
       this.loading.present();
       this.authservice.post('newpersonalsms', this.select_datas).subscribe(
         (res: any) => {
@@ -234,7 +231,6 @@ export class PersonalizedComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
     }
@@ -248,9 +244,6 @@ export class PersonalizedComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.delete,
@@ -282,9 +275,6 @@ export class PersonalizedComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.delete,
@@ -316,9 +306,6 @@ export class PersonalizedComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.send,
@@ -354,13 +341,11 @@ export class PersonalizedComponent implements OnInit {
     this.fileChooser
       .open()
       .then((uri) => {
-        console.log(uri);
         this.filePath.resolveNativePath(uri).then(
           (res) => {
             let f: any = res.split('/');
             this.select_datas.filename = f[f.length - 1].toLowerCase();
             let l: any = res.split('.');
-            console.log(l);
             l = l[l.length - 1].toLowerCase();
             if (
               l == 'jpg' ||
@@ -386,7 +371,6 @@ export class PersonalizedComponent implements OnInit {
                   this.select_datas.image = `${l}${result.split('base64,')[1]}`;
                 },
                 (err) => {
-                  console.log('@log file open error: ', err);
                   this.error = true;
                 }
               );
@@ -394,9 +378,7 @@ export class PersonalizedComponent implements OnInit {
               this.error = true;
             }
           },
-          (err) => {
-            console.log(err);
-          }
+          (err) => {}
         );
       })
       .catch((e) => console.log(e));
@@ -406,7 +388,6 @@ export class PersonalizedComponent implements OnInit {
     if (f) {
       f = f.split('.');
       f = f[f.length - 1].toLowerCase();
-      console.log(f);
       if (f != 'pdf' && f != 'mp3' && f != 'xls' && f != 'xlsx') {
         return true;
       } else {
@@ -478,7 +459,6 @@ export class PersonalizedComponent implements OnInit {
       '.mp3';
 
     this.Path = this.serfile.filepath() + this.fileName;
-    console.log(this.Path);
     this.audio = this.media.create(this.Path);
     this.select_datas.ftype = '';
     this.select_datas.image = '';
@@ -493,7 +473,6 @@ export class PersonalizedComponent implements OnInit {
 
     this.serfile.read(this.fileName).then(
       (res) => {
-        console.log(res);
         let l = res.split('base64,');
         if (l[1].length != 0) {
           this.select_datas.ftype = 'mp3';
@@ -504,9 +483,7 @@ export class PersonalizedComponent implements OnInit {
           );
         }
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
 
@@ -541,7 +518,6 @@ export class PersonalizedComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -570,7 +546,6 @@ export class PersonalizedComponent implements OnInit {
   }
 
   confirm_date() {
-    console.log('confirm');
     this.modal.dismiss(null, 'confirm');
   }
 
@@ -601,29 +576,11 @@ export class PersonalizedComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
 
-  // toggleMessage(id: any, message: any, i: any) {
-  //   console.log('toggle', id);
-  //   if (id != 'cancel' && id != 'confirm') {
-  //     this.index = i;
-  //     this.messageId = id;
-  //     this.messageText = message;
-  //     console.log('toggle', this.messageId);
-  //   }
-  //   if (id == 'confirm') {
-  //     console.log('message id', this.index);
-  //     //this.last3days[this.index].message = this.messageText;
-  //     this.editMessage(this.messageId, this.messageText);
-  //   }
-  //   this.isEditMessageOpen = !this.isEditMessageOpen;
-  // }
-
   toggleMessage(id: any, message: any, image: any, i: any) {
-    console.log('toggle', id);
     if (id && id !== 'cancel' && id !== 'confirm') {
       this.index = i;
       this.messageId = id;
@@ -631,7 +588,6 @@ export class PersonalizedComponent implements OnInit {
       this.attachment = image;
     }
     if (id === 'confirm') {
-      console.log('message id', this.index);
       this.editMessage(this.messageId, this.messageText);
     }
     this.isEditMessageOpen = !this.isEditMessageOpen;
@@ -662,7 +618,6 @@ export class PersonalizedComponent implements OnInit {
       new Date().getMinutes() +
       new Date().getSeconds() +
       '.mp3';
-    // VoiceRecorder.hasAudioRecordingPermission.then((result: GenericResponse) => console.log(result.value))
     VoiceRecorder.startRecording()
       .then((result: GenericResponse) => {
         this.select_datas.ftype = '';
@@ -671,7 +626,6 @@ export class PersonalizedComponent implements OnInit {
         this.recording = true;
         if (!this.timer) {
           this.timer = setInterval(() => {
-            console.log('@log: this.recordingTimer: ', this.recordingTimer);
             this.recordingTimer += 1;
           }, 1000);
         }
@@ -681,11 +635,9 @@ export class PersonalizedComponent implements OnInit {
           duration: 0,
           fileName: this.fileName ?? '',
         };
-        console.log('@log recording value: ', result.value);
       })
       .catch((error) => {
         this.error = true;
-        console.log('@log recording error: ', error);
       });
   }
 
@@ -696,7 +648,6 @@ export class PersonalizedComponent implements OnInit {
         if (this.timer) {
           clearInterval(this.timer);
         }
-        console.log('@log recorded value: ', result.value);
         const { mimeType, recordDataBase64, msDuration } = result.value;
         this.select_datas.filename = this.fileName;
         this.select_datas.ftype = 'mp3';
@@ -711,7 +662,6 @@ export class PersonalizedComponent implements OnInit {
       })
       .catch((error) => {
         this.error = true;
-        console.log('@log recorded error: ', error);
       });
   }
 
@@ -749,7 +699,6 @@ export class PersonalizedComponent implements OnInit {
   }
 
   async openOptions(data: any, value: any, multi: any) {
-    console.log('zzzzzzzzzzzzzzzzz', data);
     if (!multi && data[0].name != 0) {
       data.splice(0, 0, { id: 0, name: 'Select Your Subject' });
     }
@@ -774,7 +723,6 @@ export class PersonalizedComponent implements OnInit {
           }
         }
         this.select_datas.student = datar;
-        console.log('datar', this.select_datas.student);
 
         this.StudentsName =
           datar.length > 0
@@ -782,7 +730,6 @@ export class PersonalizedComponent implements OnInit {
             : 'No Students Selected';
       } else {
         this.select_datas.classid = result.data.id;
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx', this.select_datas.classid);
         this.getStudentsByClass(this.select_datas.classid);
         this.className =
           result.data.name.length > 0
@@ -801,7 +748,6 @@ export class PersonalizedComponent implements OnInit {
         this.loading.dismissAll();
         if (res['status']) {
           this.seengrpmes = res['senditem'];
-          console.log('test', this.seengrpmes);
           this.seengrpmes.sort(
             (a: any, b: any) => b.seen_status - a.seen_status
           );
@@ -809,7 +755,6 @@ export class PersonalizedComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }

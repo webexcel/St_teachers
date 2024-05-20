@@ -49,7 +49,7 @@ export class ViewRemarksComponent implements OnInit {
   @ViewChild(IonModal)
   modal!: IonModal;
   isPickerOpen: boolean = false;
-
+  isFormSubmitted: boolean = false;
   grpmes: any = [];
   last3days: any = [];
   senditems: any = [];
@@ -101,9 +101,8 @@ export class ViewRemarksComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    // if (this.select_datas.subject) {
+    this.isFormSubmitted = true;
     this.loading.present();
-    console.log(this.select_datas);
 
     this.authservice
       .post('ViewstudentRemarks', {
@@ -115,27 +114,15 @@ export class ViewRemarksComponent implements OnInit {
           this.loading.dismissAll();
           if (res['status']) {
             this.students = res['data'];
-            // form.resetForm();
-            //   this.reset();
-            //   this.getlist();
-            this.studentRemarks = res['data'][0];
-            console.log(
-              'tesy',
-              this.studentRemarks.name,
-              this.studentRemarks.message
-            );
+            this.studentRemarks = res['data'];
           } else {
             this.studentRemarks = [];
           }
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
-    // } else {
-    //   // this.getIndividualStudentRemarks(); // If there are no students selected, still fetch remarks
-    // }
   }
 
   async openOptions(data: any, value: any, bind: any, multi: any) {
@@ -155,14 +142,12 @@ export class ViewRemarksComponent implements OnInit {
     modal.onDidDismiss().then((result) => {
       if (bind == 'Class') {
         this.select_datas.class = result.data;
-        console.log('afsdf', this.select_datas.class);
         this.className =
           result.data != undefined && result.data.name != undefined
             ? result.data.name + ' Selected'
             : 'No Class Selected';
       } else if (bind == 'Subject') {
         this.select_datas.subject = result.data;
-        console.log('afsdf', this.select_datas.subject);
         this.SubjectName =
           result.data != undefined && result.data.name != undefined
             ? result.data.name + ' Selected'
@@ -188,38 +173,6 @@ export class ViewRemarksComponent implements OnInit {
       }
     }
   }
-
-  // classChange(event: any) {
-  //   this.getStudentsByClass(event.value['id']);
-  // }
-
-  // getStudentsByClass(class_Id: any) {
-  //   let data = {
-  //     class_Id: class_Id,
-  //   };
-  //   this.loading.present();
-  //   this.authservice.post('getStudentsByClass', data).subscribe(
-  //     (res: any) => {
-  //       this.loading.dismissAll();
-  //       if (res['status']) {
-  //         this.students = res['data'];
-
-  //         this.select_datas.students = {};
-
-  //         for (const student of this.students) {
-  //           this.select_datas.students[student.id] = {
-  //             id: student.id,
-  //             name: student.name,
-  //           };
-  //         }
-  //       }
-  //     },
-  //     (err) => {
-  //       this.loading.dismissAll();
-  //       console.log(err);
-  //     }
-  //   );
-  // }
 
   toggleItems(status: any) {
     if (status) {
@@ -270,7 +223,6 @@ export class ViewRemarksComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -286,32 +238,7 @@ export class ViewRemarksComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
-
-  // getIndividualStudentRemarks() {
-  //   this.loading.present();
-  //   this.authservice
-  //     .post('getStudentRemarks', {
-  //       staff_id: this.storage.getjson('teachersDetail')[0]['staff_id'],
-  //     })
-  //     .subscribe(
-  //       (res: any) => {
-  //         this.loading.dismissAll();
-  //         console.log('Response:', res);
-
-  //         if (res['status']) {
-  //           this.studentRemarks = res['data'];
-  //         } else {
-  //           this.studentRemarks = [];
-  //         }
-  //       },
-  //       (err) => {
-  //         this.loading.dismissAll();
-  //         console.error('Error:', err);
-  //       }
-  //     );
-  // }
 }

@@ -96,7 +96,6 @@ export class TimetableComponent implements OnInit {
           this.loading.dismissAll();
           if (res['status']) {
             this.data = res['data'];
-            console.log('timeTable', this.data);
 
             for (let i = 0; i < this.data.length; i++) {
               this.keys = Object.keys(this.data[i]);

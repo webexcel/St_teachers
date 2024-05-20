@@ -27,7 +27,6 @@ export class AuthService {
     if (url != 'userLogin') {
       url = url + '/' + this.storage.getjson('teachersDetail')[0]['dbname'];
     }
-    console.log('data', data);
     return this.http.post(`${this.apiBaseUrl}${url}`, data, {});
   }
 
@@ -79,12 +78,8 @@ export class AuthService {
         .get(pdf, options)
         .toPromise()
         .then(
-          (res) => {
-            console.log(res);
-          },
-          (err) => {
-            console.log(err);
-          }
+          (res) => {},
+          (err) => {}
         );
     });
     return promise;

@@ -52,12 +52,13 @@ export class DashboardComponent implements OnInit {
     duration: 0,
   };
   public circular = 'circulars';
-  // public appPages = this.storage.get('menulist');
+  //public appPages = this.storage.get('menulist');
   public appPages = environment.pages;
   isModalOpen = false;
   modalImage: any;
   grpmes: any;
   senditems: any = [];
+
   constructor(
     private modalService: BsModalService,
     private iab: InAppBrowser,
@@ -80,40 +81,9 @@ export class DashboardComponent implements OnInit {
         this.appMinimize.minimize();
       }
     });
-    // this.topMessages = {
-    //   status: true,
-    //   message: 'Get All Messages Successfully',
-    //   data: [
-    //     {
-    //       ADNO: 'KG107',
-    //       SMSdate: '10,Jan-19:33',
-    //       STUDENTNAME: 'Praburajan E',
-    //       Message:
-    //         'Dear Parents, Your Ward  Praburajan E  is Late for school today 10-01-2024 - Principal',
-    //       event_image: null,
-    //     },
-    //     {
-    //       ADNO: 'KG108',
-    //       SMSdate: '11,Jan-12:34',
-    //       STUDENTNAME: 'Praburajan E',
-    //       Message: 'G jgh thjldkhgk dhsg jhdjghjdsglhdsgh;a goawroowto hrwrye',
-    //       event_image: 'https://demo.schooltree.in/uploads/demosch/af1.jpg',
-    //     },
-    //     {
-    //       ADNO: 'KG109',
-    //       SMSdate: '11,Jan-12:34',
-    //       STUDENTNAME: 'Praburajan E',
-    //       Message:
-    //         'You have a homework to do today (2024-01-11) Check homework page',
-    //       event_image: null,
-    //     },
-    //   ],
-    // };
   }
 
   ngOnInit() {
-    console.log('aaaaaaaaaaa', this.appPages);
-    console.log('bbbbbbbbbbbb', this.storage.get('menulist'));
     this.ios = this.authservice.isiso();
     this.dataservice.currentMenustatus.subscribe((index) => {
       this.translate.set();
@@ -165,8 +135,6 @@ export class DashboardComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-
-        console.log(err);
       }
     );
   }
@@ -195,7 +163,6 @@ export class DashboardComponent implements OnInit {
     this.authservice.post('getteacherflashmessage', {}).subscribe(
       (result: any) => {
         flashmes = result;
-        console.log('result', flashmes);
         if (flashmes.status) {
           this.disabledValue = false;
           this.flashData = flashmes.data;
@@ -284,19 +251,16 @@ export class DashboardComponent implements OnInit {
                   (err) => {
                     this.ing = this.ing + 1;
                     this.getbase64();
-                    console.log(err);
                   }
                 );
               },
               (err) => {
-                console.log(err);
                 this.authservice
                   .post('getbase64', { url: encodeURI(url) })
                   .subscribe(
                     (res: any) => {
                       if (res) {
                         this.storeSMSDetails[this.ing].base64 = res['data'];
-                        console.log(this.storeSMSDetails[this.ing].base64);
                         let k = this.serfile.download(filename, res['data']);
                         if (k) {
                           this.ing = this.ing + 1;
@@ -308,7 +272,6 @@ export class DashboardComponent implements OnInit {
                       }
                     },
                     (err) => {
-                      console.log(err);
                       this.storeSMSDetails[this.ing].base64 = '';
                       this.ing = this.ing + 1;
                       this.getbase64();
@@ -329,12 +292,10 @@ export class DashboardComponent implements OnInit {
         }
       }
     } catch (error) {
-      console.log(error);
       this.storeSMSDetails[this.ing].base64 = '';
       this.ing = this.ing + 1;
       this.getbase64();
     }
-    // console.log(this.storeSMSDetails, 'aaaaaaaaaa');
   }
 
   checkimage(f: any) {
@@ -401,7 +362,6 @@ export class DashboardComponent implements OnInit {
   }
 
   setOpen(isOpen: boolean, image: any) {
-    console.log(image);
     this.modalImage = image;
     this.isModalOpen = isOpen;
   }
@@ -423,9 +383,7 @@ export class DashboardComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  swiperSlideChanged(e: any) {
-    console.log('changed: ', e);
-  }
+  swiperSlideChanged(e: any) {}
 
   swiperReady() {
     this.swiper = this.swiperRef?.nativeElement.swiper;
@@ -472,12 +430,10 @@ export class DashboardComponent implements OnInit {
               this.grpmes[i].Message = this.extractUrl(this.grpmes[i].Message);
             }
             this.senditems = res['senditem'];
-            console.log(this.senditems);
           }
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }

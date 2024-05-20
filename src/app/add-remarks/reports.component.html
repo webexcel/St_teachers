@@ -103,7 +103,7 @@
   </div>
 
   <div class="m-3">
-    <div class="dateHead">Remarks</div>
+    <div class="dateHead" *ngIf="studentRemarks?.length > 0">Remarks</div>
     <div *ngFor="let d of studentRemarks; let i = index">
       <table class="table table-bordered">
         <tbody>

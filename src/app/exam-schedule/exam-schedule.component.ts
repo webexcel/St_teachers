@@ -113,7 +113,6 @@ export class ExamScheduleComponent implements OnInit {
           }
         }
         this.select_datas.class = datar;
-        console.log('afsdf', this.select_datas.subject);
         this.ClassName =
           datar.length > 0
             ? datar.length + ' Classes Selected'
@@ -121,14 +120,12 @@ export class ExamScheduleComponent implements OnInit {
       } else {
         if (bind == 'Subject') {
           this.select_datas.subject = result.data;
-          console.log('afsdf', this.select_datas.class);
           this.SubjectName =
             result.data != undefined && result.data.name != undefined
               ? result.data.name + ' Subject Selected'
               : 'No Subject Selected';
         } else if (bind == 'Exams') {
           this.select_datas.exams = result.data;
-          console.log('afsdf', this.select_datas.class);
           this.ExamName =
             result.data != undefined && result.data.exam_type_name != undefined
               ? result.data.exam_type_name + ' Exam Selected'
@@ -180,7 +177,6 @@ export class ExamScheduleComponent implements OnInit {
     this.authservice.post('EnableGenerateButton', data).subscribe(
       (res: any) => {
         this.loading.dismissAll();
-        console.log(res);
         if (res['data'].length > 0) {
           if (Number(res['data'][0]['count']) == 0) {
             this.g_btn = true;
@@ -195,7 +191,6 @@ export class ExamScheduleComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -217,7 +212,6 @@ export class ExamScheduleComponent implements OnInit {
     this.authservice.post('InsertExamSchedule', data).subscribe(
       (res: any) => {
         this.loading.dismissAll();
-        console.log(res);
         if (res['status']) {
           this.g_btn = false;
           // this.getGenerateMarksList();
@@ -225,7 +219,6 @@ export class ExamScheduleComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
     //this.g_btn = false
@@ -240,7 +233,6 @@ export class ExamScheduleComponent implements OnInit {
     this.authservice.post('getExamSchedule', data).subscribe(
       (res: any) => {
         this.loading.dismissAll();
-        console.log(res);
         if (res['status']) {
           this.students = res['data'];
         } else {
@@ -249,13 +241,11 @@ export class ExamScheduleComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
 
   getStudentsByClass(class_Id: any) {
-    console.log(this.select_datas);
     if (this.clid != class_Id) {
       let data = {
         class_Id: class_Id,
@@ -279,13 +269,10 @@ export class ExamScheduleComponent implements OnInit {
                 grade: '',
               });
             }
-            //this.students = res['data']
-            console.log(this.students);
           }
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
     }
@@ -302,7 +289,6 @@ export class ExamScheduleComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -318,7 +304,6 @@ export class ExamScheduleComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -332,9 +317,6 @@ export class ExamScheduleComponent implements OnInit {
         {
           text: 'Cancel',
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: 'Delete',
@@ -361,7 +343,6 @@ export class ExamScheduleComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    console.log();
     this.loading.present();
     this.authservice
       .post('getExamSchedule', {
@@ -370,17 +351,14 @@ export class ExamScheduleComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.loading.dismissAll();
-          console.log(res);
           if (res['status']) {
             this.students = res['data'];
-            console.log(this.students);
           } else {
             this.g_btn = false;
           }
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -410,7 +388,6 @@ export class ExamScheduleComponent implements OnInit {
   }
 
   confirm_date() {
-    console.log('confirm');
     this.modal.dismiss(null, 'confirm');
   }
 

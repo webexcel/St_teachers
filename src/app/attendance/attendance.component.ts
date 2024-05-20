@@ -95,9 +95,7 @@ export class AttendanceComponent implements OnInit {
     this.getlist();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AttendancePage');
-  }
+  ionViewDidLoad() {}
 
   ionViewWillEnter() {}
   toggleItems(status: any) {
@@ -133,7 +131,6 @@ export class AttendanceComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -162,7 +159,6 @@ export class AttendanceComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -206,10 +202,8 @@ export class AttendanceComponent implements OnInit {
               ? datar.length + ' Sessions Selected'
               : 'No Students Selected';
         }
-        console.log('datarrrrrrrrrrrrrrr', this.select_datas.student);
       } else {
         this.select_datas.classid = result.data.id;
-        console.log('xxxxxxxxxxxxxxxxxxxxxxxxxx', this.select_datas.classid);
         this.getStudentsByClass(this.select_datas.classid);
         this.className =
           result.data.name != undefined && result.data.id != 0
@@ -235,7 +229,6 @@ export class AttendanceComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
     }
@@ -256,9 +249,7 @@ export class AttendanceComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
+          handler: (data) => {},
         },
       ],
     });
@@ -274,9 +265,6 @@ export class AttendanceComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.delete,
@@ -308,9 +296,6 @@ export class AttendanceComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.delete,
@@ -344,9 +329,6 @@ export class AttendanceComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.send,
@@ -406,7 +388,6 @@ export class AttendanceComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -435,7 +416,6 @@ export class AttendanceComponent implements OnInit {
   }
 
   confirm_date() {
-    console.log('confirm');
     this.modal.dismiss(null, 'confirm');
   }
 

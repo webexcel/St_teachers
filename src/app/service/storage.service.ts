@@ -1,41 +1,53 @@
 import { Injectable } from '@angular/core';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class StorageService {
-  constructor() {
-        
+  constructor() {}
+
+  add(key: any, data: any) {
+    localStorage.setItem(key, data);
   }
 
-  add(key: any, data: any){
-      localStorage.setItem(key,data)
+  addjson(key: any, data: any) {
+    localStorage.setItem(key, JSON.stringify(data));
   }
 
-  addjson(key: any, data: any){
-      localStorage.setItem(key,JSON.stringify(data))
+  get(key: any) {
+    return localStorage.getItem(key);
   }
 
-  get(key: any){
-      return localStorage.getItem(key)
-  }
+  // getjson(key: string): any | null {
+  //   const storedValue = localStorage.getItem(key);
 
-  getjson(key: string): any | null{
+  //   if (storedValue === null) {
+  //     return null;
+  //   }
+
+  //   return JSON.parse(storedValue);
+  // }
+
+  getjson(key: string): any | null {
     const storedValue = localStorage.getItem(key);
 
     if (storedValue === null) {
       return null;
     }
-  
-    return JSON.parse(storedValue);
+
+    try {
+      return JSON.parse(storedValue);
+    } catch (e) {
+      console.error(`Error parsing JSON data for key "${key}":`, e);
+      return null;
+    }
   }
 
-  remove(key: any){
-      localStorage.removeItem(key)
+  remove(key: any) {
+    localStorage.removeItem(key);
   }
 
-  clear(){
-      localStorage.clear()
+  clear() {
+    localStorage.clear();
   }
 }

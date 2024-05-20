@@ -55,6 +55,8 @@ export class ReportCardComponent implements OnInit {
       { name: 'Mid-III', id: '6' },
       { name: 'Preparatory', id: '7' },
     ];
+    this.select_datas.Is_Admin =
+      this.storage.getjson('teachersDetail')[0]['Is_Admin'];
   }
 
   //this.getStudentsByClass(this.select_datas.class.id)
@@ -98,7 +100,6 @@ export class ReportCardComponent implements OnInit {
     this.authservice.post('EnableGenerateButton', data).subscribe(
       (res: any) => {
         this.loading.dismissAll();
-        console.log(res);
         if (res['data'].length > 0) {
           if (Number(res['data'][0]['count']) == 0) {
             this.g_btn = true;
@@ -113,7 +114,6 @@ export class ReportCardComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -128,7 +128,6 @@ export class ReportCardComponent implements OnInit {
     this.authservice.post('generateMarksList', data).subscribe(
       (res: any) => {
         this.loading.dismissAll();
-        console.log(res);
         if (res['status']) {
           this.g_btn = false;
           this.getGenerateMarksList();
@@ -136,11 +135,8 @@ export class ReportCardComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
-    //this.g_btn = false
-    //this.getStudentsByClass(this.select_datas.class.id)
   }
 
   getGenerateMarksList() {
@@ -153,7 +149,6 @@ export class ReportCardComponent implements OnInit {
     this.authservice.post('getGenerateMarksList', data).subscribe(
       (res: any) => {
         this.loading.dismissAll();
-        console.log(res);
         if (res['status']) {
           this.students = res['data'];
         } else {
@@ -162,13 +157,11 @@ export class ReportCardComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
 
   getStudentsByClass(class_Id: any) {
-    console.log(this.select_datas);
     if (this.clid != class_Id) {
       let data = {
         class_Id: class_Id,
@@ -192,13 +185,10 @@ export class ReportCardComponent implements OnInit {
                 grade: '',
               });
             }
-            //this.students = res['data']
-            console.log(this.students);
           }
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
     }
@@ -215,7 +205,6 @@ export class ReportCardComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -245,7 +234,6 @@ export class ReportCardComponent implements OnInit {
     modal.onDidDismiss().then((result) => {
       if (bind == 'Class') {
         this.select_datas.class = result.data;
-        console.log('afsdf', this.select_datas.class);
         this.className =
           result.data != undefined && result.data.name != undefined
             ? result.data.name + ' Selected'
@@ -254,7 +242,6 @@ export class ReportCardComponent implements OnInit {
       }
       if (bind == 'Subject') {
         this.select_datas.subject = result.data;
-        console.log('afsdf', this.select_datas.subject);
         this.SubjectName =
           result.data != undefined && result.data.name != undefined
             ? result.data.name + ' Selected'
@@ -262,7 +249,6 @@ export class ReportCardComponent implements OnInit {
         this.subjectChange();
       } else if (bind == 'Exams') {
         this.select_datas.exams = result.data;
-        console.log('afsdf', this.select_datas.exams);
         this.ExamName =
           result.data != undefined && result.data[parameters[0]] != undefined
             ? result.data.exam_type_name + ' Selected'
@@ -283,27 +269,22 @@ export class ReportCardComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
 
   onSubmit(form: NgForm) {
-    console.log();
     this.loading.present();
     this.authservice
       .post('UpdateExamMarkList', { mark: this.students })
       .subscribe(
         (res: any) => {
           this.loading.dismissAll();
-          console.log(res);
           if (res['status']) {
-            console.log(this.students);
           }
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }

@@ -9,10 +9,6 @@ ion-menu.md ion-content {
   --padding-bottom: 20px;
 }
 
-ion-menu.md ion-list {
-  padding: 20px 0;
-}
-
 ion-menu.md ion-note {
   margin-bottom: 30px;
 }
@@ -118,12 +114,10 @@ ion-item.selected {
   --color: var(--ion-color-primary);
 }
 
-
-
-.after-img{
+.after-img {
   padding-left: 30px;
 }
 
-ion-icon{
+ion-icon {
   padding-left: 3px;
 }

@@ -33,23 +33,6 @@
       (ngSubmit)="f.form.valid && onSubmit(f)"
     >
       <div style="margin-top: 12px">Select Class</div>
-      <!-- <ion-item class="dropdown" style="margin: 0px">
-        <ion-label *ngIf="!select_datas.class">Select a Class</ion-label>
-
-        <ionic-selectable
-          name="class"
-          item-content
-          [(ngModel)]="select_datas.class"
-          itemValueField="id"
-          itemTextField="name"
-          [items]="classs"
-          [canSearch]="true"
-          #class="ngModel"
-          required
-        >
-        </ionic-selectable> 
-      </ion-item> -->
-
       <ion-item class="dropdown_select" style="margin: 0px">
         <ion-input
           readonly
@@ -65,24 +48,6 @@
       </ion-item>
 
       <div style="margin-top: 25px">Select Subject</div>
-      <!-- <ion-item class="dropdown">
-        <ion-label>{{ "Subject" | translate }}</ion-label>
-        <ionic-selectable
-          #portComponent
-          name="subject"
-          item-content
-          [(ngModel)]="select_datas.subject"
-          [hasVirtualScroll]="true"
-          itemValueField="id"
-          itemTextField="name"
-          [canSearch]="true"
-          #subject="ngModel"
-          [items]="subjects"
-          required
-        >
-        </ionic-selectable>
-      </ion-item> -->
-
       <ion-item class="dropdown_select" style="margin: 0px">
         <ion-input
           readonly
@@ -108,23 +73,31 @@
   </div>
 
   <div class="m-3">
-    <div *ngIf="studentRemarks">
-      <div class="dateHead">Remarks</div>
-      <table class="table table-bordered">
+    <div>
+      <div class="dateHead" *ngIf="studentRemarks?.length > 0">Remarks</div>
+      <table class="table table-bordered" *ngFor="let data of studentRemarks">
         <tbody>
           <tr>
             <td width="30%">
-              <div class="txtCenter topBg">{{ studentRemarks.name }}</div>
+              <div class="txtCenter topBg">{{ data.name }}</div>
               <div class="txtCenter" style="font-size: 14px">
-                {{ studentRemarks.CLASSSEC }}
+                {{ data.CLASSSEC }}
               </div>
             </td>
             <td width="60%" class="textleft multi_lines_text">
-              <span>{{ studentRemarks.message }}</span>
+              <span>{{ data.message }}</span>
             </td>
           </tr>
         </tbody>
       </table>
+      <div
+        *ngIf="
+          isFormSubmitted && (!studentRemarks || studentRemarks.length === 0)
+        "
+        class="no-remarks-message"
+      >
+        No Remarks Available for this Class
+      </div>
     </div>
   </div>
 </ion-content>

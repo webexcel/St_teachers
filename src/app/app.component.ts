@@ -1,18 +1,16 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Platform } from '@ionic/angular';
-import { StorageService } from './service/storage.service';
-
-import { Router } from '@angular/router';
 import { setTheme } from 'ngx-bootstrap/utils';
 import { environment } from '../environments/environment';
-import { DataService } from './service/data.service';
-import { TranslateConfigService } from './service/translate-config.service';
-
 import { AuthService } from './service/auth.service';
+import { DataService } from './service/data.service';
 import { FilesService } from './service/files.service';
 import { LoadingService } from './service/loading.service';
+import { StorageService } from './service/storage.service';
+import { TranslateConfigService } from './service/translate-config.service';
 // import { Push, PushObject, PushOptions } from '@ionic-native/push/ngx';
 import { Badge } from '@ionic-native/badge/ngx';
 import { NativeAudio } from '@ionic-native/native-audio/ngx';
@@ -34,6 +32,7 @@ export class AppComponent {
   public badgeNumber: number | undefined;
   public disPlayStudentDetail: any = [];
   public index: any = false;
+  //public appPages = this.storage.get('menulist');
   public appPages = environment.pages;
   loadingconfig: any = {
     bgsColor: environment.color,
@@ -65,7 +64,7 @@ export class AppComponent {
     maxTime: -1,
     minTime: 300,
   };
-  // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+
   constructor(
     public notif: NotificationsService,
     private nativeAudio: NativeAudio,
@@ -96,12 +95,10 @@ export class AppComponent {
           this.storage.remove('page');
       }
     });
-    // this.platform.backButton.subscribe(() => {
-    //   this.appMinimize.minimize();
-    // })
 
     this.initializeApp();
   }
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
@@ -143,7 +140,6 @@ export class AppComponent {
         (err) => {
           this.storage.addjson('classlist', []);
           this.loading.dismissAll();
-          console.log(err);
         }
       );
 
@@ -166,64 +162,8 @@ export class AppComponent {
   }
 
   async pushSetup() {
-    // const options: PushOptions = {
-    //   android: {
-    //     senderID: environment.senderID,
-    //     sound: 'true'
-    //   },
-    //   ios: {
-    //     alert: 'true',
-    //     badge: true,
-    //     sound: 'false'
-    //   }
-    // };
-
-    //const browser = this.iab.create('https://ionicframework.com/');
-
-    // const pushObject: PushObject = this.push.init(options);
     this.storage.add('push', 'ok'); // this line ok
-
     this.notif.initPush();
-
-    // pushObject.on('registration').subscribe((registration: any) => {
-    //   this.fireBaseRegistrationID = registration.registrationId
-    //   //TODO - save in local storage
-    //   this.storage.add('fireBaseID',this.fireBaseRegistrationID)
-    //   console.log('Device registered ID', this.fireBaseRegistrationID);
-    // });
-
-    // pushObject.on('notification').subscribe((notification: any) => {
-
-    //   console.log('Received aa notification', notification)
-    //   ///// Acknowledge the notification//////////
-    //   console.log('Receivedd notification', notification.additionalData.id);
-    //   ///// Acknowledge Ends//////////
-
-    //   this.badge.set(this.badgeNumber);
-    //   console.log('Default Badge Number', this.badgeNumber);
-    //   this.badge.increase(1);
-    //   console.log('After Increase Badge Number', this.badgeNumber);
-    //   //if user using app and push notification comes
-    //   if (notification.additionalData.foreground) {
-    //     // if application open, show popup
-    //     this.badge.set(this.badgeNumber);
-    //     console.log('notification.additionalData.foreground')
-
-    //     this.nativeAudio.play('uniqueId1').then((res:any)=>{
-    //       console.log(res)
-    //     },(err:any)=>{
-    //       console.log(err)
-    //     })
-    //   }
-    //   else {
-    //     //if user NOT using app and push notification comes
-    //     //TODO: Your logic on click of push notification directly
-    //     console.log('Push notification clicked');
-
-    //   }
-    // });
-    // //  this.badgeNumber++;
-    // pushObject.on('error').subscribe((error:any) => console.error('Error with Push plugin', error));
   }
 
   logout() {

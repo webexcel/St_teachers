@@ -20,7 +20,6 @@ export class FilesService {
 
   checkdir() {
     try {
-      console.log(this.file.externalDataDirectory + 'schooltree');
       this.file
         .checkDir(this.file.externalDataDirectory, 'schooltree')
         .then((response: any) => {
@@ -37,9 +36,7 @@ export class FilesService {
               console.log('Directory no create' + JSON.stringify(err));
             });
         });
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   checkfile(filename: any) {
@@ -50,7 +47,6 @@ export class FilesService {
   }
 
   filecopy(p1: any, f1: any) {
-    console.log(p1, f1);
     return this.file.copyFile(
       p1,
       f1,
@@ -82,20 +78,13 @@ export class FilesService {
       this.file
         .removeFile(this.file.externalDataDirectory, 'schooltree/' + file)
         .then(
-          (res: any) => {
-            console.log(res);
-          },
-          (err: any) => {
-            console.log(err);
-          }
+          (res: any) => {},
+          (err: any) => {}
         );
     } catch (error) {}
   }
 
   download(filename: any, imag: any) {
-    /// contentType = image/png
-    //let imag = `base64`
-
     let realData = imag.split(',')[1];
     let contentType = imag.split(',')[0].replace(';base64', '');
     contentType = contentType.replace('data:', '');

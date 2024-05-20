@@ -142,7 +142,6 @@ export class StaffGroupComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }
@@ -206,14 +205,11 @@ export class StaffGroupComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
 
   async openOptions(data: any, value: any) {
-    console.log('aaaaaaaaaaaaaa', data);
-    console.log('aaaaaaaaaaaaaa', value);
     const modal = await this.modalController.create({
       component: SelectModalComponent,
       componentProps: {
@@ -236,7 +232,6 @@ export class StaffGroupComponent implements OnInit {
         }
       }
       this.select_datas.stafftypes = datar;
-      console.log('afsdf', this.select_datas.stafftypes);
       this.staffName =
         datar.length > 0
           ? datar.length + ' Staff Type Selected'
@@ -247,7 +242,6 @@ export class StaffGroupComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (this.select_datas.stafftypes.length) {
-      console.log(this.select_datas);
       this.loading.present();
       this.authservice.post('saveMessageStaff', this.select_datas).subscribe(
         (res: any) => {
@@ -259,7 +253,6 @@ export class StaffGroupComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
     }
@@ -273,9 +266,6 @@ export class StaffGroupComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.delete,
@@ -305,9 +295,6 @@ export class StaffGroupComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.send,
@@ -346,13 +333,11 @@ export class StaffGroupComponent implements OnInit {
     this.fileChooser
       .open()
       .then((uri) => {
-        console.log(uri);
         this.filePath.resolveNativePath(uri).then(
           (res) => {
             let f: any = res.split('/');
             this.select_datas.filename = f[f.length - 1].toLowerCase();
             let l: any = res.split('.');
-            console.log(l);
             l = l[l.length - 1].toLowerCase();
             if (
               l == 'jpg' ||
@@ -378,7 +363,6 @@ export class StaffGroupComponent implements OnInit {
                   this.select_datas.image = `${l}${result.split('base64,')[1]}`;
                 },
                 (err) => {
-                  console.log('@log file open error: ', err);
                   this.error = true;
                 }
               );
@@ -386,9 +370,7 @@ export class StaffGroupComponent implements OnInit {
               this.error = true;
             }
           },
-          (err) => {
-            console.log(err);
-          }
+          (err) => {}
         );
       })
       .catch((e) => console.log(e));
@@ -398,7 +380,6 @@ export class StaffGroupComponent implements OnInit {
     if (f) {
       f = f.split('.');
       f = f[f.length - 1].toLowerCase();
-      console.log(f);
       if (f != 'pdf' && f != 'mp3' && f != 'xls' && f != 'xlsx') {
         return true;
       } else {
@@ -470,7 +451,6 @@ export class StaffGroupComponent implements OnInit {
       '.mp3';
 
     this.Path = this.serfile.filepath() + this.fileName;
-    console.log(this.Path);
     this.audio = this.media.create(this.Path);
     this.select_datas.ftype = '';
     this.select_datas.image = '';
@@ -485,7 +465,6 @@ export class StaffGroupComponent implements OnInit {
 
     this.serfile.read(this.fileName).then(
       (res) => {
-        console.log(res);
         let l = res.split('base64,');
         if (l[1].length != 0) {
           this.select_datas.ftype = 'mp3';
@@ -496,9 +475,7 @@ export class StaffGroupComponent implements OnInit {
           );
         }
       },
-      (err) => {
-        console.log(err);
-      }
+      (err) => {}
     );
   }
 
@@ -534,7 +511,6 @@ export class StaffGroupComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -563,7 +539,6 @@ export class StaffGroupComponent implements OnInit {
   }
 
   confirm_date() {
-    console.log('confirm');
     this.modal.dismiss(null, 'confirm');
   }
 
@@ -581,7 +556,6 @@ export class StaffGroupComponent implements OnInit {
     }
   }
   toggleMessage(id: any, message: any, image: any, i: any) {
-    console.log('toggle', id);
     if (id != 'cancel' && id != 'confirm') {
       this.index = i;
       this.messageId = id;
@@ -589,7 +563,6 @@ export class StaffGroupComponent implements OnInit {
       this.attachment = image;
     }
     if (id == 'confirm') {
-      console.log('message id', this.index);
       this.last3days[this.index].message = this.messageText;
       this.editMessage(this.messageId, this.messageText);
     }
@@ -609,7 +582,6 @@ export class StaffGroupComponent implements OnInit {
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
   }
@@ -623,9 +595,6 @@ export class StaffGroupComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {
-            console.log('Cancel clicked');
-          },
         },
         {
           text: this.delete,
@@ -673,7 +642,6 @@ export class StaffGroupComponent implements OnInit {
       new Date().getMinutes() +
       new Date().getSeconds() +
       '.mp3';
-    // VoiceRecorder.hasAudioRecordingPermission.then((result: GenericResponse) => console.log(result.value))
     VoiceRecorder.startRecording()
       .then((result: GenericResponse) => {
         this.select_datas.ftype = '';
@@ -682,7 +650,6 @@ export class StaffGroupComponent implements OnInit {
         this.recording = true;
         if (!this.timer) {
           this.timer = setInterval(() => {
-            console.log('@log: this.recordingTimer: ', this.recordingTimer);
             this.recordingTimer += 1;
           }, 1000);
         }
@@ -692,11 +659,9 @@ export class StaffGroupComponent implements OnInit {
           duration: 0,
           fileName: this.fileName ?? '',
         };
-        console.log('@log recording value: ', result.value);
       })
       .catch((error) => {
         this.error = true;
-        console.log('@log recording error: ', error);
       });
   }
 
@@ -707,7 +672,6 @@ export class StaffGroupComponent implements OnInit {
         if (this.timer) {
           clearInterval(this.timer);
         }
-        console.log('@log recorded value: ', result.value);
         const { mimeType, recordDataBase64, msDuration } = result.value;
         this.select_datas.filename = this.fileName;
         this.select_datas.ftype = 'mp3';
@@ -722,7 +686,6 @@ export class StaffGroupComponent implements OnInit {
       })
       .catch((error) => {
         this.error = true;
-        console.log('@log recorded error: ', error);
       });
   }
 
@@ -753,7 +716,6 @@ export class StaffGroupComponent implements OnInit {
         this.loading.dismissAll();
         if (res['status']) {
           this.seengrpmes = res['senditem'];
-          console.log('test', this.seengrpmes);
           this.seengrpmes.sort(
             (a: any, b: any) => b.seen_status - a.seen_status
           );
@@ -761,7 +723,6 @@ export class StaffGroupComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-        console.log(err);
       }
     );
   }

@@ -1,0 +1,66 @@
+ion-content {
+  --background: #f0f0f0; /* Change to your preferred color */
+  // background-color: #fff;
+}
+
+.classwise {
+  margin-top: 5%;
+}
+
+.info-container-main {
+  display: flex; /* Use flex layout */
+  justify-content: center;
+  width: 90%; /* Same width as card-container: 3 cards x 120px each */
+  //   border: 1px solid black;
+  margin-left: 5%;
+  border-radius: 5px;
+  background-color: #5886fe;
+  color: #fff;
+}
+
+// .info-container {
+//   display: flex; /* Use flex layout */
+//   justify-content: center;
+//   width: 90%; /* Same width as card-container: 3 cards x 120px each */
+//   //   border: 1px solid black;
+//   margin-left: 5%;
+//   margin-top: 5px;
+//   border-radius: 5px;
+//   //   background-color: #e2e2e2;
+//   background-color: #fff;
+//   color: #606060;
+// }
+
+// /* Each column in the info-container */
+// .info-column {
+//   width: 25%; /* Each column takes up 25% of the container's width */
+//   text-align: center; /* Center the text */
+//   padding: 3.5px; /* Optional padding for spacing */
+//   font-size: 16px;
+//   padding: 1.1% 0;
+// }
+
+.info-container {
+  justify-content: center;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5px;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #606060;
+}
+
+.info-column {
+  text-align: center;
+  padding: 3.5px;
+  font-size: 16px;
+  padding: 1.1% 0;
+}
+
+.info-container .info-column:first-child {
+  color: #5886fe;
+}
+
+.info-container-main .info-column {
+  width: 25%;
+}

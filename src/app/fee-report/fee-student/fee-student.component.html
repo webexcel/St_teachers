@@ -1,0 +1,131 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button
+        ><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon
+      ></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Student Report</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+    <ion-toolbar class="p-0">
+      <ion-buttons slot="start">
+        <ion-menu-button
+          ><ion-icon
+            class="text-white"
+            [ios]="'menu-sharp'"
+            [md]="'menu-sharp'"
+          ></ion-icon
+        ></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Student Report</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="Students">
+    <div class="info-container-main">
+      <div class="info-column">Fee Head</div>
+      <div class="info-column">Total</div>
+      <div class="info-column">Con.Amt</div>
+      <div class="info-column">Paid</div>
+    </div>
+
+    <!-- <div class="info-column">{{ fee.feeheads | slice : 0 : 10 }}</div>
+    <div class="info-column">
+      {{
+        fee.Total_Amount !== null && fee.Total_Amount !== undefined
+          ? fee.Total_Amount
+          : 0
+      }}
+    </div>
+    <div class="info-column">
+      {{
+        fee.concession !== null && fee.concession !== undefined
+          ? fee.concession
+          : 0
+      }}
+    </div>
+    <div class="info-column">
+      {{
+        fee.PaidAmount !== null && fee.PaidAmount !== undefined
+          ? fee.PaidAmount
+          : 0
+      }}
+    </div> -->
+
+    <div class="info-container" *ngFor="let fee of studentFeeDetails">
+      <div class="info-column">{{ fee.feeheads | slice : 0 : 10 }}</div>
+      <div class="info-column">
+        {{
+          fee.Total_Amount !== null && fee.Total_Amount !== undefined
+            ? fee.Total_Amount
+            : 0
+        }}
+      </div>
+      <div class="info-column">
+        {{
+          fee.concession !== null && fee.concession !== undefined
+            ? fee.concession
+            : 0
+        }}
+      </div>
+      <div class="info-column">
+        {{
+          fee.PaidAmount !== null && fee.PaidAmount !== undefined
+            ? fee.PaidAmount
+            : 0
+        }}
+      </div>
+    </div>
+
+    <div class="info-container-tot">
+      <div class="info-column">Total</div>
+      <div class="info-column">{{ totalVal }}</div>
+      <div class="info-column">0</div>
+      <div class="info-column">{{ totalPaid }}</div>
+    </div>
+
+    <div class="feeHistory">
+      <div class="feeHistoryT">Fee History</div>
+
+      <div class="container" *ngFor="let history of feeHistory">
+        <div class="left-column">
+          <div class="receipt" style="padding-bottom: 10px">
+            30-Apr-2024 [Receipt ID: 2], Receipt no:{{ history }}
+          </div>
+          <div class="amount">Paid Amount: 500.00</div>
+        </div>
+        <div class="right-column">
+          <img class="image-wrapper" src="assets/imgs/Group.png" />
+        </div>
+      </div>
+
+      <!-- <div class="container">
+        <div class="left-column">
+          <div class="receipt" style="padding-bottom: 10px">
+            30-Apr-2024 [Receipt ID: 2], Receipt no:
+          </div>
+          <div class="amount">Paid Amount: 500.00</div>
+        </div>
+        <div class="right-column">
+          <img class="image-wrapper" src="assets/imgs/Group.png" />
+        </div>
+      </div> -->
+
+      <!-- <div class="container">
+        <div class="left-column">
+          <div class="receipt" style="padding-bottom: 10px">
+            30-Apr-2024 [Receipt ID: 2], Receipt no:
+          </div>
+          <div class="amount">Paid Amount: 500.00</div>
+        </div>
+        <div class="right-column">
+          <img class="image-wrapper" src="assets/imgs/Group.png" />
+        </div>
+      </div> -->
+    </div>
+  </div>
+</ion-content>

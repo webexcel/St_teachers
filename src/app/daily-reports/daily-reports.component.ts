@@ -5,7 +5,6 @@ import {
   IonModal,
   ModalController,
 } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core/components';
 import { FlashComponent } from '../flash/flash.component';
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
@@ -60,6 +59,8 @@ export class DailyReportsComponent implements OnInit {
   staffData: any;
   level: any;
   levelType: any;
+  isReportOpen: boolean = false;
+
   constructor(
     public authservice: AuthService,
     private translate: TranslateConfigService,
@@ -74,14 +75,11 @@ export class DailyReportsComponent implements OnInit {
     this.getLevel(this.staff_id);
     this.ios = this.authservice.isiso();
     this.translate.set();
-    console.log('staff_id value', this.storage.getjson('teachersDetail')[0]);
-    // this.getMyList(this.staff_id);
   }
 
   ngOnInit() {}
 
   getLevel(ID: any) {
-    console.log('levesss');
     this.loading.present();
     this.authservice
       .post('getTeacherLevel', {
@@ -91,7 +89,6 @@ export class DailyReportsComponent implements OnInit {
         (res: any) => {
           this.staffData = res.data;
           this.levelType = this.staffData[0].Is_Admin;
-          console.log('level type', this.levelType);
           if (this.levelType == 'N') {
             this.level = 4;
           } else if (this.levelType == 'I') {
@@ -101,9 +98,7 @@ export class DailyReportsComponent implements OnInit {
           } else {
             this.level = 1;
           }
-          console.log('level valuee', this.level);
           this.getMyList(this.staff_id);
-          console.log('staff data', this.staffData);
           this.loading.dismissAll();
         },
         (err) => {
@@ -120,11 +115,9 @@ export class DailyReportsComponent implements OnInit {
     this.s_date = 'all';
     this.e_date = 'all';
     this.enable_filter = false;
-    console.log(ev);
     let val = ev.detail.value;
     this.listType = val;
     if (val == 1) {
-      console.log('called');
       this.getMyList(this.staff_id);
     } else {
       this.getOtherList(this.staff_id);
@@ -143,11 +136,7 @@ export class DailyReportsComponent implements OnInit {
     if (date_arr1.length > 1) {
       this.e_date = 'all';
     }
-    console.log('sdate', this.s_date);
-    console.log('edate', this.e_date);
     if (this.listType == 1) {
-      console.log('called');
-
       this.getMyList(this.staff_id);
     } else {
       this.getOtherList('type');
@@ -173,7 +162,6 @@ export class DailyReportsComponent implements OnInit {
       );
   }
   getMyList(ID: any) {
-    console.log('valuee level', this.level);
     this.loading.present();
     this.authservice
       .post('getactivityTeacher', {
@@ -185,7 +173,6 @@ export class DailyReportsComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.formData = res.data;
-          console.log('form data', this.formData);
           if (this.level == 2 || this.level == 1) {
             this.formData1 = res.data1;
             this.lengthOfData = this.formData.length + this.formData1.length;
@@ -209,10 +196,8 @@ export class DailyReportsComponent implements OnInit {
     modal.present();
 
     const { data, role } = await modal.onWillDismiss();
-    console.log('data', data);
     if (role === 'confirm') {
       if (type == 'new') {
-        console.log('confirmmm', data);
         data.value.staff_id = this.staff_id;
         data.value.level = this.level;
         this.loading.present();
@@ -220,13 +205,11 @@ export class DailyReportsComponent implements OnInit {
           (res: any) => {
             this.loading.dismissAll();
             if (res['status']) {
-              console.log('resultttt', res);
             }
             this.getMyList(this.staff_id);
           },
           (err) => {
             this.loading.dismissAll();
-            console.log(err);
           }
         );
       } else {
@@ -238,13 +221,11 @@ export class DailyReportsComponent implements OnInit {
           (res: any) => {
             this.loading.dismissAll();
             if (res['status']) {
-              console.log('resultttt', res);
               this.getMyList(this.staff_id);
             }
           },
           (err) => {
             this.loading.dismissAll();
-            console.log(err);
           }
         );
       }
@@ -252,7 +233,6 @@ export class DailyReportsComponent implements OnInit {
   }
 
   async openModalDetails(item: any) {
-    console.log('open modal');
     const modal = await this.modalCtrl.create({
       component: FlashComponent,
       componentProps: {
@@ -270,25 +250,20 @@ export class DailyReportsComponent implements OnInit {
         (res: any) => {
           this.loading.dismissAll();
           if (res['status']) {
-            console.log('resultttt', res);
           }
         },
         (err) => {
           this.loading.dismissAll();
-          console.log(err);
         }
       );
     } else {
-      // console.log("Please fill the data");
       this.loading.dismissAll();
     }
   }
 
   setOpen(isOpen: boolean, data: any) {
-    console.log('opening modal', isOpen);
     this.isModalOpen = isOpen;
     this.oneItem = data;
-    console.log('value', this.oneItem.act_status);
   }
   setOpenClose(isOpen: boolean) {
     this.isModalOpen = isOpen;
@@ -328,12 +303,10 @@ export class DailyReportsComponent implements OnInit {
               (res: any) => {
                 this.loading.dismissAll();
                 if (res['status']) {
-                  console.log('resultttt', res);
                 }
               },
               (err) => {
                 this.loading.dismissAll();
-                console.log(err);
               }
             );
           },
@@ -342,9 +315,6 @@ export class DailyReportsComponent implements OnInit {
           text: 'Cancel',
           icon: 'close',
           role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          },
         },
       ],
     });
@@ -352,7 +322,6 @@ export class DailyReportsComponent implements OnInit {
   }
 
   formatDate(date: Date = new Date()) {
-    // console.log('date');
     const today = new Date(date);
     const yyyy = today.getFullYear();
     let mm = `${today.getMonth() + 1}`; // Months start at 0!
@@ -373,20 +342,12 @@ export class DailyReportsComponent implements OnInit {
   }
 
   confirm_date() {
-    console.log('confirm');
     this.modal.dismiss(null, 'confirm');
   }
   showHideDatePicker() {
     this.showDatePicker = !this.showDatePicker;
   }
-  onWillDismiss(event: Event, type: any) {
-    const ev = event as CustomEvent<OverlayEventDetail<string>>;
-    if (ev.detail.role === 'cancel') {
-      if (type == 'first') {
-        this.s_date = 'all';
-      } else {
-        this.e_date = 'all';
-      }
-    }
+  toggleMessage() {
+    this.isReportOpen = !this.isReportOpen;
   }
 }
