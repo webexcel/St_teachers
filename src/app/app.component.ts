@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Platform } from '@ionic/angular';
+import { AlertController, Platform } from '@ionic/angular';
 import { setTheme } from 'ngx-bootstrap/utils';
 import { environment } from '../environments/environment';
 import { AuthService } from './service/auth.service';
@@ -78,7 +78,8 @@ export class AppComponent {
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
     private storage: StorageService,
-    public authservice: AuthService
+    public authservice: AuthService,
+    public alertCtrl: AlertController
   ) {
     setTheme('bs4');
     router.events.subscribe((val) => {
@@ -166,16 +167,32 @@ export class AppComponent {
     this.notif.initPush();
   }
 
-  logout() {
-    let laun = this.storage.get('laun');
-    let fireBaseID = this.storage.get('fireBaseID');
-    this.storage.clear();
-    if (laun) {
-      this.storage.add('laun', laun);
-      this.translate.set();
-    }
-    this.storage.add('fireBaseID', fireBaseID);
-    this.index = false;
-    this.router.navigate(['login']);
+  async logout() {
+    let alert = await this.alertCtrl.create({
+      header: 'SchoolTree',
+      message: 'Do you want to log-out?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          handler: (data) => {
+            let laun = this.storage.get('laun');
+            let fireBaseID = this.storage.get('fireBaseID');
+            this.storage.clear();
+            if (laun) {
+              this.storage.add('laun', laun);
+              this.translate.set();
+            }
+            this.storage.add('fireBaseID', fireBaseID);
+            this.index = false;
+            this.router.navigate(['login']);
+          },
+        },
+      ],
+    });
+    await alert.present();
   }
 }

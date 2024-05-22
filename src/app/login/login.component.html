@@ -1,14 +1,9 @@
-<!-- Responsive Desktop/Mobile Login form considered to be used as mobile first approach-->
-<!-- Wave animation credit: https://codepen.io/goodkatz -->
-
 <div class="header">
-  <!--Content before waves-->
   <div class="inner-header flex">
-    <!--Just the logo.. Don't mind this-->
     <h3>{{ school_name }}</h3>
   </div>
 
-  <!--Waves Container-->
+  <!-- waves design -->
   <div>
     <svg
       class="waves"
@@ -47,15 +42,13 @@
       </g>
     </svg>
   </div>
-  <!--Waves end-->
 </div>
-<!--Header ends-->
 
 <div class="card p-2 bg-white rounded shadow-lg">
   <img [src]="logo" class="card-img-top" />
 </div>
 
-<!--Content starts-->
+<!-- controls -->
 <div class="content flex">
   <form
     name="form"
@@ -96,5 +89,3 @@
     <button class="login-btn" type="submit">{{ "login" | translate }}</button>
   </form>
 </div>
-
-<!--Content ends-->

@@ -92,9 +92,7 @@ export class LoginComponent implements OnInit {
       // Handle error appropriately (e.g., display error message)
     }
   }
-  /////////////////////////////////////////////////////////////////////////
 
-  /////////////////////////////////////////////////////////////////////////
   async mobileinstall() {
     this.loading.present();
     this.app_versionCode = environment.app_versionCode;
@@ -163,7 +161,6 @@ export class LoginComponent implements OnInit {
           this.getimage(i + 1);
         }
       }
-    } else {
     }
   }
 
@@ -236,7 +233,6 @@ export class LoginComponent implements OnInit {
       },
       (err) => {
         this.loading.dismissAll();
-
         //Connection failed message
       }
     );

@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FileChooser } from '@ionic-native/file-chooser/ngx';
-import { FilePath } from '@ionic-native/file-path/ngx';
 import { IonModal, ModalController, Platform } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Base64String } from 'capacitor-voice-recorder';
@@ -19,8 +17,10 @@ import { TranslateConfigService } from '../service/translate-config.service';
   styleUrls: ['./reports.component.scss'],
 })
 export class ReportsComponent implements OnInit {
-  ios: any = false;
   @ViewChild('portComponent', { static: false }) portComponent: any;
+  @ViewChild(IonModal) modal!: IonModal;
+
+  ios: any = false;
   select_datas: any = {};
   select_datas1: any = {};
   classs: any = [];
@@ -31,6 +31,22 @@ export class ReportsComponent implements OnInit {
   subjects: any = [];
   delete_personalized: any;
   send_personalized: any;
+  fileName!: any;
+  recording: boolean = false;
+  base64: any;
+  showDatePicker: boolean = false;
+  cancel: any;
+  send: any;
+  delete: any;
+  isPickerOpen: boolean = false;
+  grpmes: any = [];
+  last3days: any = [];
+  senditems: any = [];
+  studentRemarks: any;
+  StudentsName: any;
+  SubjectName: any;
+  ClassName: any;
+
   audioData: {
     fileName: string;
     base64: Base64String | null;
@@ -40,29 +56,9 @@ export class ReportsComponent implements OnInit {
     base64: null,
     duration: 0,
   };
-  fileName!: any;
-  recording: boolean = false;
-  base64: any;
-  showDatePicker: boolean = false;
-  cancel: any;
-  send: any;
-  delete: any;
-  @ViewChild(IonModal)
-  modal!: IonModal;
-  isPickerOpen: boolean = false;
-
-  grpmes: any = [];
-  last3days: any = [];
-  senditems: any = [];
-  studentRemarks: any;
-  StudentsName: any;
-  SubjectName: any;
-  ClassName: any;
 
   constructor(
     public storage: StorageService,
-    private fileChooser: FileChooser,
-    private filePath: FilePath,
     private platform: Platform,
     private router: Router,
     public authservice: AuthService,
@@ -120,7 +116,6 @@ export class ReportsComponent implements OnInit {
     modal.onDidDismiss().then((result: any) => {
       if (multi) {
         let datar = [];
-        let textData = [];
         if (result.data != undefined) {
           for (let i = 0; i < result.data.length; i++) {
             if (result.data[i].checked) {
@@ -191,9 +186,11 @@ export class ReportsComponent implements OnInit {
   formatPorts(students: any) {
     return students.map((port: any) => port.name).join(', ');
   }
+
   toggleDateSelection() {
     this.isPickerOpen = !this.isPickerOpen;
   }
+
   onWillDismiss(event: Event, type: any) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'cancel') {

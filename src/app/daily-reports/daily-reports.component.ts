@@ -88,7 +88,12 @@ export class DailyReportsComponent implements OnInit {
       .subscribe(
         (res: any) => {
           this.staffData = res.data;
-          this.levelType = this.staffData[0].Is_Admin;
+          this.levelType =
+            this.staffData != undefined &&
+            this.staffData[0] != undefined &&
+            this.staffData[0].Is_Admin != undefined
+              ? this.staffData[0].Is_Admin
+              : '';
           if (this.levelType == 'N') {
             this.level = 4;
           } else if (this.levelType == 'I') {
