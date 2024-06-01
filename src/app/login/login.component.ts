@@ -186,7 +186,7 @@ export class LoginComponent implements OnInit {
         this.loading.dismissAll();
       }
     );
-    this.getmenu();
+    //this.getmenu();
   }
 
   getmenu() {

@@ -135,7 +135,7 @@ export const environment = {
     {
       title: 'fee-report',
       url: '/fee-report',
-      icon: 'assets/imgs/latest_Icons/News.svg',
+      icon: 'assets/imgs/latest_Icons/news.svg',
       // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
       admin: 'N',
     },
@@ -156,9 +156,9 @@ export const environment = {
   ],
   login_logo: 'assets/imgs/appicon.png',
   school_name: 'Schooltree Teachers',
-  app_versionCode: '7',
+  app_versionCode: '8',
   apiBaseUrl: 'https://demo.schooltree.in/baseTeacherS.php/api/',
-  version: '7',
+  version: '8',
   package: 'com.schooltree.schooltree',
   packageid: '',
   color: '#00CCCC',

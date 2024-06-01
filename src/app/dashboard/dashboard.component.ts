@@ -58,6 +58,8 @@ export class DashboardComponent implements OnInit {
   modalImage: any;
   grpmes: any;
   senditems: any = [];
+  schoolList: any = [];
+  schoolData: any = null;
 
   constructor(
     private modalService: BsModalService,
@@ -75,6 +77,7 @@ export class DashboardComponent implements OnInit {
     public sanitizer: DomSanitizer,
     public base64: Base64
   ) {
+    this.initializeSchoolData();
     this.platform.backButton.subscribe(() => {
       let p = this.storage.get('page');
       if (p == 'dashboard') {
@@ -94,12 +97,42 @@ export class DashboardComponent implements OnInit {
     this.getgroupMessage();
   }
 
+  initializeSchoolData() {
+    const teachersDetail = this.storage.getjson('teachersDetail');
+    if (teachersDetail && teachersDetail.length > 0) {
+      this.schoolList = teachersDetail;
+      this.schoolData = teachersDetail[0]; // Set the first item as default
+    }
+  }
+
+  currentSchool(event: any) {
+    let schoolDetails = this.storage.getjson('teachersDetail');
+    const selectedSchool = event.detail.value;
+    const selectedIndex = this.schoolList.findIndex(
+      (school: any) => school.UserId === selectedSchool.UserId
+    );
+
+    if (selectedIndex > -1) {
+      schoolDetails.splice(selectedIndex, 1);
+    }
+    schoolDetails.unshift(selectedSchool);
+
+    this.storage.addjson('teachersDetail', schoolDetails);
+    this.schoolList = schoolDetails;
+    this.schoolData = selectedSchool;
+    this.reloadPage();
+  }
+
   go(url: any) {
     this.router.navigate([url]);
   }
 
   redirectToModule() {
     this.router.navigate(['/messages']);
+  }
+
+  reloadPage() {
+    window.location.reload();
   }
 
   getosversion() {

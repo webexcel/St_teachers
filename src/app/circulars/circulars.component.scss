@@ -205,3 +205,44 @@
 //   justify-content: space-between;
 //   align-items: center;
 // }
+
+// thumbnail-image-css
+
+.uploads {
+  border: 1px solid black;
+  border-radius: 5%;
+  background-color: green;
+  color: white;
+  margin: 20px;
+}
+
+.thumbnail-container {
+  position: relative;
+  width: 90%;
+  margin: 5%;
+  cursor: pointer;
+}
+
+.thumbnail_img {
+  width: 100%;
+  filter: blur(2px);
+  transition: filter 0.3s;
+}
+
+.play-icon {
+  color: black;
+  opacity: 0.8;
+}
+
+.play-icon-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  color: white;
+}
+
+.video-player {
+  width: 100%;
+}
