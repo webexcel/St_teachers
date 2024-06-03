@@ -5,22 +5,6 @@
 export const environment = {
   production: false,
   senderID: '427864482679',
-  pagess: [
-    {
-      title: 'homework',
-      url: '/homework',
-      icon: 'assets/imgs/latest_Icons/homework.svg',
-      // filter: 'invert(15%) sepia(100%) saturate(2860%) hue-rotate(238deg) brightness(101%) contrast(170%)',
-      admin: 'N',
-    },
-    {
-      title: 'Personal',
-      url: '/personalized-messages',
-      icon: 'assets/imgs/latest_Icons/personal.svg',
-      // filter:'invert(10%) sepia(51%) saturate(5820%) hue-rotate(291deg) brightness(110%) contrast(115%)',
-      admin: 'N',
-    },
-  ],
   pages: [
     {
       title: 'circulars',
@@ -137,18 +121,10 @@ export const environment = {
     {
       title: 'fee-report',
       url: '/fee-report',
-      icon: 'assets/imgs/latest_Icons/News.svg',
+      icon: 'assets/imgs/latest_Icons/fee.svg',
       // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
       admin: 'N',
     },
-
-    // {
-    //   title: 'fee-student',
-    //   url: '/fee-student',
-    //   icon: 'assets/imgs/latest_Icons/News.svg',
-    //   // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
-    //   admin: 'N',
-    // },
   ],
   login_logo: 'assets/imgs/appicon.png',
   school_name: 'Schooltree Teachers',

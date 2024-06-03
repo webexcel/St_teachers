@@ -6,15 +6,26 @@
       </ion-menu-button>
     </ion-buttons>
     <ion-title>{{ "daily_reports" | translate }}</ion-title>
-    <ion-buttons
+    <!-- <ion-buttons
       style="margin-right: 16px; color: #505050; font-weight: 500"
       slot="end"
       color="light"
       class="box-shadow-none"
       (click)="filterDetails()"
     >
-      <!-- {{sort_value}} &nbsp;&nbsp; -->
       <ion-icon name="funnel" style="font-size: 20px"></ion-icon>
+    </ion-buttons> -->
+
+    <ion-buttons slot="end">
+      <ion-button
+        routerDirection="root"
+        routerLink="/dashboard"
+        lines="none"
+        detail="false"
+        routerLinkActive="selected"
+      >
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>

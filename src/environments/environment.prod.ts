@@ -135,18 +135,10 @@ export const environment = {
     {
       title: 'fee-report',
       url: '/fee-report',
-      icon: 'assets/imgs/latest_Icons/News.svg',
+      icon: 'assets/imgs/latest_Icons/fee.svg',
       // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
       admin: 'N',
     },
-
-    // {
-    //   title: 'fee-student',
-    //   url: '/fee-student',
-    //   icon: 'assets/imgs/latest_Icons/News.svg',
-    //   // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
-    //   admin: 'N',
-    // },
 
     /*{ title: 'gallery',url: '/gallery', icon: 'assets/imgs/speakers/gallery.png', filter:"invert(50%) sepia(24%) saturate(1477%) hue-rotate(1deg) brightness(106%) contrast(89%)"},
     
@@ -154,6 +146,7 @@ export const environment = {
     { title: 'news-events',url: '/news-events', icon: 'assets/imgs/speakers/news.png',filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"},*/
     // { title: 'language',url: '/language', icon: 'assets/imgs/speakers/language.png',filter:"invert(10%) sepia(98%) saturate(6683%) hue-rotate(247deg) brightness(62%) contrast(131%)"},
   ],
+
   login_logo: 'assets/imgs/appicon.png',
   school_name: 'Schooltree Teachers',
   app_versionCode: '7',

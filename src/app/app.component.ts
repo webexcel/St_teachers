@@ -32,8 +32,8 @@ export class AppComponent {
   public badgeNumber: number | undefined;
   public disPlayStudentDetail: any = [];
   public index: any = false;
-  //public appPages = this.storage.get('menulist');
-  public appPages = environment.pages;
+  public appPages = this.storage.getjson('menulist');
+  // public appPages = environment.pages;
   loadingconfig: any = {
     bgsColor: environment.color,
     bgsOpacity: 0.5,
@@ -148,6 +148,10 @@ export class AppComponent {
     } else {
       this.dataservice.changeMenustatus(false);
     }
+  }
+
+  async ionViewWillEnter() {
+    this.appPages = await this.storage.getjson('menulist');
   }
 
   checkview(v: any) {

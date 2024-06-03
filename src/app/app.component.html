@@ -51,13 +51,15 @@
           >
             <ion-item
               routerDirection="root"
-              [routerLink]="[p.url]"
+              [routerLink]="[p.menu_link]"
               lines="none"
               detail="false"
               routerLinkActive="selected"
             >
-              <img class="icon-img" [src]="p.icon" />
-              <ion-label class="after-img">{{ p.title | translate }}</ion-label>
+              <img class="icon-img" [src]="p.menu_icon" />
+              <ion-label class="after-img">{{
+                p.menu_name | translate
+              }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
 

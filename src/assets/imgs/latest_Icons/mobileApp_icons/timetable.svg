@@ -1,0 +1,37 @@
+<svg width="35" height="31" viewBox="0 0 35 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Group 43">
+<g id="timetable">
+<path id="Vector" fill-rule="evenodd" clip-rule="evenodd" d="M31.5 3H3.5C1.575 3 0 4.4 0 6.11111V27.8889C0 29.6 1.575 31 3.5 31H31.5C33.425 31 35 29.6 35 27.8889V6.11111C35 4.4 33.425 3 31.5 3Z" fill="#FF377F"/>
+<g id="Group 40">
+<path id="Line 8" d="M20 1V5.8" stroke="#A21F4E" stroke-linecap="round"/>
+<path id="Line 11" d="M15 1V5.8" stroke="#A21F4E" stroke-linecap="round"/>
+<path id="Line 12" d="M10 1V5.8" stroke="#A21F4E" stroke-linecap="round"/>
+<path id="Line 13" d="M25 1V5.8" stroke="#A21F4E" stroke-linecap="round"/>
+<path id="Line 14" d="M30 1V5.8" stroke="#A21F4E" stroke-linecap="round"/>
+<path id="Line 15" d="M5 1V5.8" stroke="#A21F4E" stroke-linecap="round"/>
+</g>
+</g>
+<g id="Group 39">
+<path id="Line 20" d="M25.2857 10.24H28.6667" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 19" d="M18.5238 10.24H21.9048" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 23" d="M18.5238 14.32H21.9048" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 27" d="M18.5238 18.4H21.9048" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 31" d="M18.5238 22.48H21.9048" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 35" d="M18.5238 26.56H21.9048" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 24" d="M25.2857 14.32H28.6667" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 28" d="M25.2857 18.4H28.6667" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 32" d="M25.2857 22.48H28.6667" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 36" d="M25.2857 26.56H28.6667" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 21" d="M11.7619 10.24H15.1429" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 25" d="M11.7619 14.32H15.1429" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 29" d="M11.7619 18.4H15.1429" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 33" d="M11.7619 22.48H15.1429" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 37" d="M11.7619 26.56H15.1429" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 22" d="M5 10.24H8.38095" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 26" d="M5 14.32H8.38095" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 30" d="M5 18.4H8.38095" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 34" d="M5 22.48H8.38095" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Line 38" d="M5 26.56H8.38095" stroke="#F0BED0" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+</svg>

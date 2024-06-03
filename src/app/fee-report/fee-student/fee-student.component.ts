@@ -18,6 +18,8 @@ export class FeeStudentComponent implements OnInit {
   totalVal = 0;
   totalPaid = 0;
   totalCon = 0;
+  feeKeys: any;
+  mainData: any;
 
   constructor(private route: ActivatedRoute, public authservice: AuthService) {}
 
@@ -43,9 +45,26 @@ export class FeeStudentComponent implements OnInit {
             this.studentReport.Student_History.Feedetails;
           this.studentFeeHistory =
             this.studentReport.Student_History.FEE_HISTORY;
+          console.log('Fee History 1223', this.studentFeeHistory);
+          this.feeKeys = Object.keys(this.studentFeeHistory);
+
+          this.mainData = [];
+
+          for (let i = 0; i < this.feeKeys.length; i++) {
+            for (
+              let j = 0;
+              j < this.studentFeeHistory[this.feeKeys[i]].length;
+              j++
+            ) {
+              this.mainData.push(this.studentFeeHistory[this.feeKeys[i]][j]);
+            }
+          }
 
           const admissionNumber = this.studentId;
           this.feeHistory = this.studentFeeHistory[0];
+
+          console.log('12345', this.studentFeeDetails);
+
           this.studentFeeDetails.map((data: any) => {
             this.totalVal = this.totalVal + Number(data.Total_Amount);
             this.totalPaid = this.totalPaid + Number(data.PaidAmount);

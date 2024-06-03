@@ -20,11 +20,11 @@ export class LoginComponent implements OnInit {
   school_name: any = environment.school_name;
   authForm: any = {};
   app_versionCode: any = environment.app_versionCode;
-
   usernametr: any;
   passwordtr: any;
   teachersDetail: any = [];
   storeFirBaseStatus: any;
+  menuList: any;
 
   constructor(
     private platform: Platform,
@@ -186,16 +186,16 @@ export class LoginComponent implements OnInit {
         this.loading.dismissAll();
       }
     );
+
     this.getmenu();
   }
 
   getmenu() {
     this.loading.present();
     let data = {
-      Is_Admin: this.teachersDetail[0]['Is_Admin'],
-      staff_id: this.teachersDetail[0]['staff_id'],
+      UserId: this.teachersDetail[0].UserId,
     };
-    this.authservice.post('getmenu', data).subscribe(
+    this.authservice.post('getMobileAppMenu', data).subscribe(
       (res: any) => {
         this.loading.dismissAll();
         if (res['status']) {
@@ -212,6 +212,23 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+  // getMobileAppMenu() {
+  //   let detail = {
+  //     UserId: this.teachersDetail.UserId,
+  //   };
+  //   this.loading.present();
+  //   this.authservice.post('getMobileAppMenu', detail).subscribe(
+  //     (result: any) => {
+  //       this.loading.dismissAll();
+  //       console.log(result);
+  //     },
+  //     (err) => {
+  //       this.loading.dismissAll();
+  //       //Connection failed message
+  //     }
+  //   );
+  // }
 
   updateFireBaseID() {
     let fireBaseIDValues = this.storage.get('fireBaseID');

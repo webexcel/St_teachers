@@ -52,8 +52,8 @@ export class DashboardComponent implements OnInit {
     duration: 0,
   };
   public circular = 'circulars';
-  //public appPages = this.storage.get('menulist');
-  public appPages = environment.pages;
+  // public appPages = environment.pages;
+  public appPages: any;
   isModalOpen = false;
   modalImage: any;
   grpmes: any;
@@ -92,6 +92,10 @@ export class DashboardComponent implements OnInit {
     this.flashmessage();
     this.getSMSLogDetails();
     this.getgroupMessage();
+  }
+
+  async ionViewWillEnter() {
+    this.appPages = await this.storage.getjson('menulist');
   }
 
   go(url: any) {
