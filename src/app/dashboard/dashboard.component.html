@@ -27,11 +27,20 @@
   </ion-header>
 
   <!-- 10/02 -->
+
+  <div class="select-wrapper" *ngIf="schoolList.length > 1">
+    <ion-select [value]="schoolData" (ionChange)="currentSchool($event)">
+      <ion-select-option *ngFor="let school of schoolList" [value]="school">
+        {{ school.firstname }}
+      </ion-select-option>
+    </ion-select>
+  </div>
+
   <!-- 1 -->
   <div class="dashboardName container">
     <div class="row">
       <div class="col-9">
-        <div class="staffname">Hi {{ teachersDetail[0]["firstname"] }},</div>
+        <div class="staffname">Hi {{ teachersDetail[0]["DisplayName"] }},</div>
         <div class="staffcode">
           Staff Code: {{ teachersDetail[0]["staff_id"] }}
         </div>

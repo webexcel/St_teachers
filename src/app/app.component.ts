@@ -120,6 +120,25 @@ export class AppComponent {
 
     // this.dataservice.changeMenustatus(true)
 
+    // this.storage.addjson('teachersDetail', [
+    //   {
+    //     UserId: '57',
+    //     firstname: 'School Tree Demo',
+    //     staff_id: '1',
+    //     Is_Admin: 'Y',
+    //     DisplayName: 'App Test',
+    //     dbname: 'demosch',
+    //   },
+    //   {
+    //     UserId: '7',
+    //     firstname: 'Schooltree Demo Account',
+    //     staff_id: '0',
+    //     Is_Admin: 'Y',
+    //     DisplayName: 'demo schooltree',
+    //     dbname: 'schooltree',
+    //   },
+    // ]);
+
     this.disPlayStudentDetail = this.storage.getjson('teachersDetail');
     if (this.disPlayStudentDetail) {
       this.loading.present();

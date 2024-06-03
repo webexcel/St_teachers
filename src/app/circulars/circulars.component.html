@@ -261,6 +261,31 @@
                   *ngIf="checkimage(d.event_image)"
                 />
 
+                <div *ngIf="checkmp4(d)">
+                  <div
+                    *ngIf="d.thumbnailBase64Image"
+                    class="thumbnail-container"
+                    (click)="loadVideo(d)"
+                  >
+                    <img
+                      [src]="d.thumbnail"
+                      alt="Thumbnail"
+                      class="thumbnail_img"
+                    />
+                    <div class="play-icon-container">
+                      <ion-icon name="play" class="play-icon"></ion-icon>
+                    </div>
+                  </div>
+
+                  <video
+                    *ngIf="!d.thumbnailBase64Image && d.videoClicked"
+                    [src]="d.event_image"
+                    style="width: 100%"
+                    class="video-player"
+                    controls
+                  ></video>
+                </div>
+
                 <div
                   class="row w-100 align-items-center m-0 p-0"
                   *ngIf="checkdocx(d.event_image)"
@@ -446,6 +471,34 @@
 
                   <div
                     class="row w-100 align-items-center m-0 p-0"
+                    *ngIf="checkmp4(s)"
+                  >
+                    <div
+                      *ngIf="s.thumbnailBase64Image"
+                      class="thumbnail-container"
+                      (click)="loadVideo(s)"
+                    >
+                      <img
+                        [src]="s.thumbnail"
+                        alt="Thumbnail"
+                        class="thumbnail_img"
+                      />
+                      <div class="play-icon-container">
+                        <ion-icon name="play" class="play-icon"></ion-icon>
+                      </div>
+                    </div>
+
+                    <video
+                      *ngIf="!s.thumbnailBase64Image && s.videoClicked"
+                      [src]="s.event_image"
+                      style="width: 100%"
+                      class="video-player"
+                      controls
+                    ></video>
+                  </div>
+
+                  <div
+                    class="row w-100 align-items-center m-0 p-0"
                     *ngIf="checkpdf(s.event_image)"
                   >
                     <div class="col-12">
@@ -564,6 +617,34 @@
                     class="w-100"
                     *ngIf="checkimage(s.event_image)"
                   />
+
+                  <div
+                    class="row w-100 align-items-center m-0 p-0"
+                    *ngIf="checkmp4(s)"
+                  >
+                    <div
+                      *ngIf="s.thumbnailBase64Image"
+                      class="thumbnail-container"
+                      (click)="loadVideo(s)"
+                    >
+                      <img
+                        [src]="s.thumbnail"
+                        alt="Thumbnail"
+                        class="thumbnail_img"
+                      />
+                      <div class="play-icon-container">
+                        <ion-icon name="play" class="play-icon"></ion-icon>
+                      </div>
+                    </div>
+
+                    <video
+                      *ngIf="!s.thumbnailBase64Image && s.videoClicked"
+                      [src]="s.event_image"
+                      style="width: 100%"
+                      class="video-player"
+                      controls
+                    ></video>
+                  </div>
 
                   <div
                     class="row w-100 align-items-center m-0 p-0"
@@ -757,6 +838,34 @@
                     class="w-100"
                     *ngIf="checkimage(s.event_image)"
                   />
+
+                  <div
+                    class="row w-100 align-items-center m-0 p-0"
+                    *ngIf="checkmp4(s)"
+                  >
+                    <div
+                      *ngIf="s.thumbnailBase64Image"
+                      class="thumbnail-container"
+                      (click)="loadVideo(s)"
+                    >
+                      <img
+                        [src]="s.thumbnail"
+                        alt="Thumbnail"
+                        class="thumbnail_img"
+                      />
+                      <div class="play-icon-container">
+                        <ion-icon name="play" class="play-icon"></ion-icon>
+                      </div>
+                    </div>
+
+                    <video
+                      *ngIf="!s.thumbnailBase64Image && s.videoClicked"
+                      [src]="s.event_image"
+                      style="width: 100%"
+                      class="video-player"
+                      controls
+                    ></video>
+                  </div>
 
                   <div
                     class="row w-100 align-items-center m-0 p-0"

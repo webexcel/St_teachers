@@ -23,17 +23,17 @@ export class FilesService {
       this.file
         .checkDir(this.file.externalDataDirectory, 'schooltree')
         .then((response: any) => {
-          console.log('Directory exists' + response);
+          // console.log('Directory exists' + response);
         })
         .catch((err: any) => {
-          console.log("Directory doesn't exist" + JSON.stringify(err));
+          // console.log("Directory doesn't exist" + JSON.stringify(err));
           this.file
             .createDir(this.file.externalDataDirectory, 'schooltree', false)
             .then((response: any) => {
-              console.log('Directory create' + JSON.stringify(response));
+              // console.log('Directory create' + JSON.stringify(response));
             })
             .catch((err: any) => {
-              console.log('Directory no create' + JSON.stringify(err));
+              // console.log('Directory no create' + JSON.stringify(err));
             });
         });
     } catch (error) {}

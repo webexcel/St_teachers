@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 //import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { File } from '@ionic-native/file/ngx';
@@ -28,6 +29,7 @@ import { FilesService } from '../service/files.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
 import { TranslateConfigService } from '../service/translate-config.service';
+import { VideoProcessingService } from '../service/video-processing-service';
 
 @Component({
   selector: 'app-circulars',
@@ -107,7 +109,8 @@ export class CircularsComponent implements OnInit {
     public loading: LoadingService,
     private modalController: ModalController,
     private file: File,
-    private fileOpener: FileOpener
+    private fileOpener: FileOpener,
+    private videoService: VideoProcessingService
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -139,7 +142,7 @@ export class CircularsComponent implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.className = 'Select Classes';
+    this.className = 'No Select Classes';
   }
 
   reset() {
@@ -152,6 +155,7 @@ export class CircularsComponent implements OnInit {
     this.select_datas.image = '';
     this.select_datas.type = '';
     this.select_datas.filename = '';
+    this.className = 'No Select Classes';
   }
 
   toggleItems(status: any) {
@@ -412,26 +416,88 @@ export class CircularsComponent implements OnInit {
   }
 
   open() {
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept =
-      'image/*, application/pdf, .doc, .docx, .txt, .xls, .xlsx, .mp3, .mp4';
-
-    fileInput.onchange = (event: any) => {
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = async (e: any) => {
-          this.select_datas.image = e.target.result;
-          this.select_datas.filename = file.name;
-          this.select_datas.type = file.name.split('.').pop();
-          this.writeFile(e.target.result, file.name, file.type);
-        };
-        reader.readAsDataURL(file);
-      }
-    };
-
-    fileInput.click();
+    this.alertCtrl
+      .create({
+        header: 'SchoolTree Teachers',
+        mode: 'ios',
+        cssClass: 'popup-login',
+        buttons: [
+          {
+            text: 'Open Files',
+            handler: () => {
+              this.videoService
+                .promptForVideo()
+                .then((videoFile) => {
+                  if (videoFile.type.startsWith('video/')) {
+                    if (videoFile.size > 5 * 1024 * 1024) {
+                      alert(`File size exceeds 5 MB limit.`);
+                      return;
+                    }
+                    this.videoService.uploadVideo(this.select_datas, videoFile);
+                    this.videoService
+                      .generateThumbnail(videoFile)
+                      .then((thumbnailData) => {
+                        this.select_datas['thumbnail'] = thumbnailData;
+                      })
+                      .catch((error) => {
+                        console.error('Error generating thumbnail:', error);
+                      });
+                  }
+                  const reader = new FileReader();
+                  reader.onload = async (e: any) => {
+                    this.select_datas.image = e.target.result;
+                    this.select_datas.filename = videoFile.name;
+                    this.select_datas.type = videoFile.name.split('.').pop();
+                    if (this.select_datas['thumbnail'] == undefined) {
+                      this.select_datas['thumbnail'] = '';
+                    }
+                    this.writeFile(
+                      e.target.result,
+                      videoFile.name,
+                      videoFile.type
+                    );
+                  };
+                  reader.readAsDataURL(videoFile);
+                })
+                .catch((error) => {
+                  console.error('Error generating thumbnail:', error);
+                });
+            },
+          },
+          {
+            text: 'Open Camera',
+            handler: async () => {
+              await Camera.getPhoto({
+                quality: 90,
+                allowEditing: false,
+                resultType: CameraResultType.DataUrl,
+                source: CameraSource.Camera,
+              }).then(async (media) => {
+                this.select_datas.image = media.dataUrl;
+                const iData = this.select_datas.image.split(',')[1];
+                const byteCharacters = atob(iData);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                  byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                let imageBlob = new Blob([byteArray], { type: 'image/jpeg' });
+                let imageUrl = URL.createObjectURL(imageBlob);
+                const segments = imageUrl.split('/');
+                this.select_datas.filename =
+                  segments.pop() + '.' + media.format;
+                this.select_datas.type = media.format;
+                this.select_datas['thumbnail'] = '';
+              });
+            },
+          },
+          {
+            text: 'Cancel',
+            role: 'cancel',
+          },
+        ],
+      })
+      .then((alert) => alert.present());
   }
 
   extention(url: any) {
@@ -468,7 +534,9 @@ export class CircularsComponent implements OnInit {
       .then((response) => {
         this.fileOpener.open(this.file.dataDirectory + FileName, FileType);
       })
-      .catch((err: any) => {});
+      .catch((err: any) => {
+        console.error('Error writing file:', err);
+      });
   }
 
   b64toBlob(b64Data: any, contentType: any) {
@@ -567,6 +635,39 @@ export class CircularsComponent implements OnInit {
       return true;
     }
     //image.event_image.split('.')[image.event_image.split('.').length-1]!='pdf'
+  }
+
+  checkmp4(f: any) {
+    if (f) {
+      let data = f.event_image != undefined ? f.event_image.split('.') : '';
+      data =
+        data != '' && data != undefined
+          ? data[data.length - 1].toLowerCase()
+          : '';
+      if (data == 'mp4') {
+        const urlParts = f['event_image'].split('/');
+        const videoFilename = urlParts.pop();
+        urlParts.push('thumb');
+        const thumbnailFilename = videoFilename?.replace('.mp4', '.jpeg');
+        urlParts.push(thumbnailFilename);
+        f['thumbnail'] = urlParts.join('/');
+        // f['thumbnail'] = this.select_datas['thumbnail'] != undefined && this.select_datas['thumbnail'] != ''? this.select_datas['thumbnail'] : '../../assets/imgs/appicon.png';
+        if (f['videoClicked'] == undefined) {
+          f['thumbnailBase64Image'] = true;
+          f['videoClicked'] = false;
+        }
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      f['thumbnail'] = '';
+      if (f['videoClicked'] == undefined) {
+        f['thumbnailBase64Image'] = true;
+        f['videoClicked'] = false;
+      }
+      return true;
+    }
   }
 
   checkmp3(f: any) {
@@ -872,5 +973,10 @@ export class CircularsComponent implements OnInit {
     ret += '' + secs;
 
     return ret;
+  }
+
+  loadVideo(data: any) {
+    data.thumbnailBase64Image = false;
+    data.videoClicked = true;
   }
 }

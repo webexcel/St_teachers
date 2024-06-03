@@ -34,6 +34,7 @@ import { loginGuard } from './_guards';
 import { SelectModalComponent } from './select-modal/select-modal.component';
 import { JwtInterceptor } from './service/jwt.interceptor';
 import { LoadingService } from './service/loading.service';
+import { VideoProcessingService } from './service/video-processing-service';
 @NgModule({
   declarations: [AppComponent, SelectModalComponent],
   // entryComponents: [],
@@ -75,6 +76,7 @@ import { LoadingService } from './service/loading.service';
     FileOpener,
     loginGuard,
     AppComponent,
+    VideoProcessingService,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
