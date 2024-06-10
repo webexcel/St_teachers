@@ -24,6 +24,11 @@ export class UploadsPage implements OnInit {
   selectedDate: any = new Date();
   message: any = '';
   attachedFileName: any;
+  classValue: any;
+  scroll: any = false;
+  pageSize: any = 10;
+  currentSize: any;
+  allUploadedItems: any[] = [];
 
   constructor(
     public loading: LoadingService,
@@ -36,22 +41,21 @@ export class UploadsPage implements OnInit {
   ngOnInit() {}
 
   ionViewWillEnter() {
-    this.classList = this.storage.getjson('classlist');
+    this.uploadItems = [];
+    let teacher = this.storage.getjson("teachersDetail");
+    if (teacher[0]["Is_Admin"] == 'Y') {
+      this.classList = this.storage.getjson("classlist");
+      this.classValue = this.classList[0];
+    } else{
+      this.classList = this.storage.getjson("classlist").filter((item: any) => item.classTeacher === "1");
+      this.classValue = this.classList[0];
+    }
+    this.getUploadDetails(this.classValue.id);
   }
 
-  ionViewDidEnter() {
-    this.getUploadDetails();
-  }
-
-  async getUploadDetails() {
+  async getUploadDetails(evt: any) {
+    let classId = isNaN(parseInt(evt)) ? evt.detail.value.id : evt;
     this.loading.present();
-    let classId = this.classList.filter((item: any) => item.classTeacher === "1");
-    classId =
-      classId.length > 0 &&
-      classId[0] != undefined &&
-      classId[0].id != undefined
-        ? classId[0].id
-        : undefined;
     if (classId == undefined) {
       this.loading.dismissAll();
       let alert = await this.alertCtrl.create({
@@ -64,16 +68,48 @@ export class UploadsPage implements OnInit {
       this.authservice.post('getVideoUploads', { classid: classId }).subscribe(
         (res: any) => {
           this.loading.dismissAll();
-          this.uploadItems = res['data'] != undefined ? res['data'] : [];
-          for (let i = 0; i < this.uploadItems.length; i++) {
-            this.uploadItems[i]['videoClick'] = false;
+          this.uploadItems = [];
+          this.allUploadedItems = res['data'] != undefined ? res['data'] : [];
+          if (this.pageSize > this.allUploadedItems.length) {
+            this.currentSize = this.allUploadedItems.length;
+            this.scroll = false;
+          } else {
+            this.currentSize = 10;
+            this.scroll = true;
           }
+          console.log(this.pageSize, this.allUploadedItems);
+          for (let i = 0; i < this.currentSize; i++) {
+            this.allUploadedItems[i]['videoClick'] = false;
+            this.uploadItems.push(this.allUploadedItems[i]);
+          }
+          console.log(this.uploadItems);
         },
         (err) => {
           this.loading.dismissAll();
         }
       );
     }
+  }
+
+  doInfinite(evt: any) {
+    if (this.currentSize + this.pageSize > this.allUploadedItems.length) {
+      for (let i = this.currentSize; i < this.allUploadedItems.length; i++) {
+        this.allUploadedItems[i]['videoClick'] = false;
+        this.uploadItems.push(this.allUploadedItems[i]);
+      }
+      this.currentSize = this.allUploadedItems.length;
+      this.scroll = false;  
+    } else {
+      for (let i = this.currentSize; i < this.currentSize + this.pageSize; i++) {
+        this.allUploadedItems[i]['videoClick'] = false;
+        this.uploadItems.push(this.allUploadedItems[i]);
+      }
+      this.currentSize = this.currentSize + this.pageSize;
+      this.scroll = true;
+    }
+    setTimeout(() => {
+      evt.target.complete();
+    }, 1000);
   }
 
   showVideo(index: any) {

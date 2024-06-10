@@ -22,7 +22,19 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-list>
+  <div style="padding: 10px 15px;">
+    <ion-select class="classSelect" [value]="classValue" (ionChange)="getUploadDetails($event)">
+      <ion-select-option *ngFor="let class of classList" [value]="class">
+        {{ class.name }}
+      </ion-select-option>
+    </ion-select>
+  </div>
+
+  <div *ngIf="uploadItems != undefined && uploadItems.length == 0" style="margin-top: 10%; text-align: center;">
+    <ion-label>No records found!</ion-label>
+  </div>
+ 
+  <ion-list *ngIf="uploadItems != undefined && uploadItems.length > 0">
     <ion-item *ngFor="let data of uploadItems; let i = index">
       <ion-card style="width: 100%">
         <ion-card-content>
@@ -124,6 +136,10 @@
         </ion-card-content>
       </ion-card>
     </ion-item>
+    <ion-infinite-scroll (ionInfinite)="doInfinite($event)" *ngIf="scroll">
+      <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+      </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
   </ion-list>
 
   <!-- <ion-modal [isOpen]="isModalOpen">
