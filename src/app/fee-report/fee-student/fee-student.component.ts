@@ -45,7 +45,6 @@ export class FeeStudentComponent implements OnInit {
             this.studentReport.Student_History.Feedetails;
           this.studentFeeHistory =
             this.studentReport.Student_History.FEE_HISTORY;
-          console.log('Fee History 1223', this.studentFeeHistory);
           this.feeKeys = Object.keys(this.studentFeeHistory);
 
           this.mainData = [];
@@ -62,8 +61,6 @@ export class FeeStudentComponent implements OnInit {
 
           const admissionNumber = this.studentId;
           this.feeHistory = this.studentFeeHistory[0];
-
-          console.log('12345', this.studentFeeDetails);
 
           this.studentFeeDetails.map((data: any) => {
             this.totalVal = this.totalVal + Number(data.Total_Amount);

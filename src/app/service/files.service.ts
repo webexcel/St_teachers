@@ -26,7 +26,6 @@ export class FilesService {
           // console.log('Directory exists' + response);
         })
         .catch((err: any) => {
-          // console.log("Directory doesn't exist" + JSON.stringify(err));
           this.file
             .createDir(this.file.externalDataDirectory, 'schooltree', false)
             .then((response: any) => {

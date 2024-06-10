@@ -1,0 +1,37 @@
+.uploads {
+  border: 1px solid black;
+  border-radius: 5%;
+  background-color: green;
+  color: white;
+  margin: 20px;
+}
+
+.thumbnail-container {
+  position: relative;
+  width: 90%;
+  margin: 5%;
+  cursor: pointer;
+}
+
+.thumbnail_img {
+  filter: blur(2px);
+  transition: filter 0.3s;
+}
+
+.play-icon {
+  color: #c9c9c9;
+  opacity: 0.8;
+}
+
+.play-icon-container {
+  position: absolute;
+  top: 30%;
+  left: 53%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: white;
+}
+
+.video-player {
+  width: 100%;
+}

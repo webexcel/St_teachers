@@ -125,6 +125,14 @@ export const environment = {
       // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
       admin: 'N',
     },
+
+    {
+      title: 'uploads',
+      url: '/uploads',
+      icon: 'assets/imgs/latest_Icons/uploads.svg',
+      // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
+      admin: 'N',
+    },
   ],
   login_logo: 'assets/imgs/appicon.png',
   school_name: 'Schooltree Teachers',

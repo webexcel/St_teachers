@@ -804,6 +804,7 @@ export class CircularsComponent implements OnInit {
         }
       );
   }
+
   showHideDatePicker() {
     this.showDatePicker = !this.showDatePicker;
   }

@@ -152,6 +152,13 @@ const routes: Routes = [
       ),
     canActivate: [Guard],
   },
+
+  {
+    path: 'uploads',
+    loadChildren: () =>
+      import('./uploads/uploads.module').then((m) => m.UploadsPageModule),
+    canActivate: [Guard],
+  },
 ];
 
 @NgModule({

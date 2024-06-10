@@ -32,8 +32,7 @@ export class AppComponent {
   public badgeNumber: number | undefined;
   public disPlayStudentDetail: any = [];
   public index: any = false;
-  public appPages = this.storage.getjson('menulist');
-  // public appPages = environment.pages;
+  public appPages: any;
   loadingconfig: any = {
     bgsColor: environment.color,
     bgsOpacity: 0.5,

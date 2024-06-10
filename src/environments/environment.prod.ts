@@ -140,6 +140,14 @@ export const environment = {
       admin: 'N',
     },
 
+    {
+      title: 'uploads',
+      url: '/uploads',
+      icon: 'assets/imgs/latest_Icons/uploads.svg',
+      // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
+      admin: 'N',
+    },
+
     /*{ title: 'gallery',url: '/gallery', icon: 'assets/imgs/speakers/gallery.png', filter:"invert(50%) sepia(24%) saturate(1477%) hue-rotate(1deg) brightness(106%) contrast(89%)"},
     
     { title: 'calender',url: '/calender', icon: 'assets/imgs/speakers/calendar.png',filter:"invert(23%) sepia(97%) saturate(4292%) hue-rotate(28deg) brightness(98%) contrast(101%)"},

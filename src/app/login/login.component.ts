@@ -221,7 +221,6 @@ export class LoginComponent implements OnInit {
   //   this.authservice.post('getMobileAppMenu', detail).subscribe(
   //     (result: any) => {
   //       this.loading.dismissAll();
-  //       console.log(result);
   //     },
   //     (err) => {
   //       this.loading.dismissAll();
