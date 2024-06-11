@@ -154,7 +154,7 @@ export class DashboardComponent implements OnInit {
                 environment.packageid;
               }
               if (this.platform.is('android')) {
-                this.storage.clear();
+                // this.storage.clear();
                 const options: InAppBrowserOptions = {
                   zoom: 'no',
                 };

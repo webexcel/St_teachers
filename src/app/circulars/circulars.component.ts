@@ -580,7 +580,6 @@ export class CircularsComponent implements OnInit {
               l == 'xls' ||
               l == 'xlsx'
             ) {
-              alert(1);
               this.select_datas.type = l;
               this.error = false;
               if (l == 'mp3') {
@@ -590,21 +589,16 @@ export class CircularsComponent implements OnInit {
               } else {
                 l = `data:image/${l};base64,`;
               }
-              alert(2);
               this.base64.encodeFile(res).then(
                 (result) => {
-                  alert(2.1);
                   this.select_datas.image = `${l}${result.split('base64,')[1]}`;
                 },
                 (err) => {
-                  alert(2.2);
                   alert('@log file open error: ' + JSON.stringify(err));
                   this.error = true;
                 }
               );
-              alert(3);
             } else {
-              alert(4);
               this.error = true;
             }
           },

@@ -186,11 +186,11 @@ export class LoginComponent implements OnInit {
         this.loading.dismissAll();
       }
     );
-
     this.getmenu();
   }
 
   getmenu() {
+    // alert(1);
     this.loading.present();
     let data = {
       UserId: this.teachersDetail[0].UserId,
@@ -205,6 +205,7 @@ export class LoginComponent implements OnInit {
         }
         this.dataservice.changeMenustatus(true);
         this.router.navigate(['']);
+        window.location.reload();
       },
       (err) => {
         this.storage.addjson('menulist', environment.pages);
