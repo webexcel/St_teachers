@@ -6,153 +6,143 @@ export const environment = {
   production: false,
   senderID: '427864482679',
   pages: [
-    {
-      title: 'circulars',
-      url: '/circulars',
-      icon: 'assets/imgs/latest_Icons/circulars.svg',
-      // filter: 'invert(96%) sepia(27%) saturate(2344%) hue-rotate(287deg) brightness(83%) contrast(121%)',
-      admin: 'N',
-      // menu_icon: 'assets/imgs/dashboard/circular.png',
-      // borderColor: '#000000',
-    },
-    {
-      title: 'homework',
-      url: '/homework',
-      icon: 'assets/imgs/latest_Icons/homework.svg',
-      // filter: 'invert(15%) sepia(100%) saturate(2860%) hue-rotate(238deg) brightness(101%) contrast(170%)',
-      admin: 'N',
-    },
-    {
-      title: 'Personal',
-      url: '/personalized-messages',
-      icon: 'assets/imgs/latest_Icons/personal.svg',
-      // filter:'invert(10%) sepia(51%) saturate(5820%) hue-rotate(291deg) brightness(110%) contrast(115%)',
-      admin: 'N',
-    },
-    {
-      title: 'attendance',
-      url: '/attendance',
-      icon: 'assets/imgs/latest_Icons/attendance.svg',
-      // filter:'invert(22%) sepia(32%) saturate(6676%) hue-rotate(349deg) brightness(75%) contrast(81%)',
-      admin: 'N',
-    },
-    {
-      title: 'report-card',
-      url: '/report-card',
-      icon: 'assets/imgs/latest_Icons/reportcard.svg',
-      // filter:'invert(17%) sepia(65%) saturate(5213%) hue-rotate(337deg) brightness(85%) contrast(112%)',
-      admin: 'N',
-    },
-    {
-      title: 'Flash',
-      url: '/flash',
-      icon: 'assets/imgs/latest_Icons/flash.svg',
-      // filter:'invert(77%) sepia(26%) saturate(7148%) hue-rotate(347deg) brightness(101%) contrast(98%)',
-      admin: 'N',
-    },
-
-    {
-      title: 'Timetable',
-      url: '/timetable',
-      icon: 'assets/imgs/latest_Icons/timetable.svg',
-      // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-      admin: 'N',
-    },
-    // {
-    //   title: 'gallery',
-    //   url: '/gallery',
-    //   icon: 'assets/imgs/latest_Icons/gallery.svg',
-    //   // filter:"invert(50%) sepia(24%) saturate(1477%) hue-rotate(1deg) brightness(106%) contrast(89%)"
-    // },
-
-    {
-      title: 'Staff Group',
-      url: '/staff-group',
-      icon: 'assets/imgs/latest_Icons/staffgroup.svg',
-      // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-      admin: 'N',
-    },
-
-    {
-      title: 'Staff',
-      url: '/staff',
-      icon: 'assets/imgs/latest_Icons/staff.svg',
-      // filter:'invert(10%) sepia(98%) saturate(6683%) hue-rotate(247deg) brightness(62%) contrast(131%)',
-      admin: 'N',
-    },
-
-    {
-      title: 'Reports',
-      url: '/daily-reports',
-      icon: 'assets/imgs/latest_Icons/reporting.svg',
-      // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-      admin: 'N',
-    },
-
-    // {
-    //   title: 'News',
-    //   url: '/news-events',
-    //   icon: 'assets/imgs/latest_Icons/News.svg',
-    //   // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
-    //   admin: 'Y',
-    // },
-
-    {
-      title: 'Add Remarks',
-      url: '/reports',
-      icon: 'assets/imgs/latest_Icons/edit_remarks.svg',
-      // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-      admin: 'N',
-    },
-
-    {
-      title: 'View Remarks',
-      url: '/view-remarks',
-      icon: 'assets/imgs/latest_Icons/view_remarks.svg',
-      // filter:'invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)',
-      admin: 'N',
-    },
-
-    {
-      title: 'exam-schedule',
-      url: '/exam-schedule',
-      icon: 'assets/imgs/latest_Icons/exam_schedule.svg',
-      filter:
-        'invert(61%) sepia(99%) saturate(745%) hue-rotate(1deg) brightness(107%) contrast(103%)',
-      admin: 'N',
-    },
-
-    //{ title: 'Study Material',url: '/study-material', icon: 'assets/imgs/speakers/books.png',filter:"invert(17%) sepia(65%) saturate(5213%) hue-rotate(337deg) brightness(85%) contrast(112%)"},
-    // {
-    //   title: 'report-card',
-    //   url: '/report-card',
-    //   icon: 'assets/imgs/speakers/marks.png',
-    //   filter:
-    //     'invert(10%) sepia(51%) saturate(5820%) hue-rotate(291deg) brightness(110%) contrast(115%)',
-    //   admin: 'N',
-    // },
-
-    {
-      title: 'fee-report',
-      url: '/fee-report',
-      icon: 'assets/imgs/latest_Icons/fee.svg',
-      // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
-      admin: 'N',
-    },
-
-    {
-      title: 'uploads',
-      url: '/uploads',
-      icon: 'assets/imgs/latest_Icons/uploads.svg',
-      // filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"
-      admin: 'N',
-    },
-
-    /*{ title: 'gallery',url: '/gallery', icon: 'assets/imgs/speakers/gallery.png', filter:"invert(50%) sepia(24%) saturate(1477%) hue-rotate(1deg) brightness(106%) contrast(89%)"},
-    
-    { title: 'calender',url: '/calender', icon: 'assets/imgs/speakers/calendar.png',filter:"invert(23%) sepia(97%) saturate(4292%) hue-rotate(28deg) brightness(98%) contrast(101%)"},
-    { title: 'news-events',url: '/news-events', icon: 'assets/imgs/speakers/news.png',filter:"invert(67%) sepia(89%) saturate(2066%) hue-rotate(358deg) brightness(100%) contrast(111%)"},*/
-    // { title: 'language',url: '/language', icon: 'assets/imgs/speakers/language.png',filter:"invert(10%) sepia(98%) saturate(6683%) hue-rotate(247deg) brightness(62%) contrast(131%)"},
+    [
+      {
+          "menu_id": "1",
+          "menu_name": "Circulars",
+          "menu_link": "/circulars",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/circulars.svg",
+          "menu_order": "1",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "2",
+          "menu_name": "homework",
+          "menu_link": "/homework",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/homework.svg",
+          "menu_order": "2",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "3",
+          "menu_name": "Report-card",
+          "menu_link": "/report-card",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/reportcard.svg",
+          "menu_order": "3",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "4",
+          "menu_name": "Personal",
+          "menu_link": "/personalized-messages",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/personal.svg",
+          "menu_order": "4",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "5",
+          "menu_name": "Exam-schedule",
+          "menu_link": "/exam-schedule",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/exam_schedule.svg",
+          "menu_order": "5",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "6",
+          "menu_name": "Flash",
+          "menu_link": "/flash",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/flash.svg",
+          "menu_order": "6",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "7",
+          "menu_name": "Reports",
+          "menu_link": "/daily-reports",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/reports.svg",
+          "menu_order": "7",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "8",
+          "menu_name": "Attendance",
+          "menu_link": "/attendance",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/attendance.svg",
+          "menu_order": "8",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "9",
+          "menu_name": "Staff",
+          "menu_link": "/staff",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/staff.svg",
+          "menu_order": "9",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "10",
+          "menu_name": "Staff Group",
+          "menu_link": "/staff-group",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/staffgroup.svg",
+          "menu_order": "10",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "13",
+          "menu_name": "Fee-report",
+          "menu_link": "/fee-report",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/fee.svg",
+          "menu_order": "11",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "12",
+          "menu_name": "Timetable",
+          "menu_link": "/timetable",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/timetable.svg",
+          "menu_order": "12",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "14",
+          "menu_name": "Add Remarks",
+          "menu_link": "/reports",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/edit_remarks.svg",
+          "menu_order": "13",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "15",
+          "menu_name": "View Remarks",
+          "menu_link": "/view-remarks",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/view_remarks.svg",
+          "menu_order": "14",
+          "status": "0",
+          "UserId": "2063"
+      },
+      {
+          "menu_id": "16",
+          "menu_name": "Parent Messages",
+          "menu_link": "/uploads",
+          "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/uploads.svg",
+          "menu_order": "15",
+          "status": "0",
+          "UserId": "2063"
+      }
+  ]
   ],
 
   login_logo: 'assets/imgs/appicon.png',

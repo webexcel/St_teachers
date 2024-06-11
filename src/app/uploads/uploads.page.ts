@@ -77,12 +77,10 @@ export class UploadsPage implements OnInit {
             this.currentSize = 10;
             this.scroll = true;
           }
-          console.log(this.pageSize, this.allUploadedItems);
           for (let i = 0; i < this.currentSize; i++) {
             this.allUploadedItems[i]['videoClick'] = false;
             this.uploadItems.push(this.allUploadedItems[i]);
           }
-          console.log(this.uploadItems);
         },
         (err) => {
           this.loading.dismissAll();

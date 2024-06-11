@@ -198,16 +198,16 @@ export class LoginComponent implements OnInit {
     this.authservice.post('getMobileAppMenu', data).subscribe(
       (res: any) => {
         this.loading.dismissAll();
-        if (res['status']) {
+        if (res['status'] && res['data'].length > 0) {
           this.storage.addjson('menulist', res['data']);
         } else {
-          this.storage.addjson('menulist', []);
+          this.storage.addjson('menulist', environment.pages);
         }
         this.dataservice.changeMenustatus(true);
         this.router.navigate(['']);
       },
       (err) => {
-        this.storage.addjson('menulist', []);
+        this.storage.addjson('menulist', environment.pages);
         this.loading.dismissAll();
       }
     );
