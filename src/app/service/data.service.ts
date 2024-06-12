@@ -11,6 +11,6 @@ export class DataService {
   constructor() { }
 
   changeMenustatus(message: boolean) {
-    this.menustatus.next(message)
+    this.menustatus.next(message);
   }
 }

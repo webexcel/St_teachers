@@ -1,0 +1,86 @@
+ion-content {
+  --background: #f0f0f0; /* Change to your preferred color */
+  // background-color: #fff;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 70px;
+  //   border: 1px solid #000;
+  margin: 5px;
+  font-size: 20px; /* Adjust as needed */
+  text-align: center;
+  border-radius: 8px;
+}
+
+/* Container for the card layout */
+.card-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+hr {
+  width: 100%;
+  margin: 0.1px 0;
+  border: 0.1px;
+}
+
+.color {
+  //   background-color: #088d16; /* Sets background color to red */
+  color: #fff;
+
+  width: 100%;
+  height: 100%;
+  //   margin-bottom: 2px;
+  height: 48%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  padding-top: 5px;
+}
+.card div:nth-child(3) {
+  width: 100%;
+  height: 52%; /* Takes up 55% of the card height */
+  padding-top: 5px;
+  font-size: 16px;
+  color: #606060;
+}
+
+.info-container-main {
+  display: flex; /* Use flex layout */
+  justify-content: center;
+  width: 90%; /* Same width as card-container: 3 cards x 120px each */
+  //   border: 1px solid black;
+  margin-left: 5%;
+  border-radius: 5px;
+  background-color: #5886fe;
+  color: #fff;
+}
+
+.info-container {
+  justify-content: center;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5px;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #606060;
+}
+
+.info-column {
+  width: 25%;
+  text-align: center;
+  padding: 3.5px;
+  font-size: 16px;
+  padding: 1.1% 0;
+}
+
+.info-container .info-column:first-child {
+  color: #5886fe;
+}

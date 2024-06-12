@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../service/auth.service';
-import { StorageService } from '../service/storage.service';
+import { AuthService } from 'src/app/service/auth.service';
+import { StorageService } from 'src/app/service/storage.service';
 
 @Component({
-  selector: 'app-fee-report',
-  templateUrl: './fee-report.component.html',
-  styleUrls: ['./fee-report.component.scss'],
+  selector: 'app-class-student-fee-report',
+  templateUrl: './class-student-fee-report.page.html',
+  styleUrls: ['./class-student-fee-report.page.scss'],
 })
-export class FeeReportComponent implements OnInit {
+export class ClassStudentFeeReportPage implements OnInit {
   ios: any = false;
   TotalCollection: any;
   ClassTotalCollection: any;
@@ -16,12 +16,19 @@ export class FeeReportComponent implements OnInit {
   dataIsLoading = true;
   dataIsLoading1 = true;
   classlist: any[] = [];
+  teacherDetail: any;
 
   constructor(
     private Router: Router,
     public authservice: AuthService,
     public storage: StorageService
   ) {
+    this.teacherDetail = this.storage.getjson("teachersDetail");
+    if (this.teacherDetail[0]["Is_Admin"] != 'Y') {
+      let classId = this.storage.getjson("classlist").filter((item: any) => item.classTeacher === "1");
+      classId = classId[0] != undefined && classId[0].id != undefined ? classId[0].id : "0";
+      this.Router.navigate(['/class-student-fee-report/fee-class', classId]);
+    }
     this.getClassList();
     this.getTotalCollection();
     this.getClassTotalCollection();
@@ -82,7 +89,7 @@ export class FeeReportComponent implements OnInit {
 
     if (classItem) {
       const classId = classItem.id;
-      this.Router.navigate(['/fee-report/fee-class', classId]);
+      this.Router.navigate(['/class-student-fee-report/fee-class', classId]);
     }
   }
 }

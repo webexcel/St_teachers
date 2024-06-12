@@ -100,7 +100,7 @@ export class AppComponent {
   }
 
   initializeApp() {
-    // alert(1);
+    this.appPages = this.storage.getjson('menulist');
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       //this.checkfile();
@@ -145,10 +145,6 @@ export class AppComponent {
     } else {
       this.dataservice.changeMenustatus(false);
     }
-  }
-
-  async ionViewWillEnter() {
-    this.appPages = await this.storage.getjson('menulist');
   }
 
   checkview(v: any) {

@@ -21,7 +21,7 @@ export class FeeClassComponent implements OnInit {
     public authservice: AuthService,
     public storage: StorageService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -44,11 +44,11 @@ export class FeeClassComponent implements OnInit {
           this.classRecord = this.classReport.data;
         }
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
   onStudentClick(ADMISSION_ID: any): void {
-    this.Router.navigate(['/fee-student', this.classId, ADMISSION_ID]);
+    this.Router.navigate(['/fee-report/fee-student', this.classId, ADMISSION_ID]);
   }
 }

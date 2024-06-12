@@ -1,0 +1,108 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Classwise Report</ion-title>
+
+    <ion-buttons slot="end" *ngIf="isAdmin == 'Y'">
+      <ion-button routerDirection="root" routerLink="/class-student-fee-report" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="arrow-back-circle-sharp" style="height: 24px; width: 24px"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end" *ngIf="isAdmin != 'Y'">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+    <ion-toolbar class="p-0">
+      <ion-buttons slot="start">
+        <ion-menu-button><ion-icon class="text-white" [ios]="'menu-sharp'"
+            [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Classwise Report</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="classwise">
+    <div class="info-container-main">
+      <div class="info-column">Name</div>
+      <div class="info-column">Total</div>
+      <div class="info-column">Paid</div>
+      <div class="info-column">Balance</div>
+    </div>
+
+    <div class="info-container">
+      <div class="row" *ngFor="let data of classRecord">
+        <div class="info-column col-3" (click)="onStudentClick(data.ADMISSION_ID)">
+          {{ data.NAME | slice : 0 : 7 }}
+        </div>
+        <div class="info-column col-3">{{ data.total }}</div>
+        <div class="info-column col-3">{{ data.paid }}</div>
+        <div class="info-column col-3">{{ data.bal }}</div>
+      </div>
+    </div>
+
+    <!-- <div class="info-container">
+      <div class="info-column">Aravinth</div>
+      <div class="info-column">2300</div>
+      <div class="info-column">0</div>
+      <div class="info-column">2300</div>
+    </div>
+    <div class="info-container">
+      <div class="info-column">Kumar</div>
+      <div class="info-column">2300</div>
+      <div class="info-column">0</div>
+      <div class="info-column">2300</div>
+    </div>
+    <div class="info-container">
+      <div class="info-column">Sekar</div>
+      <div class="info-column">2300</div>
+      <div class="info-column">0</div>
+      <div class="info-column">2300</div>
+    </div>
+    <div class="info-container">
+      <div class="info-column">Kevin</div>
+      <div class="info-column">2300</div>
+      <div class="info-column">0</div>
+      <div class="info-column">2300</div>
+    </div>
+    <div class="info-container">
+      <div class="info-column">Albert</div>
+      <div class="info-column">2300</div>
+      <div class="info-column">0</div>
+      <div class="info-column">2300</div>
+    </div>
+    <div class="info-container">
+      <div class="info-column">Kingsley</div>
+      <div class="info-column">2300</div>
+      <div class="info-column">0</div>
+      <div class="info-column">2300</div>
+    </div>
+    <div class="info-container">
+      <div class="info-column">Raj</div>
+      <div class="info-column">2300</div>
+      <div class="info-column">0</div>
+      <div class="info-column">2300</div>
+    </div>
+    <div class="info-container">
+      <div class="info-column">Raghu</div>
+      <div class="info-column">2300</div>
+      <div class="info-column">0</div>
+      <div class="info-column">2300</div>
+    </div>
+    <div class="info-container">
+      <div class="info-column">Shyam</div>
+      <div class="info-column">2300</div>
+      <div class="info-column">0</div>
+      <div class="info-column">2300</div>
+    </div> -->
+  </div>
+</ion-content>
