@@ -87,11 +87,12 @@ export class CircularsComponent implements OnInit {
     base64: Base64String | null;
     duration: number;
   } = {
-    fileName: '',
-    base64: null,
-    duration: 0,
-  };
+      fileName: '',
+      base64: null,
+      duration: 0,
+    };
   attachment: any;
+  showButton: any;
 
   constructor(
     private serfile: FilesService,
@@ -762,7 +763,7 @@ export class CircularsComponent implements OnInit {
           );
         }
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -974,4 +975,23 @@ export class CircularsComponent implements OnInit {
     data.thumbnailBase64Image = false;
     data.videoClicked = true;
   }
+
+
+
+  deleteSelectedItems() {
+    console.log(this.grpmes, "4444")
+    const selectedIds = this.grpmes.map((item: any) => item.ID);
+
+
+    this.authservice.post('deleteAllcirculars', { ids: selectedIds.map((id: any) => ({ id })) }).subscribe(
+      (res) => {
+        this.loading.dismissAll();
+        this.getgroupMessage();
+      },
+      (err) => {
+        this.loading.dismissAll();
+      }
+    );
+  }
+
 }

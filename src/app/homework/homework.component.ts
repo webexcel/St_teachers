@@ -75,16 +75,17 @@ export class HomeworkComponent implements OnInit {
     base64: Base64String | null;
     duration: number;
   } = {
-    fileName: '',
-    base64: null,
-    duration: 0,
-  };
+      fileName: '',
+      base64: null,
+      duration: 0,
+    };
 
   showPassword: boolean = true;
   seenhrkmes: any;
   className: any;
   SubjectName: any;
   attachment: any;
+  showButton: any;
 
   constructor(
     private serfile: FilesService,
@@ -124,6 +125,8 @@ export class HomeworkComponent implements OnInit {
     this.getSaveHomework();
     this.reset();
     this.getSaveHomeworkDraft();
+
+    console.log(this.storage.getjson)
   }
 
   reset() {
@@ -159,7 +162,7 @@ export class HomeworkComponent implements OnInit {
     this.portComponent.close();
   }
 
-  classChange(event: any) {}
+  classChange(event: any) { }
 
   getSaveHomeworkDraft() {
     this.recentdata1 = {};
@@ -481,7 +484,7 @@ export class HomeworkComponent implements OnInit {
           );
         }
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -719,10 +722,10 @@ export class HomeworkComponent implements OnInit {
     return ret;
   }
 
-  seenHomework(ID: any) {
+  seenHomework(Id: any) {
     //Is_Admin
     this.loading.present();
-    this.authservice.post('seenHomeworkmessage', { id: ID }).subscribe(
+    this.authservice.post('seenHomeworkmessage', { id: Id }).subscribe(
       (res: any) => {
         this.loading.dismissAll();
         if (res['status']) {
@@ -741,4 +744,23 @@ export class HomeworkComponent implements OnInit {
   toggleMessage3() {
     this.isEditMessageOpen3 = !this.isEditMessageOpen3;
   }
+
+  deleteSelectedItems() {
+    console.log(this.recentdata, "4545")
+    const selectedIds = this.recentdata.map((item: any) => item.MSG_ID);
+
+    this.authservice.post('deleteAllhomework', { ids: selectedIds.map((id: any) => ({ id })) }).subscribe(
+      (res) => {
+        this.loading.dismissAll();
+        this.getSaveHomeworkDraft();
+      },
+      (err) => {
+        this.loading.dismissAll();
+      }
+    );
+
+  }
+
+
+
 }

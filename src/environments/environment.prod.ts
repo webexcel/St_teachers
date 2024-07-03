@@ -96,15 +96,6 @@ export const environment = {
             "status": "0",
             "UserId": "2063"
         },
-        //   {
-        //       "menu_id": "13",
-        //       "menu_name": "Fee-report",
-        //       "menu_link": "/fee-report",
-        //       "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/fee.svg",
-        //       "menu_order": "11",
-        //       "status": "0",
-        //       "UserId": "2063"
-        //   },
         {
             "menu_id": "12",
             "menu_name": "Timetable",
@@ -132,31 +123,13 @@ export const environment = {
             "status": "0",
             "UserId": "2063"
         },
-        //   {
-        //       "menu_id": "16",
-        //       "menu_name": "Parent Messages",
-        //       "menu_link": "/uploads",
-        //       "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/uploads.svg",
-        //       "menu_order": "15",
-        //       "status": "0",
-        //       "UserId": "2063"
-        //   },
-        //   {
-        //     "menu_id": "17",
-        //     "menu_name": "Class Fees Report",
-        //     "menu_link": "/class-student-fee-report",
-        //     "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/class-student-fee-report.svg",
-        //     "menu_order": "15",
-        //     "status": "0",
-        //     "UserId": "2063"
-        // },
     ],
 
     login_logo: 'assets/imgs/appicon.png',
     school_name: 'Schooltree Teachers',
-    app_versionCode: '8',
+    app_versionCode: '9',
     apiBaseUrl: 'https://demo.schooltree.in/baseTeacherS.php/api/',
-    version: '8',
+    version: '9',
     package: 'com.schooltree.schooltree',
     packageid: '',
     color: '#00CCCC',

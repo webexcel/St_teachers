@@ -69,16 +69,17 @@ export class PersonalizedComponent implements OnInit {
     base64: Base64String | null;
     duration: number;
   } = {
-    fileName: '',
-    base64: null,
-    duration: 0,
-  };
+      fileName: '',
+      base64: null,
+      duration: 0,
+    };
   seengrpmes: any;
   isEditMessageOpen1: boolean = false;
   showPassword: boolean = false;
   className: any;
   StudentsName: any;
   attachment: any;
+  showButton: any;
 
   constructor(
     private serfile: FilesService,
@@ -378,7 +379,7 @@ export class PersonalizedComponent implements OnInit {
               this.error = true;
             }
           },
-          (err) => {}
+          (err) => { }
         );
       })
       .catch((e) => console.log(e));
@@ -483,7 +484,7 @@ export class PersonalizedComponent implements OnInit {
           );
         }
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
@@ -762,4 +763,25 @@ export class PersonalizedComponent implements OnInit {
   toggleMessage1() {
     this.isEditMessageOpen1 = !this.isEditMessageOpen1;
   }
+
+
+
+  deleteSelectedItems() {
+    const selectedIds = this.grpmes.map((item: any) => item.ID);
+    // const formattedIds = { ids: selectedIds.map((id: any) => ({ id })) };
+
+    this.authservice.post('getAlldeletepersonalmessagelist', { ids: selectedIds.map((id: any) => ({ id })) }).subscribe(
+      (res) => {
+        this.loading.dismissAll();
+        // this.getpersonalmessagelist();
+        this.getlist()
+      },
+      (err) => {
+        this.loading.dismissAll();
+      }
+    );
+
+  }
+
+
 }
