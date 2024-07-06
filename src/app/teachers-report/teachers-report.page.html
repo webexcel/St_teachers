@@ -1,0 +1,198 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Teachers Report</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" tappable>
+    <ion-fab-button (click)="toggleReportRecord('add', '-1')">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div style="text-align: center;" *ngIf="allRecords.length == 0">
+    <ion-label>No Records Found!!</ion-label>
+  </div>
+
+  <div *ngIf="allRecords.length > 0">
+    <ion-card *ngFor="let rec of allRecords; let i = index">
+
+      <ion-modal [isOpen]="rec.isOptionsModalOpen" (willDismiss)="closeOptionsModal($event, i)"
+        [initialBreakpoint]="0.25" [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
+        <ng-template>
+          <ion-content class="ion-padding">
+            <ion-button expand="full" (click)="editAction(i)">Edit</ion-button>
+            <!-- <ion-button expand="full" (click)="viewAction(i)">View</ion-button> -->
+            <ion-button expand="full" (click)="deleteAction(i)">Delete</ion-button>
+            <!-- <ion-button expand="full" (click)="closeOptionsModal('', i)">Cancel</ion-button> -->
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+      <ion-card-content>
+        <span style="position: absolute; margin-left: 90%; z-index: 10;" (click)="presentButtons(i)">
+          <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+        </span>
+        <ion-row>
+          <ion-col size="3.5" class="card_title"><ion-label>Date :</ion-label></ion-col>
+          <ion-col size="8.5"><ion-label>{{rec.date}}</ion-label></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3.5" class="card_title"><ion-label>Class :</ion-label></ion-col>
+          <ion-col size="8.5"><ion-label>{{rec.className}}</ion-label></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3.5" class="card_title"><ion-label>Period :</ion-label></ion-col>
+          <ion-col size="8.5"><ion-label>{{rec.period}}</ion-label></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3.5" class="card_title"><ion-label>Subject :</ion-label></ion-col>
+          <ion-col size="8.5"><ion-label>{{rec.subjectName}}</ion-label></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3.5" class="card_title"><ion-label>Workdone :</ion-label></ion-col>
+          <ion-col size="8.5"><ion-label>{{rec.Workdone}}</ion-label></ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="3.5" class="card_title"><ion-label>Is Smart :</ion-label></ion-col>
+          <ion-col size="8.5"><ion-label>{{rec.Smartclass == 1 ? 'true' : 'false'}}</ion-label></ion-col>
+        </ion-row>
+        <!-- <ion-row>
+          <ion-col size="3.5" class="card_title"><ion-label>Description :</ion-label></ion-col>
+          <ion-col size="8.5"><ion-label>{{rec.Description}}</ion-label></ion-col>
+        </ion-row> -->
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-modal [isOpen]="isReportRecord">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="cancelReportRecord('')">Cancel</ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end">
+            <ion-button (click)="saveReportRecord()" [strong]="true">Save</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div style="margin-top: 12px; margin-left: 7px;">Date</div>
+        <ion-item class="dropdown_select" style="margin: 0px 5px">
+          <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime id="datetime" presentation="date" [(ngModel)]="actualReportRecord.date"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-left: 7px;">Class</div>
+        <ion-item class="dropdown_select" style="margin: 0px 5px">
+          <ion-input readonly [placeholder]="className"
+            (click)="openOptions(classList, actualReportRecord.classId, 'class', false)">
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-left: 7px;">Period</div>
+        <ion-item class="dropdown_select" style="margin: 0px 5px">
+          <ion-input readonly [placeholder]="periodName"
+            (click)="openOptions(periods, actualReportRecord.period, 'period', false)">
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-left: 7px;">Subject</div>
+        <ion-item class="dropdown_select" style="margin: 0px 5px">
+          <ion-input readonly [placeholder]="subjectName"
+            (click)="openOptions(subjects, actualReportRecord.subject, 'subject', false)">
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-left: 7px;">Work Done</div>
+        <ion-item class="dropdown_select" style="height: 95px; margin: 0px 5px">
+          <ion-textarea [(ngModel)]="actualReportRecord.Workdone" type="text" name="message"></ion-textarea>
+        </ion-item>
+
+        <div style="margin-top: 12px; margin-left: 7px;">Is Smart-Class</div>
+        <ion-checkbox style="margin-left: 10px; margin-top: 10px;"
+          [(ngModel)]="actualReportRecord.Smartclass"></ion-checkbox>
+
+        <!-- <div style="margin-top: 12px; margin-left: 7px;">Description</div>
+        <ion-item class="dropdown_select" style="height: 95px; margin: 0px 5px">
+          <ion-textarea [(ngModel)]="actualReportRecord.Description" type="text" name="message"></ion-textarea>
+        </ion-item> -->
+
+        <div class="p-2 text-right">
+          <button (click)="saveReportRecord()" class="btn btn-primary" style="width: 100%">Save</button>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <ion-modal [isOpen]="isViewReportRecord">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="end">
+            <ion-button (click)="cancelReportRecord('view')">Cancel</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <div class="viewDiv">Date</div>
+        <ion-item class="dropdown_select" style="margin: 0px 5px">
+          <ion-label>{{actualReportRecord.date}}</ion-label>
+        </ion-item>
+
+        <div class="viewDiv">Class</div>
+        <ion-item class="dropdown_select" style="margin: 0px 5px">
+          <ion-label>{{actualReportRecord.className}}</ion-label>
+        </ion-item>
+
+        <div class="viewDiv">Period</div>
+        <ion-item class="dropdown_select" style="margin: 0px 5px">
+          <ion-label>{{actualReportRecord.period}}</ion-label>
+        </ion-item>
+
+        <div class="viewDiv">Subject</div>
+        <ion-item class="dropdown_select" style="margin: 0px 5px">
+          <ion-label>{{actualReportRecord.subjectName}}</ion-label>
+        </ion-item>
+
+        <div class="viewDiv">Work Done</div>
+        <ion-item class="dropdown_select" style="margin: 0px 5px">
+          <ion-textarea readonly>{{actualReportRecord.Workdone}}</ion-textarea>
+        </ion-item>
+
+        <div class="viewDiv">Is Smart-Class</div>
+        <ion-item class="dropdown_select" style="margin: 0px 5px">
+          <ion-label>{{actualReportRecord.Smartclass}}</ion-label>
+        </ion-item>
+
+        <!-- <div class="viewDiv">Description</div>
+        <ion-item class="dropdown_select" style="margin: 0px 5px">
+          <ion-textarea readonly>{{actualReportRecord.Description}}</ion-textarea>
+        </ion-item> -->
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

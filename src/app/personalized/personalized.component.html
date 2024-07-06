@@ -144,8 +144,7 @@
 
         <div style="margin-top: 25px">Enter Message Here</div>
         <ion-item lines="full" class="messageArea" style="height: 95px">
-          <ion-textarea type="text" name="message" [(ngModel)]="select_datas.message" #message="ngModel"
-            [required]="select_datas.filename.length === 0">
+          <ion-textarea type="text" name="message" [(ngModel)]="select_datas.message" #message="ngModel">
           </ion-textarea>
         </ion-item>
 
@@ -278,39 +277,37 @@
 
     <div class="" *ngIf="grpmes.length > 0">
       <div class="card-body card_body d-flex justify-content-end">
-
         <button type="button" class="btn btn-lg send_btn" style="
             background: #00b712;
             width: 179px;
-            height: 42px;
-            font-size: 11px;
-            text-align: center;
-            color: #fff;" (click)="deleteSelectedItems()">
-          Delete all message
-        </button>
-
-
-
-        <button type="button" class="btn btn-lg send_btn" style="
-            background: #00b712;
-            width: 178px;
-            height: 42px;
+            min-height: 42px;
             font-size: 11px;
             text-align: center;
             color: #fff;
-          " (click)="moveFinalgroupAll()">
-          {{ "send_aLl_messages" | translate }}
+            margin: 10px;" (click)="deleteSelectedItems()">
+          Delete All Messages
         </button>
-
+        <button type="button" class="btn btn-lg send_btn" style="
+            background: #00b712;
+            width: 178px;
+            min-height: 42px;
+            font-size: 11px;
+            text-align: center;
+            color: #fff;
+            margin: 10px;
+          " (click)="moveFinalgroupAll()">
+          Send All Messages
+        </button>
       </div>
     </div>
-
-
   </div>
   <!-- <div class="m-3 table-cls"></div> -->
 
   <tabset>
     <tab heading="Today">
+      <div class="cardlist" style="text-align: center;" *ngIf="senditems.length == 0">
+        <ion-label>No Personalized Record Found!!</ion-label>
+      </div>
       <div class="cardlist" *ngIf="senditems.length > 0">
         <div class="card-header table-cls">
           <div class="row align-items-center">
@@ -378,6 +375,9 @@
     </tab>
 
     <tab heading="Last 3 Days">
+      <div class="cardlist" style="text-align: center;" *ngIf="last3days.length == 0">
+        <ion-label>No Personalized Record Found!!</ion-label>
+      </div>
       <div class="cardlist" *ngIf="last3days.length > 0">
         <div class="card-header table-cls">
           <div class="row align-items-center">
@@ -501,6 +501,9 @@
           </div>
         </div>
       </form>
+      <div class="cardlist" style="text-align: center;" *ngIf="senditems1.length == 0">
+        <ion-label>No Personalized Record Found!!</ion-label>
+      </div>
       <div class="cardlist" *ngIf="senditems1.length > 0">
         <div class="card-header table-cls">
           <div class="row align-items-center">

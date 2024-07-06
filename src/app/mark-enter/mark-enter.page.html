@@ -1,0 +1,165 @@
+<ion-header [translucent]="true" *ngIf="!ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ "Mark Enter" | translate }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
+    <ion-toolbar class="p-0">
+      <ion-buttons slot="start">
+        <ion-menu-button><ion-icon class="text-white" [ios]="'menu-sharp'"
+            [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+      </ion-buttons>
+      <ion-title>{{ "Mark Enter" | translate }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="reportcard">
+    <div class="card-body card_body">
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm" novalidate>
+        <div style="margin-top: 12px">Select Class</div>
+        <!-- <ion-item class="dropdown" style="margin: 0px">
+          <ion-label *ngIf="!select_datas.class">Select a Class</ion-label>
+          <ionic-selectable
+            #portComponent
+            name="class"
+            item-content
+            [(ngModel)]="select_datas.class"
+            itemValueField="id"
+            itemTextField="name"
+            [items]="classs"
+            [canSearch]="true"
+            (onChange)="classChange($event)"
+            #class="ngModel"
+            required
+          >
+          </ionic-selectable>
+        </ion-item> -->
+
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input readonly [placeholder]="className" (click)="
+              openOptions(classs, select_datas.class, 'Class', false, [
+                'id',
+                'name'
+              ])
+            ">
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px">Select Subject</div>
+        <!-- <ion-item class="dropdown" style="margin: 0px">
+          <ion-label>Subject</ion-label>
+          <ionic-selectable
+            name="subject"
+            item-content
+            [(ngModel)]="select_datas.subject"
+            itemValueField="id"
+            itemTextField="name" 
+            [items]="subjects"
+            [canSearch]="true"
+            #subject="ngModel"
+            required
+            (onChange)="subjectChange($event)"
+          >
+         </ionic-selectable>
+        </ion-item> -->
+
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input readonly [placeholder]="SubjectName" (click)="
+              openOptions(subjects, select_datas.subject, 'Subject', false, [
+                'id',
+                'name'
+              ])
+            ">
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
+        </ion-item>
+
+        <div style="margin-top: 12px">Select Exam</div>
+        <!-- <ion-item class="dropdown" style="margin: 0px">
+          <ion-label>Exam</ion-label>
+          <ionic-selectable
+            name="exam"
+            item-content
+            [(ngModel)]="select_datas.exams"
+            itemValueField="exam_type_id"
+            itemTextField="exam_type_name"
+            [items]="exams"
+            [canSearch]="true"
+            #exam="ngModel"
+            required
+            (onChange)="subjectExam($event)"
+          >
+            <ng-template ionicSelectableCloseButtonTemplate>
+              <ion-icon
+                [md]="'close-circle'"
+                [ios]="'close-circle'"
+                style="font-size: 24px"
+              ></ion-icon>
+            </ng-template>
+          </ionic-selectable>
+        </ion-item> -->
+
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input readonly [placeholder]="ExamName" (click)="
+              openOptions(exams, select_datas.exams, 'Exams', false, [
+                'exam_type_id',
+                'exam_type_name'
+              ])
+            ">
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
+        </ion-item>
+
+        <div *ngIf="students.length > 0 || g_btn">
+          <hr class="bg-info" />
+        </div>
+
+        <div *ngIf="g_btn" class="text-center">
+          <button type="button" class="btn btn-primary" (click)="generate()">
+            Generate
+          </button>
+        </div>
+
+        <div class="rTable" *ngIf="students.length > 0">
+          <div class="rTableRow">
+            <div class="rTableHead">Name</div>
+            <div class="rTableHead">Mark</div>
+            <div class="rTableHead">Grade</div>
+          </div>
+
+          <div class="rTableRow" style="page-break-before: always" *ngFor="let d of students">
+            <div class="rTableCell">{{ d.NAME }}</div>
+            <div class="rTableCell">
+              <input name="{{ d.Admission_Id }}mark" [(ngModel)]="d.marks" placeholder="Mark" class="w-100" />
+            </div>
+            <div class="rTableCell">
+              <input name="{{ d.Admission_Id }}grade" [(ngModel)]="d.Grade" placeholder="Grade" class="w-100" />
+            </div>
+          </div>
+        </div>
+
+        <div class="p-1 text-center" *ngIf="students.length > 0">
+          <button type="submit" class="btn btn-primary">
+            {{ "save" | translate }}
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>

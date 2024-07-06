@@ -1,0 +1,139 @@
+ion-content {
+    --background: #f0f0f0;
+  }
+  
+  .Students {
+    margin-top: 5%;
+  }
+  
+  .feeHistory {
+    margin-bottom: 25px;
+  }
+  
+  .info-container-main {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin-left: 5%;
+    background-color: #5886fe;
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  
+  .info-container-tot {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 1px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #606060;
+    padding-top: 0.3em;
+    height: 2.6em;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  
+  .info-container-main .info-column,
+  .info-container-tot .info-column {
+    width: 25%;
+  }
+  
+  .info-container-tot .info-column:first-child {
+    color: #5886fe;
+  }
+  
+  .info-container-tot .info-column:not(:first-child) {
+    display: inline-block;
+    border: 1px solid #5886fe;
+    padding: 0;
+    border-radius: 5px;
+    margin: 5px;
+  }
+  
+  .info-container {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 5px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #606060;
+  }
+  
+  .info-column {
+    text-align: center;
+    flex: 1;
+    padding: 3.5px;
+    font-size: 16px;
+    padding: 1.1% 0;
+  }
+  
+  .info-container .info-column:first-child {
+    color: #5886fe;
+  }
+  
+  .feeHistoryT {
+    margin-top: 30px;
+    margin-left: 20px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #5886fe;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3%;
+    width: 90%;
+    border-radius: 10px;
+    margin-left: 5%;
+    background-color: #fff;
+  }
+  
+  .left-column-container {
+    width: 87%;
+    padding: 10px;
+  }
+  
+  .left-column {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px;
+    margin: 10px 0;
+  }
+  
+  .right-column {
+    width: 13%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .receipt {
+    color: #606060;
+  }
+  
+  .amount {
+    color: #5886fe;
+    font-weight: bold;
+  }
+
+  .lbl_control {
+    padding-top: 15%;
+    padding-left: 5px;
+    font-weight: bold;
+    color: gray;
+  }
+
+  .select-option {
+    border: 1px solid #80808026;
+    border-radius: 25px;
+    margin-bottom: 10px;
+  }

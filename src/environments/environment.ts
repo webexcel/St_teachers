@@ -5,6 +5,14 @@
 export const environment = {
     production: false,
     senderID: '427864482679',
+    login_logo: 'assets/imgs/appicon.png',
+    school_name: 'Schooltree Teachers',
+    app_versionCode: '8',
+    apiBaseUrl: 'https://demo.schooltree.in/baseTeacherS.php/api/',
+    version: '8',
+    package: 'com.schooltree.schooltree',
+    packageid: '',
+    color: '#00CCCC',
     pages: [
         {
             "menu_id": "1",
@@ -26,7 +34,7 @@ export const environment = {
         },
         {
             "menu_id": "3",
-            "menu_name": "Report-card",
+            "menu_name": "Report Card",
             "menu_link": "/report-card",
             "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/reportcard.svg",
             "menu_order": "3",
@@ -97,7 +105,7 @@ export const environment = {
             "UserId": "2063"
         },
         // {
-        //     "menu_id": "13",
+        //     "menu_id": "11",
         //     "menu_name": "Fee-report",
         //     "menu_link": "/fee-report",
         //     "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/fee.svg",
@@ -115,7 +123,7 @@ export const environment = {
             "UserId": "2063"
         },
         {
-            "menu_id": "14",
+            "menu_id": "13",
             "menu_name": "Add Remarks",
             "menu_link": "/reports",
             "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/edit_remarks.svg",
@@ -124,7 +132,7 @@ export const environment = {
             "UserId": "2063"
         },
         {
-            "menu_id": "15",
+            "menu_id": "14",
             "menu_name": "View Remarks",
             "menu_link": "/view-remarks",
             "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/view_remarks.svg",
@@ -132,31 +140,77 @@ export const environment = {
             "status": "0",
             "UserId": "2063"
         },
-        // {
-        //     "menu_id": "16",
-        //     "menu_name": "Parent Messages",
-        //     "menu_link": "/uploads",
-        //     "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/uploads.svg",
-        //     "menu_order": "15",
-        //     "status": "0",
-        //     "UserId": "2063"
-        // },
-        // {
-        //     "menu_id": "17",
-        //     "menu_name": "Class Fees Report",
-        //     "menu_link": "/class-student-fee-report",
-        //     "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/class-student-fee-report.svg",
-        //     "menu_order": "15",
-        //     "status": "0",
-        //     "UserId": "2063"
-        // },
-    ],
-    login_logo: 'assets/imgs/appicon.png',
-    school_name: 'Schooltree Teachers',
-    app_versionCode: '9',
-    apiBaseUrl: 'https://demo.schooltree.in/baseTeacherS.php/api/',
-    version: '9',
-    package: 'com.schooltree.schooltree',
-    packageid: '',
-    color: '#00CCCC',
+        {
+            "menu_id": "15",
+            "menu_name": "Parent Messages",
+            "menu_link": "/uploads",
+            "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/uploads.svg",
+            "menu_order": "15",
+            "status": "0",
+            "UserId": "2063"
+        },
+        {
+            "menu_id": "16",
+            "menu_name": "Class Fees Report",
+            "menu_link": "/class-student-fee-report",
+            "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/class-student-fee-report.svg",
+            "menu_order": "15",
+            "status": "0",
+            "UserId": "2063"
+        },
+        {
+            "menu_id": "17",
+            "menu_name": "Expences",
+            "menu_link": "/expences",
+            "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/expenses.svg",
+            "menu_order": "16",
+            "status": "0",
+            "UserId": "2063"
+        },
+        {
+            "menu_id": "18",
+            "menu_name": "Absentees",
+            "menu_link": "/absentees",
+            "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/absentees.svg",
+            "menu_order": "17",
+            "status": "0",
+            "UserId": "2063"
+        },
+        {
+            "menu_id": "19",
+            "menu_name": "Staff Free Period",
+            "menu_link": "/staff-free-period",
+            "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/stafffreeperiod.svg",
+            "menu_order": "18",
+            "status": "0",
+            "UserId": "2063"
+        },
+        {
+            "menu_id": "20",
+            "menu_name": "Teachers Report",
+            "menu_link": "/teachers-report",
+            "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/teachers-report.svg",
+            "menu_order": "19",
+            "status": "0",
+            "UserId": "2063"
+        },
+        {
+            "menu_id": "21",
+            "menu_name": "Mark Enter",
+            "menu_link": "/mark-enter",
+            "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/mark-enter.svg",
+            "menu_order": "20",
+            "status": "0",
+            "UserId": "2063"
+        },
+        {
+            "menu_id": "22",
+            "menu_name": "Gallery",
+            "menu_link": "/gallery",
+            "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/gallery.svg",
+            "menu_order": "21",
+            "status": "0",
+            "UserId": "2063"
+        },
+    ]
 };

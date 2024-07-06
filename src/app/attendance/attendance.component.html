@@ -7,13 +7,8 @@
     </ion-buttons>
     <ion-title>{{ "attendance" | translate }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button
-        routerDirection="root"
-        routerLink="/dashboard"
-        lines="none"
-        detail="false"
-        routerLinkActive="selected"
-      >
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
         <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
       </ion-button>
     </ion-buttons>
@@ -25,11 +20,7 @@
     <ion-toolbar class="p-0">
       <ion-buttons slot="start">
         <ion-menu-button>
-          <ion-icon
-            class="text-white"
-            [ios]="'menu-sharp'"
-            [md]="'menu-sharp'"
-          ></ion-icon>
+          <ion-icon class="text-white" [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
         </ion-menu-button>
       </ion-buttons>
       <ion-title>{{ "attendance" | translate }}</ion-title>
@@ -40,12 +31,7 @@
     <!-- Updated styles -->
 
     <div class="card-body card_body">
-      <form
-        name="form"
-        (ngSubmit)="f.form.valid && onSubmit(f)"
-        #f="ngForm"
-        novalidate
-      >
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm" novalidate>
         <div style="margin-top: 12px">Select Class</div>
         <!-- <ion-item class="dropdown" style="margin: 0px">
           <ion-label *ngIf="!select_datas.class">Select a Class</ion-label>
@@ -77,74 +63,45 @@
         </ion-item> -->
 
         <ion-item class="dropdown_select" style="margin: 0px">
-          <ion-input
-            readonly
-            [placeholder]="className"
-            (click)="openOptions(classs, select_datas.class, false, '')"
-          >
-            <ion-icon
-              name="caret-down"
-              style="margin-left: 10%; opacity: 0.5; position: absolute"
-            ></ion-icon>
+          <ion-input readonly [placeholder]="className" (click)="openOptions(classs, select_datas.class, false, '')">
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
           </ion-input>
           <ion-input hidden="true"></ion-input>
         </ion-item>
 
         <div style="margin-top: 12px">Select Date</div>
         <ion-item lines="full" class="dropdown" style="margin: 0px">
-          <ion-label
-            id="open-modal"
-            class="selected-date"
-            *ngIf="select_datas.s_date"
-          >
+          <ion-label id="open-modal" class="selected-date" *ngIf="select_datas.s_date">
             <span style="float: left">
-              {{ formatDate(select_datas.s_date) }}</span
-            >
+              {{ formatDate(select_datas.s_date) }}</span>
 
             <span style="float: right !important">
-              <img
-                style="height: 6px; width: 10px; margin-right: 5px"
-                src="../../assets/imgs/speakers/Polygon 4.png"
-              />
+              <img style="height: 6px; width: 10px; margin-right: 5px" src="../../assets/imgs/speakers/Polygon 4.png" />
             </span>
           </ion-label>
 
-          <ion-modal
-            trigger="open-modal"
-            (willDismiss)="onWillDismiss($event, 'first')"
-            [initialBreakpoint]="0.5"
-            [breakpoints]="[0, 0.25, 0.5, 0.75]"
-            animated="true"
-          >
+          <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event, 'first')" [initialBreakpoint]="0.5"
+            [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
             <ng-template>
               <ion-header>
                 <ion-toolbar>
                   <ion-buttons slot="start">
                     <ion-button (click)="cancel_date()">{{
                       "cancel" | translate
-                    }}</ion-button>
+                      }}</ion-button>
                   </ion-buttons>
                   <ion-title>{{ "select_date" | translate }}</ion-title>
                   <ion-buttons slot="end">
                     <ion-button (click)="confirm_date()" [strong]="true">{{
                       "confirm" | translate
-                    }}</ion-button>
+                      }}</ion-button>
                   </ion-buttons>
                 </ion-toolbar>
               </ion-header>
               <ion-content class="ion-padding">
-                <ion-datetime
-                  name="dob"
-                  displayFormat="DD/MM/YYYY"
-                  pickerFormat="DD/MM/YYYY"
-                  [(ngModel)]="select_datas.s_date"
-                  #dob="ngModel"
-                  presentation="date"
-                  mode="md"
-                  #datetime
-                  (ionChange)="showHideDatePicker()"
-                  required
-                >
+                <ion-datetime name="dob" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"
+                  [(ngModel)]="select_datas.s_date" #dob="ngModel" presentation="date" mode="md" #datetime
+                  (ionChange)="showHideDatePicker()" required>
                 </ion-datetime>
               </ion-content>
             </ng-template>
@@ -205,17 +162,10 @@
         </ion-item> -->
 
         <ion-item class="dropdown_select" style="margin: 0px">
-          <ion-input
-            readonly
-            [placeholder]="StudentsName"
-            (click)="
+          <ion-input readonly [placeholder]="StudentsName" (click)="
               openOptions(students, select_datas.student, true, 'Students')
-            "
-          >
-            <ion-icon
-              name="caret-down"
-              style="margin-left: 10%; opacity: 0.5; position: absolute"
-            ></ion-icon>
+            ">
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
           </ion-input>
           <ion-input hidden="true"></ion-input>
         </ion-item>
@@ -266,12 +216,8 @@
         </ion-item> -->
 
         <div *ngFor="let session of select_sessions">
-          <input
-            type="radio"
-            [value]="session.id"
-            [checked]="selectedSessions === session.id"
-            (change)="updateSelectedSession(session.id)"
-          />
+          <input type="radio" [value]="session.id" [checked]="selectedSessions === session.id"
+            (change)="updateSelectedSession(session.id)" />
           <label>{{ session.name }}</label>
         </div>
 
@@ -288,11 +234,8 @@
     <div class="m-3" *ngIf="grpmes.length > 0">
       <div>
         <div class="dateHead">Draft Message</div>
-        <table
-          style="width: 100%; table-layout: fixed"
-          class="table table-bordered"
-          *ngFor="let d of grpmes; let i = index"
-        >
+        <table style="width: 100%; table-layout: fixed" class="table table-bordered"
+          *ngFor="let d of grpmes; let i = index">
           <tbody>
             <tr>
               <td width="25%">
@@ -307,28 +250,14 @@
               </td>
 
               <td width="12%">
-                <button
-                  type="button"
-                  class="btn bg-white ml-1"
-                  style="padding: 4px; padding-top: 8px"
-                  (click)="movegrouptofinal([{ ID: d.ID }])"
-                >
-                  <img
-                    style="height: 18px; width: 20px"
-                    src="../../assets/imgs/speakers/send.svg"
-                  />
+                <button type="button" class="btn bg-white ml-1" style="padding: 4px; padding-top: 8px"
+                  (click)="movegrouptofinal([{ ID: d.ID }])">
+                  <img style="height: 18px; width: 20px" src="../../assets/imgs/speakers/send.svg" />
                 </button>
 
-                <button
-                  type="button"
-                  class="btn bg-white ml-1"
-                  style="padding: 4px; padding-top: 8px"
-                  (click)="deletecirculars(d.ID)"
-                >
-                  <img
-                    style="height: 18px; width: 20px"
-                    src="../../assets/imgs/speakers/delete.svg"
-                  />
+                <button type="button" class="btn bg-white ml-1" style="padding: 4px; padding-top: 8px"
+                  (click)="deletecirculars(d.ID)">
+                  <img style="height: 18px; width: 20px" src="../../assets/imgs/speakers/delete.svg" />
                 </button>
               </td>
             </tr>
@@ -341,19 +270,14 @@
 
     <div class="" *ngIf="grpmes.length > 0">
       <div class="card-body card_body d-flex justify-content-end">
-        <button
-          type="button"
-          class="btn btn-lg btn-block send_btn"
-          (click)="moveFinalgroupAll()"
-          style="
+        <button type="button" class="btn btn-lg btn-block send_btn" (click)="moveFinalgroupAll()" style="
             background: #00b712;
             width: 188px;
             height: 42px;
             font-size: 16px;
             text-align: center;
             color: #fff;
-          "
-        >
+          ">
           {{ "send_aLl_messages" | translate }}
         </button>
       </div>
@@ -363,6 +287,9 @@
   <div class="m-3">
     <tabset>
       <tab heading="Today">
+        <div class="cardlist" style="text-align: center;" *ngIf="senditems.length == 0">
+          <ion-label>No Attendance Found!!</ion-label>
+        </div>
         <div class="cardlist" *ngIf="senditems.length > 0">
           <div class="card-header table-cls">
             <div class="row align-items-center">
@@ -371,9 +298,7 @@
               </div>
             </div>
           </div>
-          <div
-            class="card-body card_body border border-primary p-0 bodytable table-cls"
-          >
+          <div class="card-body card_body border border-primary p-0 bodytable table-cls">
             <table *ngIf="senditems.length" class="table table-bordered">
               <thead>
                 <tr>
@@ -385,15 +310,8 @@
                 <tr *ngFor="let s of senditems">
                   <td style="width: 88%">{{ s.Admission_No }}-{{ s.name }}</td>
                   <td>
-                    <button
-                      type="button"
-                      class="btn bg-white ml-1"
-                      (click)="deletecirculars1(s.ID)"
-                    >
-                      <img
-                        style="height: 18px"
-                        src="../../assets/imgs/speakers/delete.svg"
-                      />
+                    <button type="button" class="btn bg-white ml-1" (click)="deletecirculars1(s.ID)">
+                      <img style="height: 18px" src="../../assets/imgs/speakers/delete.svg" />
                     </button>
                   </td>
                 </tr>
@@ -403,6 +321,9 @@
         </div>
       </tab>
       <tab heading="Last 3 Days">
+        <div class="cardlist" style="text-align: center;" *ngIf="last3days.length == 0">
+          <ion-label>No Attendance Found!!</ion-label>
+        </div>
         <div class="cardlist" *ngIf="last3days.length > 0">
           <div class="card-header table-cls">
             <div class="row align-items-center">
@@ -411,9 +332,7 @@
               </div>
             </div>
           </div>
-          <div
-            class="card-body card_body border border-primary p-0 bodytable table-cls"
-          >
+          <div class="card-body card_body border border-primary p-0 bodytable table-cls">
             <table *ngIf="last3days.length" class="table table-bordered">
               <thead>
                 <tr>
@@ -425,15 +344,8 @@
                 <tr *ngFor="let s of last3days">
                   <td style="width: 88%">{{ s.Admission_No }}-{{ s.name }}</td>
                   <td>
-                    <button
-                      type="button"
-                      class="btn bg-white ml-1"
-                      (click)="deletecirculars1(s.ID)"
-                    >
-                      <img
-                        style="height: 18px"
-                        src="../../assets/imgs/speakers/delete.svg"
-                      />
+                    <button type="button" class="btn bg-white ml-1" (click)="deletecirculars1(s.ID)">
+                      <img style="height: 18px" src="../../assets/imgs/speakers/delete.svg" />
                     </button>
                   </td>
                 </tr>
@@ -443,13 +355,8 @@
         </div>
       </tab>
       <tab heading="Search By Date">
-        <form
-          name="form"
-          (ngSubmit)="f.form.valid && onSubmit1()"
-          #f1="ngForm"
-          novalidate
-          class="border border-primary"
-        >
+        <form name="form" (ngSubmit)="f.form.valid && onSubmit1()" #f1="ngForm" novalidate
+          class="border border-primary">
           <div class="row text-center align-items-center">
             <div class="col-8">
               <!-- <ion-item>
@@ -463,52 +370,31 @@
                 ></ion-datetime>
               </ion-item> -->
               <ion-item lines="full">
-                <ion-label
-                  id="open-modal1"
-                  class="selected-date"
-                  *ngIf="select_datas1.s_date"
-                  (click)="toggleDateSelection()"
-                >
+                <ion-label id="open-modal1" class="selected-date" *ngIf="select_datas1.s_date"
+                  (click)="toggleDateSelection()">
                   {{ formatDate(select_datas1.s_date) }}
                 </ion-label>
-                <ion-modal
-                  [isOpen]="isPickerOpen"
-                  (willDismiss)="onWillDismiss($event, 'second')"
-                  [initialBreakpoint]="0.5"
-                  [breakpoints]="[0, 0.25, 0.5, 0.75]"
-                  animated="true"
-                >
+                <ion-modal [isOpen]="isPickerOpen" (willDismiss)="onWillDismiss($event, 'second')"
+                  [initialBreakpoint]="0.5" [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
                   <ng-template>
                     <ion-header>
                       <ion-toolbar>
                         <ion-buttons slot="start">
                           <ion-button (click)="toggleDateSelection()">{{
                             "cancel" | translate
-                          }}</ion-button>
+                            }}</ion-button>
                         </ion-buttons>
                         <ion-title>{{ "select_date" | translate }}</ion-title>
                         <ion-buttons slot="end">
-                          <ion-button
-                            (click)="toggleDateSelection()"
-                            [strong]="true"
-                            >{{ "confirm" | translate }}</ion-button
-                          >
+                          <ion-button (click)="toggleDateSelection()" [strong]="true">{{ "confirm" | translate
+                            }}</ion-button>
                         </ion-buttons>
                       </ion-toolbar>
                     </ion-header>
                     <ion-content class="ion-padding">
-                      <ion-datetime
-                        name="dob"
-                        displayFormat="DD/MM/YYYY"
-                        pickerFormat="DD/MM/YYYY"
-                        [(ngModel)]="select_datas1.s_date"
-                        #dob="ngModel"
-                        presentation="date"
-                        mode="md"
-                        #datetime
-                        (ionChange)="showHideDatePicker()"
-                        required
-                      >
+                      <ion-datetime name="dob" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"
+                        [(ngModel)]="select_datas1.s_date" #dob="ngModel" presentation="date" mode="md" #datetime
+                        (ionChange)="showHideDatePicker()" required>
                       </ion-datetime>
                     </ion-content>
                   </ng-template>
@@ -516,20 +402,16 @@
               </ion-item>
             </div>
             <div class="col-4">
-              <button
-                type="button"
-                (click)="onSubmit1()"
-                class="btn btn-success"
-              >
+              <button type="button" (click)="onSubmit1()" class="btn btn-success">
                 Get
-                <ion-icon
-                  [ios]="'arrow-forward-sharp'"
-                  [md]="'arrow-forward-sharp'"
-                ></ion-icon>
+                <ion-icon [ios]="'arrow-forward-sharp'" [md]="'arrow-forward-sharp'"></ion-icon>
               </button>
             </div>
           </div>
         </form>
+        <div class="cardlist" style="text-align: center;" *ngIf="senditems1.length == 0">
+          <ion-label>No Attendance Found!!</ion-label>
+        </div>
         <div class="cardlist" *ngIf="senditems1.length > 0">
           <div class="card-header table-cls">
             <div class="row align-items-center">
@@ -538,9 +420,7 @@
               </div>
             </div>
           </div>
-          <div
-            class="card-body card_body border border-primary p-0 bodytable table-cls"
-          >
+          <div class="card-body card_body border border-primary p-0 bodytable table-cls">
             <table *ngIf="senditems1.length" class="table table-bordered">
               <thead>
                 <tr>
@@ -552,15 +432,8 @@
                 <tr *ngFor="let s of senditems1">
                   <td style="width: 88%">{{ s.Admission_No }}-{{ s.name }}</td>
                   <td>
-                    <button
-                      type="button"
-                      class="btn bg-white ml-1"
-                      (click)="deletecirculars1(s.ID)"
-                    >
-                      <img
-                        style="height: 18px"
-                        src="../../assets/imgs/speakers/delete.svg"
-                      />
+                    <button type="button" class="btn bg-white ml-1" (click)="deletecirculars1(s.ID)">
+                      <img style="height: 18px" src="../../assets/imgs/speakers/delete.svg" />
                     </button>
                   </td>
                 </tr>

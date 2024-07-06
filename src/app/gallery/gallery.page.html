@@ -1,0 +1,174 @@
+<ion-header [translucent]="true">
+  <ion-toolbar *ngIf="presentView == 'main-page'">
+    <ion-buttons slot="start">
+      <ion-menu-button><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon></ion-menu-button>
+    </ion-buttons>
+    <ion-title>{{ "Gallery" | translate }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="presentView == 'view-page'">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeCat()">{{
+        "Close" | translate
+        }}</ion-button>
+    </ion-buttons>
+    <!-- <ion-title>{{ "Add Event" | translate }}</ion-title> -->
+    <ion-buttons slot="end">
+      <ion-button (click)="deleteAll()" [strong]="true">{{
+        "Delete All" | translate
+        }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" *ngIf="presentView == 'main-page'">
+  <div>
+    <ion-buttons style="justify-content: end;">
+      <ion-button class="catButton" (click)="openCatagoryModal()"><ion-icon style="margin-right: 5px;"
+          name="add"></ion-icon>Add Event</ion-button>
+    </ion-buttons>
+  </div>
+
+  <ion-modal [isOpen]="openCat" (willDismiss)="onWillDismiss($event)" [initialBreakpoint]="1"
+    [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="closeCat()">{{
+              "Close" | translate
+              }}</ion-button>
+          </ion-buttons>
+          <!-- <ion-title>{{ "Add Event" | translate }}</ion-title> -->
+          <ion-buttons slot="end">
+            <ion-button (click)="saveCat()" [strong]="true">{{
+              "Save" | translate
+              }}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <form name="form" #f="ngForm" novalidate (ngSubmit)="f.form.valid && saveCat()">
+          <!-- <div style="margin-top: 12px">List Of Classes</div>
+          <ion-item class="dropdown_select" style="margin: 0px">
+            <ion-input readonly [placeholder]="ClassName" (click)="openOptions(classList, classId, false, 'class')">
+              <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+            </ion-input>
+            <ion-input hidden="true"></ion-input>
+          </ion-item> -->
+
+          <div style="margin-top: 12px">Event Name</div>
+          <ion-item lines="full" class="messageArea">
+            <ion-input name="categoryName" [(ngModel)]="categoryName"></ion-input>
+          </ion-item>
+
+          <div style="margin-top: 12px">Description</div>
+          <ion-item lines="full" class="messageArea" style="height: 95px">
+            <ion-textarea type="text" name="message" #message="ngModel" [(ngModel)]="descText"></ion-textarea>
+          </ion-item>
+
+          <ion-buttons style="justify-content: center;">
+            <ion-button class="catSaveButton" (click)="saveCat()">Save</ion-button>
+          </ion-buttons>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+  <div class="gallery">
+    <div class="card-body card_body">
+      <form name="form" #f="ngForm" novalidate (ngSubmit)="f.form.valid && saveCat()">
+        <div style="margin-top: 12px">List Of Event</div>
+        <ion-item class="dropdown_select" style="margin: 0px">
+          <ion-input readonly [placeholder]="CatName" (click)="openCatOption()">
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+          </ion-input>
+          <ion-input hidden="true"></ion-input>
+        </ion-item>
+
+        <div class="row align-items-center text-center" style="margin-top: 10px;">
+          <div>
+            <div *ngIf="fileName.length > 0" class="f_name">
+              <ion-label>{{fileName.toString()}}</ion-label>
+            </div>
+            <div class="attach" style="flex: 0 0 150px">
+              <img alt="" style="width: 12px; height: 22px" src="../../assets/imgs/speakers/attach.svg" />
+              <span style="color: #fff; margin-left: 8px" (click)="open()">Attach Files</span>
+            </div>
+          </div>
+          <div class="col-12 text-danger">
+            only allow jpg, jpeg, png.
+          </div>
+        </div>
+
+        <ion-buttons style="justify-content: center;">
+          <ion-button class="catSaveButton" style="background-color: #189d00; border-radius: 10px;"
+            (click)="addGallery()">Add Images</ion-button>
+        </ion-buttons>
+      </form>
+    </div>
+  </div>
+
+  <div class="galList" *ngIf="galleryDetails.length > 0">
+    <div class="info-container-main">
+      <div style="width: 30%;" class="info-column">Event</div>
+      <div style="width: 40%;" class="info-column">Description</div>
+      <div style="width: 15%;" class="info-column">View</div>
+      <div style="width: 15%;" class="info-column">Delete</div>
+    </div>
+
+    <div class="info-container" *ngFor="let gal of galleryDetails; let i = index">
+      <div style="width: 30%;" class="info-column">{{ gal.CatName }}</div>
+      <div style="width: 40%;" class="info-column">{{ gal.Description }}</div>
+      <div style="width: 15%;" class="info-column"><ion-icon name="eye" (click)="viewCatDetails(i)"></ion-icon></div>
+      <div style="width: 15%;" class="info-column"><ion-icon name="trash" (click)="deleteCatDetails(i)"></ion-icon>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-content class="ion-padding" *ngIf="presentView == 'view-page'">
+  <div class="header-content" *ngIf="deleteButton"><ion-button slot="end" (click)="deleteImg()"><ion-icon
+        name="trash"></ion-icon></ion-button>
+  </div>
+  <div class="card-container">
+    <ion-card *ngFor="let imgData of ViewDetails; let i = index">
+      <ion-card-content>
+        <div>
+          <img class="thumbnail_img" [src]="imgData.thumbImg" [alt]="imgData.thumbImg" (click)="openImage(imgData)">
+        </div>
+        <div><ion-checkbox style="margin-top: 10px; display: flex;" [(ngModel)]="imgData.checked"
+            (ionChange)="checkCardSelection(i)"></ion-checkbox></div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <ion-modal [isOpen]="viewImages" animated="true">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-button (click)="closeImageModal()">{{
+              "Close" | translate
+              }}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <swiper-container #swiper (afterinit)="swiperReady()" (slidechange)="swiperSlideChanged($event)"
+          [pagination]="true">
+          <swiper-slide *ngFor="let image of ViewDetails">
+            <div><img [src]="image.GalPath" [alt]="image.GalPath"></div>
+          </swiper-slide>
+        </swiper-container>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

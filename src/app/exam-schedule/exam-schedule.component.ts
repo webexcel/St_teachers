@@ -6,6 +6,7 @@ import {
   IonModal,
   ModalController,
   Platform,
+  ToastController,
 } from '@ionic/angular';
 
 import { AuthService } from '../service/auth.service';
@@ -51,7 +52,8 @@ export class ExamScheduleComponent implements OnInit {
     public authservice: AuthService,
     public storage: StorageService,
     public alertCtrl: AlertController,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -77,6 +79,16 @@ export class ExamScheduleComponent implements OnInit {
     ];
     this.reset();
     this.getGenerateMarksList();
+  }
+
+  async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'middle'
+    });
+    toast.present();
   }
 
   reset() {
@@ -198,31 +210,62 @@ export class ExamScheduleComponent implements OnInit {
     return classs.map((port: any) => port.name).join(', ');
   }
 
-  generate() {
-    let data = {
-      sub: this.select_datas.subject.name,
-      examName: this.select_datas.exams.exam_type_name,
-      class: this.select_datas.class,
-      s_date: this.select_datas.s_date,
-      Time: this.select_datas.time,
-      portion: this.select_datas.message,
-      Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
-    };
-    this.loading.present();
-    this.authservice.post('InsertExamSchedule', data).subscribe(
-      (res: any) => {
-        this.loading.dismissAll();
-        if (res['status']) {
-          this.g_btn = false;
-          // this.getGenerateMarksList();
-        }
-      },
-      (err) => {
-        this.loading.dismissAll();
+  resetForm() {
+    this.select_datas.exams = undefined;
+    this.ExamName = "No Exam Selected";
+    this.select_datas.class = [];
+    this.ClassName = "No Class Selected";
+    this.classs.forEach((element: any) => {
+      if (element.checked) {
+        element.checked = false;
       }
-    );
-    //this.g_btn = false
-    //this.getStudentsByClass(this.select_datas.class.id)
+    })
+    this.select_datas.subject = undefined;
+    this.SubjectName = "No Subject Selected";
+    this.select_datas.time = "";
+    this.select_datas.message = "";
+    this.select_datas.s_date = new Date().toISOString();
+  }
+
+  generate() {
+    if (this.select_datas.exams == undefined || this.select_datas.exams.exam_type_name == undefined || this.select_datas.exams.exam_type_name == "") {
+      this.showToast("No Exam Selected!", "danger");
+    } else if (this.select_datas.class == undefined || this.select_datas.class.length == 0) {
+      this.showToast("No Class Selected!", "danger");
+    } else if (this.select_datas.subject == undefined || this.select_datas.subject.name == undefined || this.select_datas.subject.name == "") {
+      this.showToast("No Subject Selected!", "danger");
+    } else if (this.select_datas.time == undefined || this.select_datas.time == "") {
+      this.showToast("Time is Empty!", "danger");
+    } else if (this.select_datas.message == undefined || this.select_datas.message == "") {
+      this.showToast("Portion is Empty!", "danger");
+    } else {
+      let data = {
+        sub: this.select_datas.subject.name,
+        examName: this.select_datas.exams.exam_type_name,
+        class: this.select_datas.class,
+        s_date: this.select_datas.s_date,
+        Time: this.select_datas.time,
+        portion: this.select_datas.message,
+        Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
+      };
+      this.loading.present();
+      this.authservice.post('InsertExamSchedule', data).subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.showToast("Exam Schedule Added successfully.", "success");
+            this.g_btn = false;
+            this.resetForm();
+            // this.getGenerateMarksList();
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
+        }
+      );
+      //this.g_btn = false
+      //this.getStudentsByClass(this.select_datas.class.id)
+    }
   }
 
   getGenerateMarksList() {
@@ -343,24 +386,36 @@ export class ExamScheduleComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.loading.present();
-    this.authservice
-      .post('getExamSchedule', {
-        Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
-      })
-      .subscribe(
-        (res: any) => {
-          this.loading.dismissAll();
-          if (res['status']) {
-            this.students = res['data'];
-          } else {
-            this.g_btn = false;
+    if (this.select_datas.exams == undefined || this.select_datas.exams.exam_type_name == undefined || this.select_datas.exams.exam_type_name == "") {
+      this.showToast("No Exam Selected!", "danger");
+    } else if (this.select_datas.class == undefined || this.select_datas.class.length == 0) {
+      this.showToast("No Class Selected!", "danger");
+    } else if (this.select_datas.subject == undefined || this.select_datas.subject.name == undefined || this.select_datas.subject.name == "") {
+      this.showToast("No Subject Selected!", "danger");
+    } else if (this.select_datas.time == undefined || this.select_datas.time == "") {
+      this.showToast("Time is Empty!", "danger");
+    } else if (this.select_datas.message == undefined || this.select_datas.message == "") {
+      this.showToast("Portion is Empty!", "danger");
+    } else {
+      this.loading.present();
+      this.authservice
+        .post('getExamSchedule', {
+          Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
+        })
+        .subscribe(
+          (res: any) => {
+            this.loading.dismissAll();
+            if (res['status']) {
+              this.students = res['data'];
+            } else {
+              this.g_btn = false;
+            }
+          },
+          (err) => {
+            this.loading.dismissAll();
           }
-        },
-        (err) => {
-          this.loading.dismissAll();
-        }
-      );
+        );
+    }
   }
 
   showHideDatePicker() {

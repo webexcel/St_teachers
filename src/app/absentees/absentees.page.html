@@ -1,0 +1,74 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Absentees Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div style="margin: 10px;">
+
+    <ion-row>
+      <ion-col>
+        <ion-item lines="full" class="dropdown" style="margin: 0px">
+          <ion-label id="open-modal" class="selected-date" (click)="toggleDateSelection()">
+            <span style="float: left">{{ formatDate(selectedDate) }}</span>
+
+            <span style="float: right !important">
+              <img style="height: 6px; width: 10px; margin-right: 5px" src="../../assets/imgs/speakers/Polygon 4.png" />
+            </span>
+          </ion-label>
+
+          <ion-modal [isOpen]="isPickerOpen" trigger="open-modal" [initialBreakpoint]="0.5"
+            [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
+            <ng-template>
+              <ion-header>
+                <ion-toolbar>
+                  <ion-buttons slot="start">
+                    <ion-button (click)="cancel_date()">cancel</ion-button>
+                  </ion-buttons>
+                  <ion-buttons slot="end">
+                    <ion-button (click)="confirm_date()" [strong]="true">confirm</ion-button>
+                  </ion-buttons>
+                </ion-toolbar>
+              </ion-header>
+              <ion-content class="ion-padding">
+                <ion-datetime style="max-width: none;" name="dob" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"
+                  [(ngModel)]="selectedDate" #dob="ngModel" presentation="date" mode="md" #datetime
+                  (ionChange)="showHideDatePicker()" required>
+                </ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </div>
+  <div class="Students" *ngIf="abcenteesDetails.length > 0">
+    <div class="info-container-main">
+      <div class="info-column">Date</div>
+      <div class="info-column">Class Section</div>
+      <div class="info-column">Abs. Count</div>
+    </div>
+
+    <div class="info-container" *ngFor="let exp of abcenteesDetails">
+      <div class="info-column">{{ exp.date | date: 'dd-MM-yyyy' }}</div>
+      <div class="info-column">{{ exp.CLASSSEC }}</div>
+      <div class="info-column">{{ exp.classIdCount }}</div>
+    </div>
+  </div>
+
+  <div class="Students" style="text-align: center;" *ngIf="abcenteesDetails.length == 0">
+    <label>No Absentees Found!!</label>
+  </div>
+</ion-content>

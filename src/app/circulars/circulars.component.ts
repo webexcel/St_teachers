@@ -15,6 +15,7 @@ import {
   IonModal,
   ModalController,
   Platform,
+  ToastController,
 } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import {
@@ -111,16 +112,13 @@ export class CircularsComponent implements OnInit {
     private modalController: ModalController,
     private file: File,
     private fileOpener: FileOpener,
-    private videoService: VideoProcessingService
+    private videoService: VideoProcessingService,
+    private toastController: ToastController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
     });
   }
-
-  // handleSelectChange(e: any) {
-
-  // }
 
   ngOnInit() {
     this.ios = this.authservice.isiso();
@@ -146,6 +144,16 @@ export class CircularsComponent implements OnInit {
     this.className = 'No Select Classes';
   }
 
+  async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'middle'
+    });
+    toast.present();
+  }
+
   reset() {
     this.select_datas.s_date = new Date().toISOString();
     this.select_datas.staff_id =
@@ -156,6 +164,8 @@ export class CircularsComponent implements OnInit {
     this.select_datas.image = '';
     this.select_datas.type = '';
     this.select_datas.filename = '';
+    this.select_datas.class = [];
+    this.select_datas.message = "";
     this.className = 'No Select Classes';
   }
 
@@ -208,20 +218,27 @@ export class CircularsComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.loading.present();
-    this.authservice.post('saveMessage', this.select_datas).subscribe(
-      (res: any) => {
-        this.loading.dismissAll();
-        if (res['status']) {
-          form.resetForm();
-          this.reset();
-          this.getgroupMessage();
+    if (this.select_datas.class == undefined || this.select_datas.class.length == 0) {
+      this.showToast("No Classes Selected!", "danger");
+    } else if (this.select_datas.message == undefined || this.select_datas.message == "") {
+      this.showToast("Message is Empty!", "danger");
+    } else {
+      this.loading.present();
+      this.authservice.post('saveMessage', this.select_datas).subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.showToast("Message Saved Successfully.", "success");
+            form.resetForm();
+            this.reset();
+            this.getgroupMessage();
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
         }
-      },
-      (err) => {
-        this.loading.dismissAll();
-      }
-    );
+      );
+    }
   }
 
   // Function to sanitize HTML content
@@ -976,13 +993,8 @@ export class CircularsComponent implements OnInit {
     data.videoClicked = true;
   }
 
-
-
   deleteSelectedItems() {
-    console.log(this.grpmes, "4444")
     const selectedIds = this.grpmes.map((item: any) => item.ID);
-
-
     this.authservice.post('deleteAllcirculars', { ids: selectedIds.map((id: any) => ({ id })) }).subscribe(
       (res) => {
         this.loading.dismissAll();

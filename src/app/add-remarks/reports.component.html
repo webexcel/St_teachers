@@ -7,13 +7,8 @@
     </ion-buttons>
     <ion-title>Add Students Remarks</ion-title>
     <ion-buttons slot="end">
-      <ion-button
-        routerDirection="root"
-        routerLink="/dashboard"
-        lines="none"
-        detail="false"
-        routerLinkActive="selected"
-      >
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
         <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
       </ion-button>
     </ion-buttons>
@@ -25,11 +20,7 @@
     <ion-toolbar class="p-0">
       <ion-buttons slot="start">
         <ion-menu-button>
-          <ion-icon
-            class="text-white"
-            [ios]="'menu-sharp'"
-            [md]="'menu-sharp'"
-          ></ion-icon>
+          <ion-icon class="text-white" [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
         </ion-menu-button>
       </ion-buttons>
       <ion-title>Students Remarks</ion-title>
@@ -37,24 +28,12 @@
   </ion-header>
 
   <div class="card-body card_body">
-    <form
-      name="form"
-      #f="ngForm"
-      novalidate
-      (ngSubmit)="f.form.valid && onSubmit(f)"
-    >
+    <form name="form" #f="ngForm" novalidate (ngSubmit)="f.form.valid && onSubmit(f)">
       <div style="margin-top: 12px">Select Class</div>
 
       <ion-item class="dropdown_select" style="margin: 0px">
-        <ion-input
-          readonly
-          [placeholder]="ClassName"
-          (click)="openOptions(classs, select_datas.class, 'Class', false)"
-        >
-          <ion-icon
-            name="caret-down"
-            style="margin-left: 10%; opacity: 0.5; position: absolute"
-          ></ion-icon>
+        <ion-input readonly [placeholder]="ClassName" (click)="openOptions(classs, select_datas.class, 'Class', false)">
+          <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
         </ion-input>
         <ion-input hidden="true"></ion-input>
       </ion-item>
@@ -62,17 +41,10 @@
       <div style="margin-top: 25px">Select Students</div>
 
       <ion-item class="dropdown_select" style="margin: 0px">
-        <ion-input
-          readonly
-          [placeholder]="StudentsName"
-          (click)="
+        <ion-input readonly [placeholder]="StudentsName" (click)="
             openOptions(students, select_datas.student, 'Students', true)
-          "
-        >
-          <ion-icon
-            name="caret-down"
-            style="margin-left: 10%; opacity: 0.5; position: absolute"
-          ></ion-icon>
+          ">
+          <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
         </ion-input>
         <ion-input hidden="true"></ion-input>
       </ion-item>
@@ -80,28 +52,16 @@
       <div style="margin-top: 25px">Select Subject</div>
 
       <ion-item class="dropdown_select" style="margin: 0px">
-        <ion-input
-          readonly
-          [placeholder]="SubjectName"
-          (click)="openOptions(subjects, select_datas.subject, 'Subject', true)"
-        >
-          <ion-icon
-            name="caret-down"
-            style="margin-left: 10%; opacity: 0.5; position: absolute"
-          ></ion-icon>
+        <ion-input readonly [placeholder]="SubjectName"
+          (click)="openOptions(subjects, select_datas.subject, 'Subject', true)">
+          <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
         </ion-input>
         <ion-input hidden="true"></ion-input>
       </ion-item>
 
       <div style="margin-top: 25px">Enter Message Here</div>
       <ion-item lines="full" class="messageArea" style="height: 95px">
-        <ion-textarea
-          type="text"
-          name="message"
-          [(ngModel)]="select_datas.message"
-          #message="ngModel"
-        >
-          <!-- [required]="select_datas.filename.length === 0" -->
+        <ion-textarea type="text" name="message" [(ngModel)]="select_datas.message" #message="ngModel">
         </ion-textarea>
       </ion-item>
 

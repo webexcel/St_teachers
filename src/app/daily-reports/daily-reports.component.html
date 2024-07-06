@@ -17,13 +17,8 @@
     </ion-buttons> -->
 
     <ion-buttons slot="end">
-      <ion-button
-        routerDirection="root"
-        routerLink="/dashboard"
-        lines="none"
-        detail="false"
-        routerLinkActive="selected"
-      >
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
         <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
       </ion-button>
     </ion-buttons>
@@ -43,11 +38,7 @@
   <ion-toolbar class="p-0">
     <ion-buttons slot="start">
       <ion-menu-button>
-        <ion-icon
-          class="text-white"
-          [ios]="'menu-sharp'"
-          [md]="'menu-sharp'"
-        ></ion-icon>
+        <ion-icon class="text-white" [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
       </ion-menu-button>
     </ion-buttons>
     <ion-title>{{ "daily_reports" | translate }}</ion-title>
@@ -55,10 +46,7 @@
 </ion-header>
 <ion-content [fullscreen]="true">
   <div *ngIf="enable_filter">
-    <div
-      class="form-group"
-      style="margin-left: 20px; margin-right: 20px; margin-top: 10px"
-    >
+    <div class="form-group" style="margin-left: 20px; margin-right: 20px; margin-top: 10px">
       <label>Start Date</label>
       <input type="date" class="form-control" [(ngModel)]="s_date" />
     </div>
@@ -69,40 +57,24 @@
     </div>
 
     <ion-button class="date-cls" (click)="getData()">Submit</ion-button>
-    <ion-button
-      class="date-cls"
-      (click)="reset()"
-      color="danger"
-      style="float: right"
-      >Reset</ion-button
-    >
+    <ion-button class="date-cls" (click)="reset()" color="danger" style="float: right">Reset</ion-button>
   </div>
 
   <ion-list *ngIf="level == 3">
     <ion-label *ngIf="listType == 1">
-      <ion-item
-        lines="full"
-        tappable
-        *ngFor="let item of formData; let index = index"
-      >
+      <ion-item lines="full" tappable *ngFor="let item of formData; let index = index">
         <ion-label>
           <ion-grid>
             <ion-row>
               <ion-col>
-                <section
-                  style="width: 50%; float: left"
-                  (click)="setOpen(true, item)"
-                >
+                <section style="width: 50%; float: left" (click)="setOpen(true, item)">
                   <h4 class="user-name color-colorgray">
                     <b>{{ index + 1 }} . Day: {{ item.day }}</b>
                   </h4>
                 </section>
                 <section style="width: 50%; float: left">
-                  <ion-icon
-                    name="ellipsis-vertical-outline"
-                    style="float: right"
-                    (click)="expandMessageOptions(item, index)"
-                  ></ion-icon>
+                  <ion-icon name="ellipsis-vertical-outline" style="float: right"
+                    (click)="expandMessageOptions(item, index)"></ion-icon>
                 </section>
                 <br />
                 <div (click)="setOpen(true, item)">
@@ -117,20 +89,14 @@
       </ion-item>
     </ion-label>
     <ion-label *ngIf="listType == 2">
-      <ion-item
-        lines="full"
-        tappable
-        *ngFor="let item of otherReports; let index = index"
-      >
+      <ion-item lines="full" tappable *ngFor="let item of otherReports; let index = index">
         <ion-label (click)="setOpen(true, item)">
           <ion-grid>
             <ion-row>
               <ion-col>
                 <section style="width: 100%; float: left">
                   <h4 class="user-name color-colorgray">
-                    <b
-                      >{{ index + 1 }} . Submitted By: {{ item.DisplayName }}</b
-                    >
+                    <b>{{ index + 1 }} . Submitted By: {{ item.DisplayName }}</b>
                   </h4>
                 </section>
 
@@ -149,29 +115,19 @@
 
   <ion-list *ngIf="level == 4">
     <ion-label>
-      <ion-item
-        lines="full"
-        tappable
-        *ngFor="let item of formData; let index = index"
-      >
+      <ion-item lines="full" tappable *ngFor="let item of formData; let index = index">
         <ion-label>
           <ion-grid>
             <ion-row>
               <ion-col>
-                <section
-                  style="width: 50%; float: left"
-                  (click)="setOpen(true, item)"
-                >
+                <section style="width: 50%; float: left" (click)="setOpen(true, item)">
                   <h4 class="user-name color-colorgray">
                     <b>{{ index + 1 }} . Day: {{ item.day }}</b>
                   </h4>
                 </section>
                 <section style="width: 50%; float: left">
-                  <ion-icon
-                    name="ellipsis-vertical-outline"
-                    style="float: right"
-                    (click)="expandMessageOptions(item, index)"
-                  ></ion-icon>
+                  <ion-icon name="ellipsis-vertical-outline" style="float: right"
+                    (click)="expandMessageOptions(item, index)"></ion-icon>
                 </section>
                 <br />
                 <div (click)="setOpen(true, item)">
@@ -189,11 +145,7 @@
 
   <ion-list *ngIf="level == 2 || level == 1">
     <ion-label>
-      <ion-item
-        lines="full"
-        tappable
-        *ngFor="let item of formData1; let index = index"
-      >
+      <ion-item lines="full" tappable *ngFor="let item of formData1; let index = index">
         <ion-label (click)="setOpen(true, item)">
           <ion-grid>
             <ion-row>
@@ -217,11 +169,7 @@
     </ion-label>
 
     <ion-label>
-      <ion-item
-        lines="full"
-        tappable
-        *ngFor="let item of formData; let index = index"
-      >
+      <ion-item lines="full" tappable *ngFor="let item of formData; let index = index">
         <ion-label (click)="setOpen(true, item)">
           <ion-grid>
             <ion-row>
@@ -245,10 +193,7 @@
     </ion-label>
   </ion-list>
 
-  <ion-modal
-    [isOpen]="isModalOpen"
-    *ngIf="isModalOpen && oneItem.act_status == 4"
-  >
+  <ion-modal [isOpen]="isModalOpen" *ngIf="isModalOpen && oneItem.act_status == 4">
     <ng-template>
       <ion-header>
         <ion-toolbar>
@@ -260,110 +205,69 @@
       </ion-header>
       <ion-content class="ion-padding">
         <ion-item>
-          <ion-label class="custom-label"
-            >Date : <b>{{ oneItem.date }}</b></ion-label
-          >
+          <ion-label class="custom-label">Date : <b>{{ oneItem.date }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Day : <b>{{ oneItem.day }}</b></ion-label
-          >
+          <ion-label class="custom-label">Day : <b>{{ oneItem.day }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Arrival Time : <b>{{ oneItem.arrival }}</b></ion-label
-          >
+          <ion-label class="custom-label">Arrival Time : <b>{{ oneItem.arrival }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Period 1 : <b>{{ oneItem.period1 }}</b></ion-label
-          >
+          <ion-label class="custom-label">Period 1 : <b>{{ oneItem.period1 }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Period 2 : <b>{{ oneItem.period2 }}</b></ion-label
-          >
+          <ion-label class="custom-label">Period 2 : <b>{{ oneItem.period2 }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Period 3 : <b>{{ oneItem.period3 }}</b></ion-label
-          >
+          <ion-label class="custom-label">Period 3 : <b>{{ oneItem.period3 }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Period 4 : <b>{{ oneItem.period4 }}</b></ion-label
-          >
+          <ion-label class="custom-label">Period 4 : <b>{{ oneItem.period4 }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Period 5 : <b>{{ oneItem.period5 }}</b></ion-label
-          >
+          <ion-label class="custom-label">Period 5 : <b>{{ oneItem.period5 }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Period 6 : <b>{{ oneItem.period6 }}</b></ion-label
-          >
+          <ion-label class="custom-label">Period 6 : <b>{{ oneItem.period6 }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Period 7 : <b>{{ oneItem.period7 }}</b></ion-label
-          >
+          <ion-label class="custom-label">Period 7 : <b>{{ oneItem.period7 }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Period 8 : <b>{{ oneItem.period8 }}</b></ion-label
-          >
+          <ion-label class="custom-label">Period 8 : <b>{{ oneItem.period8 }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Period 9 : <b>{{ oneItem.period9 }}</b></ion-label
-          >
+          <ion-label class="custom-label">Period 9 : <b>{{ oneItem.period9 }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Period 10 : <b>{{ oneItem.period10 }}</b></ion-label
-          >
+          <ion-label class="custom-label">Period 10 : <b>{{ oneItem.period10 }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Dispersal Report : <b>{{ oneItem.dispersal }}</b></ion-label
-          >
+          <ion-label class="custom-label">Dispersal Report : <b>{{ oneItem.dispersal }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >After Dispersal workdone :
-            <b>{{ oneItem.after_dispersal }}</b></ion-label
-          >
+          <ion-label class="custom-label">After Dispersal workdone :
+            <b>{{ oneItem.after_dispersal }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Parents Met : <b>{{ oneItem.parent_met }}</b></ion-label
-          >
+          <ion-label class="custom-label">Parents Met : <b>{{ oneItem.parent_met }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Students Discipline Issues :
-            <b>{{ oneItem.stu_dis_issues }}</b></ion-label
-          >
+          <ion-label class="custom-label">Students Discipline Issues :
+            <b>{{ oneItem.stu_dis_issues }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Chronic Latecomers : <b>{{ oneItem.chronic_late }}</b></ion-label
-          >
+          <ion-label class="custom-label">Chronic Latecomers : <b>{{ oneItem.chronic_late }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Chronic Defaulters :
-            <b>{{ oneItem.chronic_default }}</b></ion-label
-          >
+          <ion-label class="custom-label">Chronic Defaulters :
+            <b>{{ oneItem.chronic_default }}</b></ion-label>
         </ion-item>
       </ion-content>
     </ng-template>
   </ion-modal>
-  <ion-modal
-    [isOpen]="isModalOpen"
-    *ngIf="isModalOpen && oneItem.act_status == 3"
-  >
+  <ion-modal [isOpen]="isModalOpen" *ngIf="isModalOpen && oneItem.act_status == 3">
     <ng-template>
       <ion-header>
         <ion-toolbar>
@@ -375,109 +279,72 @@
       </ion-header>
       <ion-content class="ion-padding">
         <ion-item>
-          <ion-label class="custom-label"
-            >Date : <b>{{ oneItem.date }}</b></ion-label
-          >
+          <ion-label class="custom-label">Date : <b>{{ oneItem.date }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Day : <b>{{ oneItem.day }}</b></ion-label
-          >
+          <ion-label class="custom-label">Day : <b>{{ oneItem.day }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Arrival observation : <b>{{ oneItem.arrival }}</b></ion-label
-          >
+          <ion-label class="custom-label">Arrival observation : <b>{{ oneItem.arrival }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Teachers on leave :
-            <b>{{ oneItem.teachers_on_leave }}</b></ion-label
-          >
+          <ion-label class="custom-label">Teachers on leave :
+            <b>{{ oneItem.teachers_on_leave }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Morning break observation :
-            <b>{{ oneItem.mrng_break_obs }}</b></ion-label
-          >
+          <ion-label class="custom-label">Morning break observation :
+            <b>{{ oneItem.mrng_break_obs }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Teacher's positive observation :
-            <b>{{ oneItem.teachers_pos_obs }}</b></ion-label
-          >
+          <ion-label class="custom-label">Teacher's positive observation :
+            <b>{{ oneItem.teachers_pos_obs }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Teacher observation to be improved and fixed :
-            <b>{{ oneItem.teachers_obs_improved_fixed }}</b></ion-label
-          >
+          <ion-label class="custom-label">Teacher observation to be improved and fixed :
+            <b>{{ oneItem.teachers_obs_improved_fixed }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Class observation Report :
-            <b>{{ oneItem.cls_obs_rpt }}</b></ion-label
-          >
+          <ion-label class="custom-label">Class observation Report :
+            <b>{{ oneItem.cls_obs_rpt }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Notebook Checking Report :
-            <b>{{ oneItem.notbook_chk_rpt }}</b></ion-label
-          >
+          <ion-label class="custom-label">Notebook Checking Report :
+            <b>{{ oneItem.notbook_chk_rpt }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Bookback exercises/ Diary checking Report :
-            <b>{{ oneItem.bookback_exercise_diary_chk_rpt }}</b></ion-label
-          >
+          <ion-label class="custom-label">Bookback exercises/ Diary checking Report :
+            <b>{{ oneItem.bookback_exercise_diary_chk_rpt }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Students discipline issues :
-            <b>{{ oneItem.stu_discipline_issue }}</b></ion-label
-          >
+          <ion-label class="custom-label">Students discipline issues :
+            <b>{{ oneItem.stu_discipline_issue }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Lunch break report : <b>{{ oneItem.lunch_brk_rpt }}</b></ion-label
-          >
+          <ion-label class="custom-label">Lunch break report : <b>{{ oneItem.lunch_brk_rpt }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Program related works done :
-            <b>{{ oneItem.prgrm_rltd_wks_dn }}</b></ion-label
-          >
+          <ion-label class="custom-label">Program related works done :
+            <b>{{ oneItem.prgrm_rltd_wks_dn }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Transport dispersal report :
-            <b>{{ oneItem.transport_dis_rpt }}</b></ion-label
-          >
+          <ion-label class="custom-label">Transport dispersal report :
+            <b>{{ oneItem.transport_dis_rpt }}</b></ion-label>
         </ion-item>
         <ion-item>
           <ion-label class="custom-label">
-            Dispersal report : <b>{{ oneItem.dispersal }}</b></ion-label
-          >
+            Dispersal report : <b>{{ oneItem.dispersal }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Parents Met : <b>{{ oneItem.parent_met }}</b></ion-label
-          >
+          <ion-label class="custom-label">Parents Met : <b>{{ oneItem.parent_met }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >ECA report : <b>{{ oneItem.eca_rpt }}</b></ion-label
-          >
+          <ion-label class="custom-label">ECA report : <b>{{ oneItem.eca_rpt }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >General report : <b>{{ oneItem.general_rpt }}</b></ion-label
-          >
+          <ion-label class="custom-label">General report : <b>{{ oneItem.general_rpt }}</b></ion-label>
         </ion-item>
         <ion-item>
-          <ion-label class="custom-label"
-            >Parent Complaint : <b>{{ oneItem.parent_complaint }}</b></ion-label
-          >
+          <ion-label class="custom-label">Parent Complaint : <b>{{ oneItem.parent_complaint }}</b></ion-label>
         </ion-item>
       </ion-content>
     </ng-template>
@@ -504,13 +371,7 @@
   >
     <ng-template> </ng-template>
   </ion-modal> -->
-  <ion-fab
-    vertical="bottom"
-    *ngIf="listType == 1 && (level == 4 || level == 3)"
-    horizontal="end"
-    slot="fixed"
-    tappable
-  >
+  <ion-fab vertical="bottom" *ngIf="listType == 1 && (level == 4 || level == 3)" horizontal="end" slot="fixed" tappable>
     <ion-fab-button (click)="toggleMessage()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
@@ -522,13 +383,13 @@
   <ng-template>
     <ion-header>
       <ion-toolbar>
-        <!-- <ion-buttons slot="start">
-          <ion-button>{{ "List" | translate }}</ion-button>
-        </ion-buttons> -->
-        <ion-buttons slot="end">
-          <ion-button (click)="toggleMessage()">{{
-            "cancel" | translate
-          }}</ion-button>
+        <ion-buttons slot="start" (click)="toggleMessage()">
+          <ion-button>{{ "Close" | translate }}</ion-button>
+        </ion-buttons>
+        <ion-buttons slot="end" (click)="toggleMessage()">
+          <ion-button>{{
+            "Save" | translate
+            }}</ion-button>
         </ion-buttons>
       </ion-toolbar>
     </ion-header>
@@ -550,10 +411,7 @@
         <div style="margin-top: 12px">Day</div>
         <ion-item class="dropdown_select" style="margin: 0px">
           <ion-input readonly [placeholder]="">
-            <ion-icon
-              name="caret-down"
-              style="margin-left: 10%; opacity: 0.5; position: absolute"
-            ></ion-icon>
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
           </ion-input>
           <ion-input hidden="true"></ion-input>
         </ion-item>
@@ -564,10 +422,7 @@
             <span style="float: left"> </span>
 
             <span style="float: right !important">
-              <img
-                style="height: 6px; width: 10px; margin-right: 5px"
-                src="../../assets/imgs/speakers/Polygon 4.png"
-              />
+              <img style="height: 6px; width: 10px; margin-right: 5px" src="../../assets/imgs/speakers/Polygon 4.png" />
             </span>
           </ion-label>
         </ion-item>

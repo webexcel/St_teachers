@@ -11,6 +11,7 @@ import {
   IonModal,
   ModalController,
   Platform,
+  ToastController,
 } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import {
@@ -68,10 +69,10 @@ export class StaffComponent implements OnInit {
     base64: Base64String | null;
     duration: number;
   } = {
-    fileName: '',
-    base64: null,
-    duration: 0,
-  };
+      fileName: '',
+      base64: null,
+      duration: 0,
+    };
   seengrpmes: any;
   isEditMessageOpen1: boolean = false;
   showPassword: boolean = false;
@@ -93,7 +94,8 @@ export class StaffComponent implements OnInit {
     private translate: TranslateConfigService,
     public loading: LoadingService,
     public authservice: AuthService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -117,7 +119,27 @@ export class StaffComponent implements OnInit {
     this.getstafftypes();
   }
 
+  async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'middle'
+    });
+    toast.present();
+  }
+
   reset() {
+    this.select_datas.stafftypes = [];
+    this.stafftypes.forEach((element: any) => {
+      if (element.checked) {
+        element.checked = false;
+      }
+    });
+    this.staffType = "No Staff Type Selected";
+    this.select_datas.staffinfo = [];
+    this.staffName = "No Staff Selected";
+    this.staffs = [];
     this.select_datas.s_date = new Date().toISOString();
     //this.classs = this.storage.getjson('classlist')
     this.select_datas.type = 'STAFFPERSONAL';
@@ -284,12 +306,19 @@ export class StaffComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (this.select_datas.staffinfo.length) {
+    if (this.select_datas.stafftypes == undefined || this.select_datas.stafftypes.length == 0) {
+      this.showToast("No Staff Types Selected!", "danger");
+    } else if (this.select_datas.staffinfo == undefined || this.select_datas.staffinfo.length == 0) {
+      this.showToast("No Staff Selected!", "danger");
+    } else if (this.select_datas.message == undefined || this.select_datas.message == "") {
+      this.showToast("Message is Empty!", "danger");
+    } else {
       this.loading.present();
       this.authservice.post('newstaffpersonalsms', this.select_datas).subscribe(
         (res: any) => {
           this.loading.dismissAll();
-          if (res['STATUS']) {
+          if (res['STATUS'] || res["status"]) {
+            this.showToast("Staff Added Successfully.", "success");
             form.resetForm();
             this.reset();
           }
@@ -413,7 +442,7 @@ export class StaffComponent implements OnInit {
               this.error = true;
             }
           },
-          (err) => {}
+          (err) => { }
         );
       })
       .catch((e) => console.log(e));
@@ -518,7 +547,7 @@ export class StaffComponent implements OnInit {
           );
         }
       },
-      (err) => {}
+      (err) => { }
     );
   }
 

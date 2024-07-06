@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IonModal, ModalController, Platform } from '@ionic/angular';
+import { IonModal, ModalController, Platform, ToastController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Base64String } from 'capacitor-voice-recorder';
 import { tap } from 'rxjs/operators';
@@ -52,10 +52,10 @@ export class ReportsComponent implements OnInit {
     base64: Base64String | null;
     duration: number;
   } = {
-    fileName: '',
-    base64: null,
-    duration: 0,
-  };
+      fileName: '',
+      base64: null,
+      duration: 0,
+    };
 
   constructor(
     public storage: StorageService,
@@ -64,7 +64,8 @@ export class ReportsComponent implements OnInit {
     public authservice: AuthService,
     public loading: LoadingService,
     private translate: TranslateConfigService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -90,7 +91,30 @@ export class ReportsComponent implements OnInit {
     this.getStudentRemarks();
   }
 
+  async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'middle'
+    });
+    toast.present();
+  }
+
   reset() {
+    this.select_datas.class = "";
+    this.ClassName = "No Class Selected";
+    this.students = [];
+    this.select_datas.student = [];
+    this.StudentsName = "No Students Selected";
+    this.subjects.forEach((element: any) => {
+      if (element.checked) {
+        element.checked = false;
+      }
+    });
+    this.select_datas.subject = [];
+    this.SubjectName = "No Subjects Selected";
+    this.select_datas.message = "";
     this.classs = this.storage.getjson('classlist');
     this.select_datas.staff_id =
       this.storage.getjson('teachersDetail')[0]['staff_id'];
@@ -150,7 +174,15 @@ export class ReportsComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (this.select_datas.student.length) {
+    if (this.select_datas.class == undefined || this.select_datas.class == "") {
+      this.showToast("No Class Selected!", "danger");
+    } else if (this.select_datas.student == undefined || this.select_datas.student.length == 0) {
+      this.showToast("No Student Selected!", "danger");
+    } else if (this.select_datas.subject == undefined || this.select_datas.subject.length == 0) {
+      this.showToast("No Subject Selected!", "danger");
+    } else if (this.select_datas.message == undefined || this.select_datas.message == "") {
+      this.showToast("Message is Empty!", "danger");
+    } else {
       this.select_datas.student.forEach((student: { name: any }) => {
         const hyphenIndex = student.name.indexOf('-');
         if (hyphenIndex !== -1) {
@@ -163,7 +195,8 @@ export class ReportsComponent implements OnInit {
         .pipe(
           tap((res: any) => {
             this.loading.dismissAll();
-            if (res['STATUS']) {
+            if (res['status']) {
+              this.showToast("Remark Added Successfully.", "success");
               form.resetForm();
               this.reset();
               this.getlist();
@@ -178,8 +211,6 @@ export class ReportsComponent implements OnInit {
             this.loading.dismissAll();
           }
         );
-    } else {
-      this.getStudentRemarks(); // If there are no students selected, still fetch remarks
     }
   }
 

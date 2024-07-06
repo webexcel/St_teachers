@@ -35,10 +35,10 @@ export class ViewRemarksComponent implements OnInit {
     base64: Base64String | null;
     duration: number;
   } = {
-    fileName: '',
-    base64: null,
-    duration: 0,
-  };
+      fileName: '',
+      base64: null,
+      duration: 0,
+    };
   fileName!: any;
   recording: boolean = false;
   base64: any;

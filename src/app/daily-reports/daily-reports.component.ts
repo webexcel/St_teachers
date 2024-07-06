@@ -4,6 +4,7 @@ import {
   AlertController,
   IonModal,
   ModalController,
+  ToastController,
 } from '@ionic/angular';
 import { FlashComponent } from '../flash/flash.component';
 import { AuthService } from '../service/auth.service';
@@ -68,7 +69,8 @@ export class DailyReportsComponent implements OnInit {
     private modalCtrl: ModalController,
     public storage: StorageService,
     public actionSheetController: ActionSheetController,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {
     this.staff_id = this.storage.getjson('teachersDetail')[0]['staff_id'];
 
@@ -77,7 +79,17 @@ export class DailyReportsComponent implements OnInit {
     this.translate.set();
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
+  async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'middle'
+    });
+    toast.present();
+  }
 
   getLevel(ID: any) {
     this.loading.present();
@@ -90,8 +102,8 @@ export class DailyReportsComponent implements OnInit {
           this.staffData = res.data;
           this.levelType =
             this.staffData != undefined &&
-            this.staffData[0] != undefined &&
-            this.staffData[0].Is_Admin != undefined
+              this.staffData[0] != undefined &&
+              this.staffData[0].Is_Admin != undefined
               ? this.staffData[0].Is_Admin
               : '';
           if (this.levelType == 'N') {

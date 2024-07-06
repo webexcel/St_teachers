@@ -12,6 +12,7 @@ import {
   IonModal,
   ModalController,
   Platform,
+  ToastController,
 } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import {
@@ -83,9 +84,9 @@ export class HomeworkComponent implements OnInit {
   showPassword: boolean = true;
   seenhrkmes: any;
   className: any;
-  SubjectName: any;
+  SubjectName: any[] = [];
   attachment: any;
-  showButton: any;
+  currentIndex: any;
 
   constructor(
     private serfile: FilesService,
@@ -101,7 +102,8 @@ export class HomeworkComponent implements OnInit {
     private translate: TranslateConfigService,
     public loading: LoadingService,
     public authservice: AuthService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -125,8 +127,6 @@ export class HomeworkComponent implements OnInit {
     this.getSaveHomework();
     this.reset();
     this.getSaveHomeworkDraft();
-
-    console.log(this.storage.getjson)
   }
 
   reset() {
@@ -137,14 +137,25 @@ export class HomeworkComponent implements OnInit {
       this.storage.getjson('teachersDetail')[0]['Is_Admin'];
     this.classs = this.storage.getjson('classlist');
     this.select_datas1.s_date = new Date().toISOString();
-    this.select_datas.image = '';
-    this.select_datas.type = '';
-    this.select_datas.filename = '';
+    // this.select_datas.image = '';
+    // this.select_datas.type = '';
+    // this.select_datas.filename = '';
+    this.select_datas.messageRecords = [{
+      "subjects": "",
+      "message": "",
+      "filename": "",
+      "type": "",
+      "image": ""
+    }];
+    this.className = 'Select Classes';
+    this.SubjectName = [];
+    this.SubjectName[0] = 'Select Subject';
   }
 
   ionViewWillEnter() {
     this.className = 'Select Classes';
-    this.SubjectName = 'Select homework';
+    this.SubjectName = [];
+    this.SubjectName[0] = 'Select Subject';
   }
 
   toggleItems(status: any) {
@@ -163,6 +174,22 @@ export class HomeworkComponent implements OnInit {
   }
 
   classChange(event: any) { }
+
+  newSection() {
+    this.select_datas.messageRecords.push({
+      "subjects": "",
+      "message": "",
+      "filename": "",
+      "type": "",
+      "image": ""
+    });
+    this.SubjectName.push("Select Subject");
+  }
+
+  removeSection(index: any) {
+    this.select_datas.messageRecords.splice(index, 1);
+    this.SubjectName.splice(index, 1);
+  }
 
   getSaveHomeworkDraft() {
     this.recentdata1 = {};
@@ -242,21 +269,63 @@ export class HomeworkComponent implements OnInit {
     );
   }
 
+  async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'middle'
+    });
+    toast.present();
+  }
+
   onSubmit(form: NgForm) {
-    this.loading.present();
-    this.authservice.post('saveHomeworkMessage', this.select_datas).subscribe(
-      (res: any) => {
-        this.loading.dismissAll();
-        if (res['status']) {
-          form.resetForm();
-          this.reset();
-          this.getSaveHomeworkDraft();
+    if (this.select_datas.class == undefined || this.select_datas.class.length == 0) {
+      this.showToast("No Classes Selected!", "danger");
+    } else {
+      let saveQuery = true;
+      let data = [];
+      for (let i = 0; i < this.select_datas.messageRecords.length; i++) {
+        if (this.select_datas.messageRecords[i].subjects == undefined || !this.select_datas.messageRecords[i].subjects) {
+          saveQuery = false;
+          this.showToast("No Subject selected in Record No - " + (i + 1) + "!", "danger");
+          break;
+        } else if (this.select_datas.messageRecords[i].message == undefined || this.select_datas.messageRecords[i].message == "") {
+          saveQuery = false;
+          this.showToast("Message is Empty in Record No - " + (i + 1) + "!", "danger");
+          break;
+        } else {
+          let mesObj: any = {};
+          mesObj["Is_Admin"] = this.select_datas.Is_Admin;
+          mesObj["class"] = this.select_datas.class;
+          mesObj["s_date"] = this.select_datas.s_date;
+          mesObj["staff_id"] = this.select_datas.staff_id;
+          mesObj["filename"] = this.select_datas.messageRecords[i].filename;
+          mesObj["image"] = this.select_datas.messageRecords[i].image;
+          mesObj["message"] = this.select_datas.messageRecords[i].message;
+          mesObj["subjects"] = this.select_datas.messageRecords[i].subjects;
+          mesObj["type"] = this.select_datas.messageRecords[i].type;
+          data.push(mesObj);
         }
-      },
-      (err) => {
-        this.loading.dismissAll();
       }
-    );
+
+      if (saveQuery) {
+        this.loading.present();
+        this.authservice.post('saveHomeworkMessage', data).subscribe(
+          (res: any) => {
+            this.loading.dismissAll();
+            if (res['status']) {
+              form.resetForm();
+              this.reset();
+              this.getSaveHomeworkDraft();
+            }
+          },
+          (err) => {
+            this.loading.dismissAll();
+          }
+        );
+      }
+    }
   }
 
   async deletehomework(ID: any) {
@@ -359,7 +428,8 @@ export class HomeworkComponent implements OnInit {
     return classs.map((port: any) => port.name).join(', ');
   }
 
-  open() {
+  open(index: any) {
+    this.currentIndex = index;
     const fileInput = document.createElement('input');
     fileInput.type = 'file';
     fileInput.accept =
@@ -378,9 +448,9 @@ export class HomeworkComponent implements OnInit {
   readFile(file: File) {
     const reader = new FileReader();
     reader.onload = async (e: any) => {
-      this.select_datas.image = e.target.result;
-      this.select_datas.filename = file.name;
-      this.select_datas.type = file.name.split('.').pop();
+      this.select_datas.messageRecords[this.currentIndex].image = e.target.result;
+      this.select_datas.messageRecords[this.currentIndex].filename = file.name;
+      this.select_datas.messageRecords[this.currentIndex].type = file.name.split('.').pop();
     };
     reader.readAsDataURL(file);
   }
@@ -461,9 +531,9 @@ export class HomeworkComponent implements OnInit {
 
     this.Path = this.serfile.filepath() + this.fileName;
     this.audio = this.media.create(this.Path);
-    this.select_datas.type = '';
-    this.select_datas.image = '';
-    this.select_datas.filename = '';
+    this.select_datas.messageRecords[this.currentIndex].type = '';
+    this.select_datas.messageRecords[this.currentIndex].image = '';
+    this.select_datas.messageRecords[this.currentIndex].filename = '';
     this.audio.startRecord();
     this.recording = true;
   }
@@ -476,10 +546,10 @@ export class HomeworkComponent implements OnInit {
       (res) => {
         let l = res.split('base64,');
         if (l[1].length != 0) {
-          this.select_datas.filename = this.fileName;
-          this.select_datas.type = 'mp3';
+          this.select_datas.messageRecords[this.currentIndex].filename = this.fileName;
+          this.select_datas.messageRecords[this.currentIndex].type = 'mp3';
           this.error = false;
-          this.select_datas.image = this.sanitizer.bypassSecurityTrustUrl(
+          this.select_datas.messageRecords[this.currentIndex].image = this.sanitizer.bypassSecurityTrustUrl(
             'data:audio/mpeg;base64,' + l[1]
           );
         }
@@ -489,9 +559,9 @@ export class HomeworkComponent implements OnInit {
   }
 
   deletefile() {
-    this.select_datas.type = '';
-    this.select_datas.image = '';
-    this.select_datas.filename = '';
+    this.select_datas.messageRecords[this.currentIndex].type = '';
+    this.select_datas.messageRecords[this.currentIndex].image = '';
+    this.select_datas.messageRecords[this.currentIndex].filename = '';
   }
 
   onSubmit1() {
@@ -580,7 +650,7 @@ export class HomeworkComponent implements OnInit {
     this.isPickerOpen = !this.isPickerOpen;
   }
 
-  async openOptions(data: any, value: any, multi: any) {
+  async openOptions(data: any, value: any, multi: any, index = -1) {
     if (!multi && data[0].id != 0) {
       data.splice(0, 0, { id: 0, name: 'Select Your Subject' });
     }
@@ -597,7 +667,6 @@ export class HomeworkComponent implements OnInit {
     modal.onDidDismiss().then((result) => {
       if (multi) {
         let datar = [];
-        let textData = [];
         for (let i = 0; i < result.data.length; i++) {
           if (result.data[i].checked) {
             datar.push(result.data[i]);
@@ -610,8 +679,8 @@ export class HomeworkComponent implements OnInit {
             ? datar.length + ' Classes Selected'
             : 'No Selected Classes';
       } else {
-        this.select_datas.subjects = result.data;
-        this.SubjectName =
+        this.select_datas.messageRecords[index].subjects = result.data;
+        this.SubjectName[index] =
           result.data.name != undefined && result.data.id != 0
             ? result.data.name + ' Selected'
             : 'No Subject Selected';
@@ -658,9 +727,9 @@ export class HomeworkComponent implements OnInit {
       '.mp3';
     VoiceRecorder.startRecording()
       .then((result: GenericResponse) => {
-        this.select_datas.type = '';
-        this.select_datas.image = '';
-        this.select_datas.filename = '';
+        this.select_datas.messageRecords[this.currentIndex].type = '';
+        this.select_datas.messageRecords[this.currentIndex].image = '';
+        this.select_datas.messageRecords[this.currentIndex].filename = '';
         this.recording = true;
         if (!this.timer) {
           this.timer = setInterval(() => {
@@ -687,8 +756,8 @@ export class HomeworkComponent implements OnInit {
           clearInterval(this.timer);
         }
         const { mimeType, recordDataBase64, msDuration } = result.value;
-        this.select_datas.filename = this.fileName;
-        this.select_datas.type = 'mp3';
+        this.select_datas.messageRecords[this.currentIndex].filename = this.fileName;
+        this.select_datas.messageRecords[this.currentIndex].type = 'mp3';
         this.error = false;
         this.audioData = {
           ...this.audioData,
@@ -696,7 +765,7 @@ export class HomeworkComponent implements OnInit {
           duration: Math.floor(msDuration / 1000),
           fileName: this.fileName ?? '',
         };
-        this.select_datas.image = recordDataBase64;
+        this.select_datas.messageRecords[this.currentIndex].image = recordDataBase64;
       })
       .catch((error) => {
         this.error = true;
@@ -722,10 +791,10 @@ export class HomeworkComponent implements OnInit {
     return ret;
   }
 
-  seenHomework(Id: any) {
+  seenHomework(ID: any) {
     //Is_Admin
     this.loading.present();
-    this.authservice.post('seenHomeworkmessage', { id: Id }).subscribe(
+    this.authservice.post('seenHomeworkmessage', { id: ID }).subscribe(
       (res: any) => {
         this.loading.dismissAll();
         if (res['status']) {

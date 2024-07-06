@@ -30,16 +30,21 @@
   <div class="homework">
     <div class="card-body card_body">
       <form name="form" (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm" novalidate>
+
+        <!-- class -->
         <div style="margin-top: 12px">Select Class</div>
 
         <ion-item class="dropdown_select" style="margin: 0px">
-          <ion-input readonly [placeholder]="className" (click)="openOptions(classs, select_datas.class, true)">
+          <ion-input readonly [placeholder]="className" (click)="openOptions(classs, select_datas.class, true)"
+            style="min-height: auto;">
             <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
           </ion-input>
           <ion-input hidden="true"></ion-input>
         </ion-item>
 
+        <!-- date -->
         <div style="margin-top: 12px">Select Date</div>
+
         <ion-item lines="full" class="dropdown" style="margin: 0px">
           <ion-label id="open-modal" class="selected-date" *ngIf="select_datas.s_date">
             <span style="float: left">
@@ -77,93 +82,77 @@
             </ng-template>
           </ion-modal>
         </ion-item>
-        <!--subject-->
 
-        <div style="margin-top: 25px">Select Subject</div>
+        <div class="subSection" *ngFor="let container of select_datas.messageRecords; let i = index">
 
-        <!-- <ion-item class="dropdown" style="margin: 0px">
-          <ion-label>{{ "subject" | translate }}</ion-label>
-          <ionic-selectable
-            name="subject"
-            item-content
-            [(ngModel)]="select_datas.subject"
-            itemValueField="id"
-            itemTextField="name"
-            [items]="subjects"
-            [canSearch]="true"
-            #subject="ngModel"
-            required
-          >
-            <ng-template ionicSelectableCloseButtonTemplate>
-              <ion-icon
-                [md]="'close-circle'"
-                [ios]="'close-circle'"
-                style="font-size: 24px"
-              ></ion-icon>
-            </ng-template>
-          </ionic-selectable>
-        </ion-item> -->
-
-        <ion-item class="dropdown_select" style="margin: 0px">
-          <ion-input readonly [placeholder]="SubjectName" (click)="openOptions(subjects, select_datas.subject, false)">
-            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
-          </ion-input>
-          <ion-input hidden="true"></ion-input>
-        </ion-item>
-
-        <!--dfgdghgf-->
-        <div style="margin-top: 25px">Enter Message Here</div>
-        <ion-item lines="full" class="messageArea" style="height: 95px">
-          <ion-textarea type="text" name="message" [(ngModel)]="select_datas.message" #message="ngModel"
-            [required]="select_datas.filename.length === 0">
-          </ion-textarea>
-        </ion-item>
-        <!-- <span *ngIf="f.submitted && message.invalid" class="text-danger"
-          >Enters Message</span> -->
-
-        <div class="row w-100 pt-3 m-0 button-container">
-          <div class="attach" *ngIf="select_datas.filename.length === 0" style="flex: 0 0 150px">
-            <img alt="" style="width: 12px; height: 22px" src="../../assets/imgs/speakers/attach.svg"
-              (click)="open()" />
-            <span style="color: #fff; margin-left: 8px" (click)="open()">Attach Files</span>
-          </div>
-          <div class="attach1" *ngIf="select_datas.filename.length === 0" style="flex: 0 0 150px">
-            <img alt="" style="width: 12px; height: 22px" src="../../assets/imgs/speakers/mic.svg"
-              (click)="onStartRecording()" *ngIf="!recording" />
-            <span style="color: #fff; margin-left: 8px" *ngIf="!recording" (click)="onStartRecording()">
-              Record Audio</span>
-
-            <span style="color: #ff0000" *ngIf="recording" (click)="onStopRecording()">
-              Stop Recording</span>
-            <!-- <br />
-            <span style="font-size: 10px" *ngIf="recording">{{
-              formatTime(recordingTimer)
-            }}</span> -->
-          </div>
-          <div class="col-10" *ngIf="
-              select_datas.filename.length > 0 && select_datas.type !== 'mp3'
-            ">
-            {{ select_datas.filename }}
-          </div>
-          <div class="col-10" *ngIf="
-              select_datas.filename.length > 0 && select_datas.type === 'mp3'
-            ">
-            <audio controls controlsList="noplaybackrate nodownload" class="w-100">
-              <source [src]="audioData.base64" type="audio/mpeg" />
-            </audio>
-          </div>
-          <div class="col-2" *ngIf="select_datas.filename.length > 0">
-            <button type="button" class="btn btn-danger" (click)="deletefile()">
-              <ion-icon [ios]="'trash-sharp'" [md]="'trash-sharp'"></ion-icon>
-            </button>
+          <div style="text-align: end;" *ngIf="i > 0">
+            <ion-button style="float: right;" (click)="removeSection(i)" color="danger"><ion-icon
+                name="trash"></ion-icon></ion-button>
           </div>
 
-          <div class="col-12 text-danger" *ngIf="error">
-            only allow jpg, jpeg, png, pdf, mp3, xls, xlsx.
+          <!--subject-->
+          <div style="margin-top: 25px">Select Subject</div>
+
+          <ion-item class="dropdown_select" style="margin: 0px">
+            <ion-input readonly [placeholder]="SubjectName[i]"
+              (click)="openOptions(subjects, container.subjects, false, i)" style="min-height: auto;">
+              <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+            </ion-input>
+            <ion-input hidden="true"></ion-input>
+          </ion-item>
+
+          <!--Message-->
+          <div style="margin-top: 25px">Enter Message Here</div>
+
+          <ion-item lines="full" class="messageArea" style="height: 95px">
+            <ion-textarea type="text" name="message" [(ngModel)]="container.message" #message="ngModel">
+            </ion-textarea>
+          </ion-item>
+
+          <div class="row w-100 pt-3 m-0 button-container">
+            <div class="attach" *ngIf="container.filename.length === 0" style="flex: 0 0 150px">
+              <img alt="" style="width: 12px; height: 22px" src="../../assets/imgs/speakers/attach.svg"
+                (click)="open(i)" />
+              <span style="color: #fff; margin-left: 8px" (click)="open(i)">Attach Files</span>
+            </div>
+            <div class="attach1" *ngIf="container.filename.length === 0" style="flex: 0 0 150px">
+              <img alt="" style="width: 12px; height: 22px" src="../../assets/imgs/speakers/mic.svg"
+                (click)="onStartRecording()" *ngIf="!recording" />
+              <span style="color: #fff; margin-left: 8px" *ngIf="!recording" (click)="onStartRecording()">
+                Record Audio</span>
+
+              <span style="color: #ff0000" *ngIf="recording" (click)="onStopRecording()">
+                Stop Recording</span>
+            </div>
+            <div class="col-10" *ngIf="
+            container.filename.length > 0 && container.type !== 'mp3'
+              ">
+              {{ container.filename }}
+            </div>
+            <div class="col-10" *ngIf="
+            container.filename.length > 0 && container.type === 'mp3'
+              ">
+              <audio controls controlsList="noplaybackrate nodownload" class="w-100">
+                <source [src]="audioData.base64" type="audio/mpeg" />
+              </audio>
+            </div>
+            <div class="col-2" *ngIf="container.filename.length > 0">
+              <button type="button" class="btn btn-danger" (click)="deletefile()">
+                <ion-icon [ios]="'trash-sharp'" [md]="'trash-sharp'"></ion-icon>
+              </button>
+            </div>
+
+            <div class="col-12 text-danger" *ngIf="error">
+              only allow jpg, jpeg, png, pdf, mp3, xls, xlsx.
+            </div>
+            <!-- <div class="col-12 p-0">
+              <hr class="bg-info" />
+            </div> -->
           </div>
-          <!-- <div class="col-12 p-0">
-            <hr class="bg-info" />
-          </div> -->
+        </div>
+
+        <div style="text-align: end;">
+          <ion-button (click)="newSection()"><ion-icon name="add"></ion-icon></ion-button>
         </div>
 
         <div class="p-2 text-right">
@@ -240,45 +229,40 @@
         </table>
       </div>
     </div>
-
     <!-- End of Drafted Message -->
 
     <div class="" *ngIf="recentdata.length > 0">
-
       <div class="card-body card_body d-flex justify-content-end">
-
-
-
         <button type="button" class="btn btn-lg send_btn" style="
             background: #00b712;
             width: 179px;
-            height: 42px;
-            font-size: 11px;
-            text-align: center;
-            color: #fff;" (click)="deleteSelectedItems()">
-          Delete all message
-        </button>
-
-
-
-
-        <button type="button" class="btn btn-lg btn-block send_btn" style="
-            background: #00b712;
-            width: 178px;
-            height: 42px;
+            min-height: 42px;
             font-size: 11px;
             text-align: center;
             color: #fff;
+            margin: 10px;" (click)="deleteSelectedItems()">
+          Delete All Homework
+        </button>
+        <button type="button" class="btn btn-lg btn-block send_btn" style="
+            background: #00b712;
+            width: 178px;
+            min-height: 42px;
+            font-size: 11px;
+            text-align: center;
+            color: #fff;
+            margin: 10px;
           " (click)="movehomeworktofinal()">
           Send All Homework
         </button>
       </div>
-
     </div>
     <!-- Tab Stars Here-->
 
     <tabset>
       <tab heading="Today">
+        <div class="cardlist" style="text-align: center;" *ngIf="gethw.length == 0">
+          <ion-label>No Homeworks Found!!</ion-label>
+        </div>
         <div class="cardlist" *ngIf="gethw.length > 0">
           <!--  *ngIf="recentdata.length > 0" -->
           <div class="card-header table-cls">
@@ -374,6 +358,9 @@
       </tab>
 
       <tab heading="Last 3 Days">
+        <div class="cardlist" style="text-align: center;" *ngIf="last3days.length == 0">
+          <ion-label>No Homeworks Found!!</ion-label>
+        </div>
         <div class="cardlist" *ngIf="last3days.length > 0">
           <div class="card-header table-cls">
             <div class="row align-items-center">
@@ -498,6 +485,9 @@
             </div>
           </div>
         </form>
+        <div class="cardlist" style="text-align: center;" *ngIf="senditems1dates.length == 0">
+          <ion-label>No Homeworks Found!!</ion-label>
+        </div>
         <div class="cardlist" *ngIf="senditems1dates.length > 0">
           <div class="card-header table-cls">
             <div class="row align-items-center">
@@ -572,8 +562,7 @@
     </tabset>
 
     <!-- Tab Ends Here-->
-    <ion-modal [isOpen]="isEditMessageOpen3" (willDismiss)="onWillDismiss($event, 'edit')" [initialBreakpoint]="1"
-      animated="true">
+    <ion-modal [isOpen]="isEditMessageOpen3" animated="true">
       <ng-template>
         <ion-header>
           <ion-toolbar>

@@ -1,0 +1,71 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Staff Free Period Details</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="card-body card_body">
+    <div>
+      <ion-row>
+        <ion-col size="3">
+          <div class="lbl_control">
+            <ion-label>Day : </ion-label>
+          </div>
+        </ion-col>
+        <ion-col size="9" class="select-option">
+          <ion-select style="margin-left: 10px;" [(ngModel)]="day" placeholder="Select Day">
+            <ion-select-option *ngFor="let day of daysList" value="{{day.value}}">
+              {{ day.name }}
+            </ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="3">
+          <div class="lbl_control">
+            <ion-label>Period : </ion-label>
+          </div>
+        </ion-col>
+        <ion-col size="9" class="select-option">
+          <ion-select style="margin-left: 10px;" [(ngModel)]="period" placeholder="Select Period">
+            <ion-select-option *ngFor="let period of periodsList" value="{{period.value}}">
+              {{ period.name }}
+            </ion-select-option>
+          </ion-select>
+        </ion-col>
+      </ion-row>
+    </div>
+    <ion-button style="margin-left: 35%;" (click)="getStaffFreeList()">
+      <ion-icon style="margin-right: 10px;" name="send"></ion-icon>Submit</ion-button>
+  </div>
+
+  <div class="Students" *ngIf="staffFreePeriodDetails.length > 0">
+    <div class="info-container-main">
+      <div class="info-column">S.No</div>
+      <div class="info-column">Staff Code</div>
+      <div class="info-column">Staff Name</div>
+    </div>
+
+    <div class="info-container" *ngFor="let exp of staffFreePeriodDetails; let i = index">
+      <div class="info-column">{{ i + 1 }}</div>
+      <div class="info-column">{{ exp.staff_code }}</div>
+      <div class="info-column">{{ exp.staff_name }}</div>
+    </div>
+  </div>
+
+  <div class="Students" style="text-align: center;" *ngIf="staffFreePeriodDetails.length == 0">
+    <ion-label>No Staff Record Found!!</ion-label>
+  </div>
+</ion-content>

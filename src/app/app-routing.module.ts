@@ -140,6 +140,34 @@ const routes: Routes = [
     loadChildren: () => import('./class-student-fee-report/fee-student/fee-student.module').then((m) => m.FeeStudentModule),
     canActivate: [Guard],
   },
+  {
+    path: 'expences',
+    loadChildren: () => import('./expences/expences.module').then(m => m.ExpencesPageModule),
+    canActivate: [Guard],
+  },
+  {
+    path: 'absentees',
+    loadChildren: () => import('./absentees/absentees.module').then(m => m.AbsenteesPageModule),
+    canActivate: [Guard],
+  },  {
+    path: 'staff-free-period',
+    loadChildren: () => import('./staff-free-period/staff-free-period.module').then( m => m.StaffFreePeriodPageModule)
+  },
+  {
+    path: 'teachers-report',
+    loadChildren: () => import('./teachers-report/teachers-report.module').then( m => m.TeachersReportPageModule)
+  },
+  {
+    path: 'mark-enter',
+    loadChildren: () => import('./mark-enter/mark-enter.module').then( m => m.MarkEnterPageModule)
+  },
+  {
+    path: 'gallery',
+    loadChildren: () => import('./gallery/gallery.module').then( m => m.GalleryPageModule)
+  },
+
+
+
 
 ];
 

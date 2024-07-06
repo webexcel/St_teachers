@@ -190,7 +190,6 @@ export class LoginComponent implements OnInit {
   }
 
   getmenu() {
-    // alert(1);
     this.loading.present();
     let data = {
       UserId: this.teachersDetail[0].UserId,

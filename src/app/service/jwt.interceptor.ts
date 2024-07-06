@@ -6,7 +6,7 @@ import {
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { finalize, tap } from 'rxjs/operators';
 import { TranslateConfigService } from '../service/translate-config.service';
 
@@ -19,7 +19,8 @@ export class JwtInterceptor implements HttpInterceptor {
   public appIsOnline$!: Observable<boolean>;
   constructor(
     public alertCtrl: AlertController,
-    private translate: TranslateConfigService
+    private translate: TranslateConfigService,
+    private toastController: ToastController
   ) {
     this.translate.getparam('cancel').then((v: any) => (this.cancel = v));
     this.initConnectivityMonitoring();
@@ -70,7 +71,7 @@ export class JwtInterceptor implements HttpInterceptor {
                   }
                 }
               }
-            } catch (error) {}
+            } catch (error) { }
           }
         },
         (error: any) => {
@@ -87,7 +88,7 @@ export class JwtInterceptor implements HttpInterceptor {
           }
         }
       ),
-      finalize(() => {})
+      finalize(() => { })
     );
   }
 
@@ -101,16 +102,33 @@ export class JwtInterceptor implements HttpInterceptor {
   }
 
   async show(msg: any) {
-    let alert = await this.alertCtrl.create({
-      header: msg,
-      buttons: [
-        {
-          text: this.cancel,
-          role: 'cancel',
-          handler: (data) => {},
-        },
-      ],
-    });
-    await alert.present();
+    if (msg.includes("Contact Support")) {
+      const toast = await this.toastController.create({
+        message: msg + "!!",
+        duration: 2000,
+        color: "danger",
+        position: 'middle'
+      });
+      toast.present();
+    } else {
+      const toast = await this.toastController.create({
+        message: msg,
+        duration: 2000,
+        color: "success",
+        position: 'middle'
+      });
+      toast.present();
+    }
+    // let alert = await this.alertCtrl.create({
+    //   header: msg,
+    //   buttons: [
+    //     {
+    //       text: this.cancel,
+    //       role: 'cancel',
+    //       handler: (data) => { },
+    //     },
+    //   ],
+    // });
+    // await alert.present();
   }
 }

@@ -6,6 +6,7 @@ import {
   IonModal,
   ModalController,
   Platform,
+  ToastController,
 } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { SelectModalComponent } from '../select-modal/select-modal.component';
@@ -60,7 +61,8 @@ export class AttendanceComponent implements OnInit {
     public loading: LoadingService,
     public authservice: AuthService,
     public storage: StorageService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -83,7 +85,22 @@ export class AttendanceComponent implements OnInit {
     this.reset();
   }
 
+  async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'middle'
+    });
+    toast.present();
+  }
+
   reset() {
+    this.students = [];
+    this.select_datas.class = "";
+    this.className = "No Class Selected";
+    this.select_datas.student = [];
+    this.StudentsName = "No Student Selceted";
     this.select_datas.s_date = new Date().toISOString();
     this.classs = this.storage.getjson('classlist');
     this.select_datas.type = 'ABSENTEES';
@@ -95,9 +112,9 @@ export class AttendanceComponent implements OnInit {
     this.getlist();
   }
 
-  ionViewDidLoad() {}
+  ionViewDidLoad() { }
 
-  ionViewWillEnter() {}
+  ionViewWillEnter() { }
   toggleItems(status: any) {
     if (status) {
       this.portComponent.toggleItems(false);
@@ -215,14 +232,19 @@ export class AttendanceComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (this.select_datas.student.length) {
+    if (this.select_datas.classid == undefined || this.select_datas.classid == "") {
+      this.showToast("No Class Selected!", "danger");
+    } else if (this.select_datas.student == undefined || this.select_datas.student.length == 0) {
+      this.showToast("No Student Selected!", "danger");
+    } else {
       this.select_datas.abtype = this.selectedSessions;
 
       this.loading.present();
       this.authservice.post('newAbsentees', this.select_datas).subscribe(
         (res: any) => {
           this.loading.dismissAll();
-          if (res['STATUS']) {
+          if (res['STATUS'] || res['status']) {
+            this.showToast("Absent Added Successfully", "success");
             form.resetForm();
             this.reset();
           }
@@ -249,7 +271,7 @@ export class AttendanceComponent implements OnInit {
         {
           text: this.cancel,
           role: 'cancel',
-          handler: (data) => {},
+          handler: (data) => { },
         },
       ],
     });

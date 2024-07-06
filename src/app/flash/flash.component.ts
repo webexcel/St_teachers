@@ -5,7 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Base64 } from '@ionic-native/base64/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { AlertController, IonModal, Platform } from '@ionic/angular';
+import { AlertController, IonModal, Platform, ToastController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
@@ -39,7 +39,8 @@ export class FlashComponent implements OnInit {
     public storage: StorageService,
     private platform: Platform,
     private router: Router,
-    private fileChooser: FileChooser
+    private fileChooser: FileChooser,
+    private toastController: ToastController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -62,6 +63,16 @@ export class FlashComponent implements OnInit {
   // reset() {
   //   this.details;
   // }
+
+  async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'middle'
+    });
+    toast.present();
+  }
 
   flashmessage() {
     let flashmes;
@@ -120,43 +131,49 @@ export class FlashComponent implements OnInit {
                     l + res.split('ase64,')[1]
                   );
                 },
-                (err) => {}
+                (err) => { }
               );
             } else {
               this.error = true;
             }
           },
-          (err) => {}
+          (err) => { }
         );
       })
       .catch((e) => console.log(e));
   }
 
   onSubmit() {
-    this.loading.present();
-    this.authservice.post('saveflase', this.details).subscribe(
-      (res: any) => {
-        this.loading.dismissAll();
-        if (res['status']) {
-          this.flashmessage();
-          this.show('Flash saved  Successfully');
-          this.reset();
+    if (this.details.title == undefined || this.details.title == "") {
+      this.showToast("Title is Empty!", "danger");
+    } else if (this.details.description == undefined || this.details.description == "") {
+      this.showToast("Description is Empty!", "danger");
+    } else {
+      this.loading.present();
+      this.authservice.post('saveflase', this.details).subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.showToast("Flash Message Save Successfully.", "success");
+            this.flashmessage();
+            this.reset();
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
         }
-      },
-      (err) => {
-        this.loading.dismissAll();
-      }
-    );
+      );
+    }
   }
 
   reset() {
-    this.details.title = ''; // Reset title field
-    this.details.description = ''; // Reset description field
-    this.details.startdate = new Date().toISOString(); // Reset start date
-    this.details.enddate = new Date().toISOString(); // Reset end date
-    this.details.image = ''; // Reset image field
-    this.details.type = ''; // Reset type field
-    this.error = false; // Reset error status
+    this.details.title = '';
+    this.details.description = '';
+    this.details.startdate = new Date().toISOString();
+    this.details.enddate = new Date().toISOString();
+    this.details.image = '';
+    this.details.type = '';
+    this.error = false;
   }
 
   delete(id: any) {

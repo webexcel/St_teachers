@@ -7,7 +7,7 @@ import {
   InAppBrowser,
   InAppBrowserOptions,
 } from '@ionic-native/in-app-browser/ngx';
-import { Platform } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { Base64String } from 'capacitor-voice-recorder';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Swiper } from 'swiper';
@@ -47,10 +47,10 @@ export class DashboardComponent implements OnInit {
     base64: Base64String | null;
     duration: number;
   } = {
-    fileName: '',
-    base64: null,
-    duration: 0,
-  };
+      fileName: '',
+      base64: null,
+      duration: 0,
+    };
   public circular = 'circulars';
   // public appPages = environment.pages;
   public appPages: any;
@@ -60,6 +60,9 @@ export class DashboardComponent implements OnInit {
   senditems: any = [];
   schoolList: any = [];
   schoolData: any = null;
+  staff_id: any;
+  staff_img: any;
+  dynamicWidth: any;
 
   constructor(
     private modalService: BsModalService,
@@ -75,7 +78,8 @@ export class DashboardComponent implements OnInit {
     public loading: LoadingService,
     private serfile: FilesService,
     public sanitizer: DomSanitizer,
-    public base64: Base64
+    public base64: Base64,
+    public modal: ModalController
   ) {
     this.initializeSchoolData();
     this.platform.backButton.subscribe(() => {
@@ -95,6 +99,7 @@ export class DashboardComponent implements OnInit {
     this.flashmessage();
     this.getSMSLogDetails();
     this.getgroupMessage();
+    this.getMobStudentPhoto();
   }
 
   async ionViewWillEnter() {
@@ -107,6 +112,30 @@ export class DashboardComponent implements OnInit {
       this.schoolList = teachersDetail;
       this.schoolData = teachersDetail[0]; // Set the first item as default
     }
+  }
+
+  getMobStudentPhoto() {
+    if (this.storage.get("profilePic") == undefined) {
+      this.staff_id = this.storage.getjson('teachersDetail')[0]['staff_id'];
+      this.loading.present();
+      this.authservice.post('getMobStaffPhoto', { staff_id: this.staff_id }).subscribe(
+        (result: any) => {
+          this.loading.dismissAll();
+          let url = "../../assets/imgs/latest_Icons/image.svg";
+          this.staff_img = result["data"] != "" && result["data"] != "data:image/jpg;base64," ? result["data"] : url;
+          this.storage.add("profilePic", this.staff_img);
+        },
+        (err) => {
+          this.loading.dismissAll();
+        }
+      );
+    } else {
+      this.staff_img = this.storage.get("profilePic");
+    }
+  }
+
+  cancel_date() {
+    this.modal.dismiss();
   }
 
   currentSchool(event: any) {
@@ -124,6 +153,7 @@ export class DashboardComponent implements OnInit {
     this.storage.addjson('teachersDetail', schoolDetails);
     this.schoolList = schoolDetails;
     this.schoolData = selectedSchool;
+    this.storage.remove("profilePic");
     this.reloadPage();
   }
 
@@ -154,13 +184,13 @@ export class DashboardComponent implements OnInit {
                 environment.packageid;
               }
               if (this.platform.is('android')) {
-                // this.storage.clear();
+                this.storage.clear();
                 const options: InAppBrowserOptions = {
                   zoom: 'no',
                 };
                 const browser = this.iab.create(
                   'https://play.google.com/store/apps/details?id=' +
-                    environment.package,
+                  environment.package,
                   '_system',
                   options
                 );
@@ -420,7 +450,7 @@ export class DashboardComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
-  swiperSlideChanged(e: any) {}
+  swiperSlideChanged(e: any) { }
 
   swiperReady() {
     this.swiper = this.swiperRef?.nativeElement.swiper;
@@ -467,6 +497,11 @@ export class DashboardComponent implements OnInit {
               this.grpmes[i].Message = this.extractUrl(this.grpmes[i].Message);
             }
             this.senditems = res['senditem'];
+            if (this.senditems.length > 3) {
+              this.dynamicWidth = '88%';
+            } else {
+              this.dynamicWidth = '100%'
+            }
           }
         },
         (err) => {

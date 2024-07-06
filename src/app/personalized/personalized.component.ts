@@ -11,6 +11,7 @@ import {
   IonModal,
   ModalController,
   Platform,
+  ToastController,
 } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import {
@@ -95,7 +96,8 @@ export class PersonalizedComponent implements OnInit {
     private translate: TranslateConfigService,
     public loading: LoadingService,
     public authservice: AuthService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -118,7 +120,23 @@ export class PersonalizedComponent implements OnInit {
     this.reset();
   }
 
+  async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'middle'
+    });
+    toast.present();
+  }
+
   reset() {
+    this.select_datas.class = "";
+    this.className = "No CLass Selected";
+    this.select_datas.student = [];
+    this.students = [];
+    this.StudentsName = "No Students Selected";
+    this.select_datas.message = "";
     this.select_datas.s_date = new Date().toISOString();
     this.classs = this.storage.getjson('classlist');
     this.select_datas.type = 'PERSONALIZE';
@@ -209,7 +227,14 @@ export class PersonalizedComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (this.select_datas.student.length > 0) {
+    if (this.select_datas.classid == undefined || this.select_datas.classid == "") {
+      this.showToast("No Class Selected!", "danger");
+    } else if (this.select_datas.student == undefined || this.select_datas.student.length == 0) {
+      this.showToast("No Students Selected!", "danger");
+    } else if (this.select_datas.message == undefined || this.select_datas.message == "") {
+      this.showToast("Message is Empty!", "danger");
+    } else {
+      this.loading.present();
       let stud = [];
       for (let i = 0; i < this.select_datas.student.length; i++) {
         let obj: any = {};
@@ -218,13 +243,12 @@ export class PersonalizedComponent implements OnInit {
         stud.push(obj);
       }
       this.select_datas.student = stud;
-    }
-    if (this.select_datas.student.length) {
-      this.loading.present();
+
       this.authservice.post('newpersonalsms', this.select_datas).subscribe(
         (res: any) => {
           this.loading.dismissAll();
-          if (res['STATUS']) {
+          if (res['STATUS'] || res["status"]) {
+            this.showToast("Personal Message Added Successfully.", "success");
             form.resetForm();
             this.reset();
             this.getlist();
@@ -236,6 +260,7 @@ export class PersonalizedComponent implements OnInit {
       );
     }
   }
+
   async deletecirculars(ID: any) {
     let alert = await this.alertCtrl.create({
       header: this.delete_personalized,
@@ -700,7 +725,7 @@ export class PersonalizedComponent implements OnInit {
   }
 
   async openOptions(data: any, value: any, multi: any) {
-    if (!multi && data[0].name != 0) {
+    if (!multi && data[0].id != 0) {
       data.splice(0, 0, { id: 0, name: 'Select Your Subject' });
     }
     const modal = await this.modalController.create({

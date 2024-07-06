@@ -1,30 +1,47 @@
 <ion-header [translucent]="true" *ngIf="!ios">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button
-        ><ion-icon
-          [ios]="'menu-sharp'"
-          [md]="'menu-sharp'"
-          class="menuIcon"
-        ></ion-icon
-      ></ion-menu-button>
+      <ion-menu-button><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'" class="menuIcon"></ion-icon></ion-menu-button>
     </ion-buttons>
     <ion-title>{{ "dashboard" | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button id="open-modal">
+        <img class="img-thumbnail dash" *ngIf="!storage.get(ADNO + 'img')" [src]="staff_img" />
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
-    <ion-toolbar class="p-0">
-      <ion-buttons slot="start">
-        <ion-menu-button>
-          <ion-icon class="text-white" [ios]="'menu-sharp'" [md]="'menu-sharp'">
-          </ion-icon>
-        </ion-menu-button>
-      </ion-buttons>
-      <ion-title>{{ "dashboard" | translate }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-modal trigger="open-modal" [initialBreakpoint]="1" animated="true">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>My Profile</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="cancel_date()">{{
+              "cancel" | translate
+              }}</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <div>
+          <img class="modal_profile" [src]="staff_img" alt="profile_img" />
+        </div>
+        <div class="modal_content">
+          <ion-row>
+            <ion-col size="3">Staff Name: </ion-col>
+            <ion-col>{{ teachersDetail[0]["DisplayName"] }}</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="3">Staff ID: </ion-col>
+            <ion-col>{{ teachersDetail[0]["staff_id"] }}</ion-col>
+          </ion-row>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 
   <!-- 10/02 -->
 
@@ -37,7 +54,7 @@
   </div>
 
   <!-- 1 -->
-  <div class="dashboardName container">
+  <!-- <div class="dashboardName container">
     <div class="row">
       <div class="col-9">
         <div class="staffname">Hi {{ teachersDetail[0]["DisplayName"] }},</div>
@@ -47,70 +64,45 @@
       </div>
       <div class="col-3 d-flex justify-content-end align-items-center">
         <div>
-          <!-- <img
-            class="img-thumbnail dash"
-            *ngIf="storage.get(ADNO + 'img')"
-            [src]="storage.get(ADNO + 'img')"
-          /> -->
-          <img
-            class="img-thumbnail dash"
-            *ngIf="!storage.get(ADNO + 'img')"
-            src="../../assets/imgs/latest_Icons/image.svg"
-          />
+          <img class="img-thumbnail dash" *ngIf="!storage.get(ADNO + 'img')" [src]="staff_img" />
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <!-- 2 -->
-  <ng-container *ngIf="senditems.length > 0; else noItemsMessage">
-    <div class="container-fluid view-all" *ngIf="senditems.length > 0">
+  <ng-container *ngIf="senditems.length > 0">
+    <div class="container-fluid view-all">
       <div class="container-fluid message-container">
-        <div
-          (click)="redirectToModule()"
-          class="left ion-card-rounded-right"
-          style="height: 85px; text-align: center"
-        >
+        <div *ngIf="senditems.length > 3" (click)="redirectToModule()" class="left ion-card-rounded-right"
+          style="height: 85px; text-align: center">
           <div class="left-view">
             View <br />
             All
           </div>
         </div>
-        <div class="right">
-          <swiper-container
-            #swiper
-            (afterinit)="swiperReady()"
-            (slidechange)="swiperSlideChanged($event)"
-            [loop]="true"
-            [pagination]="true"
-          >
-            <swiper-slide
-              *ngFor="
+        <div class="right" [ngStyle]="{ 'width': dynamicWidth }">
+          <swiper-container #swiper (afterinit)="swiperReady()" (slidechange)="swiperSlideChanged($event)" [loop]="true"
+            [pagination]="true">
+            <swiper-slide *ngFor="
                 let smsData of senditems.length >= 3
                   ? senditems.slice(senditems.length - 3)
                   : senditems
-              "
-            >
-              <ion-card class="ion-card-rounded" style="height: 88px">
+              ">
+              <ion-card class="ion-card-rounded" style="height: 88px; background-color: #e9e7e7;">
                 <ion-card-content no-padding class="frame">
                   <ion-row class="dm">
                     <ion-col>
                       <div class="message-content">
-                        <div
-                          class="multi_lines_text111"
-                          (click)="redirectToModule()"
-                        >
+                        <div class="multi_lines_text111" (click)="redirectToModule()">
                           Message :
                           {{
-                            smsData.Message.length > 100
-                              ? (smsData.Message | slice : 0 : 100) + "..."
-                              : smsData.Message
+                          smsData.Message.length > 100
+                          ? (smsData.Message | slice : 0 : 100) + "..."
+                          : smsData.Message
                           }}
                         </div>
-                        <div
-                          *ngIf="checkmp3(smsData.event_image)"
-                          class="audio-section"
-                        ></div>
+                        <div *ngIf="checkmp3(smsData.event_image)" class="audio-section"></div>
 
                         <!-- Video section -->
                         <!-- <div
@@ -223,19 +215,13 @@
                       <ion-header>
                         <ion-toolbar>
                           <ion-buttons slot="end">
-                            <ion-button (click)="setOpen(false, 't')"
-                              >Close</ion-button
-                            >
+                            <ion-button (click)="setOpen(false, 't')">Close</ion-button>
                           </ion-buttons>
                         </ion-toolbar>
                       </ion-header>
                       <ion-content class="ion-padding">
                         <div>
-                          <img
-                            class="card-img-top w-100"
-                            [src]="modalImage"
-                            alt=""
-                          />
+                          <img class="card-img-top w-100" [src]="modalImage" alt="" />
                         </div>
                       </ion-content>
                     </ng-template>
@@ -249,11 +235,11 @@
     </div>
   </ng-container>
 
-  <ng-template #noItemsMessage>
+  <!-- <ng-template #noItemsMessage>
     <div class="empty-message" (click)="redirectToModule()">
       Click Here for your Messages
     </div>
-  </ng-template>
+  </ng-template> -->
 
   <!-- 10/02 -->
 
@@ -287,42 +273,25 @@
 </ion-content>
 
 <ng-template #flash_template>
-  <div
-    class="modal-header"
-    *ngIf="flashData.length > 0 && flashData.length > flashindex"
-  >
+  <div class="modal-header" *ngIf="flashData.length > 0 && flashData.length > flashindex">
     <div class="row align-items-center w-100">
       <div class="col-10">
         <h4 class="modal-title pull-left">{{ flashData[flashindex].Title }}</h4>
       </div>
       <div class="col-2 text-left">
-        <button
-          type="button"
-          class="btn-close close pull-right"
-          aria-label="Close"
-          (click)="close()"
-        >
+        <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="close()">
           <span aria-hidden="true" class="visually-hidden">&times;</span>
         </button>
       </div>
     </div>
   </div>
-  <div
-    class="modal-body"
-    *ngIf="flashData.length > 0 && flashData.length > flashindex"
-  >
-    <img
-      [src]="flashData[flashindex].event_image"
-      alt=""
-      [class.d-none]="flashData[flashindex].event_image.length === 0"
-    />
+  <div class="modal-body" *ngIf="flashData.length > 0 && flashData.length > flashindex">
+    <img [src]="flashData[flashindex].event_image" alt=""
+      [class.d-none]="flashData[flashindex].event_image.length === 0" />
     <p class="text-center multi_lines_text">
-      <span
-        *ngIf="flashData[flashindex].Discription"
-        [innerHTML]="
+      <span *ngIf="flashData[flashindex].Discription" [innerHTML]="
           authservice.sanitizeHtml(flashData[flashindex].Discription)
-        "
-      ></span>
+        "></span>
     </p>
   </div>
 </ng-template>

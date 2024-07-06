@@ -1,8 +1,8 @@
 .homework {
   .card_body {
     padding-top: 0px !important;
-    // margin-left: 5px !important;
-    // margin-right: 5px !important;
+    margin-left: 5px !important;
+    margin-right: 5px !important;
   }
   .card-header {
     padding: 12px !important;
@@ -128,11 +128,6 @@
   /* Optional: Adjust the width based on your layout needs */
 }
 
-.send_btn {
-  margin: 0 8px;
-  font-size: 16px !important;
-}
-
 .cardlist {
   margin-top: 10px;
 }
@@ -152,4 +147,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.subSection {
+  border: 1px dotted rgb(202, 202, 202);
+  padding: 5px;
+  margin-top: 15px;
+  background-color: #7e88ff1c;
+  border-radius: 10px;
 }

@@ -1,0 +1,212 @@
+.catButton {
+    background-color: blue;
+    color: white;
+    margin-top: 10px;
+    font-weight: bold;
+    margin-right: 10px;
+    border-radius: 20px;
+}
+
+.catSaveButton {
+    background-color: blue;
+    color: white;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.dropdown_select {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #909090;
+}
+
+.messageArea {
+  border-radius: 4px;
+  border: 1px solid #909090;
+  // height: 115px;
+}
+
+.attach {
+  width: 148px;
+  height: 36px;
+  border-radius: 4px;
+  background: #5886fe;
+  padding-top: 6px;
+}
+
+.gallery {
+    .card_body {
+      padding-top: 0px !important;
+      margin-left: 5px !important;
+      margin-right: 5px !important;
+    }
+    .card-header {
+      padding: 12px !important;
+      padding-left: 20px !important;
+    }
+}
+  
+  .galList {
+    margin-top: 5%;
+  }
+  
+  .feeHistory {
+    margin-bottom: 25px;
+  }
+  
+  .info-container-main {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin-left: 5%;
+    background-color: #5886fe;
+    color: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  
+  .info-container-tot {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 1px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #606060;
+    padding-top: 0.3em;
+    height: 2.6em;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  
+  .info-container {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 5px;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #606060;
+  }
+  
+  .info-column {
+    text-align: center;
+    padding: 3.5px;
+    font-size: 16px;
+    padding: 1.1% 0;
+  }
+  
+  .info-container .info-column:first-child {
+    color: #5886fe;
+  }
+  
+  .feeHistoryT {
+    margin-top: 30px;
+    margin-left: 20px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #5886fe;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3%;
+    width: 90%;
+    border-radius: 10px;
+    margin-left: 5%;
+    background-color: #fff;
+  }
+  
+  .left-column-container {
+    width: 87%;
+    padding: 10px;
+  }
+  
+  .left-column {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5px;
+    margin: 10px 0;
+  }
+  
+  .right-column {
+    width: 13%;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .receipt {
+    color: #606060;
+  }
+  
+  .amount {
+    color: #5886fe;
+    font-weight: bold;
+  }
+
+  .card-container {
+    text-align: center;
+    margin: 10px 22px;
+  }
+  
+  hr {
+    width: 100%;
+    margin: 0.1px 0;
+    border: 0.1px;
+  }
+
+.color {
+  //   background-color: #088d16; /* Sets background color to red */
+  color: #fff;
+
+  width: 100%;
+  height: 100%;
+  //   margin-bottom: 2px;
+  height: 48%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  font-size: 16px;
+  font-weight: bold;
+  padding-top: 5px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    width: 100%;
+}
+
+.f_name {
+    margin-bottom: 10px;
+    min-height: 40px;
+    border: 1px solid #80808047;
+    border-radius: 5px;
+    padding: 10px;
+    color: gray;
+    font-size: 14px;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+ion-card {
+  width: 100%;
+}
+
+.thumbnail_img {
+  width: 100%;
+  filter: blur(2px);
+  transition: filter 0.3s;
+}

@@ -11,6 +11,7 @@ import {
   IonModal,
   ModalController,
   Platform,
+  ToastController,
 } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import {
@@ -68,10 +69,10 @@ export class StaffGroupComponent implements OnInit {
     base64: Base64String | null;
     duration: number;
   } = {
-    fileName: '',
-    base64: null,
-    duration: 0,
-  };
+      fileName: '',
+      base64: null,
+      duration: 0,
+    };
 
   seengrpmes: any;
   isEditMessageOpen1: boolean = false;
@@ -93,7 +94,8 @@ export class StaffGroupComponent implements OnInit {
     private translate: TranslateConfigService,
     public loading: LoadingService,
     public authservice: AuthService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -117,7 +119,25 @@ export class StaffGroupComponent implements OnInit {
     this.getstafftypes();
   }
 
+  async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'middle'
+    });
+    toast.present();
+  }
+
   reset() {
+    this.select_datas.stafftypes = [];
+    this.staffName = "No Staff Selected";
+    this.stafftypes.forEach((element: any) => {
+      if (element.checked) {
+        element.checked = false;
+      }
+    });
+    this.select_datas.message = ""
     this.select_datas.s_date = new Date().toISOString();
     //this.classs = this.storage.getjson('classlist')
     this.select_datas.type = 'STAFFGROUP';
@@ -241,12 +261,17 @@ export class StaffGroupComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    if (this.select_datas.stafftypes.length) {
+    if (this.select_datas.stafftypes == undefined || this.select_datas.stafftypes.length == 0) {
+      this.showToast("No Staff Type Selected!", "danger");
+    } else if (this.select_datas.message == undefined || this.select_datas.message == "") {
+      this.showToast("Message is Empty!", "danger");
+    } else {
       this.loading.present();
       this.authservice.post('saveMessageStaff', this.select_datas).subscribe(
         (res: any) => {
           this.loading.dismissAll();
           if (res['status']) {
+            this.showToast("Message Saved Successfully.", "success");
             form.resetForm();
             this.reset();
           }
@@ -257,6 +282,7 @@ export class StaffGroupComponent implements OnInit {
       );
     }
   }
+
   async deletecirculars(ID: any) {
     let alert = await this.alertCtrl.create({
       header: this.delete_personalized,
@@ -370,7 +396,7 @@ export class StaffGroupComponent implements OnInit {
               this.error = true;
             }
           },
-          (err) => {}
+          (err) => { }
         );
       })
       .catch((e) => console.log(e));
@@ -475,7 +501,7 @@ export class StaffGroupComponent implements OnInit {
           );
         }
       },
-      (err) => {}
+      (err) => { }
     );
   }
 
