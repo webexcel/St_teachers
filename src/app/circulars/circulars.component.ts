@@ -94,6 +94,8 @@ export class CircularsComponent implements OnInit {
     };
   attachment: any;
   showButton: any;
+  isDatePickerOpen: boolean = false;
+  s_date: any;
 
   constructor(
     private serfile: FilesService,
@@ -155,6 +157,7 @@ export class CircularsComponent implements OnInit {
   }
 
   reset() {
+    this.s_date = new Date().toISOString();
     this.select_datas.s_date = new Date().toISOString();
     this.select_datas.staff_id =
       this.storage.getjson('teachersDetail')[0]['staff_id'];
@@ -842,7 +845,13 @@ export class CircularsComponent implements OnInit {
   }
 
   confirm_date() {
+    this.select_datas.s_date = this.s_date;
     this.modal.dismiss(null, 'confirm');
+  }
+
+  toggleDateSelect() {
+    this.s_date = this.select_datas.s_date;
+    this.isDatePickerOpen = !this.isDatePickerOpen;
   }
 
   toggleDateSelection() {
@@ -857,7 +866,7 @@ export class CircularsComponent implements OnInit {
       this.attachment = image;
     }
     if (id == 'confirm') {
-      this.last3days[this.index].message = this.messageText;
+      this.grpmes[this.index].message = this.messageText;
       this.editMessage(this.messageId, this.messageText);
     }
     this.isEditMessageOpen = !this.isEditMessageOpen;
@@ -875,6 +884,11 @@ export class CircularsComponent implements OnInit {
       } else {
         this.select_datas1.s_date = null;
       }
+    }
+    if (type == 'first') {
+      this.isDatePickerOpen = false;
+    } else {
+      this.isPickerOpen = false;
     }
   }
 

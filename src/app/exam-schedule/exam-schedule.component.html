@@ -1,19 +1,12 @@
 <ion-header [translucent]="true" *ngIf="!ios">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button
-        ><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon
-      ></ion-menu-button>
+      <ion-menu-button><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon></ion-menu-button>
     </ion-buttons>
     <ion-title>Exam Schedule</ion-title>
     <ion-buttons slot="end">
-      <ion-button
-        routerDirection="root"
-        routerLink="/dashboard"
-        lines="none"
-        detail="false"
-        routerLinkActive="selected"
-      >
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
         <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
       </ion-button>
     </ion-buttons>
@@ -24,13 +17,8 @@
   <ion-header collapse="condense" class="mt-4" *ngIf="ios">
     <ion-toolbar class="p-0">
       <ion-buttons slot="start">
-        <ion-menu-button
-          ><ion-icon
-            class="text-white"
-            [ios]="'menu-sharp'"
-            [md]="'menu-sharp'"
-          ></ion-icon
-        ></ion-menu-button>
+        <ion-menu-button><ion-icon class="text-white" [ios]="'menu-sharp'"
+            [md]="'menu-sharp'"></ion-icon></ion-menu-button>
       </ion-buttons>
       <ion-title>Exam Schedule </ion-title>
     </ion-toolbar>
@@ -38,12 +26,7 @@
 
   <div class="reportcard">
     <div class="card-body card_body">
-      <form
-        name="form"
-        (ngSubmit)="f.form.valid && onSubmit(f)"
-        #f="ngForm"
-        novalidate
-      >
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm" novalidate>
         <div style="margin-top: 12px">Select Exam</div>
         <!-- <ion-item class="dropdown" style="margin: 0px">
           <ion-label>Exam</ion-label>
@@ -63,20 +46,13 @@
         </ion-item> -->
 
         <ion-item class="dropdown_select" style="margin: 0px">
-          <ion-input
-            readonly
-            [placeholder]="ExamName"
-            (click)="
+          <ion-input readonly [placeholder]="ExamName" (click)="
               openOptions(exams, select_datas.exams, 'Exams', false, [
                 'exam_type_id',
                 'exam_type_name'
               ])
-            "
-          >
-            <ion-icon
-              name="caret-down"
-              style="margin-left: 10%; opacity: 0.5; position: absolute"
-            ></ion-icon>
+            ">
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
           </ion-input>
           <ion-input hidden="true"></ion-input>
         </ion-item>
@@ -102,20 +78,13 @@
         </ion-item> -->
 
         <ion-item class="dropdown_select" style="margin: 0px">
-          <ion-input
-            readonly
-            [placeholder]="ClassName"
-            (click)="
+          <ion-input readonly [placeholder]="ClassName" (click)="
               openOptions(classs, select_datas.class, 'Class', true, [
                 'id',
                 'name'
               ])
-            "
-          >
-            <ion-icon
-              name="caret-down"
-              style="margin-left: 10%; opacity: 0.5; position: absolute"
-            ></ion-icon>
+            ">
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
           </ion-input>
           <ion-input hidden="true"></ion-input>
         </ion-item>
@@ -138,20 +107,13 @@
           </ionic-selectable>
         </ion-item> -->
         <ion-item class="dropdown_select" style="margin: 0px">
-          <ion-input
-            readonly
-            [placeholder]="SubjectName"
-            (click)="
+          <ion-input readonly [placeholder]="SubjectName" (click)="
               openOptions(subjects, select_datas.subject, 'Subject', false, [
                 'id',
                 'name'
               ])
-            "
-          >
-            <ion-icon
-              name="caret-down"
-              style="margin-left: 10%; opacity: 0.5; position: absolute"
-            ></ion-icon>
+            ">
+            <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
           </ion-input>
           <ion-input hidden="true"></ion-input>
         </ion-item>
@@ -160,60 +122,37 @@
 
         <div style="margin-top: 12px">Select Date</div>
         <ion-item lines="full" class="dropdown" style="margin: 0px">
-          <ion-label
-            id="open-modal"
-            class="selected-date"
-            *ngIf="select_datas.s_date"
-          >
+          <ion-label (click)="toggleDateSelect()" id="open-modal" class="selected-date" *ngIf="select_datas.s_date">
             <span style="float: left">
-              {{ formatDate(select_datas.s_date) }}</span
-            >
+              {{ formatDate(select_datas.s_date) }}</span>
 
             <span style="float: right !important">
-              <img
-                style="height: 6px; width: 10px; margin-right: 5px"
-                src="../../assets/imgs/speakers/Polygon 4.png"
-              />
+              <img style="height: 6px; width: 10px; margin-right: 5px" src="../../assets/imgs/speakers/Polygon 4.png" />
             </span>
           </ion-label>
 
-          <ion-modal
-            trigger="open-modal"
-            (willDismiss)="onWillDismiss($event, 'first')"
-            [initialBreakpoint]="0.5"
-            [breakpoints]="[0, 0.25, 0.5, 0.75]"
-            animated="true"
-          >
+          <ion-modal [isOpen]="isDatePickerOpen" trigger="open-modal" (willDismiss)="onWillDismiss($event, 'first')"
+            [initialBreakpoint]="0.5" [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
             <ng-template>
               <ion-header>
                 <ion-toolbar>
                   <ion-buttons slot="start">
-                    <ion-button (click)="cancel_date()">{{
+                    <ion-button (click)="toggleDateSelect()">{{
                       "cancel" | translate
-                    }}</ion-button>
+                      }}</ion-button>
                   </ion-buttons>
                   <ion-title>{{ "select_date" | translate }}</ion-title>
                   <ion-buttons slot="end">
                     <ion-button (click)="confirm_date()" [strong]="true">{{
                       "confirm" | translate
-                    }}</ion-button>
+                      }}</ion-button>
                   </ion-buttons>
                 </ion-toolbar>
               </ion-header>
 
               <ion-content class="ion-padding">
-                <ion-datetime
-                  name="dob"
-                  displayFormat="DD/MM/YYYY"
-                  pickerFormat="DD/MM/YYYY"
-                  [(ngModel)]="select_datas.s_date"
-                  #dob="ngModel"
-                  presentation="date"
-                  mode="md"
-                  #datetime
-                  (ionChange)="showHideDatePicker()"
-                  required
-                >
+                <ion-datetime name="dob" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="s_date"
+                  #dob="ngModel" presentation="date" mode="md" #datetime (ionChange)="showHideDatePicker()" required>
                 </ion-datetime>
               </ion-content>
             </ng-template>
@@ -222,23 +161,13 @@
 
         <div style="margin-top: 25px">Enter Time here</div>
         <ion-item lines="full" class="messageArea1">
-          <ion-textarea
-            type="text"
-            name="time"
-            [(ngModel)]="select_datas.time"
-            #time="ngModel"
-          >
+          <ion-textarea type="text" name="time" [(ngModel)]="select_datas.time" #time="ngModel">
           </ion-textarea>
         </ion-item>
 
         <div style="margin-top: 25px">Enter Portion Here</div>
         <ion-item lines="full" class="messageArea" style="height: 95px">
-          <ion-textarea
-            type="text"
-            name="message"
-            [(ngModel)]="select_datas.message"
-            #message="ngModel"
-          >
+          <ion-textarea type="text" name="message" [(ngModel)]="select_datas.message" #message="ngModel">
           </ion-textarea>
         </ion-item>
 
@@ -315,7 +244,7 @@
                   {{ d.subject }}
                   <span style="padding-left: 25px">{{
                     d.date | date : "dd-MM-yyyy"
-                  }}</span>
+                    }}</span>
                   <span style="padding-left: 25px">{{ d.time }}</span>
                 </div>
                 <hr style="margin-top: 5px; margin-bottom: 5px" />

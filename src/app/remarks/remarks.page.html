@@ -1,0 +1,141 @@
+<ion-header [translucent]="true">
+  <ion-toolbar *ngIf="presentView == 'view'">
+    <ion-buttons slot="start">
+      <ion-menu-button>
+        <ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
+      </ion-menu-button>
+    </ion-buttons>
+    <ion-title>Remarks</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
+        <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-toolbar *ngIf="presentView == 'add'">
+    <ion-buttons slot="start">
+      <ion-button (click)="closeAddForm()">{{
+        "Cancel" | translate
+        }}</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="onAddSubmit()" [strong]="true">{{
+        "Save" | translate
+        }}</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="presentView == 'view'" [fullscreen]="true">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" tappable>
+    <ion-fab-button (click)="openAddForm()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <div class="card-body card_body">
+    <form name="form" #f="ngForm" novalidate (ngSubmit)="f.form.valid && onViewSubmit(f)">
+      <div style="margin-top: 12px">Select Class</div>
+      <ion-item class="dropdown_select" style="margin: 0px">
+        <ion-input readonly [placeholder]="className"
+          (click)="openOptions('view', classs, select_datas.class, 'Class', false)">
+          <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
+      </ion-item>
+
+      <div style="margin-top: 25px">Select Subject</div>
+      <ion-item class="dropdown_select" style="margin: 0px">
+        <ion-input readonly [placeholder]="SubjectName" (click)="
+            openOptions('view', subjects, select_datas.subject, 'Subject', false)
+          ">
+          <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
+      </ion-item>
+
+      <div class="p-2 text-right">
+        <button type="submit" class="btn btn-primary" style="width: 100%">
+          Submit
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <div class="m-3">
+    <div>
+      <div class="dateHead" *ngIf="studentRemarks?.length > 0">Remarks</div>
+      <table class="table table-bordered" *ngFor="let data of studentRemarks">
+        <tbody>
+          <tr>
+            <td width="30%">
+              <div class="txtCenter topBg">{{ data.name }}</div>
+              <div class="txtCenter" style="font-size: 14px">
+                {{ data.CLASSSEC }}
+              </div>
+            </td>
+            <td width="60%" class="textleft multi_lines_text">
+              <span>{{ data.message }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div *ngIf="
+          isFormSubmitted && (!studentRemarks || studentRemarks.length === 0)
+        " class="no-remarks-message">
+        No Remarks Available for this Class
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+<ion-content *ngIf="presentView == 'add'">
+  <div class="card-body card_body">
+    <form name="form" #f="ngForm" novalidate (ngSubmit)="f.form.valid && onAddSubmit()">
+      <div style="margin-top: 12px">Select Class</div>
+
+      <ion-item class="dropdown_select" style="margin: 0px">
+        <ion-input readonly [placeholder]="ClassName"
+          (click)="openOptions('add', classs, select_datas.class, 'Class', false)">
+          <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
+      </ion-item>
+
+      <div style="margin-top: 25px">Select Students</div>
+
+      <ion-item class="dropdown_select" style="margin: 0px">
+        <ion-input readonly [placeholder]="StudentsName" (click)="
+            openOptions('add', students, select_datas.student, 'Students', true)
+          ">
+          <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
+      </ion-item>
+
+      <div style="margin-top: 25px">Select Subject</div>
+
+      <ion-item class="dropdown_select" style="margin: 0px">
+        <ion-input readonly [placeholder]="SubjectName"
+          (click)="openOptions('add', subjects, select_datas.subject, 'Subject', true)">
+          <ion-icon name="caret-down" style="margin-left: 10%; opacity: 0.5; position: absolute"></ion-icon>
+        </ion-input>
+        <ion-input hidden="true"></ion-input>
+      </ion-item>
+
+      <div style="margin-top: 25px">Enter Message Here</div>
+      <ion-item lines="full" class="messageArea" style="height: 95px">
+        <ion-textarea type="text" name="message" [(ngModel)]="select_datas.message" #message="ngModel">
+        </ion-textarea>
+      </ion-item>
+
+      <div class="p-2 text-right">
+        <button type="submit" class="btn btn-primary" style="width: 100%">
+          {{ "save" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+</ion-content>

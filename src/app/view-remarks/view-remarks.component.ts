@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
-import { IonModal, ModalController, Platform } from '@ionic/angular';
+import { IonModal, ModalController, Platform, ToastController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { Base64String } from 'capacitor-voice-recorder';
 import { SelectModalComponent } from '../select-modal/select-modal.component';
@@ -66,7 +66,8 @@ export class ViewRemarksComponent implements OnInit {
     public authservice: AuthService,
     public loading: LoadingService,
     private translate: TranslateConfigService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private toastController: ToastController
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -91,6 +92,16 @@ export class ViewRemarksComponent implements OnInit {
     // this.getIndividualStudentRemarks();
   }
 
+  async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color,
+      position: 'middle'
+    });
+    toast.present();
+  }
+
   reset() {
     this.classs = this.storage.getjson('classlist');
     this.select_datas.staff_id =
@@ -101,28 +112,34 @@ export class ViewRemarksComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    this.isFormSubmitted = true;
-    this.loading.present();
+    if (this.select_datas.class == undefined || this.select_datas.class.id == undefined || this.select_datas.class.id == "") {
+      this.showToast("No Class Selected", "danger");
+    } else if (this.select_datas.subject == undefined || this.select_datas.subject.id == undefined || this.select_datas.subject.id == "") {
+      this.showToast("No Class Subject", "danger");
+    } else {
+      this.isFormSubmitted = true;
+      this.loading.present();
 
-    this.authservice
-      .post('ViewstudentRemarks', {
-        class: this.select_datas.class,
-        subject: this.select_datas.subject,
-      })
-      .subscribe(
-        (res: any) => {
-          this.loading.dismissAll();
-          if (res['status']) {
-            this.students = res['data'];
-            this.studentRemarks = res['data'];
-          } else {
-            this.studentRemarks = [];
+      this.authservice
+        .post('ViewstudentRemarks', {
+          class: this.select_datas.class,
+          subject: this.select_datas.subject,
+        })
+        .subscribe(
+          (res: any) => {
+            this.loading.dismissAll();
+            if (res['status']) {
+              this.students = res['data'];
+              this.studentRemarks = res['data'];
+            } else {
+              this.studentRemarks = [];
+            }
+          },
+          (err) => {
+            this.loading.dismissAll();
           }
-        },
-        (err) => {
-          this.loading.dismissAll();
-        }
-      );
+        );
+    }
   }
 
   async openOptions(data: any, value: any, bind: any, multi: any) {

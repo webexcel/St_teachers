@@ -43,6 +43,8 @@ export class ExamScheduleComponent implements OnInit {
   ExamName: any;
   ClassName: any;
   SubjectName: any;
+  isDatePickerOpen: boolean = false;
+  s_date: any;
 
   constructor(
     private platform: Platform,
@@ -92,6 +94,7 @@ export class ExamScheduleComponent implements OnInit {
   }
 
   reset() {
+    this.s_date = new Date().toISOString();
     this.select_datas.s_date = new Date().toISOString();
   }
 
@@ -131,18 +134,22 @@ export class ExamScheduleComponent implements OnInit {
             : 'No Classes Selected';
       } else {
         if (bind == 'Subject') {
-          this.select_datas.subject = result.data;
+          if (result.data.name != undefined) {
+            this.select_datas.subject = result.data;
+          }
           this.SubjectName =
             result.data != undefined && result.data.name != undefined
               ? result.data.name + ' Subject Selected'
               : 'No Subject Selected';
         } else if (bind == 'Exams') {
-          this.select_datas.exams = result.data;
+          if (result.data.exam_type_name != undefined) {
+            this.select_datas.exams = result.data;
+            this.getallexams();
+          }
           this.ExamName =
             result.data != undefined && result.data.exam_type_name != undefined
               ? result.data.exam_type_name + ' Exam Selected'
               : 'No Exam Selected';
-          this.getallexams();
         }
       }
     });
@@ -443,7 +450,13 @@ export class ExamScheduleComponent implements OnInit {
   }
 
   confirm_date() {
+    this.select_datas.s_date = this.s_date;
     this.modal.dismiss(null, 'confirm');
+  }
+
+  toggleDateSelect() {
+    this.s_date = this.select_datas.s_date;
+    this.isDatePickerOpen = !this.isDatePickerOpen;
   }
 
   toggleDateSelection() {
@@ -458,6 +471,11 @@ export class ExamScheduleComponent implements OnInit {
       } else {
         this.select_datas1.s_date = null;
       }
+    }
+    if (type == 'first') {
+      this.isDatePickerOpen = false;
+    } else {
+      this.isPickerOpen = false;
     }
   }
 }

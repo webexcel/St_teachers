@@ -81,6 +81,8 @@ export class PersonalizedComponent implements OnInit {
   StudentsName: any;
   attachment: any;
   showButton: any;
+  isDatePickerOpen: boolean = false;
+  s_date: any;
 
   constructor(
     private serfile: FilesService,
@@ -137,6 +139,7 @@ export class PersonalizedComponent implements OnInit {
     this.students = [];
     this.StudentsName = "No Students Selected";
     this.select_datas.message = "";
+    this.s_date = new Date().toISOString();
     this.select_datas.s_date = new Date().toISOString();
     this.classs = this.storage.getjson('classlist');
     this.select_datas.type = 'PERSONALIZE';
@@ -572,12 +575,19 @@ export class PersonalizedComponent implements OnInit {
   }
 
   confirm_date() {
+    this.select_datas.s_date = this.s_date;
     this.modal.dismiss(null, 'confirm');
+  }
+
+  toggleDateSelect() {
+    this.s_date = this.select_datas.s_date;
+    this.isDatePickerOpen = !this.isDatePickerOpen;
   }
 
   toggleDateSelection() {
     this.isPickerOpen = !this.isPickerOpen;
   }
+
   onWillDismiss(event: Event, type: any) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'cancel') {
@@ -586,6 +596,11 @@ export class PersonalizedComponent implements OnInit {
       } else {
         this.select_datas1.s_date = null;
       }
+    }
+    if (type == 'first') {
+      this.isDatePickerOpen = false;
+    } else {
+      this.isPickerOpen = false;
     }
   }
 
@@ -725,9 +740,6 @@ export class PersonalizedComponent implements OnInit {
   }
 
   async openOptions(data: any, value: any, multi: any) {
-    if (!multi && data[0].id != 0) {
-      data.splice(0, 0, { id: 0, name: 'Select Your Subject' });
-    }
     const modal = await this.modalController.create({
       component: SelectModalComponent,
       componentProps: {
@@ -755,12 +767,14 @@ export class PersonalizedComponent implements OnInit {
             ? datar.length + ' Student Selected'
             : 'No Students Selected';
       } else {
-        this.select_datas.classid = result.data.id;
-        this.getStudentsByClass(this.select_datas.classid);
-        this.className =
-          result.data.name.length > 0
-            ? result.data.name + ' Selected'
-            : 'No Selected Classes';
+        if (result.data.id != undefined) {
+          this.select_datas.classid = result.data.id;
+          this.getStudentsByClass(this.select_datas.classid);
+        } else {
+          this.students = [];
+        }
+        this.className = result.data.name != undefined && result.data.name.length > 0 ? result.data.name + ' Selected'
+          : 'No Selected Classes';
       }
     });
     return await modal.present();

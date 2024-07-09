@@ -165,6 +165,10 @@ const routes: Routes = [
     path: 'gallery',
     loadChildren: () => import('./gallery/gallery.module').then( m => m.GalleryPageModule)
   },
+  {
+    path: 'remarks',
+    loadChildren: () => import('./remarks/remarks.module').then( m => m.RemarksPageModule)
+  },
 
 
 

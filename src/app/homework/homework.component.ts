@@ -87,6 +87,8 @@ export class HomeworkComponent implements OnInit {
   SubjectName: any[] = [];
   attachment: any;
   currentIndex: any;
+  isDatePickerOpen: boolean = false;
+  s_date: any;
 
   constructor(
     private serfile: FilesService,
@@ -130,6 +132,7 @@ export class HomeworkComponent implements OnInit {
   }
 
   reset() {
+    this.s_date = new Date().toISOString();
     this.select_datas.s_date = new Date().toISOString();
     this.select_datas.staff_id =
       this.storage.getjson('teachersDetail')[0]['staff_id'];
@@ -399,7 +402,7 @@ export class HomeworkComponent implements OnInit {
       this.attachment = image;
     }
     if (id == 'confirm') {
-      this.last3days[this.index].message = this.messageText;
+      this.recentdata[this.index].message = this.messageText;
       this.editMessage(this.messageId, this.messageText);
     }
     this.isEditMessageOpen = !this.isEditMessageOpen;
@@ -596,6 +599,27 @@ export class HomeworkComponent implements OnInit {
       );
   }
 
+  sendhomework(data: any) {
+    let finalData = {
+      CLASSSEC: [{
+        CLASSSEC: data['CLASS'],
+        ID: data['MSG_ID'],
+      }]
+    };
+    this.authservice.post('movehomeworktofinal', finalData).subscribe(
+      (res: any) => {
+        this.loading.dismissAll();
+        if (res['status']) {
+          this.getSaveHomeworkDraft();
+          this.getSaveHomework();
+        }
+      },
+      (err) => {
+        this.loading.dismissAll();
+      }
+    );
+  }
+
   movehomeworktofinal() {
     let data: any = [];
     for (let i = 0; i < this.recentdata.length; i++) {
@@ -643,7 +667,13 @@ export class HomeworkComponent implements OnInit {
   }
 
   confirm_date() {
+    this.select_datas.s_date = this.s_date;
     this.modal.dismiss(null, 'confirm');
+  }
+
+  toggleDateSelect() {
+    this.s_date = this.select_datas.s_date;
+    this.isDatePickerOpen = !this.isDatePickerOpen;
   }
 
   toggleDateSelection() {
@@ -697,6 +727,11 @@ export class HomeworkComponent implements OnInit {
       } else {
         this.select_datas1.s_date = null;
       }
+    }
+    if (type == 'first') {
+      this.isDatePickerOpen = false;
+    } else {
+      this.isPickerOpen = false;
     }
   }
 

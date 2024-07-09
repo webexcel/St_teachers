@@ -79,6 +79,8 @@ export class StaffComponent implements OnInit {
   staffType: any;
   staffName: any;
   attachment: any;
+  isDatePickerOpen: boolean = false;
+  s_date: any;
 
   constructor(
     private serfile: FilesService,
@@ -140,6 +142,7 @@ export class StaffComponent implements OnInit {
     this.select_datas.staffinfo = [];
     this.staffName = "No Staff Selected";
     this.staffs = [];
+    this.s_date = new Date().toISOString();
     this.select_datas.s_date = new Date().toISOString();
     //this.classs = this.storage.getjson('classlist')
     this.select_datas.type = 'STAFFPERSONAL';
@@ -611,7 +614,13 @@ export class StaffComponent implements OnInit {
   }
 
   confirm_date() {
+    this.select_datas.s_date = this.s_date;
     this.modal.dismiss(null, 'confirm');
+  }
+
+  toggleDateSelect() {
+    this.s_date = this.select_datas.s_date;
+    this.isDatePickerOpen = !this.isDatePickerOpen;
   }
 
   toggleDateSelection() {
@@ -625,6 +634,11 @@ export class StaffComponent implements OnInit {
       } else {
         this.select_datas1.s_date = null;
       }
+    }
+    if (type == 'first') {
+      this.isDatePickerOpen = false;
+    } else {
+      this.isPickerOpen = false;
     }
   }
 
