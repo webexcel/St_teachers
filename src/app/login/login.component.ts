@@ -192,7 +192,7 @@ export class LoginComponent implements OnInit {
   getmenu() {
     this.loading.present();
     let data = {
-      UserId: this.teachersDetail[0].UserId,
+      staff_id: this.teachersDetail[0].staff_id,
     };
     this.authservice.post('getMobileAppMenu', data).subscribe(
       (res: any) => {
@@ -203,7 +203,7 @@ export class LoginComponent implements OnInit {
           this.storage.addjson('menulist', environment.pages);
         }
         this.router.navigate(['']);
-        window.location.reload();
+        // window.location.reload();
       },
       (err) => {
         this.storage.addjson('menulist', environment.pages);

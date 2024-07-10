@@ -222,7 +222,7 @@ export class CircularsComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (this.select_datas.class == undefined || this.select_datas.class.length == 0) {
-      this.showToast("No Classes Selected!", "danger");
+      this.showToast("No Classes Selected, Please Select!", "danger");
     } else if (this.select_datas.message == undefined || this.select_datas.message == "") {
       this.showToast("Message is Empty!", "danger");
     } else {

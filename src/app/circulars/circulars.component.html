@@ -158,7 +158,7 @@
                 <span></span>
                 <span>{{ d.message }}</span><br>
                 <hr style="margin: 0;">
-                <span>Date: {{ d.insDate }} - Staff: {{ d.staff_id }}</span>
+                <span>{{ d.insDate }} - By S.Code: {{ d.staff_name }}</span>
                 <br *ngIf="d.event_image && d.event_image.length > 0" />
                 <img alt="" [src]="d.event_image" class="w-100" *ngIf="checkimage(d.event_image)" />
 

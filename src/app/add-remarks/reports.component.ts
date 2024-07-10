@@ -175,13 +175,13 @@ export class ReportsComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     if (this.select_datas.class == undefined || this.select_datas.class == "") {
-      this.showToast("No Class Selected!", "danger");
+      this.showToast("No Class Selected, Please select!", "danger");
     } else if (this.select_datas.student == undefined || this.select_datas.student.length == 0) {
-      this.showToast("No Student Selected!", "danger");
+      this.showToast("No Student Selected, Please select!", "danger");
     } else if (this.select_datas.subject == undefined || this.select_datas.subject.length == 0) {
-      this.showToast("No Subject Selected!", "danger");
+      this.showToast("No Subject Selected, Please select!", "danger");
     } else if (this.select_datas.message == undefined || this.select_datas.message == "") {
-      this.showToast("Message is Empty!", "danger");
+      this.showToast("Message box is Empty, Please select!", "danger");
     } else {
       this.select_datas.student.forEach((student: { name: any }) => {
         const hyphenIndex = student.name.indexOf('-');
