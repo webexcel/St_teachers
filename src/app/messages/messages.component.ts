@@ -11,7 +11,6 @@ import { StorageService } from '../service/storage.service';
   styleUrls: ['./messages.component.scss'],
 })
 export class MessagesComponent implements OnInit {
-  ios: any = false;
   ing: any = 0;
   storeSMSDetails: any = [1, 2, 3, 4];
   teachersDetail: any = this.storage.getjson('teachersDetail');
@@ -27,10 +26,9 @@ export class MessagesComponent implements OnInit {
     public loading: LoadingService,
     private serfile: FilesService,
     public sanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.getgroupMessage();
     this.getSMSLogDetails();
   }

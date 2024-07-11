@@ -1,4 +1,4 @@
-<ion-header [translucent]="true" *ngIf="!ios">
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button>
@@ -17,17 +17,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
-    <ion-toolbar class="p-0">
-      <ion-buttons slot="start">
-        <ion-menu-button>
-          <ion-icon class="text-white" [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon>
-        </ion-menu-button>
-      </ion-buttons>
-      <ion-title>Staff</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <div class="staff">
     <!-- Updates styles -->
     <div class="card-body card_body">
@@ -78,7 +67,7 @@
         > -->
         <div style="margin-top: 12px">Select Date</div>
         <ion-item lines="full" class="dropdown" style="margin: 0px">
-          <ion-label id="open-modal" class="selected-date" *ngIf="select_datas.s_date">
+          <ion-label (click)="toggleDateSelect()" id="open-modal" class="selected-date" *ngIf="select_datas.s_date">
             <span style="float: left">
               {{ formatDate(select_datas.s_date) }}</span>
 
@@ -87,13 +76,13 @@
             </span>
           </ion-label>
 
-          <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event, 'first')" [initialBreakpoint]="0.5"
-            [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
+          <ion-modal [isOpen]="isDatePickerOpen" trigger="open-modal" (willDismiss)="onWillDismiss($event, 'first')"
+            [initialBreakpoint]="0.5" [breakpoints]="[0, 0.25, 0.5, 0.75]" animated="true">
             <ng-template>
               <ion-header>
                 <ion-toolbar>
                   <ion-buttons slot="start">
-                    <ion-button (click)="cancel_date()">{{
+                    <ion-button (click)="toggleDateSelect()">{{
                       "cancel" | translate
                       }}</ion-button>
                   </ion-buttons>
@@ -106,9 +95,8 @@
                 </ion-toolbar>
               </ion-header>
               <ion-content class="ion-padding">
-                <ion-datetime name="dob" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY"
-                  [(ngModel)]="select_datas.s_date" #dob="ngModel" presentation="date" mode="md" #datetime
-                  (ionChange)="showHideDatePicker()" required>
+                <ion-datetime name="dob" displayFormat="DD/MM/YYYY" pickerFormat="DD/MM/YYYY" [(ngModel)]="s_date"
+                  #dob="ngModel" presentation="date" mode="md" #datetime (ionChange)="showHideDatePicker()" required>
                 </ion-datetime>
               </ion-content>
             </ng-template>

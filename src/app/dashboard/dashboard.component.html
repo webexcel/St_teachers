@@ -1,4 +1,4 @@
-<ion-header [translucent]="true" *ngIf="!ios">
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'" class="menuIcon"></ion-icon></ion-menu-button>
@@ -247,7 +247,8 @@
     <ion-row class="align-items-center">
       <ion-col size="4" *ngFor="let p of appPages; first as isFirst">
         <div class="text-center" *ngIf="isFirst">
-          <div class="row" (click)="go(p.menu_link)">
+          <div class="row" routerDirection="root" [routerLink]="[p.menu_link]" lines="none" detail="false"
+            routerLinkActive="selected">
             <div class="imgBg">
               <img class="iconnn-img" [src]="p.menu_icon" />
             </div>
@@ -257,7 +258,8 @@
           </div>
         </div>
         <div class="text-center" *ngIf="!isFirst">
-          <div class="row" (click)="go(p.menu_link)">
+          <div class="row" routerDirection="root" [routerLink]="[p.menu_link]" lines="none" detail="false"
+            routerLinkActive="selected">
             <div class="imgBg">
               <img class="iconn-img" [src]="p.menu_icon" />
               <!-- [ngStyle]="{ filter: p.filter }" -->
@@ -286,8 +288,10 @@
     </div>
   </div>
   <div class="modal-body" *ngIf="flashData.length > 0 && flashData.length > flashindex">
-    <img [src]="flashData[flashindex].event_image" alt=""
+    <img *ngIf="flashData[flashindex].format != 'mp4'" [src]="flashData[flashindex].event_image" alt=""
       [class.d-none]="flashData[flashindex].event_image.length === 0" />
+    <video *ngIf="flashData[flashindex].format == 'mp4'" [src]="flashData[flashindex].event_image" style="width: 100%"
+      class="video-player" controls></video>
     <p class="text-center multi_lines_text">
       <span *ngIf="flashData[flashindex].Discription" [innerHTML]="
           authservice.sanitizeHtml(flashData[flashindex].Discription)

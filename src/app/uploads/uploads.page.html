@@ -1,4 +1,4 @@
-<ion-header [translucent]="true" *ngIf="!ios">
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button>
@@ -8,13 +8,8 @@
     <ion-title>Parent Messages</ion-title>
 
     <ion-buttons slot="end">
-      <ion-button
-        routerDirection="root"
-        routerLink="/dashboard"
-        lines="none"
-        detail="false"
-        routerLinkActive="selected"
-      >
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
         <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
       </ion-button>
     </ion-buttons>
@@ -33,7 +28,7 @@
   <div *ngIf="uploadItems != undefined && uploadItems.length == 0" style="margin-top: 10%; text-align: center;">
     <ion-label>No records found!</ion-label>
   </div>
- 
+
   <ion-list *ngIf="uploadItems != undefined && uploadItems.length > 0">
     <ion-item *ngFor="let data of uploadItems; let i = index">
       <ion-card style="width: 100%">
@@ -84,24 +79,15 @@
             <ion-col size="3">
               <div *ngIf="checkmp4(data, i)">
                 <div (click)="showVideo(i)" *ngIf="!data.videoClick">
-                  <img
-                    [src]="data.thumbnail"
-                    alt="thumbnail"
-                    style="width: 100%; cursor: pointer"
-                    class="thumbnail_img"
-                  />
+                  <img [src]="data.thumbnail" alt="thumbnail" style="width: 100%; cursor: pointer"
+                    class="thumbnail_img" />
                   <div class="play-icon-container">
                     <ion-icon name="play" class="play-icon"></ion-icon>
                   </div>
                 </div>
               </div>
               <div *ngIf="checkimage(data.url, i)">
-                <img
-                  (click)="showVideo(i)"
-                  [src]="data.url"
-                  alt="url"
-                  style="width: 100%; cursor: pointer"
-                />
+                <img (click)="showVideo(i)" [src]="data.url" alt="url" style="width: 100%; cursor: pointer" />
               </div>
               <ion-modal [isOpen]="data.videoClick">
                 <ng-template>
@@ -113,20 +99,11 @@
                     </ion-toolbar>
                   </ion-header>
                   <ion-content class="ion-padding" *ngIf="checkmp4(data, i)">
-                    <video
-                      controls
-                      style="width: 100%"
-                      [src]="data.url"
-                      class="video-player"
-                    ></video>
+                    <video controls style="width: 100%" [src]="data.url" class="video-player"></video>
                     <p style="padding: 10px">{{data.description}}</p>
                   </ion-content>
                   <ion-content *ngIf="checkimage(data.url, i)">
-                    <img
-                      [src]="data.url"
-                      alt="url"
-                      style="width: 100%; cursor: pointer; padding: 10px"
-                    />
+                    <img [src]="data.url" alt="url" style="width: 100%; cursor: pointer; padding: 10px" />
                     <p style="padding: 10px">{{data.description}}</p>
                   </ion-content>
                 </ng-template>

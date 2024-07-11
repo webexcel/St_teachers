@@ -1,76 +1,39 @@
-<ngx-ui-loader
-  [fgsColor]="loadingconfig.fgsColor"
-  [fgsPosition]="loadingconfig.fgsPosition"
-  [fgsSize]="loadingconfig.fgsSize"
-  [fgsType]="loadingconfig.fgsType"
-  [bgsOpacity]="loadingconfig.bgsOpacity"
-  [bgsPosition]="loadingconfig.bgsPosition"
-  [bgsSize]="loadingconfig.bgsSize"
-  [bgsType]="loadingconfig.bgsType"
-  [gap]="loadingconfig.gap"
-  [logoPosition]="loadingconfig.logoPosition"
-  [logoSize]="loadingconfig.logoSize"
-  [logoUrl]="loadingconfig.logoUrl"
-  [overlayColor]="loadingconfig.overlayColor"
-  [pbColor]="loadingconfig.pbColor"
-  [pbDirection]="loadingconfig.pbDirection"
-  [pbThickness]="loadingconfig.pbThickness"
-  [hasProgressBar]="loadingconfig.hasProgressBar"
-  [text]="loadingconfig.text"
-  [textColor]="loadingconfig.textColor"
-  [textPosition]="loadingconfig.textPosition"
-></ngx-ui-loader>
+<ngx-ui-loader [fgsColor]="loadingconfig.fgsColor" [fgsPosition]="loadingconfig.fgsPosition"
+  [fgsSize]="loadingconfig.fgsSize" [fgsType]="loadingconfig.fgsType" [bgsOpacity]="loadingconfig.bgsOpacity"
+  [bgsPosition]="loadingconfig.bgsPosition" [bgsSize]="loadingconfig.bgsSize" [bgsType]="loadingconfig.bgsType"
+  [gap]="loadingconfig.gap" [logoPosition]="loadingconfig.logoPosition" [logoSize]="loadingconfig.logoSize"
+  [logoUrl]="loadingconfig.logoUrl" [overlayColor]="loadingconfig.overlayColor" [pbColor]="loadingconfig.pbColor"
+  [pbDirection]="loadingconfig.pbDirection" [pbThickness]="loadingconfig.pbThickness"
+  [hasProgressBar]="loadingconfig.hasProgressBar" [text]="loadingconfig.text" [textColor]="loadingconfig.textColor"
+  [textPosition]="loadingconfig.textPosition"></ngx-ui-loader>
 
 <ion-app>
   <ion-split-pane contentId="main-content" *ngIf="index">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
-        <ion-list id="inbox-list" [class.mt-4]="ios">
+        <ion-list id="inbox-list">
           <ion-menu-toggle auto-hide="false">
-            <ion-item
-              routerDirection="root"
-              routerLink="/dashboard"
-              lines="none"
-              detail="false"
-              routerLinkActive="selected"
-            >
-              <ion-icon
-                class="icon_menu"
-                slot="start"
-                [ios]="'grid-sharp'"
-                [md]="'grid-sharp'"
-              ></ion-icon>
+            <ion-item routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+              routerLinkActive="selected">
+              <ion-icon class="icon_menu" slot="start" [ios]="'grid-sharp'" [md]="'grid-sharp'"></ion-icon>
               <ion-label>{{ "dashboard" | translate }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
-          <ion-menu-toggle
-            auto-hide="false"
-            *ngFor="let p of appPages; let i = index"
-            [class.d-none]="checkview(p.admin)"
-          >
-            <ion-item
-              routerDirection="root"
-              [routerLink]="[p.menu_link]"
-              lines="none"
-              detail="false"
-              routerLinkActive="selected"
-            >
+          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages; let i = index"
+            [class.d-none]="checkview(p.admin)">
+            <ion-item routerDirection="root" [routerLink]="[p.menu_link]" lines="none" detail="false"
+              routerLinkActive="selected">
               <img class="icon-img" [src]="p.menu_icon" />
               <ion-label class="after-img">{{
                 p.menu_name | translate
-              }}</ion-label>
+                }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
 
           <ion-menu-toggle auto-hide="false" (click)="logout()">
             <ion-item routerDirection="root" lines="none" detail="false">
-              <ion-icon
-                class="icon_menu"
-                slot="start"
-                [ios]="'log-out-sharp'"
-                [md]="'log-out-sharp'"
-              ></ion-icon>
+              <ion-icon class="icon_menu" slot="start" [ios]="'log-out-sharp'" [md]="'log-out-sharp'"></ion-icon>
               <ion-label>{{ "logout" | translate }}</ion-label>
             </ion-item>
           </ion-menu-toggle>

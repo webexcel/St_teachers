@@ -4,12 +4,15 @@ import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Base64 } from '@ionic-native/base64/ngx';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
+import { File } from '@ionic-native/file/ngx';
 import { AlertController, IonModal, Platform, ToastController } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { AuthService } from '../service/auth.service';
 import { LoadingService } from '../service/loading.service';
 import { StorageService } from '../service/storage.service';
+import { VideoProcessingService } from '../service/video-processing-service';
 
 @Component({
   selector: 'app-flash',
@@ -17,7 +20,6 @@ import { StorageService } from '../service/storage.service';
   styleUrls: ['./flash.component.scss'],
 })
 export class FlashComponent implements OnInit {
-  ios: any = false;
   @ViewChild('portComponent', { static: false }) portComponent: any;
   classs: any = [];
   details: any = {};
@@ -28,6 +30,10 @@ export class FlashComponent implements OnInit {
   modal!: IonModal;
   isPickerOpen: boolean = false;
   fileAttached: boolean = false;
+  isStartDatePickerOpen: boolean = false;
+  isEndDatePickerOpen: boolean = false;
+  startdate: any;
+  enddate: any;
 
   constructor(
     public alertCtrl: AlertController,
@@ -40,7 +46,10 @@ export class FlashComponent implements OnInit {
     private platform: Platform,
     private router: Router,
     private fileChooser: FileChooser,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private videoService: VideoProcessingService,
+    private file: File,
+    private fileOpener: FileOpener,
   ) {
     this.platform.backButton.subscribe(() => {
       this.router.navigate(['/dashboard']);
@@ -48,7 +57,8 @@ export class FlashComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
+    this.startdate = new Date().toISOString();
+    this.enddate = new Date().toISOString();
     this.classs = this.storage.getjson('classlist');
     this.details.staff_code =
       this.storage.getjson('teachersDetail')[0]['staff_id'];
@@ -113,7 +123,7 @@ export class FlashComponent implements OnInit {
     this.portComponent.close();
   }
 
-  open() {
+  open1() {
     this.fileChooser
       .open()
       .then((uri) => {
@@ -143,6 +153,78 @@ export class FlashComponent implements OnInit {
       .catch((e) => console.log(e));
   }
 
+  open() {
+    this.videoService
+      .promptForVideo()
+      .then((videoFile) => {
+        if (videoFile.type.startsWith('video/')) {
+          if (videoFile.size > 5 * 1024 * 1024) {
+            this.showToast(`File size exceeds 5 MB limit.`, "danger");
+            return;
+          }
+          this.videoService.uploadVideo(this.details, videoFile);
+          this.videoService
+            .generateThumbnail(videoFile)
+            .then((thumbnailData) => {
+              this.details['thumbnail'] = thumbnailData;
+            })
+            .catch((error) => {
+              console.error('Error generating thumbnail:', error);
+            });
+        }
+        const reader = new FileReader();
+        reader.onload = async (e: any) => {
+          this.details.image = e.target.result;
+          this.details["imageName"] = videoFile.name;
+          this.details.type = videoFile.name.split('.').pop();
+          if (this.details['thumbnail'] == undefined) {
+            this.details['thumbnail'] = '';
+          }
+          this.writeFile(
+            e.target.result,
+            videoFile.name,
+            videoFile.type
+          );
+        };
+        reader.readAsDataURL(videoFile);
+      })
+      .catch((error) => {
+        console.error('Error generating thumbnail:', error);
+      });
+  }
+
+  writeFile(FileContents: any, FileName: any, FileType: any) {
+    let blob = this.b64toBlob(FileContents, FileType);
+    this.file
+      .writeFile(this.file.dataDirectory, FileName, blob, { replace: true })
+      .then((response) => {
+        this.fileOpener.open(this.file.dataDirectory + FileName, FileType);
+      })
+      .catch((err: any) => {
+        console.error('Error writing file:', err);
+      });
+  }
+
+  b64toBlob(b64Data: any, contentType: any) {
+    let index = String(b64Data).lastIndexOf(',');
+    let data = String(b64Data).substring(index + 1);
+    contentType = contentType || '';
+    var sliceSize = 512;
+    var byteCharacters = atob(data);
+    var byteArrays = [];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      var byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  }
+
   onSubmit() {
     if (this.details.title == undefined || this.details.title == "") {
       this.showToast("Title is Empty!", "danger");
@@ -169,6 +251,8 @@ export class FlashComponent implements OnInit {
   reset() {
     this.details.title = '';
     this.details.description = '';
+    this.startdate = new Date().toISOString();
+    this.enddate = new Date().toISOString();
     this.details.startdate = new Date().toISOString();
     this.details.enddate = new Date().toISOString();
     this.details.image = '';
@@ -183,7 +267,7 @@ export class FlashComponent implements OnInit {
         this.loading.dismissAll();
         if (res['status']) {
           this.flashmessage();
-          this.show('Flash deleted  Successfully');
+          this.showToast('Flash deleted  Successfully', "success");
         }
       },
       (err) => {
@@ -197,18 +281,6 @@ export class FlashComponent implements OnInit {
     this.details.type = '';
   }
 
-  async show(msg: any) {
-    let alert = await this.alertCtrl.create({
-      header: msg,
-      buttons: [
-        {
-          text: 'Ok',
-          role: 'Ok',
-        },
-      ],
-    });
-    await alert.present();
-  }
   showHideDatePicker() {
     this.showDatePicker = !this.showDatePicker;
   }
@@ -233,13 +305,36 @@ export class FlashComponent implements OnInit {
     this.modal.dismiss(null, 'confirm');
   }
 
-  confirm_date() {
-    this.modal.dismiss(null, 'confirm');
+  confirm_date(evt: any) {
+    if (evt == "start") {
+      if (new Date(this.startdate) <= new Date(this.details.enddate)) {
+        this.details.startdate = this.startdate;
+        this.isStartDatePickerOpen = false;
+      } else {
+        this.showToast("Start Date should be lesser than or equal to End Date!", "danger");
+      }
+    } else if (evt == "end") {
+      if (new Date(this.details.startdate) <= new Date(this.enddate)) {
+        this.details.enddate = this.enddate;
+        this.isEndDatePickerOpen = false;
+      } else {
+        this.showToast("End Date should be greater than or equal to Start Date!", "danger");
+      }
+    }
+  }
+
+  toggleDateSelect(evt: any) {
+    if (evt == 'start') {
+      this.isStartDatePickerOpen = !this.isStartDatePickerOpen;
+    } else if (evt == "end") {
+      this.isEndDatePickerOpen = !this.isEndDatePickerOpen;
+    }
   }
 
   toggleDateSelection() {
     this.isPickerOpen = !this.isPickerOpen;
   }
+
   onWillDismiss(event: Event, type: any) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'cancel') {
@@ -248,6 +343,13 @@ export class FlashComponent implements OnInit {
       } else {
         this.details.enddate = null;
       }
+    }
+    if (type == 'first') {
+      this.startdate = this.details.startdate;
+      this.isStartDatePickerOpen = false;
+    } else {
+      this.enddate = this.details.enddate;
+      this.isEndDatePickerOpen = false;
     }
   }
 }

@@ -34,7 +34,6 @@ import { SelectModalComponent } from '../select-modal/select-modal.component';
   styleUrls: ['./personalized.component.scss'],
 })
 export class PersonalizedComponent implements OnInit {
-  ios: any = false;
   @ViewChild('portComponent', { static: false }) portComponent: any;
   classs: any = [];
   students: any = [];
@@ -107,7 +106,6 @@ export class PersonalizedComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.translate.set();
     this.translate
       .getparam('delete_personalized')

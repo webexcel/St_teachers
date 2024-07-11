@@ -13,7 +13,6 @@ import { TranslateConfigService } from '../service/translate-config.service';
   styleUrls: ['./mark-enter.page.scss'],
 })
 export class MarkEnterPage implements OnInit {
-  ios: any = false;
   classs: any = [];
   subjects: any = [];
   exams: any = [];
@@ -41,7 +40,6 @@ export class MarkEnterPage implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.translate.set();
     this.classs = this.storage.getjson('classlist');
     this.getallsubject();

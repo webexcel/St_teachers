@@ -18,7 +18,6 @@ import { TranslateConfigService } from '../service/translate-config.service';
   styleUrls: ['./view-remarks.component.scss'],
 })
 export class ViewRemarksComponent implements OnInit {
-  ios: any = false;
   @ViewChild('portComponent', { static: false }) portComponent: any;
   select_datas: any = {};
   select_datas1: any = {};
@@ -75,7 +74,6 @@ export class ViewRemarksComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.translate.set();
     this.translate
       .getparam('delete_personalized')

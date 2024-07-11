@@ -23,7 +23,6 @@ register();
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  ios: any = false;
   public fireBaseRegistrationID: any;
   public getStudentDetails: any = [];
   public app_versionCode: any;
@@ -106,7 +105,6 @@ export class AppComponent {
       //this.checkfile();
       this.pushSetup();
       this.splashScreen.hide();
-      this.ios = this.authservice.isiso();
       this.serfile.checkdir();
     });
 

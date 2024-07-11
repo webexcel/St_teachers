@@ -41,7 +41,6 @@ export class DailyReportsComponent implements OnInit {
       placeholder: 'A little about yourself',
     },
   ];
-  ios: any = false;
   otherReports: any;
   myReports: any;
   listType: any = 1;
@@ -75,7 +74,6 @@ export class DailyReportsComponent implements OnInit {
     this.staff_id = this.storage.getjson('teachersDetail')[0]['staff_id'];
 
     this.getLevel(this.staff_id);
-    this.ios = this.authservice.isiso();
     this.translate.set();
   }
 

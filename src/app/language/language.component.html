@@ -1,19 +1,12 @@
-<ion-header [translucent]="true" *ngIf="!ios">
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button
-        ><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon
-      ></ion-menu-button>
+      <ion-menu-button><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon></ion-menu-button>
     </ion-buttons>
     <ion-title>{{ "language" | translate }}</ion-title>
     <ion-buttons slot="end">
-      <ion-button
-        routerDirection="root"
-        routerLink="/dashboard"
-        lines="none"
-        detail="false"
-        routerLinkActive="selected"
-      >
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
         <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
       </ion-button>
     </ion-buttons>
@@ -21,43 +14,24 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
-    <ion-toolbar class="p-0">
-      <ion-buttons slot="start">
-        <ion-menu-button
-          ><ion-icon
-            class="text-white"
-            [ios]="'menu-sharp'"
-            [md]="'menu-sharp'"
-          ></ion-icon
-        ></ion-menu-button>
-      </ion-buttons>
-      <ion-title>{{ "language" | translate }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <div class="card m-3 shadow-lg">
     <div class="card-body card_body">
       <ion-list>
         <ion-item>
           <ion-label>{{ "language" | translate }}</ion-label>
-          <ion-select
-            [(ngModel)]="laun"
-            okText="{{ 'select' | translate }}"
-            cancelText="{{ 'dismiss' | translate }}"
-          >
+          <ion-select [(ngModel)]="laun" okText="{{ 'select' | translate }}" cancelText="{{ 'dismiss' | translate }}">
             <ion-select-option value="en">{{
               "en" | translate
-            }}</ion-select-option>
+              }}</ion-select-option>
             <ion-select-option value="tn">{{
               "tn" | translate
-            }}</ion-select-option>
+              }}</ion-select-option>
           </ion-select>
         </ion-item>
         <div class="text-right p-2">
           <ion-button color="primary" (click)="save()">{{
             "save" | translate
-          }}</ion-button>
+            }}</ion-button>
         </div>
       </ion-list>
     </div>

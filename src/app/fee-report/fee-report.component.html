@@ -1,20 +1,13 @@
-<ion-header [translucent]="true" *ngIf="!ios">
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-menu-button
-        ><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon
-      ></ion-menu-button>
+      <ion-menu-button><ion-icon [ios]="'menu-sharp'" [md]="'menu-sharp'"></ion-icon></ion-menu-button>
     </ion-buttons>
     <ion-title>Fee Report</ion-title>
 
     <ion-buttons slot="end">
-      <ion-button
-        routerDirection="root"
-        routerLink="/dashboard"
-        lines="none"
-        detail="false"
-        routerLinkActive="selected"
-      >
+      <ion-button routerDirection="root" routerLink="/dashboard" lines="none" detail="false"
+        routerLinkActive="selected">
         <ion-icon name="grid" style="height: 24px; width: 24px"> </ion-icon>
       </ion-button>
     </ion-buttons>
@@ -22,20 +15,6 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense" class="mt-4" *ngIf="ios">
-    <ion-toolbar class="p-0">
-      <ion-buttons slot="start">
-        <ion-menu-button
-          ><ion-icon
-            class="text-white"
-            [ios]="'menu-sharp'"
-            [md]="'menu-sharp'"
-          ></ion-icon
-        ></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Fee Report</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
   <div class="fee">
     <div class="card-container">

@@ -41,7 +41,6 @@ export class CircularsComponent implements OnInit {
   @ViewChild('portComponent', { static: false }) portComponent: any;
   @ViewChild(IonModal) modal!: IonModal;
 
-  ios: any = false;
   optionsSelected: any = [];
   classs: any;
   select_datas: any = {};
@@ -123,7 +122,6 @@ export class CircularsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.translate.set();
     this.translate
       .getparam('delete_circulars')
@@ -451,7 +449,7 @@ export class CircularsComponent implements OnInit {
                 .then((videoFile) => {
                   if (videoFile.type.startsWith('video/')) {
                     if (videoFile.size > 5 * 1024 * 1024) {
-                      alert(`File size exceeds 5 MB limit.`);
+                      this.showToast(`File size exceeds 5 MB limit.`, "danger");
                       return;
                     }
                     this.videoService.uploadVideo(this.select_datas, videoFile);

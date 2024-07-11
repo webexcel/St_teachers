@@ -23,7 +23,6 @@ import { SelectModalComponent } from '../select-modal/select-modal.component';
   styleUrls: ['./exam-schedule.component.scss'],
 })
 export class ExamScheduleComponent implements OnInit {
-  ios: any = false;
   classs: any = [];
   subjects: any = [];
   exams: any = [];
@@ -63,7 +62,6 @@ export class ExamScheduleComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.translate.set();
     this.classs = this.storage.getjson('classlist');
     this.select_datas.s_date = new Date().toISOString();

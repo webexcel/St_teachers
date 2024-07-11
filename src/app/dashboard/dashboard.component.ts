@@ -25,7 +25,6 @@ import { TranslateConfigService } from '../service/translate-config.service';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit {
-  ios: any = false;
   teachersDetail: any = this.storage.getjson('teachersDetail');
   @ViewChild('flash_template', { static: false }) flash_template: any;
   @ViewChild('swiper')
@@ -91,7 +90,6 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.dataservice.currentMenustatus.subscribe((index) => {
       this.translate.set();
     });
@@ -235,6 +233,8 @@ export class DashboardComponent implements OnInit {
           this.flashData = flashmes.data;
           var i = 0;
           for (i = 0; i < this.flashData.length; i++) {
+            let splitData = this.flashData[i].event_image != undefined && this.flashData[i].event_image != null && this.flashData[i].event_image != "" ? this.flashData[i].event_image.split(".") : [];
+            this.flashData[i]["format"] = splitData.length > 0 ? splitData[splitData.length - 1] : "";
             this.flashData[i].Discription = this.authservice.extractUrl(
               this.flashData[i].Discription
             );

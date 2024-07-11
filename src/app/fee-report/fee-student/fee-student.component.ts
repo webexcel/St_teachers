@@ -8,7 +8,6 @@ import { AuthService } from 'src/app/service/auth.service';
   styleUrls: ['./fee-student.component.scss'],
 })
 export class FeeStudentComponent implements OnInit {
-  ios: any = false;
   classId: any;
   studentId: any;
   studentReport: any;
@@ -21,7 +20,7 @@ export class FeeStudentComponent implements OnInit {
   feeKeys: any;
   mainData: any;
 
-  constructor(private route: ActivatedRoute, public authservice: AuthService) {}
+  constructor(private route: ActivatedRoute, public authservice: AuthService) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -69,7 +68,7 @@ export class FeeStudentComponent implements OnInit {
           });
         }
       },
-      (err) => {}
+      (err) => { }
     );
   }
 }

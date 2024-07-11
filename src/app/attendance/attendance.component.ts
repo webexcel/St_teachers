@@ -20,7 +20,6 @@ import { TranslateConfigService } from '../service/translate-config.service';
   styleUrls: ['./attendance.component.scss'],
 })
 export class AttendanceComponent implements OnInit {
-  ios: any = false;
   @ViewChild('portComponent', { static: false }) portComponent: any;
   senditems: any = [];
   grpmes: any = [];
@@ -52,6 +51,8 @@ export class AttendanceComponent implements OnInit {
   StudentsName: any;
   Session: any;
   SessionName: any;
+  isDatePickerOpen: boolean = false;
+  s_date: any;
 
   constructor(
     public alertCtrl: AlertController,
@@ -70,7 +71,6 @@ export class AttendanceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.translate.set();
     this.translate
       .getparam('delete_attendance')
@@ -438,7 +438,13 @@ export class AttendanceComponent implements OnInit {
   }
 
   confirm_date() {
+    this.select_datas.s_date = this.s_date;
     this.modal.dismiss(null, 'confirm');
+  }
+
+  toggleDateSelect() {
+    this.s_date = this.select_datas.s_date;
+    this.isDatePickerOpen = !this.isDatePickerOpen;
   }
 
   toggleDateSelection() {
@@ -452,6 +458,11 @@ export class AttendanceComponent implements OnInit {
       } else {
         this.select_datas1.s_date = null;
       }
+    }
+    if (type == 'first') {
+      this.isDatePickerOpen = false;
+    } else {
+      this.isPickerOpen = false;
     }
   }
 }

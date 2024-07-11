@@ -14,7 +14,6 @@ import { StorageService } from '../service/storage.service';
 export class UploadsPage implements OnInit {
   @ViewChild(IonModal) modal!: IonModal;
 
-  ios: any = false;
   uploadItems: any;
   isModalOpen: any = false;
   modalData: any;
@@ -36,9 +35,9 @@ export class UploadsPage implements OnInit {
     private modalController: ModalController,
     public storage: StorageService,
     private alertCtrl: AlertController
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   ionViewWillEnter() {
     this.uploadItems = [];
@@ -46,7 +45,7 @@ export class UploadsPage implements OnInit {
     if (teacher[0]["Is_Admin"] == 'Y') {
       this.classList = this.storage.getjson("classlist");
       this.classValue = this.classList[0];
-    } else{
+    } else {
       this.classList = this.storage.getjson("classlist").filter((item: any) => item.classTeacher === "1");
       this.classValue = this.classList[0];
     }
@@ -96,7 +95,7 @@ export class UploadsPage implements OnInit {
         this.uploadItems.push(this.allUploadedItems[i]);
       }
       this.currentSize = this.allUploadedItems.length;
-      this.scroll = false;  
+      this.scroll = false;
     } else {
       for (let i = this.currentSize; i < this.currentSize + this.pageSize; i++) {
         this.allUploadedItems[i]['videoClick'] = false;

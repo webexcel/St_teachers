@@ -9,7 +9,6 @@ import { StorageService } from '../service/storage.service';
   styleUrls: ['./fee-report.component.scss'],
 })
 export class FeeReportComponent implements OnInit {
-  ios: any = false;
   TotalCollection: any;
   ClassTotalCollection: any;
   studentData: any;

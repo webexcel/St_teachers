@@ -33,7 +33,6 @@ import { TranslateConfigService } from '../service/translate-config.service';
   styleUrls: ['./staff.component.scss'],
 })
 export class StaffComponent implements OnInit {
-  ios: any = false;
   @ViewChild('portComponent', { static: false }) portComponent: any;
   @ViewChild('portComponent1', { static: false }) portComponent1: any;
   stafftypes: any = [];
@@ -105,7 +104,6 @@ export class StaffComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.translate.set();
     this.translate
       .getparam('delete_personalized')

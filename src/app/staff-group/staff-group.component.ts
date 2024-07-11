@@ -33,7 +33,6 @@ import { TranslateConfigService } from '../service/translate-config.service';
   styleUrls: ['./staff-group.component.scss'],
 })
 export class StaffGroupComponent implements OnInit {
-  ios: any = false;
   @ViewChild('portComponent', { static: false }) portComponent: any;
   @ViewChild('portComponent1', { static: false }) portComponent1: any;
   stafftypes: any = [];
@@ -79,6 +78,8 @@ export class StaffGroupComponent implements OnInit {
   showPassword: boolean = true;
   staffName: any;
   attachment: any;
+  isDatePickerOpen: boolean = false;
+  s_date: any;
 
   constructor(
     private serfile: FilesService,
@@ -103,7 +104,6 @@ export class StaffGroupComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.translate.set();
     this.translate
       .getparam('delete_personalized')
@@ -565,7 +565,13 @@ export class StaffGroupComponent implements OnInit {
   }
 
   confirm_date() {
+    this.select_datas.s_date = this.s_date;
     this.modal.dismiss(null, 'confirm');
+  }
+
+  toggleDateSelect() {
+    this.s_date = this.select_datas.s_date;
+    this.isDatePickerOpen = !this.isDatePickerOpen;
   }
 
   toggleDateSelection() {
@@ -579,6 +585,11 @@ export class StaffGroupComponent implements OnInit {
       } else {
         this.select_datas1.s_date = null;
       }
+    }
+    if (type == 'first') {
+      this.isDatePickerOpen = false;
+    } else {
+      this.isPickerOpen = false;
     }
   }
   toggleMessage(id: any, message: any, image: any, i: any) {

@@ -216,7 +216,7 @@ export const environment = {
             "menu_id": "23",
             "menu_name": "Remarks",
             "menu_link": "/remarks",
-            "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/gallery.svg",
+            "menu_icon": "https://demo.schooltree.in/uploads/mobileApp_icons/remarks.svg",
             "menu_order": "22",
             "status": "0",
             "UserId": "2063"

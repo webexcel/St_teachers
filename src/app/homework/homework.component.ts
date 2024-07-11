@@ -34,7 +34,6 @@ import { TranslateConfigService } from '../service/translate-config.service';
   styleUrls: ['./homework.component.scss'],
 })
 export class HomeworkComponent implements OnInit {
-  ios: any = false;
   @ViewChild('portComponent', { static: false }) portComponent: any;
   classs: any = [];
   subjects: any = [];
@@ -113,7 +112,6 @@ export class HomeworkComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.translate.set();
     this.translate
       .getparam('delete_homework')
@@ -850,7 +848,6 @@ export class HomeworkComponent implements OnInit {
   }
 
   deleteSelectedItems() {
-    console.log(this.recentdata, "4545")
     const selectedIds = this.recentdata.map((item: any) => item.MSG_ID);
 
     this.authservice.post('deleteAllhomework', { ids: selectedIds.map((id: any) => ({ id })) }).subscribe(

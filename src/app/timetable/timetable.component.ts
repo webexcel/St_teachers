@@ -13,7 +13,6 @@ import { TranslateConfigService } from '../service/translate-config.service';
   styleUrls: ['./timetable.component.scss'],
 })
 export class TimetableComponent implements OnInit {
-  ios: any = false;
   @ViewChild('portComponent', { static: false }) portComponent: any;
   timetable: any;
   classs: any = [];
@@ -52,7 +51,6 @@ export class TimetableComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.translate.set();
 
     // this.translate

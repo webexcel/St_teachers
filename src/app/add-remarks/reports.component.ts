@@ -20,7 +20,6 @@ export class ReportsComponent implements OnInit {
   @ViewChild('portComponent', { static: false }) portComponent: any;
   @ViewChild(IonModal) modal!: IonModal;
 
-  ios: any = false;
   select_datas: any = {};
   select_datas1: any = {};
   classs: any = [];
@@ -73,7 +72,6 @@ export class ReportsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ios = this.authservice.isiso();
     this.translate.set();
     this.translate
       .getparam('delete_personalized')
