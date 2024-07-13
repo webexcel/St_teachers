@@ -291,7 +291,7 @@
     <img *ngIf="flashData[flashindex].format != 'mp4'" [src]="flashData[flashindex].event_image" alt=""
       [class.d-none]="flashData[flashindex].event_image.length === 0" />
     <video *ngIf="flashData[flashindex].format == 'mp4'" [src]="flashData[flashindex].event_image" style="width: 100%"
-      class="video-player" controls></video>
+      class="video-player" controls autoplay></video>
     <p class="text-center multi_lines_text">
       <span *ngIf="flashData[flashindex].Discription" [innerHTML]="
           authservice.sanitizeHtml(flashData[flashindex].Discription)

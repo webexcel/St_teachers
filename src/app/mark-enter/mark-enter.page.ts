@@ -41,6 +41,9 @@ export class MarkEnterPage implements OnInit {
 
   ngOnInit() {
     this.translate.set();
+    this.className = "No Class Selected";
+    this.SubjectName = "No Subject Selected";
+    this.ExamName = "No Exam Selected";
     this.classs = this.storage.getjson('classlist');
     this.getallsubject();
     this.getallexams();
@@ -65,6 +68,18 @@ export class MarkEnterPage implements OnInit {
       position: 'middle'
     });
     toast.present();
+  }
+
+  reset() {
+    this.g_btn = false;
+    this.select_datas.class = [];
+    this.select_datas.subject = [];
+    this.select_datas.exams = [];
+    this.className = "No Class Selected";
+    this.SubjectName = "No Subject Selected";
+    this.ExamName = "No Exam Selected";
+    this.students = [];
+    this.select_datas.student = [];
   }
 
   //this.getStudentsByClass(this.select_datas.class.id)
@@ -97,33 +112,41 @@ export class MarkEnterPage implements OnInit {
   }
 
   checkbtn() {
-    //this.g_btn = true
-
-    let data = {
-      class_Id: this.select_datas.class.id,
-      sub: this.select_datas.subject.name,
-      examName: this.select_datas.exams.exam_type_name,
-    };
-    this.loading.present();
-    this.authservice.post('EnableGenerateButton', data).subscribe(
-      (res: any) => {
-        this.loading.dismissAll();
-        if (res['data'].length > 0) {
-          if (Number(res['data'][0]['count']) == 0) {
-            this.g_btn = true;
+    if (this.select_datas.class.id != undefined && this.select_datas.class.id != "" && this.select_datas.subject.name != undefined && this.select_datas.subject.name != "" && this.select_datas.exams.exam_type_name != undefined && this.select_datas.exams.exam_type_name != "") {
+      let data = {
+        class_Id: this.select_datas.class.id,
+        sub: this.select_datas.subject.name,
+        examName: this.select_datas.exams.exam_type_name,
+      };
+      this.loading.present();
+      this.authservice.post('EnableGenerateButton', data).subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['data'].length > 0) {
+            if (Number(res['data'][0]['count']) == 0) {
+              this.g_btn = true;
+            } else {
+              this.g_btn = false;
+              this.getGenerateMarksList();
+            }
           } else {
             this.g_btn = false;
             this.getGenerateMarksList();
           }
-        } else {
-          this.g_btn = false;
-          this.getGenerateMarksList();
+        },
+        (err) => {
+          this.loading.dismissAll();
         }
-      },
-      (err) => {
-        this.loading.dismissAll();
+      );
+    } else {
+      if (this.select_datas.class.id == undefined || this.select_datas.class.id == "") {
+        this.showToast("No Class Selected!", "danger");
+      } else if (this.select_datas.subject.name == undefined || this.select_datas.subject.name == "") {
+        this.showToast("No Subject Selected!", "danger");
+      } else if (this.select_datas.exams.exam_type_name == undefined || this.select_datas.exams.exam_type_name == "") {
+        this.showToast("No Exam Selected!", "danger");
       }
-    );
+    }
   }
 
   generate() {
@@ -230,11 +253,6 @@ export class MarkEnterPage implements OnInit {
     multi: any,
     parameters: any
   ) {
-    if (!multi && data[0][parameters[0]] != 0) {
-      data.splice(0, 0, {});
-      data[0][parameters[0]] = 0;
-      data[0][parameters[1]] = 'Select Your Option';
-    }
     const modal = await this.modalController.create({
       component: SelectModalComponent,
       componentProps: {
@@ -295,6 +313,8 @@ export class MarkEnterPage implements OnInit {
         (res: any) => {
           this.loading.dismissAll();
           if (res['status']) {
+            this.showToast(res["message"], "success");
+            this.reset();
           }
         },
         (err) => {

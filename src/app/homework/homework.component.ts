@@ -151,6 +151,9 @@ export class HomeworkComponent implements OnInit {
     this.className = 'Select Classes';
     this.SubjectName = [];
     this.SubjectName[0] = 'Select Subject';
+    this.select_datas.filename = "";
+    this.select_datas.type = "";
+    this.select_datas.image = "";
   }
 
   ionViewWillEnter() {

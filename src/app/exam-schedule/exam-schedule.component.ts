@@ -476,4 +476,25 @@ export class ExamScheduleComponent implements OnInit {
       this.isPickerOpen = false;
     }
   }
+
+  deleteExamSchedule(data: any) {
+    this.loading.present();
+    this.authservice
+      .post('deleteExamSchedule', {
+        id: data.id,
+        Is_Admin: this.storage.getjson('teachersDetail')[0]['Is_Admin'],
+      })
+      .subscribe(
+        (res: any) => {
+          this.loading.dismissAll();
+          if (res['status']) {
+            this.showToast("Exam Schedule Deleted Successfully", "success");
+            this.getGenerateMarksList();
+          }
+        },
+        (err) => {
+          this.loading.dismissAll();
+        }
+      );
+  }
 }
